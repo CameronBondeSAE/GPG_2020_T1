@@ -13,6 +13,7 @@ public class TeleportEditorGUI : Editor
         if (GUILayout.Button("Teleporting"))
         {
             myScript.Teleporting();
+           
         }
     }
 
