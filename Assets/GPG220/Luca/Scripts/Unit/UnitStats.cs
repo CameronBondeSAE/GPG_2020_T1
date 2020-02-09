@@ -1,18 +1,41 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 namespace GPG220.Luca.Scripts.Unit
 {
+    
+    [System.Serializable]
+    public class UnitStatsHealthEvent : UnityEvent<UnitStats,float,float>{}
+    
     public class UnitStats : MonoBehaviour
     {
+        public UnitStatsHealthEvent onHealthChanged;
+        
         // public Health health // Reference to health script? Or add Health
         
-        // TODO TEMPORARY STAT; Used until theres a health script from GPG210
+        // TODO TEMPORARY STAT; Used until theres a health script from GPG210 ?
         [SerializeField]
         private float health = 0;
         public float Health
         {
             get => health;
-            set => health = value;
+            set
+            {
+                var oldVal = health;
+                health = value;
+                
+                // (Reference, Old Health, New Health)
+                onHealthChanged.Invoke(this, oldVal, value);
+            }
+        }
+        
+        // TODO TEMPORARY STAT; Used until theres a health script from GPG210 ?
+        [SerializeField]
+        private float maxHealth = 100;
+        public float MaxHealth
+        {
+            get => maxHealth;
+            set => maxHealth = value;
         }
         
         [SerializeField]
@@ -39,7 +62,10 @@ namespace GPG220.Luca.Scripts.Unit
             set => validRotation = value;
         }
 
-    
+        public bool IsAlive()
+        {
+            return health > 0;
+        }
     
     }
 }

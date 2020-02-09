@@ -1,24 +1,22 @@
-﻿using UnityEngine;
+﻿using GPG220.Luca.Scripts.Resources;
+using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace GPG220.Luca.Scripts.Unit
 {
-    public class UnitBase : MonoBehaviour
+    /// <summary>
+    /// Base class for units. (A unit can be a building, movable unit, ...)
+    /// </summary>
+    public abstract class UnitBase : SerializedMonoBehaviour
     {
-    
-        // TODO Unit Ability Manager
+        // TODO Unit Abilities
         public UnitStats unitStats;
-        //TODO Unit Movement System
-    
-        // Start is called before the first frame update
-        void Start()
+        public Inventory inventory;
+
+        protected virtual void Initialize()
         {
             unitStats = GetComponent<UnitStats>();
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
+            inventory = GetComponent<Inventory>();
         }
     }
 }
