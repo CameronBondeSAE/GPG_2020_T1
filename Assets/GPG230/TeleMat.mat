@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_Teleport
+  m_Name: TeleMat
   m_Shader: {fileID: -6465566751694194690, guid: d05f0fff24524184cb4a979fa9bf5cb1,
     type: 3}
   m_ShaderKeywords: 
