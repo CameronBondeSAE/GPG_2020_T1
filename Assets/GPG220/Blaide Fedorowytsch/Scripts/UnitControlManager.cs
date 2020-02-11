@@ -24,6 +24,9 @@ public class UnitControlManager : MonoBehaviour
     public float HeightOffset;
 
     public LayerMask layerMask;
+
+
+    public List<GameObject> gameObjectsInSelection;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -94,7 +97,15 @@ public class UnitControlManager : MonoBehaviour
         boxCollider.size = new Vector3(Vector3.Distance( selectionRect[1],selectionRect[2]),10f,Vector3.Distance( selectionRect[0],selectionRect[1]));
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        gameObjectsInSelection.Add(other.gameObject);
+    }
 
+    private void OnTriggerExit(Collider other)
+    {
+        gameObjectsInSelection.Remove(other.gameObject);
+    }
 
 
     void DoAction(InputAction.CallbackContext ctx)
