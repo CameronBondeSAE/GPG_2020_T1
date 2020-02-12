@@ -4,12 +4,16 @@ using UnityEngine.Events;
 namespace GPG220.Luca.Scripts.Unit
 {
     
-    [System.Serializable]
-    public class UnitStatsHealthEvent : UnityEvent<UnitStats,float,float>{}
-    
     public class UnitStats : MonoBehaviour
     {
-        public UnitStatsHealthEvent onHealthChanged;
+        #region Events
+
+        public delegate void OnHealthChangedDelegate(UnitStats unitStats, float oldHealth, float newHealth);
+        public event OnHealthChangedDelegate onHealthChanged;
+
+        #endregion
+        
+        //public UnitStatsHealthEvent onHealthChanged;
         
         // public Health health // Reference to health script? Or add Health
         
@@ -23,9 +27,8 @@ namespace GPG220.Luca.Scripts.Unit
             {
                 var oldVal = health;
                 health = value;
-                
                 // (Reference, Old Health, New Health)
-                onHealthChanged.Invoke(this, oldVal, value);
+                onHealthChanged?.Invoke(this, oldVal, value);
             }
         }
         

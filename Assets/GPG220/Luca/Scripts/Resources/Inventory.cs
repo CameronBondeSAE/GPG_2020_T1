@@ -6,19 +6,20 @@ using UnityEngine.Events;
 
 namespace GPG220.Luca.Scripts.Resources
 {
-    [System.Serializable]
-    public class InventoryResQtyEvent : UnityEvent<Inventory,Resource,int>{}
     
     /// <summary>
     /// This class serves to store resources. (Possible use: player, individual unit, treasure chests, farmable resources, ...)
     /// </summary>
     public class Inventory : SerializedMonoBehaviour
     {
-        /// <summary>
-        /// UnityEvent that gets invoked when the quantity of a resource changes. Positive values imply resources have been added
-        /// negative values imply resources have been removed.
-        /// </summary>
-        public InventoryResQtyEvent onResQuantityChange;
+        #region Events
+
+        public delegate void OnResQuantityChangeDel(Inventory inventory, Resource resource, int amtChange);
+
+        public event OnResQuantityChangeDel onResQuantityChanged;
+
+        #endregion
+        
         
         /// <summary>
         /// Stores the amounts of each resource in this inventory. If a resource isn't present in the dictionary
@@ -81,7 +82,7 @@ namespace GPG220.Luca.Scripts.Resources
             _resources[resource] -= amt;
             
             if(amt != 0)
-                onResQuantityChange.Invoke(this,resource,-amt);
+                onResQuantityChanged?.Invoke(this,resource,-amt);
             
             return amt;
         }
@@ -118,7 +119,7 @@ namespace GPG220.Luca.Scripts.Resources
                 _resources[resource] += amt;
             
             if(amt != 0)
-                onResQuantityChange.Invoke(this,resource,amt);
+                onResQuantityChanged?.Invoke(this,resource,amt);
             
             return amt;
         }

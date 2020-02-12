@@ -70,12 +70,12 @@ namespace GPG220.Luca.Scripts.Unit
             _originalAmounts = inventory.GetResourceQuantities();
             oldHealth = unitStats.Health;
             
-            unitStats.onHealthChanged.AddListener(HandleOnHealthChanged);
+            unitStats.onHealthChanged += HandleOnHealthChanged;
         }
 
         private void OnDestroy()
         {
-            unitStats.onHealthChanged.RemoveListener(HandleOnHealthChanged);
+            unitStats.onHealthChanged -= HandleOnHealthChanged;
         }
 
         private void Update()
