@@ -5,6 +5,12 @@ using UnityEngine;
 
 public class UnitTest : GPG220.Luca.Scripts.Unit.MovableUnit, ISelectable
 {
+
+    public bool moving = false;
+    public Vector3 target;
+    
+    
+    
     public bool Selectable()
     {
         return true;
@@ -15,7 +21,6 @@ public class UnitTest : GPG220.Luca.Scripts.Unit.MovableUnit, ISelectable
        return true;
    }
 
-    //  int SelectionPriority();
     public void OnSelected()
     {
     }
@@ -27,7 +32,29 @@ public class UnitTest : GPG220.Luca.Scripts.Unit.MovableUnit, ISelectable
 
     public void OnExecuteAction(Vector3 worldPosition, GameObject g)
     {
-        Debug.Log("I" + gameObject + " would do my action on :" + g +" at :" + worldPosition );
+        moving = true;
+        target = worldPosition;
+
+    }
+
+    void Move(Vector3 v)
+    {
+        this.gameObject.transform.position = Vector3.MoveTowards(this.gameObject.transform.position, v, 0.5f);
+    }
+
+    void FixedUpdate()
+    {
+        if (moving)
+        {
+            if (Vector3.Distance(this.gameObject.transform.position, target) > 0.1f)
+            {
+                Move(target);
+            }
+            else
+            {
+                moving = false;
+            }
+        }
     }
 
 }

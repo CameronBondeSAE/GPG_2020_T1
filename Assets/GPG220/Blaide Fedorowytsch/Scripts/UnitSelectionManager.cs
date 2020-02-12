@@ -34,8 +34,13 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         public LayerMask worldLayerMask;
         public LayerMask unitLayerMask;
 
+        [SerializeField]
+        private List<ISelectable> iSelectablesInSelection;
 
-        public List<ISelectable> ISelectablesInSelection;
+        public List<ISelectable> selectedIselectables;
+
+
+        public Outline outline;
         // Start is called before the first frame update
         private void Awake()
         {
@@ -64,6 +69,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 
         void Start()
         {
+            outline = GetComponent<Outline>();
             mainCam = Camera.main;
             lineRenderer = GetComponent<LineRenderer>();
             selectionRect = new Vector3[4];
@@ -86,11 +92,28 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         {
             selectionRect[2] = new Vector3(targetPoint.x,targetPoint.y + heightOffset,targetPoint.z + heightOffset);
             selectKeyDown = false;
+            
             DrawRectangle();
             CheckSelection();
-            foreach (ISelectable S in ISelectablesInSelection)
+            
+            foreach (ISelectable s in selectedIselectables)
             {
-                S.OnSelected();
+                if (!iSelectablesInSelection.Contains(s))
+                {
+                    RemoveOutlineFromObject(((MonoBehaviour)s).gameObject);
+                }
+                
+            }
+            selectedIselectables.Clear();
+            
+            
+            lineRenderer.SetPositions(new Vector3[4]{Vector3.zero,Vector3.zero,Vector3.zero,Vector3.zero});
+            
+            foreach (ISelectable s in iSelectablesInSelection)
+            {
+                s.OnSelected();
+                ApplyOutlineToObject(((MonoBehaviour)s).gameObject);
+                selectedIselectables.Add(s);
             }
         }
 
@@ -115,7 +138,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                 ISelectable i = other.GetComponent<ISelectable>();
                 if (i.Selectable())
                 {
-                    ISelectablesInSelection.Add(other.gameObject.GetComponent<ISelectable>());
+                    iSelectablesInSelection.Add(other.gameObject.GetComponent<ISelectable>());
                 }
             }
         }
@@ -127,15 +150,33 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                 ISelectable i = other.GetComponent<ISelectable>();
                 if (i.Selectable())
                 {
-                    ISelectablesInSelection.Remove(other.gameObject.GetComponent<ISelectable>());
+                    iSelectablesInSelection.Remove(other.gameObject.GetComponent<ISelectable>());
                 }
             }
         }
 
+        void ApplyOutlineToObject(GameObject g)
+        {
+            if (g.GetComponent<Outline>() == null)
+            {
+                Outline o = g.AddComponent<Outline>();
+                o.OutlineColor = outline.OutlineColor;
+                o.OutlineMode = outline.OutlineMode;
+                o.OutlineWidth = outline.OutlineWidth;
+            }
+        }
+
+        void RemoveOutlineFromObject(GameObject g)
+        {
+            if (g.GetComponent<Outline>() != null)
+            {
+                Destroy(g.GetComponent<Outline>());
+            }
+        }
 
         void DoAction(InputAction.CallbackContext ctx)
         {
-            foreach (ISelectable S in ISelectablesInSelection)
+            foreach (ISelectable S in selectedIselectables)
             {
                 S.OnExecuteAction(targetPoint,targetObject);
             }
