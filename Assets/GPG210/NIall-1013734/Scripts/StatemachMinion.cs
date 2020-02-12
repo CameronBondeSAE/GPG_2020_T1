@@ -71,6 +71,6 @@ void Update()
 // picks random direction to wander in every time wanderTime = 0
     void Wander()
 {
-    transform.eulerAngles = new Vector3(0, Random.Range (0, 180), 0);
+    transform.eulerAngles = new Vector3(0, Random.Range (0, 360), 0);
 }
 }
