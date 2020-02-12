@@ -94,7 +94,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             selectKeyDown = false;
             
             DrawRectangle();
-            CheckSelection();
+            AdjustTriggerBox();
             
             foreach (ISelectable s in selectedIselectables)
             {
@@ -125,12 +125,13 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             lineRenderer.SetPositions(selectionRect);
         }
 
-        void CheckSelection()
+        void AdjustTriggerBox()
         {
             boxCollider.center = Vector3.Lerp(selectionRect[0], selectionRect[2], 0.5f);
             boxCollider.size = new Vector3(Vector3.Distance( selectionRect[1],selectionRect[2]),10f,Vector3.Distance( selectionRect[0],selectionRect[1]));
         }
-
+        
+        // This is just detecting objects using a box Collider set to trigger, It doesn't work unless they have rigidbodies
         private void OnTriggerEnter(Collider other)
         {
             if (other.GetComponent<ISelectable>() != null)
@@ -142,7 +143,6 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                 }
             }
         }
-
         private void OnTriggerExit(Collider other)
         {
             if (other.GetComponent<ISelectable>() != null)
@@ -205,7 +205,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             if (selectKeyDown)
             {
                 DrawRectangle();
-                CheckSelection();
+                AdjustTriggerBox();
             }
         }
     

@@ -1,60 +1,60 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using GPG220.Blaide_Fedorowytsch.Scripts.Interfaces;
+﻿using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using ISelectable = GPG220.Blaide_Fedorowytsch.Scripts.Interfaces.ISelectable;
 
-public class UnitTest : GPG220.Luca.Scripts.Unit.MovableUnit, ISelectable
+namespace GPG220.Blaide_Fedorowytsch.Scripts
 {
-
-    public bool moving = false;
-    public Vector3 target;
-    
-    
-    
-    public bool Selectable()
+    public class UnitTest : TestUnitBase
     {
-        return true;
-    }
 
-   public  bool GroupSelectable()
-   {
-       return true;
-   }
+        public bool moving = false;
+        public Vector3 target;
+        public List<ISelectable> selctionGroup;
 
-    public void OnSelected()
-    {
-    }
-
-    public void OnDeSelected()
-    {
-        
-    }
-
-    public void OnExecuteAction(Vector3 worldPosition, GameObject g)
-    {
-        moving = true;
-        target = worldPosition;
-
-    }
-
-    void Move(Vector3 v)
-    {
-        this.gameObject.transform.position = Vector3.MoveTowards(this.gameObject.transform.position, v, 0.5f);
-    }
-
-    void FixedUpdate()
-    {
-        if (moving)
+        public override void OnExecuteAction(Vector3 worldPosition, GameObject g)
         {
-            if (Vector3.Distance(this.gameObject.transform.position, target) > 0.1f)
+            moving = true;
+            target = worldPosition;
+        }
+
+        public override void OnSelected()
+        {
+            selctionGroup = usm.selectedIselectables;
+        }
+
+        void Move(Vector3 v)
+        {
+            this.gameObject.transform.position = Vector3.MoveTowards(this.gameObject.transform.position, v, 0.5f);
+        }
+
+        Vector3 OffsetPosition()
+        {
+            Vector3 total = new Vector3();
+
+            foreach (ISelectable s in selctionGroup)
             {
-                Move(target);
+                total += ((MonoBehaviour) s).gameObject.transform.position;
             }
-            else
+
+            return transform.position - total / selctionGroup.Count;
+        }
+
+
+        void FixedUpdate()
+        {
+            if (moving)
             {
-                moving = false;
+                if (Vector3.Distance(this.gameObject.transform.position, target + OffsetPosition()) > 0.1f)
+                {
+                    Move(target + OffsetPosition());
+                }
+                else
+                {
+                    moving = false;
+                }
             }
         }
-    }
 
+    }
 }
