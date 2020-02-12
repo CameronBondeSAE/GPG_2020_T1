@@ -14,12 +14,15 @@ public class TeleportEditor : MonoBehaviour
     
     //moving variables
     public float moveSpeed;
-    
+    public Transform currentTarget;
+   
 
-
- 
-    
-
+    Enemy closestEnemy = null;
+    void Update()
+    {
+       
+        
+    }
 
 
     public void Teleporting()
@@ -48,7 +51,7 @@ public class TeleportEditor : MonoBehaviour
     void WalkToClosest()
     {
         float distanceToClosestEnemy = Mathf.Infinity;
-        Enemy closestEnemy = null;
+      
         Enemy[] allEnemies = GameObject.FindObjectsOfType<Enemy>();
 
         foreach (Enemy currentEnemy in allEnemies)
@@ -58,11 +61,12 @@ public class TeleportEditor : MonoBehaviour
             {
                 distanceToClosestEnemy = distanceToEnemy;
                 closestEnemy = currentEnemy;
-                
+               
+               
             }
         }
 
-        
+
 
     }
 }
