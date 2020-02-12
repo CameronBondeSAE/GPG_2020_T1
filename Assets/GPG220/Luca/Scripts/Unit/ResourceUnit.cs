@@ -5,13 +5,12 @@ using GPG220.Luca.Scripts.Resources;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEngine;
-using UnityEngine.Experimental.PlayerLoop;
 
 namespace GPG220.Luca.Scripts.Unit
 {
     public class ResourceUnit : UnitBase
     {
-        [NonSerialized] private Dictionary<Resource, int> _originalAmounts;
+        [NonSerialized] private Dictionary<ResourceType, int> _originalAmounts;
 
         public GameObject currentModel;
 

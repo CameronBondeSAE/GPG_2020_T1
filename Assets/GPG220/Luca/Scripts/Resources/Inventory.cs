@@ -14,7 +14,7 @@ namespace GPG220.Luca.Scripts.Resources
     {
         #region Events
 
-        public delegate void OnResQuantityChangeDel(Inventory inventory, Resource resource, int amtChange);
+        public delegate void OnResQuantityChangeDel(Inventory inventory, ResourceType resourceType, int amtChange);
 
         public event OnResQuantityChangeDel onResQuantityChanged;
 
@@ -26,7 +26,7 @@ namespace GPG220.Luca.Scripts.Resources
         /// it implies that the amount is 0.
         /// </summary>
         [ShowInInspector, OdinSerialize]
-        private Dictionary<Resource, int> _resources;
+        private Dictionary<ResourceType, int> _resources;
         
         /// <summary>
         /// Resets <paramref name="resourcesMax"/> and fills it with all active resources. Default value is -1 (Unlimited amounts).
@@ -34,9 +34,9 @@ namespace GPG220.Luca.Scripts.Resources
         [Button("Init Resources Max"), PropertyTooltip("Loads all resources into the dictionary. Deletes old values."), FoldoutGroup("Resource Maximums")]
         private void InitializeResourcesMax()
         {
-            resourcesMax = new Dictionary<Resource, int>();
+            resourcesMax = new Dictionary<ResourceType, int>();
             
-            Resource.GetAllResources().ForEach(res =>
+            ResourceType.GetAllResources().ForEach(res =>
             {
                 resourcesMax.Add(res, -1);
             });
@@ -48,41 +48,41 @@ namespace GPG220.Luca.Scripts.Resources
         /// </summary>
         [InfoBox("Here you can define maximum allowed quantities of different resources for this specific inventory.")]
         [ShowInInspector, OdinSerialize,FoldoutGroup("Resource Maximums")]
-        public Dictionary<Resource, int> resourcesMax;
+        public Dictionary<ResourceType, int> resourcesMax;
         
 
         private void Awake()
         {
             if(resourcesMax == null)
-                resourcesMax = new Dictionary<Resource, int>();
+                resourcesMax = new Dictionary<ResourceType, int>();
             
             if(_resources == null)
-                _resources = new Dictionary<Resource, int>();
+                _resources = new Dictionary<ResourceType, int>();
         }
 
 
         /// <summary>
         /// Tries to remove a given amount of resources from the inventory.
         /// </summary>
-        /// <param name="resource">Defines the type of resource you'd like to remove.</param>
+        /// <param name="resourceType">Defines the type of resource you'd like to remove.</param>
         /// <param name="amount">The amount you would like to remove.</param>
         /// <param name="requireFullAmount">If set to true, resources will only be taken if the desired amount is
         /// available in the inventory.</param>
         /// <returns>Returns the amount of resources that have been taken. If you try to remove more resources than
         /// there are and <paramref name="requireFullAmount"/> is set to false, the method will return the available amount that has been deducted.</returns>
-        public int RemoveResources(Resource resource, int amount, bool requireFullAmount = true)
+        public int RemoveResources(ResourceType resourceType, int amount, bool requireFullAmount = true)
         {
             var amt = 0;
 
-            if (!_resources.ContainsKey(resource) || (requireFullAmount && _resources[resource] < amount))
+            if (!_resources.ContainsKey(resourceType) || (requireFullAmount && _resources[resourceType] < amount))
                 return amt;
 
-            amt = _resources[resource] >= amount ? amount : _resources[resource];
+            amt = _resources[resourceType] >= amount ? amount : _resources[resourceType];
             
-            _resources[resource] -= amt;
+            _resources[resourceType] -= amt;
             
             if(amt != 0)
-                onResQuantityChanged?.Invoke(this,resource,-amt);
+                onResQuantityChanged?.Invoke(this,resourceType,-amt);
             
             return amt;
         }
@@ -90,18 +90,18 @@ namespace GPG220.Luca.Scripts.Resources
         /// <summary>
         /// Tries to add a given amount of resources to the inventory.
         /// </summary>
-        /// <param name="resource">The type of resources you're adding.</param>
+        /// <param name="resourceType">The type of resources you're adding.</param>
         /// <param name="amount">The amount of the resource you're adding.'</param>
         /// <param name="requireFullAmount">If set to true, the resources will only be added if there is space
         /// for the full amount of the given resources.</param>
         /// <returns>Returns the final amount of resources that have been added. Note that this number could be lower than the given amount.</returns>
-        public int AddResources(Resource resource, int amount, bool requireFullAmount = true)
+        public int AddResources(ResourceType resourceType, int amount, bool requireFullAmount = true)
         {
             var amt = 0;
 
             // Calculate available quantity
-            var resMax = resourcesMax.ContainsKey(resource) ? resourcesMax[resource] : -1;
-            _resources.TryGetValue(resource, out var storedQty);
+            var resMax = resourcesMax.ContainsKey(resourceType) ? resourcesMax[resourceType] : -1;
+            _resources.TryGetValue(resourceType, out var storedQty);
             var availableQty = resMax - storedQty;
             availableQty = resMax == -1 ? -1 : (availableQty > 0 ? availableQty : 0);
 
@@ -113,13 +113,13 @@ namespace GPG220.Luca.Scripts.Resources
             amt = (availableQty == -1 ? amount : availableQty);
             
             // Add resources
-            if (!_resources.ContainsKey(resource))
-                _resources.Add(resource, amt);
+            if (!_resources.ContainsKey(resourceType))
+                _resources.Add(resourceType, amt);
             else
-                _resources[resource] += amt;
+                _resources[resourceType] += amt;
             
             if(amt != 0)
-                onResQuantityChanged?.Invoke(this,resource,amt);
+                onResQuantityChanged?.Invoke(this,resourceType,amt);
             
             return amt;
         }
@@ -128,10 +128,10 @@ namespace GPG220.Luca.Scripts.Resources
         /// <para>Returns the current quantity of the given resource.</para>
         /// <para>Doesn't remove nor add any resources from the inventory.</para>
         /// </summary>
-        /// <param name="resource">The resource of which you want to find out its quantity.</param>
-        public int GetResourceQuantity(Resource resource)
+        /// <param name="resourceType">The resource of which you want to find out its quantity.</param>
+        public int GetResourceQuantity(ResourceType resourceType)
         {
-            return _resources.ContainsKey(resource) ? _resources[resource] : 0;
+            return _resources.ContainsKey(resourceType) ? _resources[resourceType] : 0;
         }
 
         /// <summary>
@@ -139,10 +139,10 @@ namespace GPG220.Luca.Scripts.Resources
         /// <para>This method doesn't remove nor add any resources from the inventory. The returned dictionary is a copy of the original.</para>
         /// </summary>
         /// <returns></returns>
-        public Dictionary<Resource, int> GetResourceQuantities()
+        public Dictionary<ResourceType, int> GetResourceQuantities()
         {
             
-            return new Dictionary<Resource, int>(_resources);
+            return new Dictionary<ResourceType, int>(_resources);
         }
         
     }
