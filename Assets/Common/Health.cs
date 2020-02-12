@@ -9,7 +9,7 @@ public class Health : MonoBehaviour
     public int currentHealth;
 
 
-    public Awake()
+    public void Awake()
     {
         currentHealth = startingHealth;
     }
