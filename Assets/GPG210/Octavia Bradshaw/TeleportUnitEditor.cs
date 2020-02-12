@@ -31,5 +31,10 @@ public class TeleportUnitEditor : Editor
         {
             myScript.Attacking();
         }
+
+        if (GUILayout.Button(("Dead")))
+        {
+            myScript.Dead();
+        }
     }
 }

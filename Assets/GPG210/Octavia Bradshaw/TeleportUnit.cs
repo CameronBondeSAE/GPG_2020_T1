@@ -12,7 +12,8 @@ public class TeleportUnit : MonoBehaviour
         Walk,
         Sprint,
         Teleport,
-        Attack
+        Attack,
+        Dead
     }
 
     public States currentState;
@@ -27,7 +28,6 @@ public class TeleportUnit : MonoBehaviour
         Debug.Log("Sprinting");
     }
 
-    
     public void Teleporting()
     {
         Debug.Log("Teleporting");
@@ -38,6 +38,12 @@ public class TeleportUnit : MonoBehaviour
         Debug.Log("Attacking");
     }
 
+    public void Dead()
+    {
+        Debug.Log("Dead");
+        Destroy(gameObject);
+    }
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -47,6 +53,12 @@ public class TeleportUnit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (GetComponent<Health>().currentHealth <= 0)
+        {
+            currentState = States.Dead;
+        }
+        
         switch (currentState)
         {
             case States.Walk:
@@ -56,6 +68,8 @@ public class TeleportUnit : MonoBehaviour
             case States.Teleport:
                 break;
             case States.Attack:
+                break;
+            case States.Dead:
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
