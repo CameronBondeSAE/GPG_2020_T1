@@ -125,6 +125,7 @@ MonoBehaviour:
   teleportTarget: {fileID: 0}
   player: {fileID: 577926091930366374}
   Range: -10
+  moveSpeed: 20
 --- !u!114 &3590460850139835099
 MonoBehaviour:
   m_ObjectHideFlags: 0
