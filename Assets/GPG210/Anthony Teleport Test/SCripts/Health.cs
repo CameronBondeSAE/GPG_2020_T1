@@ -2,16 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Health : MonoBehaviour
+
+namespace MyNamespace
 {
 
-    public int startingHealth;
-    public int currentHealth;
 
-
-    public void Awake()
+    public class Health : MonoBehaviour
     {
-        currentHealth = startingHealth;
-    }
 
+        public int startingHealth;
+        public int currentHealth;
+
+
+        public void Awake()
+        {
+            currentHealth = startingHealth;
+            
+        }
+    }
 }
