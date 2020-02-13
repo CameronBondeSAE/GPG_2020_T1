@@ -65,7 +65,7 @@ public class PathFinder : MonoBehaviour
 
     public void FindPath(PathNode startNode, PathNode goalNode)
     {
-        bool findingPath;
+        bool findingPath = true;
         int loopCount = 0;
         openNodes.Add(startNode);
         PathNode lowestNode = startNode;
