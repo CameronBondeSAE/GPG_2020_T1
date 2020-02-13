@@ -2,10 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using GPG220.Luca.Scripts.Unit;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class TeleportEditor : MonoBehaviour
+public class TeleportEditor : UnitBase
 {
     public bool isTeleporting = true;
     public Transform teleportTarget;
@@ -16,6 +17,17 @@ public class TeleportEditor : MonoBehaviour
     public float moveSpeed;
     public Transform currentTarget;
    
+   public override void OnSelected()
+       {
+           base.OnSelected();
+           Debug.Log("Mage has been selected!");
+       }
+   
+       public override void OnExecuteAction(Vector3 worldPosition, GameObject g)
+       {
+           base.OnExecuteAction(worldPosition, g);
+           Debug.Log("Move :"+worldPosition);
+       }
 
     Enemy closestEnemy = null;
     void Update()
