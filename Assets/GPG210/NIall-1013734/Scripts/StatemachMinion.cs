@@ -41,7 +41,6 @@ public class StatemachMinion : UnitBase
         switch (currentState)
         {
             case States.Wander:
-                print("Unit is Wandering");
                 // Random Wandering if state is set to Wander.
                 if (wanderTime > 0)
                 {
