@@ -155,22 +155,35 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             }
         }
 
-        void ApplyOutlineToObject(GameObject g)
+        void ApplyOutlineToObject(GameObject selectedGameObject)
         {
-            if (g.GetComponent<Outline>() == null)
+            
+            if (selectedGameObject.GetComponent<Outline>() == null)
             {
-                Outline o = g.AddComponent<Outline>();
+                Outline o = selectedGameObject.AddComponent<Outline>();
+                o.OutlineColor = outline.OutlineColor;
+                o.OutlineMode = outline.OutlineMode;
+                o.OutlineWidth = outline.OutlineWidth;
+            }
+            else if (selectedGameObject.GetComponentInChildren<Outline>() == null)
+            {
+                GameObject childOfSelected = selectedGameObject.GetComponentInChildren<MeshRenderer>().gameObject;
+                Outline o = childOfSelected.AddComponent<Outline>();
                 o.OutlineColor = outline.OutlineColor;
                 o.OutlineMode = outline.OutlineMode;
                 o.OutlineWidth = outline.OutlineWidth;
             }
         }
 
-        void RemoveOutlineFromObject(GameObject g)
+        void RemoveOutlineFromObject(GameObject selectedGameObject)
         {
-            if (g.GetComponent<Outline>() != null)
+            if (selectedGameObject.GetComponent<Outline>() != null)
             {
-                Destroy(g.GetComponent<Outline>());
+                Destroy(selectedGameObject.GetComponent<Outline>());
+            }
+            else if (selectedGameObject.GetComponentInChildren<Outline>() != null)
+            {
+                Destroy(selectedGameObject.GetComponentInChildren<Outline>());
             }
         }
 

@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using ISelectable = GPG220.Blaide_Fedorowytsch.Scripts.Interfaces.ISelectable;
 
 namespace GPG220.Blaide_Fedorowytsch.Scripts
 {
+    /// <summary>
+    /// A basic test unit, action lerps to the returned world position.
+    /// 
+    /// </summary>
     public class UnitTest : TestUnitBase
     {
 
@@ -17,7 +20,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             moving = true;
             target = worldPosition;
         }
-
+        
+        
         public override void OnSelected()
         {
             selctionGroup = usm.selectedIselectables;
