@@ -20,19 +20,25 @@ public class TeleportEditor : UnitBase
     public override void OnSelected()
     {
         base.OnSelected();
-        Debug.Log("Mage has been selected!");
+       
+    }
+
+    public override void OnDeSelected()
+    {
+        base.OnDeSelected();
     }
 
     public override void OnExecuteAction(Vector3 worldPosition, GameObject g)
     {
         base.OnExecuteAction(worldPosition, g);
-        Debug.Log("Move :" + worldPosition);
+        
     }
 
     Enemy closestEnemy = null;
 
     void Update()
     {
+        
     }
 
 
@@ -54,7 +60,7 @@ public class TeleportEditor : UnitBase
     public void StartWalk()
     {
         Debug.Log(("Player is Walking towards targets"));
-        player.transform.position = Vector3.MoveTowards(player.transform.position, currentTarget.position, moveSpeed);
+        //player.transform.position = Vector3.MoveTowards(player.transform.position, currentTarget.position, moveSpeed);
 
         WalkToClosest();
     }
