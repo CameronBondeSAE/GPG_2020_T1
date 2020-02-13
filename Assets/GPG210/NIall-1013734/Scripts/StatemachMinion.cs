@@ -32,6 +32,7 @@ public class StatemachMinion : UnitBase
     public override void OnSelected()
     {
         base.OnSelected();
+        currentState = States.Moving;
     }
 
 
@@ -75,10 +76,10 @@ public class StatemachMinion : UnitBase
                 throw new ArgumentOutOfRangeException();
         }
 
-        /*if (GetComponent<Health>().())
+         void Die()
         {
             currentState = States.Dead;
-        }*/
+        }
 
 
     }
