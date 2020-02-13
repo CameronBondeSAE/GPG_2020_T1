@@ -2,12 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using GPG220.Luca.Scripts.Unit;
 using UnityEditor;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 using Random = UnityEngine.Random;
 
-public class StatemachMinion : MonoBehaviour
+public class StatemachMinion : UnitBase
 {
     public float wanderTime;
     public float wanderSpeed;
@@ -27,6 +28,12 @@ public class StatemachMinion : MonoBehaviour
     {
         unitlvlup = GetComponent<UnitLevelUp>();
     }
+
+    public override void OnSelected()
+    {
+        base.OnSelected();
+    }
+
 
 
     void Update()
