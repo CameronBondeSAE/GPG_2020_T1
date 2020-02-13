@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using ISelectable = GPG220.Blaide_Fedorowytsch.Scripts.Interfaces.ISelectable;
 
@@ -15,6 +14,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         public bool moving = false;
         public Vector3 target;
         public List<ISelectable> selctionGroup;
+        public float HeightOffset;
 
         public override void OnExecuteAction(Vector3 worldPosition, GameObject g)
         {
@@ -50,9 +50,9 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         {
             if (moving)
             {
-                if (Vector3.Distance(this.gameObject.transform.position, target + OffsetPosition()) > 0.1f)
+                if (Vector3.Distance(this.gameObject.transform.position, target  + (Vector3.up *HeightOffset)  + OffsetPosition()) > 0.1f)
                 {
-                    Move(target + OffsetPosition());
+                    Move(target + (Vector3.up *HeightOffset) + OffsetPosition());
                 }
                 else
                 {

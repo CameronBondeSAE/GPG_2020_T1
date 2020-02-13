@@ -8,11 +8,13 @@ namespace GPG220.Luca.Scripts.Unit
     /// <summary>
     /// Base class for units. (A unit can be a building, movable unit, ...)
     /// </summary>
+    [RequireComponent(typeof(Rigidbody))]
     public abstract class UnitBase : SerializedMonoBehaviour, ISelectable
     {
         // TODO Unit Abilities
         public UnitStats unitStats;
         public Inventory inventory;
+        
 
         protected virtual void Initialize()
         {

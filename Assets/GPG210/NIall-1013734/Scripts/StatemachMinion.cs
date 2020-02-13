@@ -32,6 +32,7 @@ public class StatemachMinion : UnitBase
     public override void OnSelected()
     {
         base.OnSelected();
+        currentState = States.Moving;
     }
 
 
@@ -41,8 +42,7 @@ public class StatemachMinion : UnitBase
         switch (currentState)
         {
             case States.Wander:
-                print("Unit is Wandering");
-                // random wandering if state is set to Moving.
+                // Random Wandering if state is set to Wander.
                 if (wanderTime > 0)
                 {
                     transform.Translate(Vector3.forward * wanderSpeed);
@@ -76,7 +76,7 @@ public class StatemachMinion : UnitBase
                 throw new ArgumentOutOfRangeException();
         }
 
-        if (GetComponent<Health>().currentHealth <= 0)
+         void Die()
         {
             currentState = States.Dead;
         }

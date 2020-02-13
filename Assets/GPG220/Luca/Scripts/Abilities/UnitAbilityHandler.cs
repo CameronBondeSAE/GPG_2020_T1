@@ -27,10 +27,10 @@ namespace GPG220.Luca.Scripts.Abilities
             if(!CheckAbilityRequirements(ability))
                 return false;
             
-            foreach (var instantAction in ability.instantSelfActions)
+            /*foreach (var instantAction in ability.instantSelfActions)
             {
                 instantAction.ExecuteAction(unitBase);
-            }
+            }*/
             
             OnAbilityExecuted?.Invoke(unitBase, ability);
             return true;
@@ -38,8 +38,8 @@ namespace GPG220.Luca.Scripts.Abilities
 
         public bool CheckAbilityRequirements(Ability ability)
         {
-            if (ability == null || ability.instantSelfActions == null)
-                return false;
+            /*if (ability == null || ability.instantSelfActions == null)
+                return false;*/
             
             // TODO
             return true;
