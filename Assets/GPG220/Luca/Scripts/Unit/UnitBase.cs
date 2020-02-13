@@ -14,6 +14,7 @@ namespace GPG220.Luca.Scripts.Unit
         // TODO Unit Abilities
         public UnitStats unitStats;
         public Inventory inventory;
+        
 
         protected virtual void Initialize()
         {
