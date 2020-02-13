@@ -13,6 +13,8 @@ public class StatemachMinion : UnitBase
     public float wanderTime;
     public float wanderSpeed;
     public UnitLevelUp unitlvlup;
+    
+    
 
     public enum States
     {
@@ -32,6 +34,8 @@ public class StatemachMinion : UnitBase
     public override void OnSelected()
     {
         base.OnSelected();
+
+        currentState = States.Moving;
     }
 
 
@@ -69,18 +73,21 @@ public class StatemachMinion : UnitBase
                 // Destroys unit if State is set to Dead.
                 print("Unit is Dead");
 
+                
+
                 Destroy(gameObject);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
-
-        if (GetComponent<Health>().currentHealth <= 0)
-        {
-            currentState = States.Dead;
-        }
+        
 
 
+    }
+
+    public void Die()
+    {
+        currentState = States.Dead;
     }
 
 // picks random direction to wander in every time wanderTime = 0
