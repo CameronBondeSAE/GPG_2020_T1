@@ -86,10 +86,10 @@ public class TeleportUnit : UnitBase
     void Update()
     {
 
-        if (GetComponent<Health>().currentHealth <= 0)
-        {
-            currentState = States.Dead;
-        }
+        // if (GetComponent<Health>().currentHealth <= 0)
+        // {
+            // currentState = States.Dead;
+        // }
         
         switch (currentState)
         {

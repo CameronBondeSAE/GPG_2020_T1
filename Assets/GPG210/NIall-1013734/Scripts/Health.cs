@@ -8,32 +8,24 @@ using UnityEngine.Events;
     {
 
         public int startingHealth;
-        public int currentHealth;
 
-        private UnityEvent deathEvent;
+        [SerializeField]
+        private int currentHealth;
 
-        public void Awake()
+        public event Action deathEvent;
+
+        private void Awake()
         {
             currentHealth = startingHealth;
-            
         }
 
-
-        public void Start()
+        public void ChangeHealth(int amount)
         {
-            if (deathEvent == null)
-                deathEvent = new UnityEvent();
-            
-            deathEvent.AddListener(Death);
+            currentHealth += amount;
+            CheckForDeath();
         }
 
-        private void Death()
-        {
-            Debug.Log("Death");
-        }
-
-
-        private void Update()
+        private void CheckForDeath()
         {
             if (currentHealth <= 0 && deathEvent != null)
             {
