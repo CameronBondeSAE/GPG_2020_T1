@@ -222,7 +222,6 @@ GameObject:
   - component: {fileID: 1050641068}
   - component: {fileID: 1050641067}
   - component: {fileID: 1050641066}
-  - component: {fileID: 1050641069}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -295,80 +294,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 30.995, y: 0, z: 0}
---- !u!114 &1050641069
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1050641065}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72bfaf2542009eb40a4e057032155590, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: iSelectablesInSelection
-      Entry: 6
-      Data: 
-    - Name: selectedIselectables
-      Entry: 6
-      Data: 
-  selectKeyPressed:
-    m_Name: Select Key Pressed
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: b35f4b23-82c1-4a9d-b7cf-b44afbf6ff30
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-  selectKeyReleased:
-    m_Name: Select Key Released
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: ddc7a00b-f71b-4a9b-ab86-4296fb082595
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-  selectKeyDown: 0
-  actionKey:
-    m_Name: Action Key
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 4bb9c115-9dc1-4deb-bffc-848144c1a618
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-  cursorMove:
-    m_Name: Cursor Move
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: c8606bf2-782f-4053-8eea-67df02706dbe
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-  cursorPoint: {x: 0, y: 0}
-  targetPoint: {x: 0, y: 0, z: 0}
-  targetObject: {fileID: 0}
-  selectionRect: []
-  boxCollider: {fileID: 0}
-  lineRenderer: {fileID: 0}
-  heightOffset: 0
-  worldLayerMask:
-    serializedVersion: 2
-    m_Bits: 256
-  unitLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  outline: {fileID: 0}
 --- !u!1 &1139044842 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1555321804470288115, guid: 91458b95eb965ac4baf5c3fd0c4c25e5,
@@ -388,6 +313,111 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thing: {fileID: 1440955559183952, guid: 20c1442531b654d4da6e53eca7291655, type: 3}
+--- !u!1 &1634776248
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1634776253}
+  - component: {fileID: 1634776252}
+  - component: {fileID: 1634776251}
+  - component: {fileID: 1634776250}
+  - component: {fileID: 1634776249}
+  m_Layer: 0
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1634776249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634776248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18f8208cd0f479043ada818ec5f6c4f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &1634776250
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634776248}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1634776251
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634776248}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &1634776252
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634776248}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1634776253
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634776248}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.56, y: 4.38, z: 23.62}
+  m_LocalScale: {x: 12.843, y: 12.843, z: 12.843}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1755751400
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -617,5 +647,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 114733390339695892, guid: 20c1442531b654d4da6e53eca7291655,
         type: 3}
+    - target: {fileID: 1404205552856636576, guid: 20c1442531b654d4da6e53eca7291655,
+        type: 3}
+      propertyPath: startingHealth
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20c1442531b654d4da6e53eca7291655, type: 3}
