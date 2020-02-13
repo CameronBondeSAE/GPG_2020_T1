@@ -6,6 +6,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 {
     public class TestUnitBase : MonoBehaviour, ISelectable
     {
+        [HideInInspector]
         public UnitSelectionManager usm;
 
         private void Start()

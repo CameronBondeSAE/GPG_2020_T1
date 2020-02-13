@@ -9,14 +9,14 @@ namespace GPG220.Luca.Scripts.Resources
     /// This Scriptable Object class represents a resource type. It stores base data about the resource.
     /// </summary>
     [CreateAssetMenu(fileName = "New Resource", menuName = "Game/Resource")]
-    public class Resource : SerializedScriptableObject
+    public class ResourceType : SerializedScriptableObject
     {
-        private static List<Resource> _allResources;
-        public static List<Resource> GetAllResources()
+        private static List<ResourceType> _allResources;
+        public static List<ResourceType> GetAllResources()
         {
             if (_allResources == null || _allResources.Count == 0)
             {
-                _allResources = UnityEngine.Resources.FindObjectsOfTypeAll<Resource>().Where(res => res.loadResource).ToList(); // Kinda Hacky
+                _allResources = UnityEngine.Resources.FindObjectsOfTypeAll<ResourceType>().Where(res => res.loadResource).ToList(); // Kinda Hacky
             }
 
             return _allResources;

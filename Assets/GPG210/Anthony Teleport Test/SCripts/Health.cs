@@ -2,11 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-namespace MyNamespace
-{
-
-
     public class Health : MonoBehaviour
     {
 
@@ -20,4 +15,3 @@ namespace MyNamespace
             
         }
     }
-}
