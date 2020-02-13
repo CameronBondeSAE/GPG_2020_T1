@@ -42,7 +42,7 @@ public class StatemachMinion : UnitBase
         {
             case States.Wander:
                 print("Unit is Wandering");
-                // random wandering if state is set to Moving.
+                // Random Wandering if state is set to Wander.
                 if (wanderTime > 0)
                 {
                     transform.Translate(Vector3.forward * wanderSpeed);
