@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using GPG220.Luca.Scripts.Unit;
+﻿using GPG220.Luca.Scripts.Unit;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -17,10 +13,11 @@ public class TeleportEditor : UnitBase
     public float moveSpeed;
     public Transform currentTarget;
 
+
     public override void OnSelected()
     {
         base.OnSelected();
-       
+        Debug.Log("Selected!");
     }
 
     public override void OnDeSelected()
@@ -31,7 +28,7 @@ public class TeleportEditor : UnitBase
     public override void OnExecuteAction(Vector3 worldPosition, GameObject g)
     {
         base.OnExecuteAction(worldPosition, g);
-        
+        Teleporting();
     }
 
     Enemy closestEnemy = null;

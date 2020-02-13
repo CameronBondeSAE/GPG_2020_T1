@@ -75,10 +75,10 @@ public class StatemachMinion : UnitBase
                 throw new ArgumentOutOfRangeException();
         }
 
-        if (GetComponent<Health>().currentHealth <= 0)
+        /*if (GetComponent<Health>().())
         {
             currentState = States.Dead;
-        }
+        }*/
 
 
     }
