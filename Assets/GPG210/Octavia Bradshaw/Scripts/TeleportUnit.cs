@@ -1,14 +1,41 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using GPG220.Luca.Scripts.Unit;
 using UnityEngine;
 using Random = System.Random;
 
-public class TeleportUnit : MonoBehaviour
+public class TeleportUnit : UnitBase
 {
-    
+    public override bool Selectable()
+    {
+        return base.Selectable();
+    }
+
+    public override bool GroupSelectable()
+    {
+        return base.GroupSelectable();
+    }
+
+    public override void OnSelected()
+    {
+        base.OnSelected();
+        Debug.Log("Selected");
+    }
+
+    public override void OnExecuteAction(Vector3 worldPosition, GameObject g)
+    {
+        base.OnExecuteAction(worldPosition, g);
+    }
+
+    public override void OnDeSelected()
+    {
+        base.OnDeSelected();
+    }
+
     public enum States
     {
+        Idle,
         Walk,
         Sprint,
         Teleport,
@@ -17,6 +44,11 @@ public class TeleportUnit : MonoBehaviour
     }
 
     public States currentState;
+
+    public void Idle()
+    {
+        
+    }
     
     public void Walking()
     {
@@ -61,6 +93,8 @@ public class TeleportUnit : MonoBehaviour
         
         switch (currentState)
         {
+            case States.Idle:
+                break;
             case States.Walk:
                 break;
             case States.Sprint:
