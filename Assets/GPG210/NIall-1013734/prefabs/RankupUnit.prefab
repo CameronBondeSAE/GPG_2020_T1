@@ -143,6 +143,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3b626875b997fc4cab18ac01525356f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  unitStats: {fileID: 0}
+  inventory: {fileID: 0}
   wanderTime: 3
   wanderSpeed: 0.1
   unitlvlup: {fileID: 0}
@@ -172,7 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce0191082ce543b4cbe4cc3b25625f83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 0
+  startingHealth: 50
   currentHealth: 0
 --- !u!1 &1686169348673056
 GameObject:
