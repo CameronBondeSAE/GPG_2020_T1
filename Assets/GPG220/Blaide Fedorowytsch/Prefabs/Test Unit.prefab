@@ -123,14 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8112a2693723f34d9348973a4b4ae60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes: []
-  unitStats: {fileID: 0}
-  inventory: {fileID: 0}
+  usm: {fileID: 0}
+  moving: 0
+  target: {x: 0, y: 0, z: 0}
+  HeightOffset: 0.5

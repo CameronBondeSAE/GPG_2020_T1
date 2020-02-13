@@ -44,7 +44,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         // Start is called before the first frame update
         private void Awake()
         {
-            selectKeyPressed.performed += SelectKepPressed;
+            selectKeyPressed.performed += SelectKeyPressed;
             selectKeyReleased.performed += SelectKeyReleased;
             actionKey.performed += DoAction;
             cursorMove.performed += CursorMove;
@@ -82,7 +82,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         
         }
 
-        void SelectKepPressed(InputAction.CallbackContext ctx)
+        void SelectKeyPressed(InputAction.CallbackContext ctx)
         {
             selectionRect[0] = new Vector3(targetPoint.x,targetPoint.y + heightOffset,targetPoint.z);
             selectKeyDown = true;
