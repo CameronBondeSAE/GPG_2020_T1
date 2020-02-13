@@ -140,7 +140,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1440955559183952}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3b626875b997fc4cab18ac01525356f, type: 3}
+  m_Script: {fileID: 11500000, guid: ea0a088a58d3c714daaecf3078b5adf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
@@ -154,8 +154,8 @@ MonoBehaviour:
     SerializationNodes: []
   unitStats: {fileID: 0}
   inventory: {fileID: 0}
-  wanderTime: 3
-  wanderSpeed: 0.1
+  wanderTime: 0
+  wanderSpeed: 0
   unitlvlup: {fileID: 0}
   currentState: 0
 --- !u!114 &114009500597666366
