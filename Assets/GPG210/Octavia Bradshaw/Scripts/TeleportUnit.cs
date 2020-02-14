@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using GPG220.Luca.Scripts.Unit;
 using UnityEngine;
-using Random = System.Random;
+using Random = UnityEngine.Random;
 
 public class TeleportUnit : UnitBase
 {
@@ -63,6 +63,7 @@ public class TeleportUnit : UnitBase
     public void Teleporting()
     {
         Debug.Log("Teleporting");
+        transform.position = new Vector3(Random.Range(-10f,10f),1,Random.Range(-10f,10f));
     }
 
     public void Attacking()
