@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GPG220.Dylan.BuildingSystemTest.Scripts
 {
-    public class BuildingPlacement : MonoBehaviour
+    public class BuildingPlacementManager : MonoBehaviour
     {
         private Transform currentBuilding;
         [SerializeField] private Camera camera;

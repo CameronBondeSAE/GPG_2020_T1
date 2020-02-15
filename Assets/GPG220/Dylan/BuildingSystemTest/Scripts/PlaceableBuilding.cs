@@ -5,17 +5,23 @@ using UnityEngine;
 namespace GPG220.Dylan.BuildingSystemTest.Scripts
 {
     [RequireComponent(typeof(Collider)),RequireComponent(typeof(Rigidbody))]
-        //Collider needs to be trigger, rigidbody uses no gravity, requires building Tag and building layer
+    //Collider needs to be trigger, rigidbody uses no gravity, requires building Tag and building layer
+    //make colliders slightly smaller than model
     public class PlaceableBuilding : MonoBehaviour
     {
+        /// <summary>
+        /// this script is put on any building that wishes to be placed in the game,
+        /// all settings, for collider and rigidbody are set on awake so no need to change anything,
+        /// however you need to add the cant build material for the building
+        /// </summary>
         [HideInInspector] public List<Collider> colliders = new List<Collider>();
-
+        
         private bool isSelected;
         private Rigidbody rb;
         private Collider collider;
 
         public Material cantBuildHere;
-        [SerializeField] private Material defaultMat;
+        private Material defaultMat;
         
         private void Awake()
         {
