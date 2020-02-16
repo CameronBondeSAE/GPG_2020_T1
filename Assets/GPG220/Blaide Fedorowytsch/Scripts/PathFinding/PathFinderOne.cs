@@ -6,84 +6,72 @@ using UnityEngine.WSA;
 
 namespace GPG220.Blaide_Fedorowytsch.Scripts
 {
-    public class PathFinder : SerializedMonoBehaviour
+    public class PathFinderOne : SerializedMonoBehaviour
     {
         public Vector2Int gridSize = new Vector2Int(2, 2);
+        
         [HideInInspector] public PathNode[,] nodeGrid;
         [HideInInspector] public GameObject[,] displayObjects;
+        
         public GameObject displayPrefab;
         public bool drawGrid;
         public Material openMaterial;
         public Material closedMaterial;
         public Material obstructedMaterial;
         
-
-        public List<PathNode> closedNodes;
-        public List<PathNode> openNodes;
-        public List<PathNode> newlyOpenedNodes;
-
         public Transform oppositeCornerTransform;
-
-
         public Vector2 tileSize;
+        public Vector3 tileSizeDefault;
+
+
+        [HideInInspector] public List<PathNode> closedNodes;
+        [HideInInspector] public List<PathNode> openNodes;
+        [HideInInspector] public List<PathNode> newlyOpenedNodes;
+
+        public LayerMask obstructionlayerMask;
+        public Transform tileHolder;
+
+
+        public Transform startWorldTransform;
+        public Transform goalWorldTransform;
 
 
         [Button("PathFindTest")]
         void PathFindTest()
         {
-            if (startNodePosition.x > gridSize.x)
-            {
-                startNodePosition.x = gridSize.x;
-            }
-            if (startNodePosition.y > gridSize.y)
-            {
-                startNodePosition.y = gridSize.y;
-            }
-            
-            PathNode startNode = new PathNode();
-            PathNode goalNode = new PathNode();
-            startNode.gridPosition = startNodePosition;
-            goalNode.gridPosition = goalNodePosition;
+            Vector2Int startGridPosition = WorldPositionToGridPosition(startWorldTransform.position);
+            Vector2Int goalGridPosition = WorldPositionToGridPosition(goalWorldTransform.position);
+
+            PathNode startNode = nodeGrid[startGridPosition.x, startGridPosition.y];
+            PathNode goalNode = nodeGrid[goalGridPosition.x, goalGridPosition.y];
+
             FindPath(startNode,goalNode);
-
-
-
         }
 
-        public Vector2Int startNodePosition;
-        public Vector2Int goalNodePosition;
-        
 
-        private BoxCollider boxCollider;
         // Start is called before the first frame update
         void Start()
         {
-            
             UpdateGrid();
-
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-            
-        }
         [Button("UodateGrid")]
         public void UpdateGrid()
         {
             nodeGrid = new PathNode[gridSize.x,gridSize.y];
-            for (int i = 0; i < gridSize.x; i++)
+            for (int x = 0; x < gridSize.x; x++)
             {
-                for (int j = 0; j < gridSize.y; j++)
+                for (int y = 0; y < gridSize.y; y++)
                 {
-                    nodeGrid[i,j] = new PathNode();
+                    Vector2Int gridPos = new Vector2Int(x,y);
+                    bool obstruction = !Physics.CheckBox(GridPositionToWorldPosition(gridPos),new Vector3(tileSize.x/2,1,tileSize.y/2),transform.rotation,obstructionlayerMask);
+                    nodeGrid[x,y] = new PathNode(obstruction,GridPositionToWorldPosition(gridPos));
                 }
             }
             
             float gridWidth = Mathf.Abs(transform.position.x - oppositeCornerTransform.position.x);
             float gridHeight = Mathf.Abs(transform.position.z - oppositeCornerTransform.position.z);
-            
-            
+
             tileSize = new Vector2(gridWidth / gridSize.x,gridHeight / gridSize.y);
             if (drawGrid)
             {
@@ -111,24 +99,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         {
             return new Vector2Int(Mathf.RoundToInt((worldPosition.x - tileSize.x/2) - transform.position.x),Mathf.RoundToInt((worldPosition.y - tileSize.y/2)-transform.position.y));
         }
-
-
-        public void CheckForObstructions()
-        {
-            for (int i = 0; i < gridSize.x; i++)
-            {
-                for (int j = 0; j < gridSize.y; j++)
-                {
-                   // boxCollider.center = blah.
-                   //boxCollider.
-
-
-                }
-            }
-
-
-        }
-
+        
 
         public void DrawGrid()
         {
@@ -148,13 +119,17 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 
             displayObjects = new GameObject[gridSize.x,gridSize.y];
             
-            for (int i = 0; i < gridSize.x; i++)
+            for (int x = 0; x < gridSize.x; x++)
             {
-                for (int j = 0; j < gridSize.y; j++)
+                for (int y = 0; y < gridSize.y; y++)
                 {
                     
-                    displayObjects[i,j] = Instantiate(displayPrefab, GridPositionToWorldPosition(new Vector2Int(i, j)), transform.rotation);
-                    displayObjects[i,j].transform.localScale = new Vector3(tileSize.x *0.8f,0.1f,tileSize.y * 0.8f);
+                    displayObjects[x,y] = Instantiate(displayPrefab, GridPositionToWorldPosition(new Vector2Int(x, y)), transform.rotation,tileHolder);
+                    displayObjects[x,y].transform.localScale = new Vector3(tileSize.x *tileSizeDefault.x,tileSizeDefault.y,tileSize.y * tileSizeDefault.z);
+                    if (!nodeGrid[x,y].obstruction)
+                    {
+                        ColourizeTile(new Vector2Int(x,y),obstructedMaterial);
+                    }
                 }
             }
         }
@@ -163,81 +138,84 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         {
             MeshRenderer meshRenderer = displayObjects[gridPosition.x, gridPosition.y].GetComponent<MeshRenderer>();
 
-            meshRenderer.material = m;
+            meshRenderer.sharedMaterial = m;
+        }
+        
+        public List<PathNode> SearchAroundNode(PathNode queryNode,PathNode startNode, PathNode goalNode)
+        {
+                foreach (PathNode surroundingNode in SurroundingNodes(queryNode))
+                {
+                    float gCostAddition;
+                    if (surroundingNode.gridPosition.y != startNode.gridPosition.y &&
+                        surroundingNode.gridPosition.x != startNode.gridPosition.x)
+                    {
+                        
+                        gCostAddition = 14; //this would be a diagonal move.
+                    }
+                    else
+                    {
+                        gCostAddition = 10; //this would be a non-diagonal move.
+                    }
+
+                    if (surroundingNode.gCost < Mathf.Infinity &&
+                        surroundingNode.gCost > queryNode.gCost + gCostAddition)
+                    {
+
+                    }
+                    else
+                    {
+                        if (surroundingNode.parentNode != null)
+                        {
+                            surroundingNode.gCost = gCostAddition + surroundingNode.parentNode.gCost;
+                        }
+                        else
+                        {
+                            //surroundingNode.
+                        }
+                    }
+                    newlyOpenedNodes.Add(surroundingNode);
+                }
+
+                return newlyOpenedNodes;
         }
 
-
-        public void SearchAroundNode(PathNode queryNode,PathNode startNode, PathNode goalNode)
+        public List<PathNode> SurroundingNodes(PathNode queryNode)
         {
-            if (nodeGrid[queryNode.gridPosition.x, queryNode.gridPosition.y].obstruction == false)
-            {
-                List<PathNode> surroundingNodes = new List<PathNode>(8);
+            List<PathNode> surroundingNodes = new List<PathNode>(8);
 
-                for (int i = 0; i < 3; i++)
+            for (int x= 0; x < 3; x++)
+            {
+                for (int y = 0; y < 3; y++)
                 {
-                    for (int j = 0; j < 3; j++)
+                    if ((x>= 0 && y >= 0)&&(x<=gridSize.x && y <= gridSize.y))
                     {
-                        if ((i >= 0 && j >= 0)&&(i<=gridSize.x && j <= gridSize.y))
+                        if (!nodeGrid[x, y].obstruction)
                         {
-                            if (!nodeGrid[i, j].obstruction)
-                            {
-                                surroundingNodes.Add(nodeGrid[i,j]);
-                            }
+                            surroundingNodes.Add(nodeGrid[x,y]);
                         }
                     }
                 }
-                foreach (PathNode pathNode in surroundingNodes)
-                {
-                    pathNode.gCost = Vector2.Distance(pathNode.gridPosition, startNode.gridPosition);
-                    pathNode.hCost = Vector2.Distance(pathNode.gridPosition, goalNode.gridPosition);
-                    pathNode.fCost = pathNode.gCost + pathNode.hCost;
-
-                    float gCostAddition;
-                
-                    if (pathNode.gridPosition.y != startNode.gridPosition.y && pathNode.gridPosition.x != startNode.gridPosition.x)
-                
-                    {
-                        //this would be a diagonal move.
-                        gCostAddition = 14;
-                    }
-                    else
-                    {
-                        //this would be a non-diagonal move.
-                        gCostAddition = 10;
-                    } 
-                    
-                    if (pathNode.gCost < Mathf.Infinity && pathNode.gCost > queryNode.gCost + gCostAddition)
-                    {
-                        
-                    }
-                    else
-                    {
-                        pathNode.gCost = gCostAddition + pathNode.parentNode.gCost; 
-                    }
-                    
-                    
-                    
-                    
-                    
-                    newlyOpenedNodes.Add(pathNode);
-                }
             }
+
+            return surroundingNodes;
         }
-    
+
 
         public void FindPath(PathNode startNode, PathNode goalNode)
         {
             openNodes = new List<PathNode>();
+            closedNodes = new List<PathNode>();
+            newlyOpenedNodes = new List<PathNode>();
             
             bool findingPath = true;
             int loopCount = 0;
             openNodes.Add(startNode);
             PathNode lowestNode = startNode;
             startNode.parentNode = startNode;
-            SearchAroundNode(startNode, startNode, goalNode);
-            
+
+
             while (findingPath || loopCount> gridSize.x*gridSize.y)
-            { 
+            {
                 foreach (PathNode node in newlyOpenedNodes)
                 {
                     openNodes.Add(node);
@@ -258,7 +236,6 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                     }
                 }
                 SearchAroundNode(lowestNode, startNode, goalNode);
-                
             }
         }
     }
@@ -271,7 +248,14 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         public float hCost = Mathf.Infinity;
         public float fCost = Mathf.Infinity;
         public PathNode parentNode;
-        public bool obstruction = false;
+        
+        public bool obstruction;
         public Vector3 worldPosition;
+
+       public PathNode(bool _obstruction, Vector3 _worldPosition)
+       {
+           obstruction = _obstruction;
+           worldPosition = _worldPosition;
+       }
     }
 }
