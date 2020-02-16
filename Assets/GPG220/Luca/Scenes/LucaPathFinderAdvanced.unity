@@ -157,7 +157,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2086
   sectorTileSize: 1
-  sectorFlowFieldSize: 1
+  sectorFlowFieldTileSize: 1
   bounds:
     m_Center: {x: 40, y: 0, z: 60}
     m_Extent: {x: 40, y: 20, z: 20}
@@ -467,7 +467,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 307105683}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 48.7, y: 0.2, z: 28.95}
+  m_LocalPosition: {x: 30.48, y: 0.2, z: 12.32}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -668,7 +668,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2086
   sectorTileSize: 1
-  sectorFlowFieldSize: 1
+  sectorFlowFieldTileSize: 1
   bounds:
     m_Center: {x: 60, y: 0, z: 20}
     m_Extent: {x: 20, y: 20, z: 20}
@@ -754,7 +754,7 @@ MonoBehaviour:
   goToNearestPossiblePos: 1
   sectors: []
   debugPathGeneration: 1
-  debugPathGenerationDelay: 0.25
+  debugPathGenerationDelay: 0
   debugPathGenerationDataDeletionDelay: 3
   debugStartColor:
     serializedVersion: 2
@@ -773,6 +773,7 @@ MonoBehaviour:
     rgba: 4278190080
   testStartPos: {fileID: 1519768126}
   testEndPos: {fileID: 307105683}
+  calculateFlowField: 1
 --- !u!1 &1209468875
 GameObject:
   m_ObjectHideFlags: 0
@@ -1085,7 +1086,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2086
   sectorTileSize: 1
-  sectorFlowFieldSize: 1
+  sectorFlowFieldTileSize: 1
   bounds:
     m_Center: {x: 20, y: 0, z: 20}
     m_Extent: {x: 20, y: 20, z: 20}
@@ -1162,7 +1163,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2086
   sectorTileSize: 1
-  sectorFlowFieldSize: 1
+  sectorFlowFieldTileSize: 1
   bounds:
     m_Center: {x: 50, y: 0, z: 90}
     m_Extent: {x: 50, y: 20, z: 10}
@@ -1239,7 +1240,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2086
   sectorTileSize: 1
-  sectorFlowFieldSize: 1
+  sectorFlowFieldTileSize: 1
   bounds:
     m_Center: {x: 90, y: 0, z: 40}
     m_Extent: {x: 10, y: 20, z: 40}

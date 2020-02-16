@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using GPG220.Luca.Scripts.Pathfinding;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ public class PathFinderSector : MonoBehaviour
     
     
     public float sectorTileSize = 1;
-    public float sectorFlowFieldSize = 1;
+    public float sectorFlowFieldTileSize = 1;
     
     public Bounds bounds;
 
@@ -31,6 +32,8 @@ public class PathFinderSector : MonoBehaviour
     public bool doDebug = false;
     public Color32 debugSectorColor = new Color32(0, 255, 255, 100);
     public bool debugDrawTiles = false;
+
+    public GPG220.Luca.Scripts.Pathfinding.PathFinderFlowField pathFinderFlowFieldTemplate;
     
     public void CreateSectorTileGrid()
     {
@@ -48,6 +51,8 @@ public class PathFinderSector : MonoBehaviour
         
         var rowsX = (int)floatRowsX;
         var rowsZ = (int)floatRowsZ;
+        
+        pathFinderFlowFieldTemplate = new PathFinderFlowField(sectorTileSize, rowsX, rowsZ);
 /*
 
         var specialSizeX = floatRowsX - rowsX;
@@ -96,7 +101,9 @@ public class PathFinderSector : MonoBehaviour
                             sector = this
                         };
                         tiles[x, z] = tile;
-                    
+
+                        pathFinderFlowFieldTemplate.flowField[x][z] = Vector3.zero;
+                        
                         sectorTiles.Add(tile);
                     
                         // TODO needed?

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using GPG220.Blaide_Fedorowytsch.Scripts;
 using GPG220.Luca.Scripts.Pathfinding;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
@@ -31,7 +32,7 @@ public class PathFinderController : MonoBehaviour
     [FoldoutGroup("Debug"), ShowInInspector]
     public List<PathFinderSectorTile> debugPathList = new List<PathFinderSectorTile>();
     [FoldoutGroup("Debug")]
-    public float debugPathGenerationDelay = 0.25f; // seconds
+    public float debugPathGenerationDelay = 0.0001f; // seconds
     [FoldoutGroup("Debug")]
     public float debugPathGenerationDataDeletionDelay = 3f;
     [FoldoutGroup("Debug")]
@@ -54,13 +55,27 @@ public class PathFinderController : MonoBehaviour
     public GameObject testStartPos;
     [FoldoutGroup("Debug")]
     public GameObject testEndPos;
+    [FoldoutGroup("Debug")]
+    public bool calculateFlowField;
+
+    [FoldoutGroup("Debug"), ShowInInspector]
+    public List<PathFinderSectorTile> waypointList;
     [FoldoutGroup("Debug"), Button("Find Path"), DisableInEditorMode]
     public void TestFindPath()
     {
         if (testStartPos == null || testEndPos == null)
             return;
-        
-        StartCoroutine(FindPath(testStartPos.transform.position, testEndPos.transform.position, list => Debug.Log("Done calculating path. "+list?.Count)));
+
+        Action<List<PathFinderSectorTile>> onDoneFunc = list =>
+        {
+            Debug.Log("Done calculating path. " + list?.Count);
+            if (calculateFlowField)
+            {
+                StartCoroutine(FindFlowFieldPath(list));
+            }
+            waypointList = list;
+        };
+        StartCoroutine(FindPath(testStartPos.transform.position, testEndPos.transform.position, onDoneFunc));
     }
     [FoldoutGroup("Debug"), Button("Test"), DisableInEditorMode]
     public void Test()
@@ -126,8 +141,6 @@ public class PathFinderController : MonoBehaviour
         
         return connectingSectors;
     }
-
-    
     
     public IEnumerator FindPath(Vector3 startPos, Vector3 targetPos, Action<List<PathFinderSectorTile>> onDoneCallback = null)
     {
@@ -260,7 +273,8 @@ public class PathFinderController : MonoBehaviour
 
                  //yield return 0;
             }
-            yield return null;
+            if (debugPathGeneration && debugPathGenerationDelay > 0)
+                yield return new WaitForSeconds(debugPathGenerationDelay);
         }
         
         Debug.Log("FindPath: Done w/ While Loop");
@@ -279,6 +293,77 @@ public class PathFinderController : MonoBehaviour
         Debug.Log("FindPath: End");
 
         yield return 0;
+    }
+
+    public IEnumerator FindFlowFieldPath(List<PathFinderSectorTile> tilePath)
+    {
+        var flowFields = new Dictionary<PathFinderSector, PathFinderFlowField>();
+        Debug.Log("Start Calc Flow Field");
+        for (int i = 0; i < tilePath.Count; i++)
+        {
+            var currentTile = tilePath[i];
+            if(currentTile == null || currentTile.sector == null)
+                continue;
+            
+            if (i == tilePath.Count-1 || tilePath[i+1].sector != currentTile.sector)
+            {
+                PathFinderFlowField secFlowField;
+
+                if (!flowFields.ContainsKey(currentTile.sector))
+                {
+                    secFlowField = (PathFinderFlowField) currentTile.sector.pathFinderFlowFieldTemplate?.Clone();
+
+                    if (secFlowField == null)
+                    {
+                        var rowsX = (int)(currentTile.sector.bounds.size.x / currentTile.sector.sectorTileSize);
+                        var rowsZ = (int)(currentTile.sector.bounds.size.z / currentTile.sector.sectorTileSize);
+                        secFlowField = new PathFinderFlowField(currentTile.sector.sectorTileSize, rowsX, rowsZ);
+                    }
+                    flowFields.Add(currentTile.sector, secFlowField);
+                }
+                else
+                {
+                    secFlowField = flowFields[currentTile.sector];
+                }
+
+                secFlowField.targetPosition = currentTile.position;
+                Debug.Log("Start Gen HeatMap");
+                secFlowField.GenerateHeatmap(currentTile, currentTile.sector);
+                //StartCoroutine(secFlowField.GenerateHeatmap(currentTile, currentTile.sector));
+                yield return new WaitForSeconds(1); // TODO SUPER UGLY HACK;; Need to wait until the previous coroutine is done, then execute next coroutine.
+                Debug.Log("Start Gen VecField");
+                StartCoroutine(GenerateVectorField(currentTile, currentTile.sector));
+                //secFlowField.GenerateVectorField(currentTile, currentTile.sector);
+            }
+        }
+        
+        Debug.Log("Done with function...");
+        
+        yield return 0;
+    }
+    
+    public IEnumerator GenerateVectorField(PathFinderSectorTile currentTile, PathFinderSector sector)
+    {
+        if (currentTile == null)
+            yield break;
+            
+        var dirVector = new Vector3(currentTile.GetLeftTile()?.flowFieldDistanceToTarget ?? 0 - currentTile.GetRightTile()?.flowFieldDistanceToTarget ?? 0, 0, currentTile.GetTopTile()?.flowFieldDistanceToTarget ?? 0 - currentTile.GetBottomTile()?.flowFieldDistanceToTarget ?? 0);
+        currentTile.flowFieldDirection = dirVector.normalized;
+            
+            
+        var rayStartPos = currentTile.position;
+        rayStartPos.y += 0.5f;
+        //Debug.Log("GEN VEC FIELD Pos: "+currentTile.position+" Vector: "+dirVector+" neighbours: "+currentTile.neighbourTiles.Count);
+        Debug.DrawRay(rayStartPos, currentTile.flowFieldDirection, Color.red, 30f);
+        yield return new WaitForEndOfFrame();
+        currentTile.neighbourTiles?.ForEach(tile =>
+        {
+            //Debug.Log("Wus.. "+ (tile == null)+" - "+(sector != null && tile.sector != sector)+" - "+(currentTile.flowFieldDirection != Vector3.zero)+" - "+(tile.Equals(currentTile)));
+            if (tile == null || (sector != null && tile.sector != sector) || tile.flowFieldDirection != Vector3.zero) return;
+            StartCoroutine(GenerateVectorField(tile, sector));
+        });
+            
+        yield return null;
     }
     
     private static List<PathFinderSectorTile> CreateWaypointsListFromTile(PathFinderSectorTile endTile)
@@ -375,16 +460,4 @@ public class PathFinderController : MonoBehaviour
 
         return walkableObjects;
     }*/
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
