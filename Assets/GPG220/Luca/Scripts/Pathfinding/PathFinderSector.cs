@@ -171,6 +171,26 @@ public class PathFinderSector : MonoBehaviour
 
         sectorTileGrid = tiles;
     }
+    
+    public PathFinderSectorTile GetNearestNode(Vector3 position)
+    {
+        PathFinderSectorTile nearestNode = null;
+        var nearestNodeDist = 0f;
+        
+        if (sectorTiles == null || sectorTiles.Count <= 0) return null;
+        
+        foreach (var tile in sectorTiles)
+        {
+            var dist = Vector3.Distance(tile.position, position);
+            
+            if (!(dist < nearestNodeDist) && nearestNode != null) continue;
+            
+            nearestNode = tile;
+            nearestNodeDist = dist;
+        }
+
+        return nearestNode;
+    }
 
     public bool ContainsPoint(Vector3 point)
     {

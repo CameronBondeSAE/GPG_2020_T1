@@ -85,7 +85,8 @@ public class PathFinderController : MonoBehaviour
             }
             waypointList = path.tilePath;
         };
-        StartCoroutine(FindPath(testStartPos.transform.position, testEndPos.transform.position, onDoneFunc));
+        //StartCoroutine(FindPath(testStartPos.transform.position, testEndPos.transform.position, onDoneFunc));
+        FindPathTo(testStartPos.transform.position, testEndPos.transform.position, onDoneFunc);
     }
 
     private IEnumerator LoadSector(PathFinderSector sector, bool reload = false, bool connectSector = false)
@@ -128,10 +129,16 @@ public class PathFinderController : MonoBehaviour
         
         return connectingSectors;
     }
+
+    public void FindPathTo(Vector3 startPos, Vector3 targetPos, Action<PathFinderPath> onDoneCallback = null)
+    {
+        //Debug.Log(startPos+" -- "+targetPos);
+        StartCoroutine(FindPath(startPos, targetPos, onDoneCallback));
+    }
     
     public IEnumerator FindPath(Vector3 startPos, Vector3 targetPos, Action<PathFinderPath> onDoneCallback = null)
     {
-        var path = new PathFinderPath();
+        var path = new PathFinderPath(this);
         
         var tmpDebugPathList = new List<PathFinderSectorTileData>();
 
@@ -187,7 +194,7 @@ public class PathFinderController : MonoBehaviour
             {
                 if(neighbourTile == null) continue;
                 
-                path.tileData.TryGetValue(neighbourTile, out var neighbourTileData);
+                path.tileDataList.TryGetValue(neighbourTile, out var neighbourTileData);
                 if(neighbourTileData == null)
                     neighbourTileData = new PathFinderSectorTileData(neighbourTile);
                 
@@ -240,10 +247,12 @@ public class PathFinderController : MonoBehaviour
     }
 
     public Color32[] colors = new Color32[15];
-    public IEnumerator FindFlowFieldPath(PathFinderPath path)
+    public IEnumerator FindFlowFieldPath(PathFinderPath path, Action<PathFinderPath> onDoneAction = null)
     {
         var flowFields = new Dictionary<PathFinderSector, PathFinderFlowField>();
-        
+
+
+        var endPositionTilesTMPTEST = new List<PathFinderSectorTileData>();
         for (int i = 0; i < path.tilePath.Count; i++)
         {
             var currentTileData = path.tilePath[i];
@@ -273,21 +282,32 @@ public class PathFinderController : MonoBehaviour
 
                 secFlowField.colors = colors;
                 secFlowField.targetPosition = currentTileData.tile.position;
-                Debug.Log("Start Gen HeatMap");
+                if(debugPathGeneration)
+                    Debug.Log("Start Gen HeatMap "+currentTileData.tile.sector);
                 secFlowField.GenerateHeatmap(currentTileData, currentTileData.tile.sector, path);
                 //StartCoroutine(secFlowField.GenerateHeatmap(currentTile, currentTile.sector));
                 //yield return new WaitForSeconds(1); // TODO SUPER UGLY HACK;; Need to wait until the previous coroutine is done, then execute next coroutine.
                 //Debug.Log("Start Gen VecField");
-                Debug.DrawRay(currentTileData.GetPosition(), Vector3.up*5, Color.cyan,30f);
+                if(debugPathGeneration)
+                    Debug.DrawRay(currentTileData.GetPosition(), Vector3.up*5, Color.cyan,30f);
                 StartCoroutine(GenerateVectorField(currentTileData, currentTileData.tile.sector, path));
                 //secFlowField.GenerateVectorField(currentTile, currentTile.sector);
+                endPositionTilesTMPTEST.Add(currentTileData);
                 
             }
         }
-        StartCoroutine(DrawFlowFieldTEMPTEST(path.tilePath[0], path.tilePath[0].tile.sector, path));
+
+        path.flowFieldAvailable = true;
+        if (debugPathGeneration)
+        {
+            endPositionTilesTMPTEST.ForEach(entry =>
+                StartCoroutine(DrawFlowFieldTEMPTEST(entry, entry.tile.sector, path)));
+            //StartCoroutine(DrawFlowFieldTEMPTEST(path.tilePath[0], path.tilePath[0].tile.sector, path));
+        }
+        
         
         Debug.Log("Done with function...");
-        
+        onDoneAction?.Invoke(path); // TODO: Theres a chance that not all vectorfields are calculated at this point...
         yield return 0;
     }
 
@@ -296,7 +316,7 @@ public class PathFinderController : MonoBehaviour
         var rayStartPos = currentTileData.GetPosition();
         rayStartPos.y += 0.2f;
         //Debug.Log("GEN VEC FIELD Pos: "+currentTile.position+" Vector: "+dirVector+" neighbours: "+currentTile.neighbourTiles.Count);
-        Debug.DrawRay(currentTileData.GetPosition(), Vector3.up * currentTileData.flowFieldDistanceToTarget, colors[Mathf.Clamp((int)currentTileData.flowFieldDistanceToTarget,0,14)], 30f);
+        //Debug.DrawRay(currentTileData.GetPosition(), Vector3.up * currentTileData.flowFieldDistanceToTarget, colors[Mathf.Clamp((int)currentTileData.flowFieldDistanceToTarget,0,14)], 30f);
         Debug.DrawRay(rayStartPos-(currentTileData.flowFieldDirection/2), currentTileData.flowFieldDirection, Color.red, 30f);
         Debug.DrawRay(rayStartPos+(currentTileData.flowFieldDirection/2*.3f),currentTileData.flowFieldDirection*.3f, Color.yellow, 30f);
         currentTileData.vecDirDrawed = true;
@@ -304,7 +324,7 @@ public class PathFinderController : MonoBehaviour
         currentTileData.tile.neighbourTiles?.ForEach(neighbourTile =>
         {
             if (neighbourTile == null || (sector != null && neighbourTile.sector != sector)) return;
-            path.tileData.TryGetValue(neighbourTile, out var neighbourTileData);
+            path.tileDataList.TryGetValue(neighbourTile, out var neighbourTileData);
             if(neighbourTileData == null || neighbourTileData.vecDirDrawed) return;
             
             var generateVectorField = DrawFlowFieldTEMPTEST(neighbourTileData, sector, path);
@@ -327,10 +347,10 @@ public class PathFinderController : MonoBehaviour
             rightTile = currentTileData.tile.GetRightTile(),
             topTile = currentTileData.tile.GetTopTile(),
             bottomTile = currentTileData.tile.GetBottomTile();
-        if(leftTile != null) path.tileData.TryGetValue(leftTile, out leftTileData);
-        if(rightTile != null) path.tileData.TryGetValue(rightTile, out rightTileData);
-        if(topTile != null) path.tileData.TryGetValue(topTile, out topTileData);
-        if(bottomTile != null) path.tileData.TryGetValue(bottomTile, out bottomTileData);
+        if(leftTile != null) path.tileDataList.TryGetValue(leftTile, out leftTileData);
+        if(rightTile != null) path.tileDataList.TryGetValue(rightTile, out rightTileData);
+        if(topTile != null) path.tileDataList.TryGetValue(topTile, out topTileData);
+        if(bottomTile != null) path.tileDataList.TryGetValue(bottomTile, out bottomTileData);
         
         var dirVector = new Vector3((leftTileData?.flowFieldDistanceToTarget ?? currentTileData.flowFieldDistanceToTarget) - (rightTileData?.flowFieldDistanceToTarget ?? currentTileData.flowFieldDistanceToTarget), 
                 0, 
@@ -360,7 +380,7 @@ public class PathFinderController : MonoBehaviour
         currentTileData.tile.neighbourTiles?.ForEach(neighbourTile =>
         {
             if (neighbourTile == null || (sector != null && neighbourTile.sector != sector)) return;
-            path.tileData.TryGetValue(neighbourTile, out var neighbourTileData);
+            path.tileDataList.TryGetValue(neighbourTile, out var neighbourTileData);
             if (neighbourTileData == null || !neighbourTileData.flowFieldDirection.Equals(Vector3.negativeInfinity)) return;
             
             var generateVectorField = GenerateVectorField(neighbourTileData, sector, path);

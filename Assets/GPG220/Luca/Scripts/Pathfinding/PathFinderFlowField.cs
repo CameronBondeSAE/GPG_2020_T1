@@ -45,7 +45,7 @@ namespace GPG220.Luca.Scripts.Pathfinding
             currentTileData.tile.neighbourTiles?.ForEach(neighbourTile =>
             {
                 if (neighbourTile == null || (sector != null && neighbourTile.sector != sector)) return;
-                path.tileData.TryGetValue(neighbourTile, out var neighbourTileData);
+                path.tileDataList.TryGetValue(neighbourTile, out var neighbourTileData);
                 if (neighbourTileData == null)
                 {
                     neighbourTileData = new PathFinderSectorTileData(neighbourTile);
