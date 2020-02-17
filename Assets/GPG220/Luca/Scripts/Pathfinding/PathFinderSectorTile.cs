@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class PathFinderSectorTile : ICloneable, IEquatable<PathFinderSectorTile>
@@ -47,11 +48,14 @@ public class PathFinderSectorTile : ICloneable, IEquatable<PathFinderSectorTile>
     public bool isEnd = false;
     public bool isPath = false;
 
+    public bool vecDirDrawed = false; // TODO DELETE
+    
     // FlowField stuff
     public float flowFieldDistanceToTarget = -1f;
-    public Vector3 flowFieldDirection = Vector3.zero;
+    public Vector3 flowFieldDirection = Vector3.negativeInfinity;
     public PathFinderSectorTile flowFieldLastNode;
 
+    [ShowInInspector]
     private PathFinderSectorTile _leftTile;
     public PathFinderSectorTile GetLeftTile()
     {
@@ -60,6 +64,7 @@ public class PathFinderSectorTile : ICloneable, IEquatable<PathFinderSectorTile>
         return _leftTile;
     }
 
+    [ShowInInspector]
     private PathFinderSectorTile _rightTile;
     public PathFinderSectorTile GetRightTile()
     {
@@ -67,6 +72,7 @@ public class PathFinderSectorTile : ICloneable, IEquatable<PathFinderSectorTile>
             FindAdjacentTiles();
         return _rightTile;
     }
+    [ShowInInspector]
     private PathFinderSectorTile _topTile;
     public PathFinderSectorTile GetTopTile()
     {
@@ -74,6 +80,7 @@ public class PathFinderSectorTile : ICloneable, IEquatable<PathFinderSectorTile>
             FindAdjacentTiles();
         return _topTile;
     }
+    [ShowInInspector]
     private PathFinderSectorTile _bottomTile;
     public PathFinderSectorTile GetBottomTile()
     {
@@ -86,27 +93,39 @@ public class PathFinderSectorTile : ICloneable, IEquatable<PathFinderSectorTile>
     {
         if (neighbourTiles == null || neighbourTiles.Count == 0)
             return;
-
         foreach (var neighbour in neighbourTiles)
         {
             var horSame = Mathf.Approximately(neighbour.position.x, position.x);//neighbour.position.x.Equals(position.x);
             var vertSame = Mathf.Approximately(neighbour.position.z,position.z);//neighbour.position.z.Equals(position.z);
-
+            //Debug.Log("horSame: "+neighbour.position.x+"<>"+position.x+"?"+Mathf.Approximately(neighbour.position.x, position.x)+" vertSame: "+neighbour.position.z+"<>"+position.z+"?"+Mathf.Approximately(neighbour.position.z, position.z));
             if (horSame && !vertSame)
-            {
+            {//Debug.Log("Swush");
                 if (neighbour.position.z > position.z)
+                {
                     _topTile = neighbour;
+                    //Debug.DrawRay(position, position-neighbour.position, Color.blue, 30f);
+                }
                 else
+                {
                     _bottomTile = neighbour;
-                break;
+                    //Debug.DrawRay(position, position-neighbour.position, Color.green, 30f);
+                }
+
+                continue;
             }
             if (!horSame && vertSame)
             {
                 if (neighbour.position.x > position.x)
+                {
                     _rightTile = neighbour;
+                    //Debug.DrawRay(position, position-neighbour.position, Color.magenta, 30f);
+                }
                 else
+                {
                     _leftTile = neighbour;
-                break;
+                    //Debug.DrawRay(position, position-neighbour.position, Color.yellow, 30f);
+                }
+                continue;
             }
         }
     }

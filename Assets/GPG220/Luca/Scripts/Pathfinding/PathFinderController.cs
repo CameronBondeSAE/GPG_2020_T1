@@ -6,6 +6,7 @@ using GPG220.Blaide_Fedorowytsch.Scripts;
 using GPG220.Luca.Scripts.Pathfinding;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
+using UnityEditor;
 using UnityEngine;
 
 public class PathFinderController : MonoBehaviour
@@ -295,8 +296,10 @@ public class PathFinderController : MonoBehaviour
         yield return 0;
     }
 
+    public Color32[] colors = new Color32[15];
     public IEnumerator FindFlowFieldPath(List<PathFinderSectorTile> tilePath)
     {
+        //tilePath.Reverse(); // Have last node first
         var flowFields = new Dictionary<PathFinderSector, PathFinderFlowField>();
         Debug.Log("Start Calc Flow Field");
         for (int i = 0; i < tilePath.Count; i++)
@@ -326,41 +329,92 @@ public class PathFinderController : MonoBehaviour
                     secFlowField = flowFields[currentTile.sector];
                 }
 
+                secFlowField.colors = colors;
                 secFlowField.targetPosition = currentTile.position;
                 Debug.Log("Start Gen HeatMap");
                 secFlowField.GenerateHeatmap(currentTile, currentTile.sector);
                 //StartCoroutine(secFlowField.GenerateHeatmap(currentTile, currentTile.sector));
-                yield return new WaitForSeconds(1); // TODO SUPER UGLY HACK;; Need to wait until the previous coroutine is done, then execute next coroutine.
-                Debug.Log("Start Gen VecField");
+                //yield return new WaitForSeconds(1); // TODO SUPER UGLY HACK;; Need to wait until the previous coroutine is done, then execute next coroutine.
+                //Debug.Log("Start Gen VecField");
+                Debug.DrawRay(currentTile.position, Vector3.up*5, Color.cyan,30f);
                 StartCoroutine(GenerateVectorField(currentTile, currentTile.sector));
                 //secFlowField.GenerateVectorField(currentTile, currentTile.sector);
+                
             }
         }
+        StartCoroutine(DrawFlowFieldTEMPTEST(tilePath[0], tilePath[0].sector));
         
         Debug.Log("Done with function...");
         
         yield return 0;
     }
-    
-    public IEnumerator GenerateVectorField(PathFinderSectorTile currentTile, PathFinderSector sector)
+
+    public IEnumerator DrawFlowFieldTEMPTEST(PathFinderSectorTile currentTile, PathFinderSector sector)
     {
-        if (currentTile == null)
-            yield break;
-            
-        var dirVector = new Vector3(currentTile.GetLeftTile()?.flowFieldDistanceToTarget ?? 0 - currentTile.GetRightTile()?.flowFieldDistanceToTarget ?? 0, 0, currentTile.GetTopTile()?.flowFieldDistanceToTarget ?? 0 - currentTile.GetBottomTile()?.flowFieldDistanceToTarget ?? 0);
-        currentTile.flowFieldDirection = dirVector.normalized;
-            
-            
         var rayStartPos = currentTile.position;
-        rayStartPos.y += 0.5f;
+        rayStartPos.y += 0.2f;
         //Debug.Log("GEN VEC FIELD Pos: "+currentTile.position+" Vector: "+dirVector+" neighbours: "+currentTile.neighbourTiles.Count);
-        Debug.DrawRay(rayStartPos, currentTile.flowFieldDirection, Color.red, 30f);
+        Debug.DrawRay(currentTile.position, Vector3.up * currentTile.flowFieldDistanceToTarget, colors[Mathf.Clamp((int)currentTile.flowFieldDistanceToTarget,0,14)], 30f);
+        Debug.DrawRay(rayStartPos-(currentTile.flowFieldDirection/2), currentTile.flowFieldDirection, Color.red, 30f);
+        Debug.DrawRay(rayStartPos+(currentTile.flowFieldDirection/2*.3f),currentTile.flowFieldDirection*.3f, Color.yellow, 30f);
+        currentTile.vecDirDrawed = true;
         yield return new WaitForEndOfFrame();
         currentTile.neighbourTiles?.ForEach(tile =>
         {
+            if (tile == null || (sector != null && tile.sector != sector) || tile.vecDirDrawed) return;
+            var generateVectorField = DrawFlowFieldTEMPTEST(tile, sector);
+            while(generateVectorField.MoveNext())
+            {
+            }
+        });
+
+        yield return 0;
+    }
+    
+    public IEnumerator GenerateVectorField(PathFinderSectorTile currentTile, PathFinderSector sector)
+    {
+        if (currentTile == null || !currentTile.flowFieldDirection.Equals(Vector3.negativeInfinity))
+            yield break;
+            
+        var dirVector = new Vector3((currentTile.GetLeftTile()?.flowFieldDistanceToTarget ?? currentTile.flowFieldDistanceToTarget) - (currentTile.GetRightTile()?.flowFieldDistanceToTarget ?? currentTile.flowFieldDistanceToTarget), 
+                0, 
+                (currentTile.GetBottomTile()?.flowFieldDistanceToTarget ?? currentTile.flowFieldDistanceToTarget) - (currentTile.GetTopTile()?.flowFieldDistanceToTarget ?? currentTile.flowFieldDistanceToTarget));
+        currentTile.flowFieldDirection = dirVector.normalized;
+
+        
+        
+        if (Mathf.Approximately(currentTile.flowFieldDistanceToTarget, 0))
+        {
+            Debug.Log("@TARGET : "+currentTile.flowFieldDirection+" ;; "+dirVector+" ;; "+dirVector.normalized);
+            Debug.Log("LEFT: "+currentTile.GetLeftTile()?.flowFieldDistanceToTarget+
+                      " ;;right: "+currentTile.GetRightTile()?.flowFieldDistanceToTarget+
+                      " ;;top: "+currentTile.GetTopTile()?.flowFieldDistanceToTarget+
+                      " ;;bottom: "+currentTile.GetBottomTile()?.flowFieldDistanceToTarget);
+            
+            if(currentTile.GetLeftTile() != null)
+                Debug.DrawRay(currentTile.GetLeftTile().position, Vector3.up * 5, Color.red, 30f);
+            if(currentTile.GetRightTile() != null)
+                Debug.DrawRay(currentTile.GetRightTile().position, Vector3.up * 5, Color.red, 30f);
+            if(currentTile.GetTopTile() != null)
+                Debug.DrawRay(currentTile.GetTopTile().position, Vector3.up * 5, Color.blue, 30f);
+            if(currentTile.GetBottomTile() != null)
+                Debug.DrawRay(currentTile.GetBottomTile().position, Vector3.up * 5, Color.blue, 30f);
+        }
+            
+        /*var rayStartPos = currentTile.position;
+        rayStartPos.y += 0.2f;
+        //Debug.Log("GEN VEC FIELD Pos: "+currentTile.position+" Vector: "+dirVector+" neighbours: "+currentTile.neighbourTiles.Count);
+        Debug.DrawRay(rayStartPos-(currentTile.flowFieldDirection/2), currentTile.flowFieldDirection, Color.red, 30f);
+        Debug.DrawRay(rayStartPos+(currentTile.flowFieldDirection/2*.3f),currentTile.flowFieldDirection*.3f, Color.yellow, 30f);
+        yield return new WaitForEndOfFrame();*/
+        currentTile.neighbourTiles?.ForEach(tile =>
+        {
             //Debug.Log("Wus.. "+ (tile == null)+" - "+(sector != null && tile.sector != sector)+" - "+(currentTile.flowFieldDirection != Vector3.zero)+" - "+(tile.Equals(currentTile)));
-            if (tile == null || (sector != null && tile.sector != sector) || tile.flowFieldDirection != Vector3.zero) return;
-            StartCoroutine(GenerateVectorField(tile, sector));
+            if (tile == null || (sector != null && tile.sector != sector) || !tile.flowFieldDirection.Equals(Vector3.negativeInfinity)) return;
+            var generateVectorField = GenerateVectorField(tile, sector);
+            while(generateVectorField.MoveNext())
+            {
+            }
         });
             
         yield return null;
@@ -378,6 +432,8 @@ public class PathFinderController : MonoBehaviour
             waypoints.Add(currentTile); // .position
             currentTile = currentTile.lastNode;
         }
+
+        waypoints.Reverse();
 
         return waypoints;
     }

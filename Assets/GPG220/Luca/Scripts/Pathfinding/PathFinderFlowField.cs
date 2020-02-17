@@ -31,6 +31,9 @@ namespace GPG220.Luca.Scripts.Pathfinding
         // TMP HACK
         public List<PathFinderSectorTile> clones = new List<PathFinderSectorTile>();
         
+        
+        public Color32[] colors = new Color32[15];
+        
         public void GenerateHeatmap(PathFinderSectorTile currentTile, PathFinderSector sector)
         {
             if (currentTile.position == targetPosition)
@@ -71,16 +74,55 @@ namespace GPG220.Luca.Scripts.Pathfinding
             //Debug.Log("GenHeat... Pos: "+currentTile.position+" neighbours2: "+currentTile.neighbourTiles.Count+" sector: "+currentTile.sector.bounds);
             //////////////
             
+            var neighboursToEvaluate = new List<PathFinderSectorTile>();
             currentTile.neighbourTiles?.ForEach(tile =>
             {
                 //Debug.Log(" ===== > Neighbour1 "+" sector: "+tile.sector.bounds);
-                if (tile == null || !(tile.flowFieldDistanceToTarget < 0) || (sector != null && tile.sector != sector)) return;
+                if (tile == null /*|| tile.flowFieldDistanceToTarget >= 0*/ || (sector != null && tile.sector != sector)) return;
+
+                /*if (tile.flowFieldDistanceToTarget > 0)
+                {
+                    if (tile.flowFieldDistanceToTarget > currentTile.flowFieldDistanceToTarget + 1)
+                    {
+                        tile.flowFieldLastNode = currentTile;
+                        tile.flowFieldDistanceToTarget = currentTile.flowFieldDistanceToTarget + 1;
+                    }
+                    return;
+                }
+                
                 //Debug.Log(" ===== > Neighbour2 "+" sector: "+tile.sector.bounds);
                 tile.flowFieldLastNode = currentTile;
-                tile.flowFieldDistanceToTarget = currentTile.flowFieldDistanceToTarget + 1;
-                GenerateHeatmap(tile, sector);
+                tile.flowFieldDistanceToTarget = currentTile.flowFieldDistanceToTarget + 1;*/
+                var distToTargetNotSetYet = tile.flowFieldDistanceToTarget < 0;
+                if (distToTargetNotSetYet || tile.flowFieldDistanceToTarget > currentTile.flowFieldDistanceToTarget + 1)
+                {
+                    tile.flowFieldLastNode = currentTile;
+                    tile.flowFieldDistanceToTarget = currentTile.flowFieldDistanceToTarget + 1;
+                    /*Debug.Log(tile.flowFieldDistanceToTarget);
+                    Debug.DrawRay(tile.position, Vector3.up * tile.flowFieldDistanceToTarget, colors[Mathf.Clamp((int)tile.flowFieldDistanceToTarget,0,14)], 30f);*/
+                    neighboursToEvaluate.Add(tile);
+                    /*
+
+                    if(distToTargetNotSetYet)
+                        GenerateHeatmap(tile, sector);*/
+                }
             });
 
+            neighboursToEvaluate.ForEach(tile =>
+            {
+                if (tile == null || (sector != null && tile.sector != sector)) return;
+                GenerateHeatmap(tile, sector);
+            });
+/*
+
+            // Calc Vector Direction
+            var dirVector = new Vector3(
+                currentTile.GetTopTile()?.flowFieldDistanceToTarget ?? currentTile.flowFieldDistanceToTarget - currentTile.GetBottomTile()?.flowFieldDistanceToTarget ?? currentTile.flowFieldDistanceToTarget,
+                0, 
+                currentTile.GetLeftTile()?.flowFieldDistanceToTarget ?? currentTile.flowFieldDistanceToTarget - currentTile.GetRightTile()?.flowFieldDistanceToTarget ?? currentTile.flowFieldDistanceToTarget);
+            currentTile.flowFieldDirection = dirVector.normalized;*/
+            
+            
             //yield return null;
         }
         
@@ -90,8 +132,12 @@ namespace GPG220.Luca.Scripts.Pathfinding
         {
             if (currentTile == null)
                 yield break;
-            
-            var dirVector = new Vector3(currentTile.GetLeftTile()?.flowFieldDistanceToTarget ?? 0 - currentTile.GetRightTile()?.flowFieldDistanceToTarget ?? 0, 0, currentTile.GetTopTile()?.flowFieldDistanceToTarget ?? 0 - currentTile.GetBottomTile()?.flowFieldDistanceToTarget ?? 0);
+
+            var dirVector = currentTile.position.Equals(targetPosition) ?
+                Vector3.zero :
+                new Vector3(currentTile.GetLeftTile()?.flowFieldDistanceToTarget ?? 0 - currentTile.GetRightTile()?.flowFieldDistanceToTarget ?? 0, 
+                    0, 
+                    currentTile.GetTopTile()?.flowFieldDistanceToTarget ?? 0 - currentTile.GetBottomTile()?.flowFieldDistanceToTarget ?? 0);
             currentTile.flowFieldDirection = dirVector.normalized;
             
             
