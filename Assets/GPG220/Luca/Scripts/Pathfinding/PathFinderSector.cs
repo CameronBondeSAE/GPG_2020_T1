@@ -9,6 +9,8 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider))]
 public class PathFinderSector : MonoBehaviour
 {
+    public PathFinderSectorTile[,] sectorTileGrid;
+    
     public LayerMask walkableMask;
     public LayerMask ignoreMask;
     
@@ -33,7 +35,7 @@ public class PathFinderSector : MonoBehaviour
     public Color32 debugSectorColor = new Color32(0, 255, 255, 100);
     public bool debugDrawTiles = false;
 
-    public GPG220.Luca.Scripts.Pathfinding.PathFinderFlowField pathFinderFlowFieldTemplate;
+    public PathFinderFlowField pathFinderFlowFieldTemplate;
     
     public void CreateSectorTileGrid()
     {
@@ -166,6 +168,8 @@ public class PathFinderSector : MonoBehaviour
                 }
             }
         }
+
+        sectorTileGrid = tiles;
     }
 
     public bool ContainsPoint(Vector3 point)

@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public struct PathFinderSectorConnection
+﻿namespace GPG220.Luca.Scripts.Pathfinding
 {
-    public PathFinderSector sectorOne;
-    public PathFinderSector sectorTwo;
+    public struct PathFinderSectorConnection
+    {
+        public PathFinderSector sectorOne;
+        public PathFinderSector sectorTwo;
 
-    public PathFinderSectorTile sectorOneTile;
-    public PathFinderSectorTile sectorTwoTile;
+        public PathFinderSectorTile sectorOneTile;
+        public PathFinderSectorTile sectorTwoTile;
+    }
 }

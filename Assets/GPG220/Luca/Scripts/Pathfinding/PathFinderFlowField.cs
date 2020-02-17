@@ -34,126 +34,40 @@ namespace GPG220.Luca.Scripts.Pathfinding
         
         public Color32[] colors = new Color32[15];
         
-        public void GenerateHeatmap(PathFinderSectorTile currentTile, PathFinderSector sector)
+        public void GenerateHeatmap(PathFinderSectorTileData currentTileData, PathFinderSector sector, PathFinderPath path)
         {
-            if (currentTile.position == targetPosition)
+            if (currentTileData.GetPosition() == targetPosition)
             {
-                currentTile.flowFieldDistanceToTarget = 0;
+                currentTileData.flowFieldDistanceToTarget = 0;
             }
             
-            //Debug.Log("GenHeat... Pos: "+currentTile.position+" neighbours1: "+currentTile.neighbourTiles.Count+" sector: "+currentTile.sector.bounds);
-            ////////////// TODO UGLY HACKY
-            // Clone neighbour tiles
-            //currentTile.neighbourTiles = currentTile.neighbourTiles.Select(nt => (PathFinderSectorTile)nt.Clone()).ToList();
-            var newNeighbourTilesList = new List<PathFinderSectorTile>();
-            currentTile.neighbourTiles.ForEach(nt =>
+            var neighboursToEvaluate = new List<PathFinderSectorTileData>();
+            currentTileData.tile.neighbourTiles?.ForEach(neighbourTile =>
             {
-                if (nt == null)
-                    return;
-
-                if (nt.isTempCopy)
+                if (neighbourTile == null || (sector != null && neighbourTile.sector != sector)) return;
+                path.tileData.TryGetValue(neighbourTile, out var neighbourTileData);
+                if (neighbourTileData == null)
                 {
-                    if(!clones.Contains(nt))
-                        clones.Add(nt);
-                    newNeighbourTilesList.Add(nt);
-                    return;
-                }
-
-                if (clones.Contains(nt))
-                {
-                    newNeighbourTilesList.Add(clones[clones.IndexOf(nt)]);
-                    return;
+                    neighbourTileData = new PathFinderSectorTileData(neighbourTile);
+                    path.AddTileData(neighbourTileData);
                 }
                 
-                
-                var ntClone = (PathFinderSectorTile) nt.Clone();
-                newNeighbourTilesList.Add(ntClone);
-                clones.Add(ntClone);
-            });
-            currentTile.neighbourTiles = newNeighbourTilesList;
-            //Debug.Log("GenHeat... Pos: "+currentTile.position+" neighbours2: "+currentTile.neighbourTiles.Count+" sector: "+currentTile.sector.bounds);
-            //////////////
-            
-            var neighboursToEvaluate = new List<PathFinderSectorTile>();
-            currentTile.neighbourTiles?.ForEach(tile =>
-            {
-                //Debug.Log(" ===== > Neighbour1 "+" sector: "+tile.sector.bounds);
-                if (tile == null /*|| tile.flowFieldDistanceToTarget >= 0*/ || (sector != null && tile.sector != sector)) return;
-
-                /*if (tile.flowFieldDistanceToTarget > 0)
+                var distToTargetNotSetYet = neighbourTileData.flowFieldDistanceToTarget < 0;
+                if (distToTargetNotSetYet || neighbourTileData.flowFieldDistanceToTarget > currentTileData.flowFieldDistanceToTarget + 1)
                 {
-                    if (tile.flowFieldDistanceToTarget > currentTile.flowFieldDistanceToTarget + 1)
-                    {
-                        tile.flowFieldLastNode = currentTile;
-                        tile.flowFieldDistanceToTarget = currentTile.flowFieldDistanceToTarget + 1;
-                    }
-                    return;
-                }
-                
-                //Debug.Log(" ===== > Neighbour2 "+" sector: "+tile.sector.bounds);
-                tile.flowFieldLastNode = currentTile;
-                tile.flowFieldDistanceToTarget = currentTile.flowFieldDistanceToTarget + 1;*/
-                var distToTargetNotSetYet = tile.flowFieldDistanceToTarget < 0;
-                if (distToTargetNotSetYet || tile.flowFieldDistanceToTarget > currentTile.flowFieldDistanceToTarget + 1)
-                {
-                    tile.flowFieldLastNode = currentTile;
-                    tile.flowFieldDistanceToTarget = currentTile.flowFieldDistanceToTarget + 1;
-                    /*Debug.Log(tile.flowFieldDistanceToTarget);
-                    Debug.DrawRay(tile.position, Vector3.up * tile.flowFieldDistanceToTarget, colors[Mathf.Clamp((int)tile.flowFieldDistanceToTarget,0,14)], 30f);*/
-                    neighboursToEvaluate.Add(tile);
-                    /*
-
-                    if(distToTargetNotSetYet)
-                        GenerateHeatmap(tile, sector);*/
+                    neighbourTileData.flowFieldLastTile = currentTileData.tile;
+                    neighbourTileData.flowFieldLastTileData = currentTileData;
+                    neighbourTileData.flowFieldDistanceToTarget = currentTileData.flowFieldDistanceToTarget + 1;
+                    neighboursToEvaluate.Add(neighbourTileData);
                 }
             });
 
-            neighboursToEvaluate.ForEach(tile =>
+            neighboursToEvaluate.ForEach(neighbourTileData =>
             {
-                if (tile == null || (sector != null && tile.sector != sector)) return;
-                GenerateHeatmap(tile, sector);
+                if (neighbourTileData == null || (sector != null && neighbourTileData.tile.sector != sector)) return;
+                GenerateHeatmap(neighbourTileData, sector, path);
             });
-/*
 
-            // Calc Vector Direction
-            var dirVector = new Vector3(
-                currentTile.GetTopTile()?.flowFieldDistanceToTarget ?? currentTile.flowFieldDistanceToTarget - currentTile.GetBottomTile()?.flowFieldDistanceToTarget ?? currentTile.flowFieldDistanceToTarget,
-                0, 
-                currentTile.GetLeftTile()?.flowFieldDistanceToTarget ?? currentTile.flowFieldDistanceToTarget - currentTile.GetRightTile()?.flowFieldDistanceToTarget ?? currentTile.flowFieldDistanceToTarget);
-            currentTile.flowFieldDirection = dirVector.normalized;*/
-            
-            
-            //yield return null;
-        }
-        
-        //public List<PathFinderSectorTile> TMPTSTDEBUGTILE = new List<PathFinderSectorTile>();
-
-        public IEnumerator GenerateVectorField(PathFinderSectorTile currentTile, PathFinderSector sector)
-        {
-            if (currentTile == null)
-                yield break;
-
-            var dirVector = currentTile.position.Equals(targetPosition) ?
-                Vector3.zero :
-                new Vector3(currentTile.GetLeftTile()?.flowFieldDistanceToTarget ?? 0 - currentTile.GetRightTile()?.flowFieldDistanceToTarget ?? 0, 
-                    0, 
-                    currentTile.GetTopTile()?.flowFieldDistanceToTarget ?? 0 - currentTile.GetBottomTile()?.flowFieldDistanceToTarget ?? 0);
-            currentTile.flowFieldDirection = dirVector.normalized;
-            
-            
-            var rayStartPos = currentTile.position;
-            rayStartPos.y += 0.5f;
-            //Debug.Log("GEN VEC FIELD Pos: "+currentTile.position+" Vector: "+dirVector+" neighbours: "+currentTile.neighbourTiles.Count);
-            Debug.DrawRay(rayStartPos, currentTile.flowFieldDirection, Color.red, 30f);
-            yield return new WaitForEndOfFrame();
-            currentTile.neighbourTiles?.ForEach(tile =>
-            {
-                //Debug.Log("Wus.. "+ (tile == null)+" - "+(sector != null && tile.sector != sector)+" - "+(currentTile.flowFieldDirection != Vector3.zero)+" - "+(tile.Equals(currentTile)));
-                if (tile == null || (sector != null && tile.sector != sector) || tile.flowFieldDirection != Vector3.zero) return;
-                GenerateVectorField(tile, sector);
-            });
-            
-            yield return null;
         }
         
         public bool ContainsPoint(Vector3 point)
