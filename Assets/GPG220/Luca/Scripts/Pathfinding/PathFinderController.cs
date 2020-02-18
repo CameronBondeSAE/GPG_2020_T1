@@ -410,21 +410,43 @@ public class PathFinderController : MonoBehaviour
         return waypoints;
     }
 
-    public PathFinderSector GetSectorByPoint(Vector3 point)
+    public PathFinderSector GetSectorByPoint(Vector3 point) // Point must be within a sector
     {
         return sectors.FirstOrDefault(s => s.ContainsPoint(point));
     }
+
+    public PathFinderSector GetNearestSector(Vector3 point) // Point may be outside of any sector
+    {
+        PathFinderSector nearestSector = null;
+        float nearestSectorDist = -1;
+
+        // TODO !!! UNreliable method, especially if the sectors have different sizes! Improve
+        sectors.ForEach(sec =>
+        {
+            var dist = Vector3.Distance(sec.transform.position, point);
+
+            if (nearestSector != null && !(dist < nearestSectorDist)) return;
+            nearestSector = sec;
+            nearestSectorDist = dist;
+        });
+        
+        return nearestSector;
+    }
     
-    public PathFinderSectorTile GetNearestNode(Vector3 position)
+    public PathFinderSectorTile GetNearestNode(Vector3 position, bool ignoreNonSectorPos = true)
     {
         var sector = GetSectorByPoint(position);
         
-        if (sector == null) return null;
+        if ((sector == null || sector.sectorTiles == null || sector.sectorTiles.Count <= 0) && ignoreNonSectorPos) return null;
+        else if (!ignoreNonSectorPos && sector == null)
+        {
+            sector = GetNearestSector(position);
+            if (sector == null || sector.sectorTiles == null || sector.sectorTiles.Count <= 0)
+                return null;
+        }
         
         PathFinderSectorTile nearestNode = null;
         var nearestNodeDist = 0f;
-        
-        if (sector.sectorTiles == null || sector.sectorTiles.Count <= 0) return null;
         
         foreach (var tile in sector.sectorTiles)
         {

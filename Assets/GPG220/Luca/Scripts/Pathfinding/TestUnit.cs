@@ -15,6 +15,7 @@ namespace GPG220.Luca.Scripts.Pathfinding
         public PathFinderPath currentPath;
 
         public bool move = false;
+        public float stopMovingBelowDistToTarget = 2f;
         
         public GameObject testTarget;
         [Button("Recalculate Path"), DisableInEditorMode]
@@ -58,6 +59,10 @@ namespace GPG220.Luca.Scripts.Pathfinding
         {
             if (move)
             {
+                if (stopMovingBelowDistToTarget >= 0 && currentPath.GetAproxDistanceToTargetAtPos(transform.position) <=
+                    stopMovingBelowDistToTarget)
+                    move = false;
+                
                 if (currentPath.flowFieldAvailable)
                 {
                     MoveOnFlowField();
@@ -66,7 +71,12 @@ namespace GPG220.Luca.Scripts.Pathfinding
                 {
                     MoveAlongPath();
                 }
-            }  
+            }else if (stopMovingBelowDistToTarget >= 0 && currentPath != null &&
+                      currentPath.GetAproxDistanceToTargetAtPos(transform.position) >
+                      stopMovingBelowDistToTarget)
+            {
+                move = true;
+            }
         }
 
         private void MoveAlongPath()
@@ -76,7 +86,7 @@ namespace GPG220.Luca.Scripts.Pathfinding
 
         private void MoveOnFlowField()
         {
-            var moveDir = currentPath.GetFlowDirectionAtPos(transform.position);
+            var moveDir = currentPath.GetDirectionAtPos(transform.position);
             Move(moveDir);
         }
 
