@@ -2,9 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using GPG220.Blaide_Fedorowytsch.Scripts;
 using GPG220.Luca.Scripts.Pathfinding;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
+using UnityEditor;
 using UnityEngine;
 
 public class PathFinderController : MonoBehaviour
@@ -29,9 +31,9 @@ public class PathFinderController : MonoBehaviour
     [FoldoutGroup("Debug")]
     public bool debugPathGeneration = false;
     [FoldoutGroup("Debug"), ShowInInspector]
-    public List<PathFinderSectorTile> debugPathList = new List<PathFinderSectorTile>();
+    public List<PathFinderSectorTileData> debugPathList = new List<PathFinderSectorTileData>();
     [FoldoutGroup("Debug")]
-    public float debugPathGenerationDelay = 0.25f; // seconds
+    public float debugPathGenerationDelay = 0.0001f; // seconds
     [FoldoutGroup("Debug")]
     public float debugPathGenerationDataDeletionDelay = 3f;
     [FoldoutGroup("Debug")]
@@ -54,27 +56,37 @@ public class PathFinderController : MonoBehaviour
     public GameObject testStartPos;
     [FoldoutGroup("Debug")]
     public GameObject testEndPos;
+    [FoldoutGroup("Debug")]
+    public bool calculateFlowField;
+
+    [FoldoutGroup("Debug"), ShowInInspector]
+    public List<PathFinderSectorTileData> waypointList;
     [FoldoutGroup("Debug"), Button("Find Path"), DisableInEditorMode]
     public void TestFindPath()
     {
         if (testStartPos == null || testEndPos == null)
             return;
-        
-        StartCoroutine(FindPath(testStartPos.transform.position, testEndPos.transform.position, list => Debug.Log("Done calculating path. "+list?.Count)));
-    }
-    [FoldoutGroup("Debug"), Button("Test"), DisableInEditorMode]
-    public void Test()
-    {
-        var tOrig = new PathFinderSectorTile();
-        tOrig.position = transform.position;
-        tOrig.sector = sectors[0];
 
-        var tClone = (PathFinderSectorTile)tOrig.Clone();
-        
-        var list1 = new List<PathFinderSectorTile>(){tOrig};
-        
-        
-        Debug.Log(list1.IndexOf(tOrig)+" <> "+list1.IndexOf(tClone)+" ;; "+tOrig.Equals(tClone));
+        /*Action<List<PathFinderSectorTileData>> onDoneFunc = list =>
+        {
+            Debug.Log("Done calculating path. " + list?.Count);
+            if (calculateFlowField)
+            {
+                StartCoroutine(FindFlowFieldPath(list));
+            }
+            waypointList = list;
+        };*/
+        Action<PathFinderPath> onDoneFunc = path =>
+        {
+            Debug.Log("Done calculating path. " + path.tilePath?.Count);
+            if (calculateFlowField)
+            {
+                StartCoroutine(FindFlowFieldPath(path));
+            }
+            waypointList = path.tilePath;
+        };
+        //StartCoroutine(FindPath(testStartPos.transform.position, testEndPos.transform.position, onDoneFunc));
+        FindPathTo(testStartPos.transform.position, testEndPos.transform.position, onDoneFunc);
     }
 
     private IEnumerator LoadSector(PathFinderSector sector, bool reload = false, bool connectSector = false)
@@ -95,21 +107,12 @@ public class PathFinderController : MonoBehaviour
     private IEnumerator ConnectSector(PathFinderSector sector)
     {
         var connectingSectors = GetConnectingSectors(sector);
-        //Debug.Log("Found "+connectingSectors.Count+" connecting sectors");
-        /*foreach (var conSec in connectingSectors)
-        {
-            if(conSec == null || conSec.borderTiles == null || conSec.borderTiles.Count == 0)
-                return;
-        }*/
         foreach (var borderTileObject in sector.borderTileObjects)
         {
             if(borderTileObject.Tile == null)
                 continue;
             
             borderTileObject.Tile.neighbourTiles.AddRange(borderTileObject.GetNeighbourTileObjects(true).Select(obj => obj.Tile).ToList());
-            //Debug.Log("border tile test. tileRect Pos: "+borderTile.tileRect.position+" ;; tileRect Center: "+borderTile.tileRect.center+" ;; tileRect size: "+borderTile.tileRect.size);
-            //var hits = Physics.OverlapBox(borderTile.tileRect.position, borderTile.tileRect.size * .5f);
-
         }
         yield return 0;
     }
@@ -127,191 +130,323 @@ public class PathFinderController : MonoBehaviour
         return connectingSectors;
     }
 
-    
-    
-    public IEnumerator FindPath(Vector3 startPos, Vector3 targetPos, Action<List<PathFinderSectorTile>> onDoneCallback = null)
+    public void FindPathTo(Vector3 startPos, Vector3 targetPos, Action<PathFinderPath> onDoneCallback = null)
     {
-        var clonedTiles = new List<PathFinderSectorTile>();
-        var tmpDebugPathList = new List<PathFinderSectorTile>();
-        var startTile = (PathFinderSectorTile)GetNearestNode(startPos)?.Clone();
-        clonedTiles.Add(startTile);
+        //Debug.Log(startPos+" -- "+targetPos);
+        StartCoroutine(FindPath(startPos, targetPos, onDoneCallback));
+    }
+    
+    public IEnumerator FindPath(Vector3 startPos, Vector3 targetPos, Action<PathFinderPath> onDoneCallback = null)
+    {
+        var path = new PathFinderPath(this);
         
-        var endTile = GetNearestNode(targetPos);
+        var tmpDebugPathList = new List<PathFinderSectorTileData>();
 
-        if (startTile == null || endTile == null)
+        var startTileData = new PathFinderSectorTileData(GetNearestNode(startPos));
+        
+        var targetTile = GetNearestNode(targetPos);
+
+        if (startTileData.tile == null || targetTile == null)
             yield break;
         
-        startTile.GCost = 0;
-        startTile.HCost = PathFinderSectorTile.CalculateHCost(startTile, endTile);
+        startTileData.GCost = 0;
+        startTileData.HCost = PathFinderSectorTileData.CalculateHCost(startTileData.tile, targetTile);
         
         if (debugPathGeneration)
         {
-            startTile.isStart = true;
-            startTile.isGreen = true;
-            debugPathList.Add(startTile);
-            tmpDebugPathList.Add(startTile);
+            startTileData.isStart = true;
+            startTileData.isGreen = true;
+            debugPathList.Add(startTileData);
+            tmpDebugPathList.Add(startTileData);
         }
         
-        var greenTiles = new List<PathFinderSectorTile>(){startTile};
-        var redTiles = new List<PathFinderSectorTile>();
+        var greenTilesData = new List<PathFinderSectorTileData>(){startTileData};
+        var redTilesData = new List<PathFinderSectorTileData>();
         
-        PathFinderSectorTile finalEndNode = null;
+        PathFinderSectorTileData targetTileData = null;
         
-        Debug.Log("PathFinder: Start while...");
         while (true) // TODO Add security break!
         {
-            var currentTile = GetLowestFCostTile(greenTiles);
+            var currentTileData = GetLowestFCostTile(greenTilesData);
             
-            if(currentTile == null)
+            if(currentTileData == null)
                 break;
 
-            greenTiles.Remove(currentTile);
+            greenTilesData.Remove(currentTileData);
             if (debugPathGeneration)
-                currentTile.isGreen = false;
-            redTiles.Add(currentTile);
+                currentTileData.isGreen = false;
+            redTilesData.Add(currentTileData);
             if (debugPathGeneration)
-                currentTile.isRed = true;
-            /*
+                currentTileData.isRed = true;
 
-            if (debugPathGeneration)
-                yield return new WaitForSeconds(debugPathGenerationDelay);*/
-
-            if (currentTile.position.Equals(endTile.position) || currentTile.neighbourTiles == null || currentTile.neighbourTiles.Count == 0)
+            if (currentTileData.tile.Equals(targetTile) || currentTileData.tile.neighbourTiles == null || currentTileData.tile.neighbourTiles.Count == 0)
             {
-                if (goToNearestPossiblePos || currentTile.position.Equals(endTile.position))
+                if (goToNearestPossiblePos || currentTileData.tile.Equals(targetTile))
                 {
-                    finalEndNode = currentTile;
+                    targetTileData = currentTileData;
                     if (debugPathGeneration)
-                        currentTile.isEnd = true;
+                        currentTileData.isEnd = true;
                 }
                 break;
             }
-
-            // Clone neighbour tiles
-            //currentTile.neighbourTiles = currentTile.neighbourTiles.Select(nt => (PathFinderSectorTile)nt.Clone()).ToList();
-            var newNeighbourTilesList = new List<PathFinderSectorTile>();
-            currentTile.neighbourTiles.ForEach(nt =>
+            
+            foreach (var neighbourTile in currentTileData.tile.neighbourTiles)
             {
-                if (nt == null)
-                    return;
+                if(neighbourTile == null) continue;
                 
-                var clonedIndex = clonedTiles.IndexOf(nt);
-                if (clonedIndex >= 0 )
-                {
-                    newNeighbourTilesList.Add(clonedTiles[clonedIndex]);
-                }
-                else
-                {
-                    var ntClone = (PathFinderSectorTile) nt.Clone();
-                    clonedTiles.Add(ntClone);
-                    newNeighbourTilesList.Add(ntClone);
-                }
-            });
-            currentTile.neighbourTiles = newNeighbourTilesList;
-            
-            
-            foreach (var neighbourTile in currentTile.neighbourTiles)
-            {
-                if(neighbourTile == null || redTiles.Contains(neighbourTile))
-                    continue;
+                path.tileDataList.TryGetValue(neighbourTile, out var neighbourTileData);
+                if(neighbourTileData == null)
+                    neighbourTileData = new PathFinderSectorTileData(neighbourTile);
+                
+                if(redTilesData.Contains(neighbourTileData)) continue;
 
-                if (debugPathGeneration && !debugPathList.Contains(neighbourTile))
+                if (debugPathGeneration && !debugPathList.Contains(neighbourTileData))
                 {
-                    debugPathList.Add(neighbourTile);
-                    tmpDebugPathList.Add(neighbourTile);
+                    debugPathList.Add(neighbourTileData);
+                    tmpDebugPathList.Add(neighbourTileData);
                 }
 
-                var neighbourGCost = Vector3.Distance(neighbourTile.position, currentTile.position) +
-                                     currentTile.GCost;
-                var neighbourHCost = PathFinderSectorTile.CalculateHCost(neighbourTile, endTile);
+                var neighbourGCost = Vector3.Distance(neighbourTile.position, currentTileData.tile.position) +
+                                     currentTileData.GCost;
+                var neighbourHCost = PathFinderSectorTileData.CalculateHCost(neighbourTile, targetTile);
                 var neighbourFCost = neighbourGCost + neighbourHCost;
 
-                if ((neighbourTile.fCost >= 0 && neighbourFCost < neighbourTile.fCost) ||
-                    !greenTiles.Contains(neighbourTile))
+                if ((neighbourTileData.fCost >= 0 && neighbourFCost < neighbourTileData.fCost) ||
+                    !greenTilesData.Contains(neighbourTileData))
                 {
-                    neighbourTile.GCost = neighbourGCost;
-                    neighbourTile.HCost = neighbourHCost;
-                    neighbourTile.lastNode = currentTile;
+                    neighbourTileData.GCost = neighbourGCost;
+                    neighbourTileData.HCost = neighbourHCost;
+                    neighbourTileData.lastTile = currentTileData.tile;
+                    neighbourTileData.lastTileData = currentTileData;
                     
-                    if (!greenTiles.Contains(neighbourTile))
+                    if (!greenTilesData.Contains(neighbourTileData))
                     {
-                        greenTiles.Add(neighbourTile);
+                        greenTilesData.Add(neighbourTileData);
                         if (debugPathGeneration)
-                            neighbourTile.isGreen = true;
+                            neighbourTileData.isGreen = true;
                     }
                 }
-                
-                /*////////////
-                if ((!(neighbourTile.fCost >= 0) || !(neighbourFCost < neighbourTile.fCost)) &&
-                    greenTiles.Contains(neighbourTile)) continue;
-                
-                neighbourTile.GCost = neighbourGCost;
-                neighbourTile.HCost = neighbourHCost;
-                neighbourTile.lastNode = currentTile;
-
-                if (greenTiles.Contains(neighbourTile)) continue;
-                
-                greenTiles.Add(neighbourTile);
-                if (debugPathGeneration)
-                    neighbourTile.isGreen = true;*/
-                
-                /*if (debugPathGeneration)
-                    yield return new WaitForSeconds(debugPathGenerationDelay);*/
-
-                 //yield return 0;
             }
-            yield return null;
+            if (debugPathGeneration && debugPathGenerationDelay > 0)
+                yield return new WaitForSeconds(debugPathGenerationDelay);
         }
-        
-        Debug.Log("FindPath: Done w/ While Loop");
 
-        var waypointList = CreateWaypointsListFromTile(finalEndNode);
-        onDoneCallback?.Invoke(waypointList);
+        var waypointDataList = CreateWaypointsListFromTileData(targetTileData);
+        path.tilePath = waypointDataList;
+        onDoneCallback?.Invoke(path);
 
         if (debugPathGeneration)
         {
-            waypointList?.ForEach(wp => { wp.isPath = true; });
+            waypointDataList?.ForEach(wp => { wp.isPath = true; });
             
             yield return new WaitForSeconds(debugPathGenerationDataDeletionDelay);
             debugPathList = debugPathList.Except(tmpDebugPathList).ToList(); // TODO SUPER HACKY & POTENTIALLY BUGGY
         }
+
+        yield return 0;
+    }
+
+    public Color32[] colors = new Color32[15];
+    public IEnumerator FindFlowFieldPath(PathFinderPath path, Action<PathFinderPath> onDoneAction = null)
+    {
+        var flowFields = new Dictionary<PathFinderSector, PathFinderFlowField>();
+
+
+        var endPositionTilesTMPTEST = new List<PathFinderSectorTileData>();
+        for (int i = 0; i < path.tilePath.Count; i++)
+        {
+            var currentTileData = path.tilePath[i];
+            if(currentTileData == null || currentTileData.tile.sector == null)
+                continue;
+            
+            if (i == path.tilePath.Count-1 || path.tilePath[i+1].tile.sector != currentTileData.tile.sector)
+            {
+                PathFinderFlowField secFlowField;
+
+                if (!flowFields.ContainsKey(currentTileData.tile.sector))
+                {
+                    secFlowField = (PathFinderFlowField) currentTileData.tile.sector.pathFinderFlowFieldTemplate?.Clone();
+
+                    if (secFlowField == null)
+                    {
+                        var rowsX = (int)(currentTileData.tile.sector.bounds.size.x / currentTileData.tile.sector.sectorTileSize);
+                        var rowsZ = (int)(currentTileData.tile.sector.bounds.size.z / currentTileData.tile.sector.sectorTileSize);
+                        secFlowField = new PathFinderFlowField(currentTileData.tile.sector.sectorTileSize, rowsX, rowsZ);
+                    }
+                    flowFields.Add(currentTileData.tile.sector, secFlowField);
+                }
+                else
+                {
+                    secFlowField = flowFields[currentTileData.tile.sector];
+                }
+
+                secFlowField.colors = colors;
+                secFlowField.targetPosition = currentTileData.tile.position;
+                if(debugPathGeneration)
+                    Debug.Log("Start Gen HeatMap "+currentTileData.tile.sector);
+                secFlowField.GenerateHeatmap(currentTileData, currentTileData.tile.sector, path);
+                //StartCoroutine(secFlowField.GenerateHeatmap(currentTile, currentTile.sector));
+                //yield return new WaitForSeconds(1); // TODO SUPER UGLY HACK;; Need to wait until the previous coroutine is done, then execute next coroutine.
+                //Debug.Log("Start Gen VecField");
+                if(debugPathGeneration)
+                    Debug.DrawRay(currentTileData.GetPosition(), Vector3.up*5, Color.cyan,30f);
+                StartCoroutine(GenerateVectorField(currentTileData, currentTileData.tile.sector, path));
+                //secFlowField.GenerateVectorField(currentTile, currentTile.sector);
+                endPositionTilesTMPTEST.Add(currentTileData);
+                
+            }
+        }
+
+        path.flowFieldAvailable = true;
+        if (debugPathGeneration)
+        {
+            endPositionTilesTMPTEST.ForEach(entry =>
+                StartCoroutine(DrawFlowFieldTEMPTEST(entry, entry.tile.sector, path)));
+            //StartCoroutine(DrawFlowFieldTEMPTEST(path.tilePath[0], path.tilePath[0].tile.sector, path));
+        }
         
-        Debug.Log("FindPath: End");
+        
+        Debug.Log("Done with function...");
+        onDoneAction?.Invoke(path); // TODO: Theres a chance that not all vectorfields are calculated at this point...
+        yield return 0;
+    }
+
+    public IEnumerator DrawFlowFieldTEMPTEST(PathFinderSectorTileData currentTileData, PathFinderSector sector, PathFinderPath path)
+    {
+        var rayStartPos = currentTileData.GetPosition();
+        rayStartPos.y += 0.2f;
+        //Debug.Log("GEN VEC FIELD Pos: "+currentTile.position+" Vector: "+dirVector+" neighbours: "+currentTile.neighbourTiles.Count);
+        //Debug.DrawRay(currentTileData.GetPosition(), Vector3.up * currentTileData.flowFieldDistanceToTarget, colors[Mathf.Clamp((int)currentTileData.flowFieldDistanceToTarget,0,14)], 30f);
+        Debug.DrawRay(rayStartPos-(currentTileData.flowFieldDirection/2), currentTileData.flowFieldDirection, Color.red, 30f);
+        Debug.DrawRay(rayStartPos+(currentTileData.flowFieldDirection/2*.3f),currentTileData.flowFieldDirection*.3f, Color.yellow, 30f);
+        currentTileData.vecDirDrawed = true;
+        yield return new WaitForEndOfFrame();
+        currentTileData.tile.neighbourTiles?.ForEach(neighbourTile =>
+        {
+            if (neighbourTile == null || (sector != null && neighbourTile.sector != sector)) return;
+            path.tileDataList.TryGetValue(neighbourTile, out var neighbourTileData);
+            if(neighbourTileData == null || neighbourTileData.vecDirDrawed) return;
+            
+            var generateVectorField = DrawFlowFieldTEMPTEST(neighbourTileData, sector, path);
+            while(generateVectorField.MoveNext())
+            {
+            }
+        });
 
         yield return 0;
     }
     
-    private static List<PathFinderSectorTile> CreateWaypointsListFromTile(PathFinderSectorTile endTile)
+    public IEnumerator GenerateVectorField(PathFinderSectorTileData currentTileData, PathFinderSector sector, PathFinderPath path)
     {
-        var waypoints = new List<PathFinderSectorTile>();
-        if (endTile == null)
+        if (currentTileData == null || !currentTileData.flowFieldDirection.Equals(Vector3.negativeInfinity))
+            yield break;
+
+        // Calculate Flow Field Direction
+        PathFinderSectorTileData leftTileData = null, rightTileData = null, topTileData = null, bottomTileData = null;
+        PathFinderSectorTile leftTile = currentTileData.tile.GetLeftTile(),
+            rightTile = currentTileData.tile.GetRightTile(),
+            topTile = currentTileData.tile.GetTopTile(),
+            bottomTile = currentTileData.tile.GetBottomTile();
+        if(leftTile != null) path.tileDataList.TryGetValue(leftTile, out leftTileData);
+        if(rightTile != null) path.tileDataList.TryGetValue(rightTile, out rightTileData);
+        if(topTile != null) path.tileDataList.TryGetValue(topTile, out topTileData);
+        if(bottomTile != null) path.tileDataList.TryGetValue(bottomTile, out bottomTileData);
+        
+        var dirVector = new Vector3((leftTileData?.flowFieldDistanceToTarget ?? currentTileData.flowFieldDistanceToTarget) - (rightTileData?.flowFieldDistanceToTarget ?? currentTileData.flowFieldDistanceToTarget), 
+                0, 
+                (bottomTileData?.flowFieldDistanceToTarget ?? currentTileData.flowFieldDistanceToTarget) - (topTileData?.flowFieldDistanceToTarget ?? currentTileData.flowFieldDistanceToTarget));
+        currentTileData.flowFieldDirection = dirVector.normalized;
+
+        
+        /*// Debug Stuff
+        if (debugPathGeneration && Mathf.Approximately(currentTileData.flowFieldDistanceToTarget, 0))
+        {
+            Debug.Log("@TARGET : "+currentTileData.flowFieldDirection+" ;; "+dirVector+" ;; "+dirVector.normalized);
+            Debug.Log("LEFT: "+leftTileData?.flowFieldDistanceToTarget+
+                      " ;;right: "+rightTileData?.flowFieldDistanceToTarget+
+                      " ;;top: "+topTileData?.flowFieldDistanceToTarget+
+                      " ;;bottom: "+bottomTileData?.flowFieldDistanceToTarget);
+            
+            if(leftTileData != null)
+                Debug.DrawRay(leftTileData.GetPosition(), Vector3.up * 5, Color.red, 30f);
+            if(rightTileData != null)
+                Debug.DrawRay(rightTileData.GetPosition(), Vector3.up * 5, Color.red, 30f);
+            if(topTileData != null)
+                Debug.DrawRay(topTileData.GetPosition(), Vector3.up * 5, Color.blue, 30f);
+            if(bottomTileData != null)
+                Debug.DrawRay(bottomTileData.GetPosition(), Vector3.up * 5, Color.blue, 30f);
+        }*/
+            
+        currentTileData.tile.neighbourTiles?.ForEach(neighbourTile =>
+        {
+            if (neighbourTile == null || (sector != null && neighbourTile.sector != sector)) return;
+            path.tileDataList.TryGetValue(neighbourTile, out var neighbourTileData);
+            if (neighbourTileData == null || !neighbourTileData.flowFieldDirection.Equals(Vector3.negativeInfinity)) return;
+            
+            var generateVectorField = GenerateVectorField(neighbourTileData, sector, path);
+            while(generateVectorField.MoveNext())
+            {
+            }
+        });
+            
+        yield return null;
+    }
+    
+    private static List<PathFinderSectorTileData> CreateWaypointsListFromTileData(PathFinderSectorTileData targetTileData)
+    {
+        var waypoints = new List<PathFinderSectorTileData>();
+        if (targetTileData == null)
             return waypoints;
 
-        var currentTile = endTile;
-        while (currentTile.lastNode != null)
+        var currentTileData = targetTileData;
+        while (currentTileData.lastTile != null)
         {
-            waypoints.Add(currentTile); // .position
-            currentTile = currentTile.lastNode;
+            waypoints.Add(currentTileData); // .position
+            currentTileData = currentTileData.lastTileData;
         }
+
+        waypoints.Reverse();
 
         return waypoints;
     }
 
-    public PathFinderSector GetSectorByPoint(Vector3 point)
+    public PathFinderSector GetSectorByPoint(Vector3 point) // Point must be within a sector
     {
         return sectors.FirstOrDefault(s => s.ContainsPoint(point));
     }
+
+    public PathFinderSector GetNearestSector(Vector3 point) // Point may be outside of any sector
+    {
+        PathFinderSector nearestSector = null;
+        float nearestSectorDist = -1;
+
+        // TODO !!! UNreliable method, especially if the sectors have different sizes! Improve
+        sectors.ForEach(sec =>
+        {
+            var dist = Vector3.Distance(sec.transform.position, point);
+
+            if (nearestSector != null && !(dist < nearestSectorDist)) return;
+            nearestSector = sec;
+            nearestSectorDist = dist;
+        });
+        
+        return nearestSector;
+    }
     
-    public PathFinderSectorTile GetNearestNode(Vector3 position)
+    public PathFinderSectorTile GetNearestNode(Vector3 position, bool ignoreNonSectorPos = true)
     {
         var sector = GetSectorByPoint(position);
         
-        if (sector == null) return null;
+        if ((sector == null || sector.sectorTiles == null || sector.sectorTiles.Count <= 0) && ignoreNonSectorPos) return null;
+        else if (!ignoreNonSectorPos && sector == null)
+        {
+            sector = GetNearestSector(position);
+            if (sector == null || sector.sectorTiles == null || sector.sectorTiles.Count <= 0)
+                return null;
+        }
         
         PathFinderSectorTile nearestNode = null;
         var nearestNodeDist = 0f;
-        
-        if (sector.sectorTiles == null || sector.sectorTiles.Count <= 0) return null;
         
         foreach (var tile in sector.sectorTiles)
         {
@@ -326,18 +461,18 @@ public class PathFinderController : MonoBehaviour
         return nearestNode;
     }
 
-    private PathFinderSectorTile GetLowestFCostTile(List<PathFinderSectorTile> tiles)
+    private static PathFinderSectorTileData GetLowestFCostTile(IEnumerable<PathFinderSectorTileData> tileDataList)
     {
-        PathFinderSectorTile lowestCostTile = null;
-        foreach (var tile in tiles)
+        PathFinderSectorTileData lowestCostTileData = null;
+        foreach (var tileData in tileDataList)
         {
-            if (lowestCostTile == null || tile.fCost < lowestCostTile.fCost)
+            if (lowestCostTileData == null || tileData.fCost < lowestCostTileData.fCost)
             {
-                lowestCostTile = tile;
+                lowestCostTileData = tileData;
             }   
         }
 
-        return lowestCostTile;
+        return lowestCostTileData;
     }
 
     private void OnDrawGizmos()
@@ -346,11 +481,11 @@ public class PathFinderController : MonoBehaviour
             return;
 
         
-        foreach (var tile in debugPathList)
+        foreach (var tileData in debugPathList)
         {
-            Gizmos.color = tile.isStart ? debugStartColor : tile.isEnd ? debugEndColor : tile.isPath ? debugPathColor : tile.isRed ? debugRedColor : tile.isGreen ? debugGreenColor : new Color32(0,0,0,0);
+            Gizmos.color = tileData.isStart ? debugStartColor : tileData.isEnd ? debugEndColor : tileData.isPath ? debugPathColor : tileData.isRed ? debugRedColor : tileData.isGreen ? debugGreenColor : new Color32(0,0,0,0);
             
-            Gizmos.DrawCube(tile.position, tile.isStart || tile.isEnd ? debugEndPointSize : debugWaypointPointSize);
+            Gizmos.DrawCube(tileData.GetPosition(), tileData.isStart || tileData.isEnd ? debugEndPointSize : debugWaypointPointSize);
         }
     }
     
@@ -375,16 +510,4 @@ public class PathFinderController : MonoBehaviour
 
         return walkableObjects;
     }*/
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -2,18 +2,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using GPG220.Luca.Scripts.Pathfinding;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
 public class PathFinderSector : MonoBehaviour
 {
+    public PathFinderSectorTile[,] sectorTileGrid;
+    
     public LayerMask walkableMask;
     public LayerMask ignoreMask;
     
     
     public float sectorTileSize = 1;
-    public float sectorFlowFieldSize = 1;
+    public float sectorFlowFieldTileSize = 1;
     
     public Bounds bounds;
 
@@ -31,6 +34,8 @@ public class PathFinderSector : MonoBehaviour
     public bool doDebug = false;
     public Color32 debugSectorColor = new Color32(0, 255, 255, 100);
     public bool debugDrawTiles = false;
+
+    public PathFinderFlowField pathFinderFlowFieldTemplate;
     
     public void CreateSectorTileGrid()
     {
@@ -48,6 +53,8 @@ public class PathFinderSector : MonoBehaviour
         
         var rowsX = (int)floatRowsX;
         var rowsZ = (int)floatRowsZ;
+        
+        pathFinderFlowFieldTemplate = new PathFinderFlowField(sectorTileSize, rowsX, rowsZ);
 /*
 
         var specialSizeX = floatRowsX - rowsX;
@@ -96,7 +103,9 @@ public class PathFinderSector : MonoBehaviour
                             sector = this
                         };
                         tiles[x, z] = tile;
-                    
+
+                        pathFinderFlowFieldTemplate.flowField[x][z] = Vector3.zero;
+                        
                         sectorTiles.Add(tile);
                     
                         // TODO needed?
@@ -159,6 +168,28 @@ public class PathFinderSector : MonoBehaviour
                 }
             }
         }
+
+        sectorTileGrid = tiles;
+    }
+    
+    public PathFinderSectorTile GetNearestNode(Vector3 position)
+    {
+        PathFinderSectorTile nearestNode = null;
+        var nearestNodeDist = 0f;
+        
+        if (sectorTiles == null || sectorTiles.Count <= 0) return null;
+        
+        foreach (var tile in sectorTiles)
+        {
+            var dist = Vector3.Distance(tile.position, position);
+            
+            if (!(dist < nearestNodeDist) && nearestNode != null) continue;
+            
+            nearestNode = tile;
+            nearestNodeDist = dist;
+        }
+
+        return nearestNode;
     }
 
     public bool ContainsPoint(Vector3 point)
