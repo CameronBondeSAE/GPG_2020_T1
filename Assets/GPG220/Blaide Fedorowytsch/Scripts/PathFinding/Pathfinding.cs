@@ -8,6 +8,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
     {
         private NodeGrid grid;
         public Transform seeker, target;
+        
 
         private void Awake()
         {

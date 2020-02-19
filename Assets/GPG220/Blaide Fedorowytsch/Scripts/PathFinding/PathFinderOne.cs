@@ -167,7 +167,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                     }
                 }
             }
-            
+
+            return surroundingNodes;
         }
 
 
