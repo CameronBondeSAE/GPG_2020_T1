@@ -8,6 +8,7 @@ using UnityEngine;
 using Debug = UnityEngine.Debug;
 using Random = UnityEngine.Random;
 
+
 public class StatemachMinion : UnitBase
 {
     public float wanderTime;
@@ -35,10 +36,23 @@ public class StatemachMinion : UnitBase
         currentState = States.Moving;
     }
 
+    public override void OnDeSelected()
+    {
+        base.OnDeSelected();
+        currentState = States.Wander;
+        Debug.Log("Wandering");
+    }
 
 
     void Update()
     {
+        if (GetComponent<Health>().currentHealth <= 0)
+        {
+            currentState = States.Dead;
+        }
+
+        Physics.Raycast(transform.position, transform.forward, 6f);
+        
         switch (currentState)
         {
             case States.Wander:
@@ -68,20 +82,19 @@ public class StatemachMinion : UnitBase
                 break;
             case States.Dead:
                 // Destroys unit if State is set to Dead.
-                print("Unit is Dead");
-
+                Debug.Log( gameObject.name + "Unit is Dead");
+               
                 Destroy(gameObject);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
-
-         void Die()
-        {
-            currentState = States.Dead;
-        }
-
-
+        
+        
+    }
+    void Die()
+    {
+        currentState = States.Dead;
     }
 
 // picks random direction to wander in every time wanderTime = 0
