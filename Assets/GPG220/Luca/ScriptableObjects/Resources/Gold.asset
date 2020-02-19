@@ -25,3 +25,6 @@ MonoBehaviour:
   resourceName: Gold
   resourceDescription: 
   resourceThumbnail: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  resourcePrefab: {fileID: 5364050421391014370, guid: 3d4be94da64c6294e9e63e78d67b5d04,
+    type: 3}
+  loadResource: 1
