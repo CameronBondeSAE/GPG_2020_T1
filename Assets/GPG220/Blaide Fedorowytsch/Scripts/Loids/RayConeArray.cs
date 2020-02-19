@@ -13,7 +13,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Loids
         public float rayLength;
         public RaycastHit[] hit;
         public Ray[] ray;
-
+        private Vector3 endCentre;
         [System.Serializable] public class RayConeArrayHit: UnityEvent<RayConeArrayHitData> {}
         [SerializeField] RayConeArrayHit rayConeArrayHit;
         // Start is called before the first frame update
@@ -36,28 +36,29 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Loids
             }
             if (hitThisUpdate == true)
             {
-                RayConeArrayHitData rayConeArrayHitData = new RayConeArrayHitData(ray,hit);
+                RayConeArrayHitData rayConeArrayHitData = new RayConeArrayHitData(ray,hit,endCentre);
                 rayConeArrayHit.Invoke(rayConeArrayHitData);
             }
         }
 
         private void UpdateRayArrayStructure()
         {
+
             ray = new Ray[resolution];
             hit = new RaycastHit[resolution];
-            //transform.forward;
-            List<Vector3> localEndpoints = ConstructPolygon(resolution, rayEndRadius, transform.forward * rayLength);
-            
+
+            endCentre = transform.forward * rayLength;
+            List<Vector3> localEndpoints = ConstructPolygon(resolution, rayEndRadius, endCentre, transform.rotation);
             // create a circle at the end of line from centre to rayend along transform forward.
             
             for (int r = 0; r < resolution; r++)
             {
                 ray[r].direction = localEndpoints[r];
-                ray[r].origin = transform.position + (localEndpoints[r]*rayStartlength);
+                ray[r].origin = transform.position + (ray[r].direction*rayStartlength);
             }
         }
         
-        List<Vector3> ConstructPolygon(int vertexNumber, float radius, Vector3 centerPos)
+        List<Vector3> ConstructPolygon(int vertexNumber, float radius, Vector3 centerPos,Quaternion rotation)
         {
             List<Vector3> points = new List<Vector3>();
             float angle = 2 * Mathf.PI / vertexNumber;
@@ -70,23 +71,41 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Loids
                     new Vector4(0, 0, 0, 1));
                 Vector3 initialRelativePosition = new Vector3(0, radius, 0);
                 //lineRenderer.SetPosition(i, centerPos + rotationMatrix.MultiplyPoint(initialRelativePosition));
-                points.Add(centerPos + rotationMatrix.MultiplyPoint(initialRelativePosition));
+                Vector3 point = centerPos + rotationMatrix.MultiplyPoint(initialRelativePosition);
+                point = rotation * (point - centerPos) + centerPos;
+                points.Add(point);
+                
+              
             }
             return points;
         }
         
         private void OnDrawGizmos()
         {
-            Gizmos.DrawLine(transform.position, transform.forward * rayLength);
+            Gizmos.color = Color.blue;
+            
+            Gizmos.DrawLine(transform.position, transform.position + transform.forward * rayLength);
+            Gizmos.DrawSphere(transform.position + transform.forward * rayLength,0.1f);
 
             if (hit != null && ray != null)
             {
-                for (int r = 0; r < resolution; r++)
+                for (int r = 0; r < ray.Length ; r++)
                 {
-
                     Gizmos.color = (hit[r].collider == null) ? Color.white : Color.red;
-                    Gizmos.DrawLine(ray[r].origin,
-                        (hit[r].collider != null) ? hit[r].point : ray[r].direction * rayLength);
+
+                    if (hit[r].collider != null)
+                    {
+                        Gizmos.DrawLine(ray[r].origin,hit[r].point);  
+                        Gizmos.DrawSphere(hit[r].point,0.1f);
+
+                    }
+                    else
+                    {
+                        Gizmos.DrawRay(ray[r].origin,ray[r].direction * rayLength);
+                        Gizmos.DrawSphere(ray[r].GetPoint(rayLength), 0.1f);
+
+                    }
+
                 }
             }
         }
@@ -96,10 +115,12 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Loids
     {
         public Ray[] ray;
         public RaycastHit[] hit;
-        public RayConeArrayHitData(Ray[]_ray,RaycastHit[]_hit)
+        public Vector3 endCenter;
+        public RayConeArrayHitData(Ray[]_ray,RaycastHit[]_hit,Vector3 _endCenter)
         {
             ray = _ray;
             hit = _hit;
+            endCenter = _endCenter;
         }
     }
 
