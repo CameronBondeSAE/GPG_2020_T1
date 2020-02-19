@@ -142,12 +142,12 @@ public class PathFinderController : MonoBehaviour
         
         var tmpDebugPathList = new List<PathFinderSectorTileData>();
 
-        var startTileData = new PathFinderSectorTileData(GetNearestNode(startPos));
-        
+        var startNode = GetNearestNode(startPos);
+        if(startNode == null) yield break;
+        var startTileData = new PathFinderSectorTileData(startNode);
         var targetTile = GetNearestNode(targetPos);
 
-        if (startTileData.tile == null || targetTile == null)
-            yield break;
+        if (startTileData.tile == null || targetTile == null) yield break;
         
         startTileData.GCost = 0;
         startTileData.HCost = PathFinderSectorTileData.CalculateHCost(startTileData.tile, targetTile);
@@ -197,6 +197,7 @@ public class PathFinderController : MonoBehaviour
                 path.tileDataList.TryGetValue(neighbourTile, out var neighbourTileData);
                 if(neighbourTileData == null)
                     neighbourTileData = new PathFinderSectorTileData(neighbourTile);
+                currentTileData.neighbourTiles.Add(neighbourTileData);
                 
                 if(redTilesData.Contains(neighbourTileData)) continue;
 
@@ -262,7 +263,7 @@ public class PathFinderController : MonoBehaviour
             if (i == path.tilePath.Count-1 || path.tilePath[i+1].tile.sector != currentTileData.tile.sector)
             {
                 PathFinderFlowField secFlowField;
-
+                
                 if (!flowFields.ContainsKey(currentTileData.tile.sector))
                 {
                     secFlowField = (PathFinderFlowField) currentTileData.tile.sector.pathFinderFlowFieldTemplate?.Clone();
@@ -338,9 +339,15 @@ public class PathFinderController : MonoBehaviour
     
     public IEnumerator GenerateVectorField(PathFinderSectorTileData currentTileData, PathFinderSector sector, PathFinderPath path)
     {
-        if (currentTileData == null || !currentTileData.flowFieldDirection.Equals(Vector3.negativeInfinity))
+        if (currentTileData?.tile == null || !currentTileData.flowFieldDirection.Equals(Vector3.negativeInfinity))
             yield break;
 
+        /*if (currentTileData.lastTile != null && currentTileData.lastTile.sector != currentTileData.tile.sector)
+        {
+            currentTileData.lastTileData.flowFieldDirection =
+                currentTileData.lastTile.position - currentTileData.GetPosition();
+        }*/
+        
         // Calculate Flow Field Direction
         PathFinderSectorTileData leftTileData = null, rightTileData = null, topTileData = null, bottomTileData = null;
         PathFinderSectorTile leftTile = currentTileData.tile.GetLeftTile(),

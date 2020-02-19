@@ -496,7 +496,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 181940562}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 23.954348, y: 49.364918, z: -49.629044}
+  m_LocalPosition: {x: 23.954348, y: 49.364918, z: -54.19}
   m_LocalScale: {x: 4.8108, y: 3.3823, z: 11.339}
   m_Children: []
   m_Father: {fileID: 1508375978}
@@ -707,7 +707,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 307105683}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.86, y: 0.2, z: 3.28}
+  m_LocalPosition: {x: 36.55, y: 0.2, z: 36.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1181,7 +1181,7 @@ MonoBehaviour:
   tileObjectPrefab: {fileID: 4367888579796516851, guid: 74bc25ec0bbe5484d9f20db3bb79a9a0,
     type: 3}
   borderTileObjects: []
-  doDebug: 0
+  doDebug: 1
   debugSectorColor:
     serializedVersion: 2
     rgba: 1694498560
@@ -3223,7 +3223,7 @@ MonoBehaviour:
   tileObjectPrefab: {fileID: 4367888579796516851, guid: 74bc25ec0bbe5484d9f20db3bb79a9a0,
     type: 3}
   borderTileObjects: []
-  doDebug: 0
+  doDebug: 1
   debugSectorColor:
     serializedVersion: 2
     rgba: 1677765119

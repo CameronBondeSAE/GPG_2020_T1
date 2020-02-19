@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GPG220.Luca.Scripts.Pathfinding
@@ -40,6 +41,8 @@ namespace GPG220.Luca.Scripts.Pathfinding
         public float fCost = -1; // gCost + hCost
         public PathFinderSectorTile lastTile;
         public PathFinderSectorTileData lastTileData;
+        
+        public readonly List<PathFinderSectorTileData> neighbourTiles = new List<PathFinderSectorTileData>();
     
         // FlowField stuff
         public float flowFieldDistanceToTarget = -1f;
