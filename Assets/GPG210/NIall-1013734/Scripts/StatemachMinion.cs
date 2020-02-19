@@ -71,6 +71,9 @@ public class StatemachMinion : UnitBase
 
                 break;
             case States.Moving:
+                
+                transform.Translate(Vector3.forward * wanderSpeed);
+                
                 if (unitlvlup.Kills <= 3)
                 {
                     // increase Unit speed/attack by unitLevelup Kills divided by 6.

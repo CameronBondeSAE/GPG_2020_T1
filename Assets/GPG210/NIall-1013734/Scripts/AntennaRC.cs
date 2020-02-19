@@ -5,17 +5,27 @@ using UnityEngine;
 
 public class AntennaRC : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private Transform t;
+    public float distance;
+    public float turnSpeed;
+    public Rigidbody rb;
     void Start()
     {
-        
+        t = GetComponent<Transform>();
+        rb = GetComponent<Rigidbody>();
+
     }
 
-    // Update is called once per frame
-    void Update()
+
+    void FixedUpdate()
     {
-        Physics.Raycast(transform.position, Vector3.forward, 10f);
-        
+        RaycastHit hit;
+        if (Physics.Raycast(t.position, t.forward, distance))
+        {
+            Debug.Log(gameObject.name + "Detected a wall");
+           rb.AddTorque(0, turnSpeed, 0);
+            
+        }
         
     }
 }
