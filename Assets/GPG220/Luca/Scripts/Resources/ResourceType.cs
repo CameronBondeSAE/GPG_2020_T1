@@ -34,6 +34,9 @@ namespace GPG220.Luca.Scripts.Resources
     
         [SerializeField] private Sprite resourceThumbnail;
         public Sprite ResourceThumbnail => resourceThumbnail;
+
+        [SerializeField] private GameObject resourcePrefab;
+        public GameObject ResourcePrefab => resourcePrefab;
         
         [SerializeField, PropertyTooltip("If set to true, the property will be loaded in-game.")]
         private bool loadResource = true;

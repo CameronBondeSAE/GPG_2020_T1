@@ -1,8 +1,12 @@
-﻿using System;
+﻿
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
-using UnityEngine.Events;
+using Sirenix.Utilities;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace GPG220.Luca.Scripts.Resources
 {
@@ -19,7 +23,12 @@ namespace GPG220.Luca.Scripts.Resources
         public event OnResQuantityChangeDel onResQuantityChanged;
 
         #endregion
-        
+
+        public float dropOutAcceleration = 4f;
+        [Range(0,90)]
+        public float dropOutAngle = 30;
+        public int dropOutMaxStack = 5;
+        public float timeBetweenDropOuts = 1;
         
         /// <summary>
         /// Stores the amounts of each resource in this inventory. If a resource isn't present in the dictionary
@@ -58,6 +67,50 @@ namespace GPG220.Luca.Scripts.Resources
             
             if(_resources == null)
                 _resources = new Dictionary<ResourceType, int>();
+
+            var health = GetComponent<Health>();
+            // TODO Register to onDeath event
+            /*if(health != null)
+                health.deathEvent*/
+        }
+
+        [Button("Drop All Items")]
+        public void DropAllItems()
+        {
+            StartCoroutine(DropItems());
+        }
+
+        private IEnumerator DropItems()
+        {
+            foreach (var resType in GetResourceQuantities())
+            {
+                var startPos = transform.position;
+                startPos.y += 1.5f;
+
+                var stacks = dropOutMaxStack <= 0 ? 1 : Mathf.CeilToInt((float)resType.Value / dropOutMaxStack);
+                for (var i = 0; i < stacks; i++)
+                {
+                    var go = resType.Key.ResourcePrefab == null ? GameObject.CreatePrimitive(PrimitiveType.Cube) : Instantiate(resType.Key.ResourcePrefab);
+                    go.transform.position = startPos;
+                    
+                    var amtToTake = RemoveResources(resType.Key, dropOutMaxStack, false);
+                    var rpu = go.GetComponent<ResourcePickUp>() ?? go.AddComponent<ResourcePickUp>();
+                    var rpuInventory = rpu?.inventory ?? rpu?.GetComponent<Inventory>();
+                    var amtTaken = rpuInventory?.AddResources(resType.Key, amtToTake) ?? 0;
+
+                    if (amtTaken < amtToTake)
+                        AddResources(resType.Key, amtToTake - amtTaken);
+
+                    var rb = go.GetComponent<Rigidbody>();
+                    var dropOutForce = Quaternion.Euler(Random.Range(-dropOutAngle,dropOutAngle),0,Random.Range(-dropOutAngle,dropOutAngle)) * (dropOutAcceleration * rb.mass * Vector3.up);
+                    rb.AddForce(dropOutForce, ForceMode.Impulse);
+                    
+                    yield return new WaitForSeconds(timeBetweenDropOuts);
+                }
+
+            }
+
+            yield return 0;
         }
 
 
@@ -122,6 +175,11 @@ namespace GPG220.Luca.Scripts.Resources
                 onResQuantityChanged?.Invoke(this,resourceType,amt);
             
             return amt;
+        }
+
+        public bool IsEmpty()
+        {
+            return _resources.Sum(res => res.Value) == 0;
         }
 
         /// <summary>
