@@ -158,7 +158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 0
+    SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 
@@ -168,10 +168,9 @@ MonoBehaviour:
     SerializationNodes: []
   unitStats: {fileID: 0}
   inventory: {fileID: 0}
-  wanderTime: 0
-  wanderSpeed: 0
+  UnitSpeed: 0.3
   unitlvlup: {fileID: 0}
-  currentState: 0
+  currentState: 1
 --- !u!114 &1404205552856636576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,7 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3266ec32201a0694a8a80c5131a2d2ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 10
+  startingHealth: 50
   currentHealth: 0
 --- !u!114 &1530850841574439630
 MonoBehaviour:
