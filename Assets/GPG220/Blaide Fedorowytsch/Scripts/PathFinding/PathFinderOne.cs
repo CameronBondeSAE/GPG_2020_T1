@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.WSA;
 
 namespace GPG220.Blaide_Fedorowytsch.Scripts
 {

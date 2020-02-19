@@ -11,24 +11,34 @@ public class Changecolour : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GetComponent<Light>().color = lightcolour;
-        timer = 1f;
+        
+        
+            GetComponent<Light>().color = lightcolour;
+            timer = 1f;
+            
+        
+        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        timer -= Time.deltaTime;
-
-        if (timer < 0)
+        
+        if (isServer)
         {
-            
-            lightcolour = Random.ColorHSV();
-            
-            GetComponent<Light>().color = lightcolour;
-            timer = 1;
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+
+                lightcolour = Random.ColorHSV();
+
+            }
         }
 
+        if (isClient)
+        {
+            GetComponent<Light>().color = lightcolour;
+        }
 
     }
     
