@@ -9,6 +9,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
         public Vector2 gridWorldSize;
         public float nodeRadius;
         private Node[,] grid;
+        public LayerMask layerMask;
         
 
         private float nodeDiamater;
@@ -55,7 +56,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
                 {
                     Vector3 worldPoint = worldBottomLeft + Vector3.right * (x * nodeDiamater + nodeRadius) +
                                          Vector3.forward * (y * nodeDiamater + nodeRadius);
-                    bool walkable = !Physics.CheckSphere(worldPoint, nodeRadius);
+                    bool walkable = !Physics.CheckSphere(worldPoint, nodeRadius,layerMask);
 
                     grid[x, y] = new Node(walkable, worldPoint,x,y);
                 }  

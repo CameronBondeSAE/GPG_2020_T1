@@ -144,35 +144,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         {
                 foreach (PathNode surroundingNode in SurroundingNodes(queryNode))
                 {
-                    float gCostAddition;
-                    if (surroundingNode.gridPosition.y != startNode.gridPosition.y &&
-                        surroundingNode.gridPosition.x != startNode.gridPosition.x)
-                    {
-                        
-                        gCostAddition = 14; //this would be a diagonal move.
-                    }
-                    else
-                    {
-                        gCostAddition = 10; //this would be a non-diagonal move.
-                    }
-
-                    if (surroundingNode.gCost < Mathf.Infinity &&
-                        surroundingNode.gCost > queryNode.gCost + gCostAddition)
-                    {
-
-                    }
-                    else
-                    {
-                        if (surroundingNode.parentNode != null)
-                        {
-                            surroundingNode.gCost = gCostAddition + surroundingNode.parentNode.gCost;
-                        }
-                        else
-                        {
-                            //surroundingNode.
-                        }
-                    }
-                    newlyOpenedNodes.Add(surroundingNode);
+                    
                 }
 
                 return newlyOpenedNodes;
@@ -195,8 +167,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                     }
                 }
             }
-
-            return surroundingNodes;
+            
         }
 
 
