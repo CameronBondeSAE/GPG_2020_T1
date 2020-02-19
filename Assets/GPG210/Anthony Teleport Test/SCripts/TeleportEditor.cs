@@ -13,6 +13,8 @@ public class TeleportEditor : UnitBase
     public float moveSpeed;
     public Transform currentTarget;
 
+    private Rigidbody rb;
+
 
     public override void OnSelected()
     {
@@ -35,7 +37,7 @@ public class TeleportEditor : UnitBase
 
     void Update()
     {
-        
+        rb.AddRelativeForce(0,0,moveSpeed);
     }
 
 
@@ -59,23 +61,8 @@ public class TeleportEditor : UnitBase
         Debug.Log(("Player is Walking towards targets"));
         //player.transform.position = Vector3.MoveTowards(player.transform.position, currentTarget.position, moveSpeed);
 
-        WalkToClosest();
+       
     }
 
-    void WalkToClosest()
-    {
-        float distanceToClosestEnemy = Mathf.Infinity;
-
-        Enemy[] allEnemies = GameObject.FindObjectsOfType<Enemy>();
-
-        foreach (Enemy currentEnemy in allEnemies)
-        {
-            float distanceToEnemy = (currentEnemy.transform.position - this.transform.position).sqrMagnitude;
-            if (distanceToEnemy < distanceToClosestEnemy)
-            {
-                distanceToClosestEnemy = distanceToEnemy;
-                closestEnemy = currentEnemy;
-            }
-        }
-    }
+    
 }
