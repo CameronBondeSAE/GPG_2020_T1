@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Mirror;
 namespace Stephen
 {
 
 
 
-    public class Move : MonoBehaviour
+    public class Move : NetworkBehaviour
     {
         private Rigidbody rb;
         
@@ -20,21 +20,28 @@ namespace Stephen
         // Update is called once per frame
         void Update()
         {
-            if (Input.GetKeyDown(("W")))
+            if (isLocalPlayer)
             {
-                rb.AddRelativeForce(Vector3.forward);
-            }
-            if (Input.GetKeyDown(("s")))
-            {
-                rb.AddRelativeForce(Vector3.back);
-            }
-            if (Input.GetKeyDown(("a")))
-            {
-                rb.AddRelativeForce(Vector3.left);
-            }
-            if (Input.GetKeyDown(("d")))
-            {
-                rb.AddRelativeForce(Vector3.right);
+                
+                if (Input.GetKeyDown(("W")))
+                {
+                    rb.AddRelativeForce(Vector3.forward);
+                }
+
+                if (Input.GetKeyDown(("s")))
+                {
+                    rb.AddRelativeForce(Vector3.back);
+                }
+
+                if (Input.GetKeyDown(("a")))
+                {
+                    rb.AddRelativeForce(Vector3.left);
+                }
+
+                if (Input.GetKeyDown(("d")))
+                {
+                    rb.AddRelativeForce(Vector3.right);
+                }
             }
         }
     }

@@ -12,13 +12,10 @@ public class Changecolour : NetworkBehaviour
     void Start()
     {
         
-        
-            GetComponent<Light>().color = lightcolour;
-            timer = 1f;
+        GetComponent<Light>().color = lightcolour;
+           
+        timer = 1f;
             
-        
-        
-
     }
 
     // Update is called once per frame
@@ -31,7 +28,6 @@ public class Changecolour : NetworkBehaviour
             {
 
                 lightcolour = Random.ColorHSV();
-
             }
         }
 
