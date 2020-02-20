@@ -12,7 +12,7 @@ using Random = UnityEngine.Random;
 public class StatemachMinion : UnitBase
 {
     public float UnitSpeed;
-    public UnitLevelUp unitlvlup;
+    private UnitLevelUp unitlvlup;
 
     public enum States
     {

@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 114733390339695892}
   - component: {fileID: 1404205552856636576}
   - component: {fileID: 1530850841574439630}
+  - component: {fileID: 68299660218663067}
   m_Layer: 0
   m_Name: RankupUnit
   m_TagString: Untagged
@@ -169,7 +170,6 @@ MonoBehaviour:
   unitStats: {fileID: 0}
   inventory: {fileID: 0}
   UnitSpeed: 0.3
-  unitlvlup: {fileID: 0}
   currentState: 0
 --- !u!114 &1404205552856636576
 MonoBehaviour:
@@ -200,6 +200,20 @@ MonoBehaviour:
   distance: 10
   turnSpeed: 80
   rb: {fileID: 54844123311866720}
+--- !u!114 &68299660218663067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1440955559183952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 874cb52109fd49e45b974084751dcfc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 5
+  damage: 5
 --- !u!1 &1686169348673056
 GameObject:
   m_ObjectHideFlags: 0
