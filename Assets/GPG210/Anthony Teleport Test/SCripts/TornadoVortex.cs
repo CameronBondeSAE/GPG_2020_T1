@@ -14,7 +14,7 @@ public class TornadoVortex : MonoBehaviour
    //Ontrigger function called every frame for every collider other that is touching the trigger
    public void OnTriggerStay(Collider other)
    {
-      if (other.gameObject.GetComponent<Rigidbody>())
+      if (other.gameObject.GetComponent<Rigidbody>() != null)
       {
          pullObj = other.gameObject;
          //if the object is pullable move it towards the tornado.

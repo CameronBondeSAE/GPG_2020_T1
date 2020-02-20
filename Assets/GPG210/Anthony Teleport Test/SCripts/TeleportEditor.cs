@@ -13,6 +13,7 @@ public class TeleportEditor : UnitBase
     //moving variables
     public float moveSpeed;
     public Transform currentTarget;
+    public int damage;
 
     private Rigidbody rb;
 
@@ -34,7 +35,7 @@ public class TeleportEditor : UnitBase
         Teleporting();
     }
 
-    Enemy closestEnemy = null;
+    
     
 //Check Death
    void Start()
@@ -47,18 +48,25 @@ public class TeleportEditor : UnitBase
        Destroy(gameObject);
    }
 
-    void Update()
-    {
-        rb.AddRelativeForce(0,0,moveSpeed);
-    }
+   
+
+   private void OnCollisionEnter(Collision other)
+   {
+       // Does the other object even have a Health component?
+       if (other.gameObject.GetComponent<Health>() != null)
+       {
+           // Do damage
+           other.gameObject.GetComponent<Health>().ChangeHealth(-damage);
+       }
+   }
 
 
     public void Teleporting()
     {
         Debug.Log("Teleporting Activated");
-        //player.transform.position = teleportTarget.transform.position;
+        player.transform.position = teleportTarget.transform.position;
 
-        player.transform.position = new Vector3(Random.Range(-Range, Range), 1, Random.Range(-Range, Range));
+        //player.transform.position = new Vector3(Random.Range(-Range, Range), 1, Random.Range(-Range, Range));
         player.SetActive(false);
         Invoke("DelayTeleport", 1); //delay the teleporter by 1 second
     }
@@ -68,13 +76,7 @@ public class TeleportEditor : UnitBase
         player.SetActive(true);
     }
 
-    public void StartWalk()
-    {
-        Debug.Log(("Player is Walking towards targets"));
-        //player.transform.position = Vector3.MoveTowards(player.transform.position, currentTarget.position, moveSpeed);
-
-       
-    }
+    
 
     
 }

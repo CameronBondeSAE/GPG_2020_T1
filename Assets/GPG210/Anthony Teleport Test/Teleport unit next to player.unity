@@ -149,12 +149,12 @@ Rigidbody:
   m_GameObject: {fileID: 27627440}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_Drag: 1.95
+  m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!1001 &390493476
 PrefabInstance:
@@ -282,7 +282,7 @@ GameObject:
   - component: {fileID: 414867581}
   - component: {fileID: 414867580}
   - component: {fileID: 414867579}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -363,6 +363,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &475419452 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2013552115246364282, guid: e8e17d5cc7b14d2409dfea474528d91b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1254078871}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &539162274
 GameObject:
   m_ObjectHideFlags: 0
@@ -638,6 +644,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Missile
       objectReference: {fileID: 0}
+    - target: {fileID: 8445865835273923261, guid: 79889639ed2a1204cb6e1cdf5ccbb139,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8445865835273923207, guid: 79889639ed2a1204cb6e1cdf5ccbb139,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -884,6 +895,22 @@ PrefabInstance:
       propertyPath: playerTarget
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 577926091930366375, guid: b2ddfa75df058774db6b0b3a4e67bbed,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 577926091930366375, guid: b2ddfa75df058774db6b0b3a4e67bbed,
+        type: 3}
+    - target: {fileID: 577926091930366375, guid: b2ddfa75df058774db6b0b3a4e67bbed,
+        type: 3}
+      propertyPath: currentTarget
+      value: 
+      objectReference: {fileID: 475419452}
+    - target: {fileID: 577926091930366375, guid: b2ddfa75df058774db6b0b3a4e67bbed,
+        type: 3}
+      propertyPath: damage
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 577926091930366368, guid: b2ddfa75df058774db6b0b3a4e67bbed, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b2ddfa75df058774db6b0b3a4e67bbed, type: 3}
@@ -954,5 +981,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2728465803196161178, guid: e8e17d5cc7b14d2409dfea474528d91b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e8e17d5cc7b14d2409dfea474528d91b, type: 3}

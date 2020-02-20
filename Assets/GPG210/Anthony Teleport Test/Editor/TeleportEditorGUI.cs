@@ -16,10 +16,7 @@ public class TeleportEditorGUI : Editor
            
         }
 
-        if (GUILayout.Button("Walk"))
-        {
-            myScript.StartWalk();
-        }
+        
             
     }
 

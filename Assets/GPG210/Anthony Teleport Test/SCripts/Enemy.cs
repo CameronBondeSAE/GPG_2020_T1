@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public GameObject blood;
+    //Check Death
     void Start()
     {
-        
+        GetComponent<Health>().deathEvent += Death;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Death()
     {
-        
+        Instantiate(blood, transform.position, Quaternion.identity);
+        Destroy(gameObject);
     }
+
 }
