@@ -10,6 +10,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Loids.Steering_Behaviours
         private void Start()
         {
             rB = GetComponent<Rigidbody>();
+            GetComponent<RayConeArray>().RayConeArrayHitEvent += OnRayHit;
         }
 
 
