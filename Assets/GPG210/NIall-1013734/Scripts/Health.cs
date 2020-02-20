@@ -25,7 +25,7 @@ using UnityEngine.Events;
             CheckForDeath();
         }
 
-        private void CheckForDeath()
+        public void CheckForDeath()
         {
             if (currentHealth <= 0 && deathEvent != null)
             {
