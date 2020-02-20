@@ -377,7 +377,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0.0703125, y: 0.0703125, z: 0.03125, w: -0.03125}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -527,7 +527,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f8208cd0f479043ada818ec5f6c4f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 80
+  damage: 9999
 --- !u!136 &1379490205
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -596,13 +596,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1379490202}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.09, y: 6.42, z: 0.11}
+  m_LocalPosition: {x: -0.09, y: 6.42, z: -1.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1450078951
+--- !u!1001 &1697572386
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -617,17 +617,17 @@ PrefabInstance:
     - target: {fileID: 370540908157501794, guid: 034d145f47743a348bfc3c6557f64867,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.01
+      value: -0.52
       objectReference: {fileID: 0}
     - target: {fileID: 370540908157501794, guid: 034d145f47743a348bfc3c6557f64867,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.2455187
+      value: 2.48
       objectReference: {fileID: 0}
     - target: {fileID: 370540908157501794, guid: 034d145f47743a348bfc3c6557f64867,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.04
+      value: -0.86
       objectReference: {fileID: 0}
     - target: {fileID: 370540908157501794, guid: 034d145f47743a348bfc3c6557f64867,
         type: 3}
@@ -669,16 +669,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7570358868819421729, guid: 034d145f47743a348bfc3c6557f64867,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 10650, guid: 0000000000000000f000000000000000, type: 0}
-    - target: {fileID: 3648155918811046637, guid: 034d145f47743a348bfc3c6557f64867,
-        type: 3}
-      propertyPath: serializationData.Prefab
-      value: 
-      objectReference: {fileID: 3648155918811046637, guid: 034d145f47743a348bfc3c6557f64867,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 034d145f47743a348bfc3c6557f64867, type: 3}

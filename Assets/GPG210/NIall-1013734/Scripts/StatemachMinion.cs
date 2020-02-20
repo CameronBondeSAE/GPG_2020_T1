@@ -29,10 +29,15 @@ public class StatemachMinion : UnitBase
         unitlvlup = GetComponent<UnitLevelUp>();
     }
 
+    void Start()
+    {
+        GetComponent<Health>().deathEvent += Die;
+    }
+
     public override void OnSelected()
     {
         base.OnSelected();
-        currentState = States.Idle;
+        currentState = States.Moving;
     }
 
     public override void OnDeSelected()
@@ -45,16 +50,12 @@ public class StatemachMinion : UnitBase
 
     void Update()
     {
-        if (GetComponent<Health>().currentHealth <= 0)
-        {
-            currentState = States.Dead;
-        }
+      
 
         switch (currentState)
         {
             case States.Idle:
-                // is Idle/Not moving.
-            transform.Translate(Vector3.forward * 0);
+                // is Idle/Not moving
 
                 break;
             case States.Moving:
@@ -86,7 +87,6 @@ public class StatemachMinion : UnitBase
     {
         currentState = States.Dead;
     }
-
-// picks random direction to wander in every time wanderTime = 0
+    
 
 }
