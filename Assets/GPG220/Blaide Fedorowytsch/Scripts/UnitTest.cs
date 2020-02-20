@@ -13,8 +13,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
     public class UnitTest : TestUnitBase
     {
 
-        //Networking
-        [SyncVar] public Vector3 position;
+       
+       
         
         
         public bool moving = false;
@@ -33,14 +33,18 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 
             if (isServer)
             {
-                position = transform.position;
-            }
-
-            if (isClient)
-            {
-                transform.position = position;
+                RpcMove(transform.position);
             }
             
+            
+        }
+
+        [ClientRpc]
+        public void RpcMove(Vector3 pos)
+        {
+            
+            
+            transform.position = pos;
         }
 
         public override void OnSelected()
