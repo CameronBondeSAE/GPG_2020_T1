@@ -237,7 +237,7 @@ GameObject:
   - component: {fileID: 552069973}
   - component: {fileID: 552069972}
   - component: {fileID: 552069971}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -394,13 +394,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 760107247}
-  m_LocalRotation: {x: 0.34704462, y: -0, z: -0, w: 0.9378486}
-  m_LocalPosition: {x: 22.5, y: 10.73, z: -20.38}
+  m_LocalRotation: {x: 0.10228716, y: 0.6996695, z: -0.10228719, w: 0.6996695}
+  m_LocalPosition: {x: -29.9, y: 16.9, z: 29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 40.613003, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 16.635, y: 90.00001, z: 0}
 --- !u!1 &1017739196
 GameObject:
   m_ObjectHideFlags: 0
@@ -886,7 +886,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1270645001}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 21.9, y: -12.5, z: -6.14}
+  m_LocalPosition: {x: 21.9, y: -12.5, z: -3.29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -920,22 +920,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45dd639d79fa48b4dac666ac253f6900, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes: []
-  unitStats: {fileID: 0}
-  inventory: {fileID: 0}
-  tornadoTarget: {fileID: 0}
-  player: {fileID: 0}
-  Range: -10
-  moveSpeed: 0
-  currentTarget: {fileID: 0}
 --- !u!1 &1341035389
 GameObject:
   m_ObjectHideFlags: 0
