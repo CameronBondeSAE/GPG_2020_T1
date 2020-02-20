@@ -9,14 +9,10 @@ using UnityEngine.Events;
 
         public int startingHealth;
 
-        [SerializeField] public int currentHealth;
+        [SerializeField]
+        private int currentHealth;
 
-        UnityEvent deathEvent = new UnityEvent();
-
-        public void Start()
-        {
-            deathEvent.AddListener(CheckForDeath);
-        }
+        public event Action deathEvent;
 
         private void Awake()
         {
