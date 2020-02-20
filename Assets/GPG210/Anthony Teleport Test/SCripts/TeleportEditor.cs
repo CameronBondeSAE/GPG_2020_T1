@@ -31,6 +31,12 @@ public class TeleportEditor : UnitBase
     public override void OnExecuteAction(Vector3 worldPosition, GameObject g)
     {
         base.OnExecuteAction(worldPosition, g);
+
+        if (g != null)
+        {
+            currentTarget = g.transform;
+        }
+        
         Teleporting();
     }
 
@@ -63,7 +69,7 @@ public class TeleportEditor : UnitBase
     public void Teleporting()
     {
         Debug.Log("Teleporting Activated");
-        player.transform.position = teleportTarget.transform.position;
+        player.transform.position = currentTarget.transform.position;
 
         //player.transform.position = new Vector3(Random.Range(-Range, Range), 1, Random.Range(-Range, Range));
         player.SetActive(false);
