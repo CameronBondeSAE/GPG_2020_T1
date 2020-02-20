@@ -29,6 +29,11 @@ public class StatemachMinion : UnitBase
         unitlvlup = GetComponent<UnitLevelUp>();
     }
 
+    void Start()
+    {
+        GetComponent<Health>().deathEvent += Die;
+    }
+
     public override void OnSelected()
     {
         base.OnSelected();
