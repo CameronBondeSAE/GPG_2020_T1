@@ -3,39 +3,34 @@ using UnityEngine;
 
 namespace GPG220.Blaide_Fedorowytsch.Scripts.Loids.Steering_Behaviours
 {
-    public class Avoidance : MonoBehaviour
+    public class Avoidance : SteeringBehaviourBase
     {
-        private Rigidbody rB;
         public float forceMultiplier;
-        private void Start()
+        public override void Start()
         {
-            rB = GetComponent<Rigidbody>();
+            base.Start();
+            GetComponent<RayConeArray>().RayConeArrayHitEvent += OnRayHit;
         }
 
 
+
         // Avoiding 
-        public void OnRayHit(RayConeArrayHitData rayConeArrayHitData)
+        private void OnRayHit(RayConeArrayHitData rayConeArrayHitData)
         {
             for (int r = 0; r < rayConeArrayHitData.coneRay.Length; r++)
             {
                 if (rayConeArrayHitData.coneHit[r].collider != null)
                 {
-
-
-                   RaycastHit hit = rayConeArrayHitData.coneHit[r];
+                    RaycastHit hit = rayConeArrayHitData.coneHit[r];
                    Ray centreLine = new Ray(transform.position,transform.forward);
                    rB.AddForceAtPosition(((centreLine.GetPoint(hit.distance) - hit.point )* 1/hit.distance) * forceMultiplier /rayConeArrayHitData.coneRay.Length,hit.point);
-                   
                 }
             }
-
             if (rayConeArrayHitData.centreHit.collider != null)
             {
                 rB.AddForce(-((transform.forward) * forceMultiplier*10 * 15/rayConeArrayHitData.centreHit.distance));
                 rB.AddTorque(transform.right * forceMultiplier*10 * 2/rayConeArrayHitData.centreHit.distance);
             }
-
         }
-
     }
 }
