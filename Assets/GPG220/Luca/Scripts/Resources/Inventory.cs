@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,10 +25,16 @@ namespace GPG220.Luca.Scripts.Resources
 
         #endregion
 
+        
+        [FoldoutGroup("Drop Settings")]
+        public bool dropInventoryOnDeath = true;
+        [FoldoutGroup("Drop Settings")]
         public float dropOutAcceleration = 4f;
-        [Range(0,90)]
+        [FoldoutGroup("Drop Settings"),Range(0,90)]
         public float dropOutAngle = 30;
+        [FoldoutGroup("Drop Settings")]
         public int dropOutMaxStack = 5;
+        [FoldoutGroup("Drop Settings")]
         public float timeBetweenDropOuts = 1;
         
         /// <summary>
@@ -70,8 +77,16 @@ namespace GPG220.Luca.Scripts.Resources
 
             var health = GetComponent<Health>();
             // TODO Register to onDeath event
-            /*if(health != null)
-                health.deathEvent*/
+            if (dropInventoryOnDeath && health != null)
+                health.deathEvent += DropAllItems;
+        }
+
+        private void OnDestroy()
+        {
+            var health = GetComponent<Health>();
+            // TODO Register to onDeath event
+            if (dropInventoryOnDeath && health != null)
+                health.deathEvent -= DropAllItems;
         }
 
         [Button("Drop All Items")]

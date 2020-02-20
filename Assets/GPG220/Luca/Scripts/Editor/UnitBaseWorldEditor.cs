@@ -1,11 +1,15 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
+using GPG220.Luca.Scripts.Resources;
 using GPG220.Luca.Scripts.Unit;
+using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Experimental.PlayerLoop;
+using UnityEngine.UI;
 
 namespace GPG220.Luca.Scripts.Editor
 {
@@ -45,6 +49,8 @@ namespace GPG220.Luca.Scripts.Editor
 
         private string[] unitBaseSubTypes;
         
+        private List<ResourceType> _resourceTypes = new List<ResourceType>();
+        
         // Filter Selections
         private LayerMask unitBaseSubTypeMask = -1;
         private SelectionFilter selectionFilter = SelectionFilter.AllUnits;
@@ -60,8 +66,9 @@ namespace GPG220.Luca.Scripts.Editor
         void OnEnable()
         {
             LoadUnitBaseSubTypes();
-            position = new Rect(200,200,600,600);
-            lastWindowSize = new Vector2(600,600);
+            LoadResourceTypes();
+            position = new Rect(200,200,800,400);
+            lastWindowSize = new Vector2(800,400);
             
 
             unitListAreaMaxSize.x = position.width - infoListAreaMinSize.x;
@@ -69,7 +76,7 @@ namespace GPG220.Luca.Scripts.Editor
             infoListAreaMaxSize.x = position.width - unitListAreaMinSize.x;
             infoListAreaMaxSize.y = unitListAreaMaxSize.y;
             
-            SetUnitListAreaSize(position.width/3 * 2);
+            SetUnitListAreaSize(position.width/5 * 3);
             //SetInfoListAreaSize(position.width/3);
             
             /*
@@ -86,6 +93,11 @@ namespace GPG220.Luca.Scripts.Editor
             UpdateFilteredList();
         }
 
+        private void LoadResourceTypes()
+        {
+            _resourceTypes = ResourceType.GetAllResources();
+        }
+
         // TODO Hacky
         private void LoadUnitBaseSubTypes()
         {
@@ -96,10 +108,27 @@ namespace GPG220.Luca.Scripts.Editor
 
             //unitBaseSubTypes = (new string[] {"All Unit Types"}).Union(unitBaseSubTypes).ToArray();
         }
+        
 
         private void Awake()
         {
-            
+            EditorApplication.playModeStateChanged += OnPlayModeState;
+        }
+
+        private void OnPlayModeState(PlayModeStateChange state)
+        {
+            switch (state)
+            {
+                case PlayModeStateChange.EnteredEditMode:
+                case PlayModeStateChange.EnteredPlayMode:
+                    LoadAllUnits();
+                    LoadSelectedUnits();
+                    UpdateFilteredList();
+                    break;
+                case PlayModeStateChange.ExitingEditMode:
+                case PlayModeStateChange.ExitingPlayMode:
+                    break;
+            }
         }
 
 
@@ -107,7 +136,7 @@ namespace GPG220.Luca.Scripts.Editor
         {
             if(CheckWindowSizeChanged())
                 OnWindowResize();
-            
+
             
             EditorGUILayout.BeginVertical();
             DrawHeader();
@@ -129,6 +158,7 @@ namespace GPG220.Luca.Scripts.Editor
             EditorGUILayout.EndVertical();
             
             Repaint(); //TODO used?
+            CaptureUnitSelection();
             
             lastWindowSize.x = position.width;
             lastWindowSize.y = position.height;
@@ -189,16 +219,56 @@ namespace GPG220.Luca.Scripts.Editor
             filteredUnits = newList?.ToArray();
         }
 
-        Color32 listElementEvenColor = new Color32(230,230,230,255);
-        Color32 listElementUnevenColor = new Color32(150,150,150,255);
+        private int selectedIndex = -1;
+
+        private readonly Color32 _listElementEvenColor = new Color32(230,230,230,255);
+        private readonly Color32 _listElementUnevenColor = new Color32(150,150,150,255);
+        private readonly Color32 _listElementHighlightedColor = new Color32(200,200,0,255);
+
+        private readonly Dictionary<int,Rect> _unitEntryRects = new Dictionary<int,Rect>();
         private void DrawUnitListElement(UnitBase unit, int index = 0)
         {
             var style = new GUIStyle {};
             //style.normal.background = MakeTex((int)unitListAreaRect.width, (int)unitListAreaRect.height, infoBoxBackgroundColor);
             var r = EditorGUILayout.BeginHorizontal(style);
-            GUI.DrawTexture(r, MakeTex((int)unitListAreaRect.width, (int)unitListAreaRect.height, index%2 == 0?listElementEvenColor:listElementUnevenColor), ScaleMode.StretchToFill);
-            EditorGUILayout.LabelField("Unit ... "+unit.GetType());
+            GUI.DrawTexture(r, MakeTex((int)unitListAreaRect.width, (int)unitListAreaRect.height, (selectedIndex == index ? _listElementHighlightedColor : (index%2 == 0 ? _listElementEvenColor :_listElementUnevenColor))), ScaleMode.StretchToFill);
+            EditorGUILayout.LabelField("Player [X]", GUILayout.MaxWidth(80));
+            EditorGUILayout.LabelField("("+unit.GetType().Name+")", GUILayout.MaxWidth(150));
+
+            var health = unit.GetComponent<Health>();
+            EditorGUILayout.LabelField("Health: "+(health != null?"[X]/[Max]":"N/A"), GUILayout.MaxWidth(130)); // TODO No access to health currently...
+            
+            if (GUILayout.Button("Go To", EditorStyles.miniButtonLeft))
+            {
+                EditorGUIUtility.PingObject(unit);
+                var activeSelection = Selection.activeGameObject;
+                Selection.activeGameObject = unit.gameObject;
+                SceneView.lastActiveSceneView.FrameSelected();
+                
+                Selection.activeGameObject = activeSelection;
+            }
+            if (GUILayout.Button("Follow", EditorStyles.miniButtonMid))
+            {
+                Selection.activeGameObject = unit.gameObject;
+                SceneView.FrameLastActiveSceneViewWithLock();
+            }
+
+            if (health == null)
+                GUI.enabled = false;
+            GUIStyle killBtnStyle = new GUIStyle(EditorStyles.miniButtonRight);
+            killBtnStyle.normal.background = MakeTex((int) unitListAreaRect.width, (int) unitListAreaRect.height,
+                new Color32(150, 0, 0, 255));
+            killBtnStyle.normal.textColor = Color.white;
+            killBtnStyle.fontStyle = FontStyle.Bold;
+            if (GUILayout.Button("Kill", killBtnStyle) && health != null)
+            {
+                health.ChangeHealth(health.startingHealth * -10); // TODO Can't get current health due to visibility ....
+            }
+            GUI.enabled = true;
+                
+            
             EditorGUILayout.EndHorizontal();
+            _unitEntryRects.Add(index, r);
         }
 
         private void DrawHeader()
@@ -278,7 +348,7 @@ namespace GPG220.Luca.Scripts.Editor
             gStyle.margin.bottom = infoBoxPaddingF;
             //gStyle.stretchHeight = true;
             var viewOptions = new GUILayoutOption[2]{GUILayout.ExpandHeight(true), GUILayout.Width(unitListAreaRect.width)};
-            EditorGUILayout.BeginVertical(gStyle,viewOptions);
+            var newListAreaRect = EditorGUILayout.BeginVertical(gStyle,viewOptions);
             
             
              
@@ -290,12 +360,18 @@ namespace GPG220.Luca.Scripts.Editor
             unitListScrollPos = GUILayout.BeginScrollView(unitListScrollPos,sStyle,scrollViewOptions);
             /////////////// UNIT LIST CONTENT START
 
+            _unitEntryRects.Clear();
             if (filteredUnits != null && filteredUnits.Length > 0)
             {
+                var currentActualIndex = 0;
                 for (int i = 0; i < filteredUnits.Length; i++)
                 {
                     if (allUnits[i] != null)
-                        DrawUnitListElement(filteredUnits[i],i);
+                    {
+                        DrawUnitListElement(filteredUnits[i],currentActualIndex);
+                        currentActualIndex++;
+                    }
+                        
                 }
             }
             
@@ -303,8 +379,8 @@ namespace GPG220.Luca.Scripts.Editor
             GUILayout.EndScrollView();
             EditorGUILayout.EndVertical();
             //var newListAreaRect = EditorGUILayout.GetControlRect();
-            /*unitListAreaRect.x = newListAreaRect.x;
-            unitListAreaRect.y = newListAreaRect.y;*/
+            unitListAreaRect.x = newListAreaRect.x;
+            unitListAreaRect.y = newListAreaRect.y;
             //unitListAreaRect = newListAreaRect;
         }
 
@@ -324,7 +400,28 @@ namespace GPG220.Luca.Scripts.Editor
             /////////////// INFO CONTENT START
             if (filteredUnits != null && filteredUnits.Length > 0)
             {
-                if (filteredUnits.Length > 1)
+                if (filteredUnits.Length == 1 || selectedIndex >= 0)
+                {
+                    var filteredUnitIndex = (selectedIndex < 0 || selectedIndex >= filteredUnits.Length) ? (filteredUnits.Length == 0 ? -1 : 0) : selectedIndex;
+                    if (filteredUnitIndex >= 0)
+                    {
+                        var unit = filteredUnits[filteredUnitIndex];
+                        if (unit != null)
+                        {
+                            DrawInfoBoxSingle(unit);
+                            EditorGUILayout.Space();
+                            EditorGUILayout.Space();
+                            DrawInfoBoxInventory(unit);
+                            EditorGUILayout.Space();
+                            EditorGUILayout.Space();
+                            DrawInfoBoxUnitComponent(unit);
+                            EditorGUILayout.Space();
+                            EditorGUILayout.Space();
+                        }
+                        
+                    }
+                    
+                }else if (filteredUnits.Length > 1)
                 {
                     DrawInfoBoxMultiple();
                 }
@@ -332,15 +429,206 @@ namespace GPG220.Luca.Scripts.Editor
             /////////////// INFO CONTENT END
             GUILayout.EndScrollView();
             EditorGUILayout.EndVertical();
-            /*ar newListAreaRect = EditorGUILayout.GetControlRect();
-            infoListAreaRect.x = newListAreaRect.x;//position.width - newListAreaRect.width;
-            infoListAreaRect.y = newListAreaRect.y;*/
+            /*ar newListAreaRect = EditorGUILayout.GetControlRect();*/
+            infoListAreaRect.x = newInfoListAreaRect.x;//position.width - newListAreaRect.width;
+            infoListAreaRect.y = newInfoListAreaRect.y;
             //infoListAreaRect = newInfoListAreaRect;
+        }
+
+        private void DrawInfoBoxUnitComponent(UnitBase unit)
+        {
+            if (unit == null) return;
+            var unitHealth = unit?.GetComponent<Health>();
+            
+            var infoBoxStyle = new GUIStyle {/*padding = infoBoxPadding*/};
+            infoBoxStyle.padding.left = infoBoxPaddingF;
+            infoBoxStyle.padding.right = infoBoxPaddingF;
+            infoBoxStyle.padding.top = infoBoxPaddingF;
+            infoBoxStyle.padding.bottom = infoBoxPaddingF;
+            
+            var r = EditorGUILayout.BeginVertical(infoBoxStyle);
+            GUI.DrawTexture(r, MakeTex((int)unitListAreaRect.width, (int)unitListAreaRect.height, infoBoxBackgroundColor), ScaleMode.StretchToFill);
+            
+            var titleStyle = new GUIStyle {fontSize = 15, fontStyle = FontStyle.Bold};
+            EditorGUILayout.LabelField("Unit Component",titleStyle);
+            
+            var editor = UnityEditor.Editor.CreateEditor( unit );
+            editor.DrawDefaultInspector();
+            
+            GUILayout.BeginArea(r);
+            editor.DrawDefaultInspector(); //confines the editor to the specified rectangle
+            GUILayout.EndArea();
+            
+            
+            EditorGUILayout.Space();
+            EditorGUILayout.Space();
+            EditorGUILayout.EndVertical();
         }
 
         private Color32 infoBoxBackgroundColor = new Color32(150,150,150,255);
         private int infoBoxPaddingF = 5;
 
+        private void DrawInfoBoxSingle(UnitBase unit)
+        {
+            if (unit == null) return;
+            var unitHealth = unit?.GetComponent<Health>();
+            
+            var infoBoxStyle = new GUIStyle {/*padding = infoBoxPadding*/};
+            infoBoxStyle.padding.left = infoBoxPaddingF;
+            infoBoxStyle.padding.right = infoBoxPaddingF;
+            infoBoxStyle.padding.top = infoBoxPaddingF;
+            infoBoxStyle.padding.bottom = infoBoxPaddingF;
+            
+            var r = EditorGUILayout.BeginVertical(infoBoxStyle);
+            GUI.DrawTexture(r, MakeTex((int)unitListAreaRect.width, (int)unitListAreaRect.height, infoBoxBackgroundColor), ScaleMode.StretchToFill);
+            //GUI.backgroundColor = infoBoxBackgroundColor;
+
+            var titleStyle = new GUIStyle {fontSize = 15, fontStyle = FontStyle.Bold};
+            EditorGUILayout.LabelField("Unit Overview",titleStyle);
+            EditorGUILayout.LabelField("Player:","[X]");
+            EditorGUILayout.LabelField("Type:",unit.GetType().Name);
+            EditorGUILayout.LabelField("Health:","[X]/[Max]");
+
+
+            EditorGUILayout.BeginHorizontal();
+            if (GUILayout.Button("Select", EditorStyles.miniButtonLeft))
+            {
+                Selection.activeGameObject = unit.gameObject;
+                if (SceneView.sceneViews.Count > 0)
+                {
+                    var sceneView = (SceneView)SceneView.sceneViews[0];
+                    sceneView.Focus();
+                }
+            }
+            if (GUILayout.Button("Go To", EditorStyles.miniButtonMid))
+            {
+                EditorGUIUtility.PingObject(unit);
+                var activeSelection = Selection.activeGameObject;
+                Selection.activeGameObject = unit.gameObject;
+                SceneView.lastActiveSceneView.FrameSelected();
+                
+                Selection.activeGameObject = activeSelection;
+            }
+            if (GUILayout.Button("Follow", EditorStyles.miniButtonMid))
+            {
+                Selection.activeGameObject = unit.gameObject;
+                SceneView.FrameLastActiveSceneViewWithLock();
+            }
+            GUIStyle killBtnStyle = new GUIStyle(EditorStyles.miniButtonRight);
+            killBtnStyle.normal.background = MakeTex((int) unitListAreaRect.width, (int) unitListAreaRect.height,
+                new Color32(150,0,0,255));
+            killBtnStyle.normal.textColor = Color.white;
+            killBtnStyle.fontStyle = FontStyle.Bold;
+            if (GUILayout.Button("Kill", killBtnStyle))
+            {
+                if (unitHealth == null)
+                    return;
+                unitHealth.ChangeHealth(unitHealth.startingHealth * -10); // TODO Can't get current health due to visibility ....
+            }
+            EditorGUILayout.EndHorizontal();
+            
+            
+            
+            EditorGUILayout.Space();
+            EditorGUILayout.Space();
+            EditorGUILayout.EndVertical();
+        }
+
+        private int selectedResourceIndex = 0;
+        private int selectedResourceAmount = 1;
+        private void DrawInfoBoxInventory(UnitBase unit)
+        {
+            var unitInventory = unit?.inventory ?? unit?.GetComponent<Inventory>();
+            if (unit == null || unitInventory == null) return;
+            
+            var infoBoxStyle = new GUIStyle {/*padding = infoBoxPadding*/};
+            infoBoxStyle.padding.left = infoBoxPaddingF;
+            infoBoxStyle.padding.right = infoBoxPaddingF;
+            infoBoxStyle.padding.top = infoBoxPaddingF;
+            infoBoxStyle.padding.bottom = infoBoxPaddingF;
+            
+            var r = EditorGUILayout.BeginVertical(infoBoxStyle);
+            GUI.DrawTexture(r, MakeTex((int)unitListAreaRect.width, (int)unitListAreaRect.height, infoBoxBackgroundColor), ScaleMode.StretchToFill);
+            //GUI.backgroundColor = infoBoxBackgroundColor;
+
+            var titleStyle = new GUIStyle {fontSize = 15, fontStyle = FontStyle.Bold};
+            EditorGUILayout.LabelField("Unit Inventory",titleStyle);
+
+            var resStyle = new GUIStyle {fontSize = 12, alignment = TextAnchor.MiddleLeft, clipping = TextClipping.Clip, stretchWidth = false, fontStyle = FontStyle.Bold};
+            foreach (var kvp in unitInventory.GetResourceQuantities())
+            {
+                var entryRect = EditorGUILayout.BeginHorizontal();
+                var x = EditorGUILayout.GetControlRect(GUILayout.MaxWidth(50), GUILayout.MaxHeight(50));
+                if(kvp.Key.ResourceThumbnail != null)
+                    GUI.DrawTexture(x, kvp.Key.ResourceThumbnail.texture,ScaleMode.ScaleToFit);
+                else
+                    GUI.DrawTexture(x, MakeTex(50, 50, Color.white), ScaleMode.ScaleToFit);
+                
+                EditorGUILayout.BeginVertical();
+                
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField(kvp.Key.ResourceName, resStyle, GUILayout.MaxWidth(100));
+                EditorGUILayout.LabelField(kvp.Value.ToString(), resStyle, GUILayout.MaxWidth(100));
+                EditorGUILayout.EndHorizontal();
+                
+                EditorGUILayout.BeginHorizontal();
+                if (GUILayout.Button("-5", EditorStyles.miniButtonLeft))
+                {
+                    unitInventory.RemoveResources(kvp.Key, 5);
+                }
+                if (GUILayout.Button("-1", EditorStyles.miniButtonMid))
+                {
+                    unitInventory.RemoveResources(kvp.Key, 1);
+                }
+                if (GUILayout.Button("0", EditorStyles.miniButtonMid))
+                {
+                    unitInventory.RemoveResources(kvp.Key, kvp.Value);
+                }
+                if (GUILayout.Button("+1", EditorStyles.miniButtonMid))
+                {
+                    unitInventory.AddResources(kvp.Key, 1);
+                }
+                if (GUILayout.Button("+5", EditorStyles.miniButtonRight))
+                {
+                    unitInventory.AddResources(kvp.Key, 5);
+                }
+                EditorGUILayout.EndHorizontal();
+                
+                EditorGUILayout.EndVertical();
+                
+                EditorGUILayout.EndHorizontal();
+            }
+            
+            EditorGUILayout.Space();
+            EditorGUILayout.Space();
+            var addResRect = EditorGUILayout.BeginHorizontal(infoBoxStyle);
+            GUI.DrawTexture(addResRect, MakeTex((int)unitListAreaRect.width, (int)unitListAreaRect.height, new Color32(99,99,99,255)), ScaleMode.StretchToFill);
+            
+            //EditorGUILayout.LabelField("Add", resStyle);
+            selectedResourceIndex = EditorGUILayout.IntPopup(selectedResourceIndex, _resourceTypes.Select(res => res.ResourceName).ToArray(),_resourceTypes.Select((res,i) => i).ToArray());
+            selectedResourceAmount = EditorGUILayout.IntField(selectedResourceAmount);
+            
+            if (GUILayout.Button("Add") && selectedResourceIndex >= 0 && selectedResourceAmount > 0 && _resourceTypes.Count > selectedResourceIndex)
+            {
+                unitInventory.AddResources(_resourceTypes[selectedResourceIndex], selectedResourceAmount);
+            }
+            
+            
+            EditorGUILayout.EndHorizontal();
+            /*
+
+            if (GUILayout.Button("Kill Unit"))
+            {
+                if (unitHealth == null)
+                    return;
+                unitHealth.ChangeHealth(unitHealth.startingHealth * -10); // TODO Can't get current health due to visibility ....
+            }*/
+            
+            EditorGUILayout.Space();
+            EditorGUILayout.Space();
+            EditorGUILayout.EndVertical();
+        }
+        
         private void DrawInfoBoxMultiple()
         {
             var infoBoxStyle = new GUIStyle {/*padding = infoBoxPadding*/};
@@ -348,7 +636,8 @@ namespace GPG220.Luca.Scripts.Editor
             infoBoxStyle.padding.right = infoBoxPaddingF;
             infoBoxStyle.padding.top = infoBoxPaddingF;
             infoBoxStyle.padding.bottom = infoBoxPaddingF;
-            var drawInfoBoxMultipleRect = EditorGUILayout.GetControlRect();/*
+            //var drawInfoBoxMultipleRect = EditorGUILayout.GetControlRect();
+            /*
             if(drawInfoBoxMultipleRect.width > 2*infoBoxPaddingF && drawInfoBoxMultipleRect.height > 2*infoBoxPaddingF)
                 infoBoxStyle.normal.background = MakeTex((int)drawInfoBoxMultipleRect.width-(2*infoBoxPaddingF), (int)drawInfoBoxMultipleRect.height-(2*infoBoxPaddingF), infoBoxBackgroundColor);*/
             //infoBoxStyle.normal.background = MakeTex((int)drawInfoBoxMultipleRect.width, (int)drawInfoBoxMultipleRect.height, infoBoxBackgroundColor);
@@ -379,13 +668,18 @@ namespace GPG220.Luca.Scripts.Editor
                 EditorGUILayout.LabelField(entry.Key, entry.Value.ToString());
             });
             
-            if (GUILayout.Button("Kill All Units"))
+            GUIStyle killBtnStyle = new GUIStyle(EditorStyles.miniButtonRight);
+            killBtnStyle.normal.background = MakeTex((int) unitListAreaRect.width, (int) unitListAreaRect.height,
+                new Color32(150,0,0,255));
+            killBtnStyle.normal.textColor = Color.white;
+            killBtnStyle.fontStyle = FontStyle.Bold;
+            if (GUILayout.Button("Kill All Units",killBtnStyle))
             {
                 filteredUnits.ForEach(unit =>
                 {
-                    Health unitHealth = unit?.GetComponent<Health>();
-                    if (unitHealth == null)
-                        return;
+                    if (unit == null) return;
+                    var unitHealth = unit.GetComponent<Health>();
+                    if (unitHealth == null) return;
                     unitHealth.ChangeHealth(unitHealth.startingHealth * -10); // TODO Can't get current health due to visibility ....
                 });
             }
@@ -461,7 +755,31 @@ namespace GPG220.Luca.Scripts.Editor
         {
             allUnits = UnityEngine.Resources.FindObjectsOfTypeAll<UnitBase>();
         }
-        
+
+        private void CaptureUnitSelection()
+        {
+
+            EditorGUIUtility.AddCursorRect(cursorChangeRect, MouseCursor.Orbit);
+                
+            var mousePos = Event.current.mousePosition;
+
+            if (Event.current.type == EventType.MouseUp)
+            {
+                if (unitListAreaRect.Contains(mousePos))
+                {
+                    var relMousePos = mousePos;
+                    relMousePos.x -= unitListAreaRect.x;
+                    relMousePos.y -= unitListAreaRect.y;
+                    var index = _unitEntryRects.Where(kvp => kvp.Value.Contains(relMousePos)).Select((kvp)=>kvp.Key).DefaultIfEmpty(-1).FirstOrDefault();
+                    selectedIndex = index == selectedIndex ? -1 : index;
+                }
+                else if(!infoListAreaRect.Contains(mousePos))
+                {
+                    //selectedIndex = -1;
+                }
+            }
+            
+        }
      
         private void ResizeScrollView(){
             
