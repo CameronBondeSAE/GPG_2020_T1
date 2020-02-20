@@ -22,6 +22,7 @@ using UnityEngine.Events;
         public void ChangeHealth(int amount)
         {
             currentHealth += amount;
+            CheckForDeath();
         }
 
         private void CheckForDeath()
