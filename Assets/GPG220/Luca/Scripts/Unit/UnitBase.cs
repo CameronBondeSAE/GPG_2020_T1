@@ -9,7 +9,7 @@ namespace GPG220.Luca.Scripts.Unit
     /// <summary>
     /// Base class for units. (A unit can be a building, movable unit, ...)
     /// </summary>
-    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Rigidbody), typeof(Health), typeof(Inventory))]
     public abstract class UnitBase : NetworkBehaviour, ISelectable
     {
         // TODO Unit Abilities

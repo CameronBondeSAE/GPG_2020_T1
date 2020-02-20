@@ -5,7 +5,10 @@ using UnityEngine;
 
 namespace GPG220.Luca.Scripts.Abilities
 {
-    public class HealAbility : Ability
+    /// <summary>
+    /// Test Ability - Heals a player.
+    /// </summary>
+    public class HealAbilityBase : AbilityBase
     {
         public LayerMask layerMask;
         public float range = 10;

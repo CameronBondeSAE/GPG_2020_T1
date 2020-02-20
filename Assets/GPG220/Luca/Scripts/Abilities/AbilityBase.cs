@@ -2,7 +2,7 @@
 
 namespace GPG220.Luca.Scripts.Abilities
 {
-    public abstract class Ability : MonoBehaviour
+    public abstract class AbilityBase : MonoBehaviour
     {
         public string abilityName;
         public string abilityDescription;
@@ -11,7 +11,7 @@ namespace GPG220.Luca.Scripts.Abilities
         
         public float currentCooldown; // Info: Public so UI could get current cooldown for example
 
-        public delegate void OnAbilityExecutedDel(Ability ability, GameObject executor);
+        public delegate void OnAbilityExecutedDel(AbilityBase abilityBase, GameObject executor);
         public event OnAbilityExecutedDel OnAbilityExecuted;
 
         /// <summary>
