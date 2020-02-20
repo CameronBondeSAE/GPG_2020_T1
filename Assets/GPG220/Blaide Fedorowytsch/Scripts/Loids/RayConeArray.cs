@@ -10,9 +10,13 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Loids
         public float rayEndRadius = 3f;
         public float rayStartlength;
         public int resolution;
+        public bool addCentreRay;
         public float rayLength;
-        public RaycastHit[] hit;
-        public Ray[] ray;
+        public RaycastHit[] coneHit;
+        public Ray[] coneRay;
+        public Ray centreRay;
+        public RaycastHit centreHit;
+        
         private Vector3 endCentre;
         [System.Serializable] public class RayConeArrayHit: UnityEvent<RayConeArrayHitData> {}
         [SerializeField] RayConeArrayHit rayConeArrayHit;
@@ -28,24 +32,31 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Loids
             UpdateRayArrayStructure();
             for (int r = 0; r < resolution; r++)
             {
-                if (Physics.Raycast(ray[r], out hit[r], rayLength))
+                if (Physics.Raycast(coneRay[r], out coneHit[r], rayLength))
                 {
                     hitThisUpdate = true;
-                    
                 }
             }
+
+            if (Physics.Raycast(centreRay, out centreHit, rayLength))
+            {
+                hitThisUpdate = true;
+            }
+
             if (hitThisUpdate == true)
             {
-                RayConeArrayHitData rayConeArrayHitData = new RayConeArrayHitData(ray,hit,endCentre);
+                RayConeArrayHitData rayConeArrayHitData = new RayConeArrayHitData(coneRay,coneHit,endCentre,centreHit,centreRay);
                 rayConeArrayHit.Invoke(rayConeArrayHitData);
             }
         }
 
         private void UpdateRayArrayStructure()
         {
+            centreRay = new Ray(transform.position,transform.forward);
+            centreHit = new RaycastHit();
 
-            ray = new Ray[resolution];
-            hit = new RaycastHit[resolution];
+            coneRay = new Ray[resolution];
+            coneHit = new RaycastHit[resolution];
 
             endCentre = transform.forward * rayLength;
             List<Vector3> localEndpoints = ConstructPolygon(resolution, rayEndRadius, endCentre, transform.rotation);
@@ -53,8 +64,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Loids
             
             for (int r = 0; r < resolution; r++)
             {
-                ray[r].direction = localEndpoints[r];
-                ray[r].origin = transform.position + (ray[r].direction*rayStartlength);
+                coneRay[r].direction = localEndpoints[r];
+                coneRay[r].origin = transform.position + (coneRay[r].direction*rayStartlength);
             }
         }
         
@@ -82,30 +93,34 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Loids
         
         private void OnDrawGizmos()
         {
-            Gizmos.color = Color.blue;
-            
-            Gizmos.DrawLine(transform.position, transform.position + transform.forward * rayLength);
-            Gizmos.DrawSphere(transform.position + transform.forward * rayLength,0.1f);
-
-            if (hit != null && ray != null)
+            if (coneHit != null && coneRay != null)
             {
-                for (int r = 0; r < ray.Length ; r++)
+                for (int r = 0; r < coneRay.Length ; r++)
                 {
-                    Gizmos.color = (hit[r].collider == null) ? Color.white : Color.red;
+                    Gizmos.color = (coneHit[r].collider == null) ? Color.white : Color.red;
 
-                    if (hit[r].collider != null)
+                    if (coneHit[r].collider != null)
                     {
-                        Gizmos.DrawLine(ray[r].origin,hit[r].point);  
-                        Gizmos.DrawSphere(hit[r].point,0.1f);
+                        Gizmos.DrawLine(coneRay[r].origin,coneHit[r].point);  
+                        Gizmos.DrawSphere(coneHit[r].point,0.1f);
 
                     }
                     else
                     {
-                        Gizmos.DrawRay(ray[r].origin,ray[r].direction * rayLength);
-                        Gizmos.DrawSphere(ray[r].GetPoint(rayLength), 0.1f);
+                        Gizmos.DrawRay(coneRay[r].origin,coneRay[r].direction * rayLength);
+                        Gizmos.DrawSphere(coneRay[r].GetPoint(rayLength), 0.1f);
 
                     }
 
+                }
+            }
+
+            if (true)
+            {
+                Gizmos.color = (centreHit.collider == null) ? Color.white : Color.red;
+                if (centreHit.collider != null)
+                {
+                    Gizmos.DrawRay(centreRay.origin,centreRay.direction *rayLength);
                 }
             }
         }
@@ -113,14 +128,19 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Loids
 
     public class RayConeArrayHitData
     {
-        public Ray[] ray;
-        public RaycastHit[] hit;
+        public Ray[] coneRay;
+        public RaycastHit[] coneHit;
+        public Ray centreRay;
+        public RaycastHit centreHit;
         public Vector3 endCenter;
-        public RayConeArrayHitData(Ray[]_ray,RaycastHit[]_hit,Vector3 _endCenter)
+        public RayConeArrayHitData(Ray[]_coneRay,RaycastHit[]_coneHit,Vector3 _endCenter,RaycastHit _centreHit, Ray _centreRay)
         {
-            ray = _ray;
-            hit = _hit;
+            coneRay = _coneRay;
+            coneHit = _coneHit;
             endCenter = _endCenter;
+            centreHit = _centreHit;
+            centreRay = _centreRay;
+
         }
     }
 
