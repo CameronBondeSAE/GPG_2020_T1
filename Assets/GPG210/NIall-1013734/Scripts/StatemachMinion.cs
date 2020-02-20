@@ -45,10 +45,7 @@ public class StatemachMinion : UnitBase
 
     void Update()
     {
-        if (GetComponent<Health>().currentHealth <= 0)
-        {
-            currentState = States.Dead;
-        }
+      
 
         switch (currentState)
         {
