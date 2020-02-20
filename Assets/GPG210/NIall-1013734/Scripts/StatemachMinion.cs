@@ -11,13 +11,12 @@ using Random = UnityEngine.Random;
 
 public class StatemachMinion : UnitBase
 {
-    public float wanderTime;
-    public float wanderSpeed;
+    public float UnitSpeed;
     public UnitLevelUp unitlvlup;
 
     public enum States
     {
-        Wander,
+        Idle,
         Moving,
         Attacking,
         Dead
@@ -33,14 +32,14 @@ public class StatemachMinion : UnitBase
     public override void OnSelected()
     {
         base.OnSelected();
-        currentState = States.Moving;
+        currentState = States.Idle;
     }
 
     public override void OnDeSelected()
     {
         base.OnDeSelected();
-        currentState = States.Wander;
-        Debug.Log("Wandering");
+        currentState = States.Moving;
+        Debug.Log("Moving");
     }
 
 
@@ -51,32 +50,20 @@ public class StatemachMinion : UnitBase
             currentState = States.Dead;
         }
 
-        Physics.Raycast(transform.position, transform.forward, 6f);
-        
         switch (currentState)
         {
-            case States.Wander:
-                // Random Wandering if state is set to Wander.
-                if (wanderTime > 0)
-                {
-                    transform.Translate(Vector3.forward * wanderSpeed);
-                    wanderTime -= Time.deltaTime;
-                }
-                else
-                {
-                    wanderTime = Random.Range(0.2f, 0.6f);
-                    wanderSpeed = Random.Range(0f, 0.3f);
-                    Wander();
-                }
+            case States.Idle:
+                // is Idle/Not moving.
+            transform.Translate(Vector3.forward * 0);
 
                 break;
             case States.Moving:
                 
-                transform.Translate(Vector3.forward * wanderSpeed);
+                transform.Translate(Vector3.forward * UnitSpeed);
                 
                 if (unitlvlup.Kills <= 3)
                 {
-                    // increase Unit speed/attack by unitLevelup Kills divided by 6.
+                    //TBA
                 }
                 break;
 
@@ -101,8 +88,5 @@ public class StatemachMinion : UnitBase
     }
 
 // picks random direction to wander in every time wanderTime = 0
-    void Wander()
-    {
-        transform.eulerAngles = new Vector3(0, Random.Range(0, 359), 0);
-    }
+
 }
