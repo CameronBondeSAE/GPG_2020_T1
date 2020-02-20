@@ -8,12 +8,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Loids.Steering_Behaviours
         public float forceMultiplier;
         public override void Start()
         {
-<<<<<<< Updated upstream
-            rB = GetComponent<Rigidbody>();
-=======
             base.Start();
             GetComponent<RayConeArray>().RayConeArrayHitEvent += OnRayHit;
->>>>>>> Stashed changes
         }
 
 
