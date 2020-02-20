@@ -1,5 +1,6 @@
 ﻿using GPG220.Blaide_Fedorowytsch.Scripts.Interfaces;
 using GPG220.Luca.Scripts.Resources;
+using Mirror;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ namespace GPG220.Luca.Scripts.Unit
     /// Base class for units. (A unit can be a building, movable unit, ...)
     /// </summary>
     [RequireComponent(typeof(Rigidbody))]
-    public abstract class UnitBase : SerializedMonoBehaviour, ISelectable
+    public abstract class UnitBase : NetworkBehaviour, ISelectable
     {
         // TODO Unit Abilities
         public UnitStats unitStats;

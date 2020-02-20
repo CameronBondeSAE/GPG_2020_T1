@@ -1,10 +1,11 @@
 ﻿using System;
 using GPG220.Blaide_Fedorowytsch.Scripts.Interfaces;
+using Mirror;
 using UnityEngine;
 
 namespace GPG220.Blaide_Fedorowytsch.Scripts
 {
-    public class TestUnitBase : MonoBehaviour, ISelectable
+    public class TestUnitBase : NetworkBehaviour, ISelectable
     {
         [HideInInspector]
         public UnitSelectionManager usm;

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 using ISelectable = GPG220.Blaide_Fedorowytsch.Scripts.Interfaces.ISelectable;
 
@@ -11,6 +13,10 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
     public class UnitTest : TestUnitBase
     {
 
+        //Networking
+        [SyncVar] public Vector3 position;
+        
+        
         public bool moving = false;
         public Vector3 target;
         public List<ISelectable> selctionGroup;
@@ -21,12 +27,27 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             moving = true;
             target = worldPosition;
         }
-        
-        
+
+        void Update()
+        {
+
+            if (isServer)
+            {
+                position = transform.position;
+            }
+
+            if (isClient)
+            {
+                transform.position = position;
+            }
+            
+        }
+
         public override void OnSelected()
         {
             selctionGroup = usm.selectedIselectables;
         }
+
 
         void Move(Vector3 v)
         {
