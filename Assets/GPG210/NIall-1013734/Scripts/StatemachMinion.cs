@@ -37,7 +37,7 @@ public class StatemachMinion : UnitBase
     public override void OnSelected()
     {
         base.OnSelected();
-        currentState = States.Idle;
+        currentState = States.Moving;
     }
 
     public override void OnDeSelected()
@@ -55,8 +55,7 @@ public class StatemachMinion : UnitBase
         switch (currentState)
         {
             case States.Idle:
-                // is Idle/Not moving.
-            transform.Translate(Vector3.forward * 0);
+                // is Idle/Not moving
 
                 break;
             case States.Moving:
@@ -88,7 +87,6 @@ public class StatemachMinion : UnitBase
     {
         currentState = States.Dead;
     }
-
-// picks random direction to wander in every time wanderTime = 0
+    
 
 }
