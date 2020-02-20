@@ -30,6 +30,9 @@ GameObject:
   - component: {fileID: 8122360784518642093}
   - component: {fileID: 8122360784518642087}
   - component: {fileID: 8122360784518642084}
+  - component: {fileID: 2568168273862343227}
+  - component: {fileID: 2487472327532310385}
+  - component: {fileID: 2733052297197401643}
   m_Layer: 0
   m_Name: Loid
   m_TagString: Untagged
@@ -106,10 +109,10 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8122360784518642092}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &8122360784518642086
 Rigidbody:
@@ -141,7 +144,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rayEndRadius: 8.41
   rayStartlength: 0.035
+<<<<<<< Updated upstream
   resolution: 8
+=======
+  resolution: 4
+  addCentreRay: 1
+>>>>>>> Stashed changes
   rayLength: 14.41
   rayConeArrayHit:
     m_PersistentCalls:
@@ -169,7 +177,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fedf9693629af848a8eb38f4766ec4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< Updated upstream
   forceMultiplier: 10
+=======
+  rB: {fileID: 0}
+  forceMultiplier: 25
+>>>>>>> Stashed changes
 --- !u!114 &8122360784518642084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,6 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc5c7ac985978e04c97978c3bf1de8b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rB: {fileID: 0}
   space:
     m_Name: Space
     m_Type: 0
@@ -190,7 +204,61 @@ MonoBehaviour:
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
+<<<<<<< Updated upstream
   forceMultiplier: 300
+=======
+  forceMultiplier: 450
+--- !u!114 &2568168273862343227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8122360784518642092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bc31c0c85055d04cbe4c63edb77fa6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rB: {fileID: 0}
+  forceMultiplier: 30
+  timeScale: 0.1
+--- !u!114 &2487472327532310385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8122360784518642092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1c1aec9f1a0a294fb7e0ece2b4960d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  far: 0
+  near: 0
+  neighbours: []
+--- !u!114 &2733052297197401643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8122360784518642092}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a53f3e1f080eacc4f9df1ffa7097a97f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rB: {fileID: 0}
+  neighbour: {fileID: 0}
+  rotationCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+>>>>>>> Stashed changes
 --- !u!1001 &8122360782960112735
 PrefabInstance:
   m_ObjectHideFlags: 0

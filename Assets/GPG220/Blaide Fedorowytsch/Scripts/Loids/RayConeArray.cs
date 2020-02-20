@@ -26,7 +26,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Loids
         
         }
         // Update is called once per frame
-        void Update()
+        void FixedUpdate()
         {
             bool hitThisUpdate = false;
             UpdateRayArrayStructure();
@@ -46,7 +46,14 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Loids
             if (hitThisUpdate == true)
             {
                 RayConeArrayHitData rayConeArrayHitData = new RayConeArrayHitData(coneRay,coneHit,endCentre,centreHit,centreRay);
+<<<<<<< Updated upstream
                 rayConeArrayHit.Invoke(rayConeArrayHitData);
+=======
+                if (rayConeArrayHitData != null)
+                {
+                    RayConeArrayHitEvent.Invoke(rayConeArrayHitData);
+                }
+>>>>>>> Stashed changes
             }
         }
 

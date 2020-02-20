@@ -3,23 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class DirectControl : MonoBehaviour
+public class DirectControl : SteeringBehaviourBase
 {
 
     public InputAction space;
-
-    private Rigidbody rB;
+    
 
     public float forceMultiplier;
 
     // Start is called before the first frame update
-    void Start()
-    {
-        rB = GetComponent<Rigidbody>();
-    }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         rB.AddForce(transform.forward * forceMultiplier);
         
