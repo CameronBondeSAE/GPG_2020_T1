@@ -144,12 +144,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rayEndRadius: 8.41
   rayStartlength: 0.035
-<<<<<<< Updated upstream
-  resolution: 8
-=======
   resolution: 4
   addCentreRay: 1
->>>>>>> Stashed changes
   rayLength: 14.41
   rayConeArrayHit:
     m_PersistentCalls:
@@ -177,9 +173,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fedf9693629af848a8eb38f4766ec4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< Updated upstream
-  forceMultiplier: 10
-=======
   rB: {fileID: 0}
   forceMultiplier: 25
 >>>>>>> Stashed changes
@@ -258,7 +251,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
->>>>>>> Stashed changes
 --- !u!1001 &8122360782960112735
 PrefabInstance:
   m_ObjectHideFlags: 0
