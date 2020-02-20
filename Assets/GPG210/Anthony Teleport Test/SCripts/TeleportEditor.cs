@@ -1,5 +1,4 @@
-﻿using System;
-using GPG220.Luca.Scripts.Unit;
+﻿using GPG220.Luca.Scripts.Unit;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -35,17 +34,6 @@ public class TeleportEditor : UnitBase
     }
 
     Enemy closestEnemy = null;
-    
-//Check Death
-   void Start()
-   {
-       GetComponent<Health>().deathEvent += Death;
-   }
-
-   public void Death()
-   {
-       Destroy(gameObject);
-   }
 
     void Update()
     {
