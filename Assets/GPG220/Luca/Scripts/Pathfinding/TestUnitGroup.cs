@@ -16,7 +16,7 @@ public class TestUnitGroup : MonoBehaviour
     public PathFinderController pfController;
     
     public GameObject testTarget;
-    [Button("Recalculate Path"), DisableInEditorMode]
+/*    [Button("Recalculate Path"), DisableInEditorMode]
     public void RecalculatePathToTarget()
     {
         controlledUnits?.ForEach(unit => unit.move = false);
@@ -32,9 +32,9 @@ public class TestUnitGroup : MonoBehaviour
 
             currentPath = path;
         };
-        pfController.FindPathTo(CalculateStartPosition(), testTarget.transform.position, onDoneFunc);
+        pfController.FindPathTo(CalculateStartPosition(), testTarget.transform.position, false, onDoneFunc);
         //StartCoroutine(pfController.FindPath(transform.position, testTarget.transform.position, onDoneFunc));
-    }
+    }*/
     
     [Button("Recalculate Path (Proximity)"), DisableInEditorMode]
     public void RecalculatePathToTargetProximity()
@@ -44,15 +44,15 @@ public class TestUnitGroup : MonoBehaviour
         Action<PathFinderPath> onDoneFunc = path =>
         {
             Debug.Log("Done calculating proximity path. " + path.tilePath?.Count);
-            if (calculateFlowFieldPath)
+            /*if (calculateFlowFieldPath)
             {
                 Action<PathFinderPath> onFinallyDoneFunc = PathCalculationDone;
                 StartCoroutine(pfController.FindFlowFieldPathInProximity(path, onFinallyDoneFunc));
-            }
+            }*/
 
-            currentPath = path;
+            PathCalculationDone(path);
         };
-        pfController.FindPathTo(CalculateStartPosition(), testTarget.transform.position, onDoneFunc);
+        pfController.FindPathTo(CalculateStartPosition(), testTarget.transform.position, calculateFlowFieldPath, onDoneFunc);
         //StartCoroutine(pfController.FindPath(transform.position, testTarget.transform.position, onDoneFunc));
     }
 
@@ -69,6 +69,7 @@ public class TestUnitGroup : MonoBehaviour
     
     private void PathCalculationDone(PathFinderPath path)
     {
+        currentPath = path;
         controlledUnits?.ForEach(unit =>
         {
             unit.currentPath = path;

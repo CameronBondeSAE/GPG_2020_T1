@@ -89,4 +89,5 @@ public class PathFinderSectorTile : IEquatable<PathFinderSectorTile>
         if (ReferenceEquals(null, other)) return false;
         return Equals(sector, other.sector) && position.Equals(other.position);
     }
+    
 }

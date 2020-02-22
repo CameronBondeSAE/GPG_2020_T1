@@ -26,16 +26,17 @@ namespace GPG220.Luca.Scripts.Pathfinding
             move = false;
             Action<PathFinderPath> onDoneFunc = path =>
             {
-                Debug.Log("Done calculating path. " + path.tilePath?.Count);
+                /*Debug.Log("Done calculating path. " + path.tilePath?.Count);
                 if (calculateFlowFieldPath)
                 {
                     Action<PathFinderPath> onFinallyDoneFunc = PathCalculationDone;
                     StartCoroutine(pfController.FindFlowFieldPath(path, onFinallyDoneFunc));
-                }
+                }*/
 
                 currentPath = path;
             };
-            pfController.FindPathTo(transform.position, testTarget.transform.position, onDoneFunc);
+            pfController.FindPathTo(transform.position, testTarget.transform.position, true, onDoneFunc);
+            
             //StartCoroutine(pfController.FindPath(transform.position, testTarget.transform.position, onDoneFunc));
         }
 

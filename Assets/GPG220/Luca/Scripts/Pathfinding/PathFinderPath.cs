@@ -61,7 +61,7 @@ namespace GPG220.Luca.Scripts.Pathfinding
                 {
                     
                     
-                    var x = controller.GenerateSurroundingVectorField(tileData, this,
+                    var x = controller.GenerateSurroundingVectorField(tileData, tileData.tile.sector,this, null,
                         controller.proximityFlowFieldRadius);
                     while (x.MoveNext())
                     {

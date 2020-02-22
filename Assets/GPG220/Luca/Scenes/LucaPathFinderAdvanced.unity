@@ -157,11 +157,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 6182
   sectorTileSize: 1
-  sectorFlowFieldTileSize: 1
   bounds:
     m_Center: {x: 40, y: 0, z: 60}
     m_Extent: {x: 40, y: 20, z: 20}
-  connectedSectors: []
   tileObjectPrefab: {fileID: 4367888579796516851, guid: 74bc25ec0bbe5484d9f20db3bb79a9a0,
     type: 3}
   borderTileObjects: []
@@ -496,8 +494,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 181940562}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 23.954348, y: 49.364918, z: -54.19}
-  m_LocalScale: {x: 4.8108, y: 3.3823, z: 11.339}
+  m_LocalPosition: {x: 23.954348, y: 49.364918, z: -53.5}
+  m_LocalScale: {x: 4.8108, y: 3.3823, z: 11.179794}
   m_Children: []
   m_Father: {fileID: 1508375978}
   m_RootOrder: 9
@@ -1153,7 +1151,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &918709401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1173,11 +1171,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 6182
   sectorTileSize: 1
-  sectorFlowFieldTileSize: 1
   bounds:
     m_Center: {x: 60, y: 0, z: 20}
     m_Extent: {x: 20, y: 20, z: 20}
-  connectedSectors: []
   tileObjectPrefab: {fileID: 4367888579796516851, guid: 74bc25ec0bbe5484d9f20db3bb79a9a0,
     type: 3}
   borderTileObjects: []
@@ -1408,7 +1404,7 @@ GameObject:
   m_Component:
   - component: {fileID: 953189118}
   - component: {fileID: 953189119}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PathFinderController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1442,63 +1438,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goToNearestPossiblePos: 1
+  proximityFlowFieldRadius: 10
   sectors: []
-  debugPathGeneration: 1
-  debugPathGenerationDelay: 0
-  debugPathGenerationDataDeletionDelay: 35
-  debugStartColor:
+  autoGenerateSectors: 1
+  maxSectorSize: 50
+  sectorTileSize: 1
+  walkableMask:
     serializedVersion: 2
-    rgba: 3338600448
-  debugEndColor:
+    m_Bits: 256
+  ignoreMask:
+    serializedVersion: 2
+    m_Bits: 6182
+  sectorLayer: 11
+  tileObjectPrefab: {fileID: 4367888579796516851, guid: 74bc25ec0bbe5484d9f20db3bb79a9a0,
+    type: 3}
+  _debugPathGeneration: 0
+  _debugPathGenerationDelay: 0
+  _debugPathGenerationDataDeletionDelay: 0
+  _debugStartColor:
+    serializedVersion: 2
+    rgba: 3372154880
+  _debugEndColor:
     serializedVersion: 2
     rgba: 3358771455
-  debugGreenColor:
+  _debugGreenColor:
     serializedVersion: 2
     rgba: 3358785330
-  debugRedColor:
+  _debugRedColor:
     serializedVersion: 2
     rgba: 3355443455
-  debugPathColor:
+  _debugPathColor:
     serializedVersion: 2
     rgba: 4278190080
-  testStartPos: {fileID: 1519768126}
-  testEndPos: {fileID: 307105683}
-  calculateFlowField: 1
-  colors:
-  - serializedVersion: 2
-    rgba: 4278255368
-  - serializedVersion: 2
-    rgba: 4278255471
-  - serializedVersion: 2
-    rgba: 4278255553
-  - serializedVersion: 2
-    rgba: 4278255612
-  - serializedVersion: 2
-    rgba: 4278246143
-  - serializedVersion: 2
-    rgba: 4278234879
-  - serializedVersion: 2
-    rgba: 4278220799
-  - serializedVersion: 2
-    rgba: 4278209791
-  - serializedVersion: 2
-    rgba: 4278195455
-  - serializedVersion: 2
-    rgba: 4281073919
-  - serializedVersion: 2
-    rgba: 4286972159
-  - serializedVersion: 2
-    rgba: 4294901993
-  - serializedVersion: 2
-    rgba: 4294901905
-  - serializedVersion: 2
-    rgba: 4294901868
-  - serializedVersion: 2
-    rgba: 4294901822
-  proximityFlowFieldRadius: 10
-  c: 0
-  calcs: 0
-  noFlowFieldNum: 0
+  _testStartPos: {fileID: 1519768126}
+  _testEndPos: {fileID: 307105683}
+  _calculateFlowField: 1
 --- !u!1 &997499172
 GameObject:
   m_ObjectHideFlags: 0
@@ -2940,11 +2914,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 6182
   sectorTileSize: 1
-  sectorFlowFieldTileSize: 1
   bounds:
     m_Center: {x: 5, y: 0, z: 45}
     m_Extent: {x: 5, y: 20, z: 5}
-  connectedSectors: []
   tileObjectPrefab: {fileID: 4367888579796516851, guid: 74bc25ec0bbe5484d9f20db3bb79a9a0,
     type: 3}
   borderTileObjects: []
@@ -3169,7 +3141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1725008784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3189,11 +3161,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 6182
   sectorTileSize: 1
-  sectorFlowFieldTileSize: 1
   bounds:
     m_Center: {x: 20, y: 0, z: 20}
     m_Extent: {x: 20, y: 20, z: 20}
-  connectedSectors: []
   tileObjectPrefab: {fileID: 4367888579796516851, guid: 74bc25ec0bbe5484d9f20db3bb79a9a0,
     type: 3}
   borderTileObjects: []
@@ -3478,11 +3448,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 6182
   sectorTileSize: 1
-  sectorFlowFieldTileSize: 1
   bounds:
     m_Center: {x: 50, y: 0, z: 90}
     m_Extent: {x: 50, y: 20, z: 10}
-  connectedSectors: []
   tileObjectPrefab: {fileID: 4367888579796516851, guid: 74bc25ec0bbe5484d9f20db3bb79a9a0,
     type: 3}
   borderTileObjects: []
@@ -3767,11 +3735,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 6182
   sectorTileSize: 1
-  sectorFlowFieldTileSize: 1
   bounds:
     m_Center: {x: 90, y: 0, z: 40}
     m_Extent: {x: 10, y: 20, z: 40}
-  connectedSectors: []
   tileObjectPrefab: {fileID: 4367888579796516851, guid: 74bc25ec0bbe5484d9f20db3bb79a9a0,
     type: 3}
   borderTileObjects: []

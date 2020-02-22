@@ -16,11 +16,10 @@ public class PathFinderSector : MonoBehaviour
     
     
     public float sectorTileSize = 1;
-    public float sectorFlowFieldTileSize = 1;
     
     public Bounds bounds;
 
-    public List<PathFinderSector> connectedSectors = new List<PathFinderSector>();
+    //public List<PathFinderSector> connectedSectors = new List<PathFinderSector>();
 
     public GameObject tileObjectPrefab;
     
@@ -205,6 +204,26 @@ public class PathFinderSector : MonoBehaviour
         Gizmos.color = debugSectorColor;
         Gizmos.DrawCube(bounds.center, bounds.size);
 
+        if (debugDrawTiles && borderTiles != null && borderTiles.Count > 0)
+        {
+            foreach (var tile in borderTiles)
+            {
+                var leftTile = tile.GetLeftTile();
+                var rightTile = tile.GetRightTile();
+                var topTile = tile.GetTopTile();
+                var bottomTile = tile.GetBottomTile();
+
+                if (leftTile != null)
+                    Gizmos.DrawLine(tile.position, leftTile.position);
+                if (rightTile != null)
+                    Gizmos.DrawLine(tile.position, rightTile.position);
+                if (topTile != null)
+                    Gizmos.DrawLine(tile.position, topTile.position);
+                if (bottomTile != null)
+                    Gizmos.DrawLine(tile.position, bottomTile.position);
+            }
+        }
+        
         if (debugDrawTiles && sectorTiles != null && sectorTiles.Count > 0)
         {
             Vector3 tileSize = new Vector3(sectorTileSize, .5f, sectorTileSize);
