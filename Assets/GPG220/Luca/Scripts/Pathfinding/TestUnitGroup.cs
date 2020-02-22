@@ -35,6 +35,26 @@ public class TestUnitGroup : MonoBehaviour
         pfController.FindPathTo(CalculateStartPosition(), testTarget.transform.position, onDoneFunc);
         //StartCoroutine(pfController.FindPath(transform.position, testTarget.transform.position, onDoneFunc));
     }
+    
+    [Button("Recalculate Path (Proximity)"), DisableInEditorMode]
+    public void RecalculatePathToTargetProximity()
+    {
+        controlledUnits?.ForEach(unit => unit.move = false);
+        
+        Action<PathFinderPath> onDoneFunc = path =>
+        {
+            Debug.Log("Done calculating proximity path. " + path.tilePath?.Count);
+            if (calculateFlowFieldPath)
+            {
+                Action<PathFinderPath> onFinallyDoneFunc = PathCalculationDone;
+                StartCoroutine(pfController.FindFlowFieldPathInProximity(path, onFinallyDoneFunc));
+            }
+
+            currentPath = path;
+        };
+        pfController.FindPathTo(CalculateStartPosition(), testTarget.transform.position, onDoneFunc);
+        //StartCoroutine(pfController.FindPath(transform.position, testTarget.transform.position, onDoneFunc));
+    }
 
     public Vector3 CalculateStartPosition()
     {

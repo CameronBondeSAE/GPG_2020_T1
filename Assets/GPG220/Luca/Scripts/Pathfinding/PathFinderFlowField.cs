@@ -28,12 +28,6 @@ namespace GPG220.Luca.Scripts.Pathfinding
             flowField = Enumerable.Repeat(Enumerable.Repeat(Vector3.negativeInfinity, sizeZ).ToArray(),sizeX).ToArray(); //new Vector3[sizeX,sizeZ];   
         }
         
-        // TMP HACK
-        public List<PathFinderSectorTile> clones = new List<PathFinderSectorTile>();
-        
-        
-        public Color32[] colors = new Color32[15];
-        
         public void GenerateHeatmap(PathFinderSectorTileData currentTileData, PathFinderSector sector, PathFinderPath path)
         {
             if (currentTileData.GetPosition() == targetPosition)
@@ -67,7 +61,6 @@ namespace GPG220.Luca.Scripts.Pathfinding
                 if (neighbourTileData == null || (sector != null && neighbourTileData.tile.sector != sector)) return;
                 GenerateHeatmap(neighbourTileData, sector, path);
             });
-
         }
         
         public bool ContainsPoint(Vector3 point)

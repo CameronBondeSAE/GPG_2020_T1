@@ -57,7 +57,7 @@ namespace GPG220.Luca.Scripts.Pathfinding
         // Update is called once per frame
         void Update()
         {
-            if (move)
+            if (move && currentPath != null)
             {
                 if (stopMovingBelowDistToTarget >= 0 && currentPath.GetAproxDistanceToTargetAtPos(transform.position) <=
                     stopMovingBelowDistToTarget)
@@ -93,7 +93,7 @@ namespace GPG220.Luca.Scripts.Pathfinding
         public float acceleration = 10;
         private void Move(Vector3 dir)
         {
-            rb.AddForce(dir * acceleration);
+            rb.AddForce(rb.mass * acceleration* dir);
         }
     }
 }

@@ -366,7 +366,7 @@ namespace GPG220.Luca.Scripts.Editor
                 var currentActualIndex = 0;
                 for (int i = 0; i < filteredUnits.Length; i++)
                 {
-                    if (allUnits[i] != null)
+                    if (filteredUnits[i] != null)
                     {
                         DrawUnitListElement(filteredUnits[i],currentActualIndex);
                         currentActualIndex++;

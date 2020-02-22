@@ -49,6 +49,8 @@ namespace GPG220.Luca.Scripts.Pathfinding
         public Vector3 flowFieldDirection = Vector3.negativeInfinity;
         public PathFinderSectorTile flowFieldLastTile;
         public PathFinderSectorTileData flowFieldLastTileData;
+
+        public PathFinderSectorTileData flowFieldSurroundingTargetTileData;
     
         // TMP Debug stuff
         public bool isRed = false;

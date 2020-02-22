@@ -22,7 +22,17 @@ public class PathFinderController : MonoBehaviour
         var sectorsInScene = FindObjectsOfType<PathFinderSector>();
 
         // Load all sectors
-        sectorsInScene.ForEach(s => StartCoroutine(LoadSector(s, reloadExisting, false)));
+        //sectorsInScene.ForEach(s => StartCoroutine(LoadSector(s, reloadExisting, false)));
+
+        foreach (var sec in sectorsInScene)
+        {
+            var x = LoadSector(sec, reloadExisting, false);
+            while (x.MoveNext())
+            {
+                
+            }
+        }
+        
         // Connect all sectors
         sectorsInScene.ForEach(s => StartCoroutine(ConnectSector(s)));
     }
@@ -82,6 +92,34 @@ public class PathFinderController : MonoBehaviour
             if (calculateFlowField)
             {
                 StartCoroutine(FindFlowFieldPath(path));
+            }
+            waypointList = path.tilePath;
+        };
+        //StartCoroutine(FindPath(testStartPos.transform.position, testEndPos.transform.position, onDoneFunc));
+        FindPathTo(testStartPos.transform.position, testEndPos.transform.position, onDoneFunc);
+    }
+    
+    [FoldoutGroup("Debug"), Button("Find Path (Proximity FlowField)"), DisableInEditorMode]
+    public void TestFindPathProximityFlowField()
+    {
+        if (testStartPos == null || testEndPos == null)
+            return;
+
+        /*Action<List<PathFinderSectorTileData>> onDoneFunc = list =>
+        {
+            Debug.Log("Done calculating path. " + list?.Count);
+            if (calculateFlowField)
+            {
+                StartCoroutine(FindFlowFieldPath(list));
+            }
+            waypointList = list;
+        };*/
+        Action<PathFinderPath> onDoneFunc = path =>
+        {
+            Debug.Log("Done calculating (flowfield proximity) path. " + path.tilePath?.Count);
+            if (calculateFlowField)
+            {
+                StartCoroutine(FindFlowFieldPathInProximity(path));
             }
             waypointList = path.tilePath;
         };
@@ -281,7 +319,6 @@ public class PathFinderController : MonoBehaviour
                     secFlowField = flowFields[currentTileData.tile.sector];
                 }
 
-                secFlowField.colors = colors;
                 secFlowField.targetPosition = currentTileData.tile.position;
                 if(debugPathGeneration)
                     Debug.Log("Start Gen HeatMap "+currentTileData.tile.sector);
@@ -291,10 +328,12 @@ public class PathFinderController : MonoBehaviour
                 //Debug.Log("Start Gen VecField");
                 if(debugPathGeneration)
                     Debug.DrawRay(currentTileData.GetPosition(), Vector3.up*5, Color.cyan,30f);
+                
                 StartCoroutine(GenerateVectorField(currentTileData, currentTileData.tile.sector, path));
+                
+                
                 //secFlowField.GenerateVectorField(currentTile, currentTile.sector);
                 endPositionTilesTMPTEST.Add(currentTileData);
-                
             }
         }
 
@@ -312,7 +351,108 @@ public class PathFinderController : MonoBehaviour
         yield return 0;
     }
 
-    public IEnumerator DrawFlowFieldTEMPTEST(PathFinderSectorTileData currentTileData, PathFinderSector sector, PathFinderPath path)
+    public int proximityFlowFieldRadius = 2;
+    public IEnumerator FindFlowFieldPathInProximity(PathFinderPath path, Action<PathFinderPath> onDoneAction = null)
+    {
+        path.flowFieldAvailable = true;
+        // PATH MUST BE End to Start sorted! 
+        
+        //var flowFields = new Dictionary<PathFinderSector, PathFinderFlowField>();
+
+
+        var endPositionTilesTMPTEST = new List<PathFinderSectorTileData>();
+        
+        //PathFinderFlowField secFlowField = null;
+        var inverseTilePath = new List<PathFinderSectorTileData>(path.tilePath);
+        Debug.Log(inverseTilePath.Count+" <<<< LENGTH");
+        inverseTilePath.Reverse();
+        for (int i = 0; i < inverseTilePath.Count; i++)
+        {
+            var currentTileData = inverseTilePath[i];
+            if(currentTileData == null || currentTileData.tile.sector == null)
+                continue;
+
+
+            
+            // Calculate FlowField
+            if (i == 0/*inverseTilePath.Count-1*/ || inverseTilePath[i-1].tile.sector != currentTileData.tile.sector)
+            {
+                if(debugPathGeneration)
+                    Debug.DrawRay(currentTileData.GetPosition(), Vector3.up*5, Color.cyan,30f);
+                
+                Action GenVecFieldAction = () =>
+                {
+                    /*foreach (var t in inverseTilePath)
+                    {
+                        if (t.tile.sector == currentTileData.tile.sector)
+                        {
+                            Debug.Log("Gen Proximity Vec Field...");
+                            IEnumerator x = GenerateSurroundingVectorField(t, path, proximityFlowFieldRadius);
+                            while (x.MoveNext())
+                            {
+                                
+                            }
+                        }
+                    }*/
+                    //StartCoroutine(DrawFlowFieldTEMPTESTNEW(currentTileData, currentTileData.tile.sector, path));
+                };
+                endPositionTilesTMPTEST.Add(currentTileData);
+                yield return StartCoroutine(GenerateHeatmap(currentTileData, currentTileData.tile.sector, path, currentTileData.tile.position, GenVecFieldAction));
+                
+            }
+            /*
+
+            Action DebugDrawFlowField = () =>
+            {
+                Debug.Log("Draw Flow Field...");
+                StartCoroutine(DrawFlowFieldTEMPTESTNEW(currentTileData, currentTileData.tile.sector, path));
+                //if (debugPathGeneration) endPositionTilesTMPTEST.ForEach(entry => StartCoroutine(DrawFlowFieldTEMPTESTNEW(entry, entry.tile.sector, path)));
+            };*/
+
+
+            //StartCoroutine(GenerateHeatmap(currentTileData, currentTileData.tile.sector, path, currentTileData.tile.position, GenVecFieldAction));
+            //yield return StartCoroutine(GenerateHeatmap(currentTileData, currentTileData.tile.sector, path, currentTileData.tile.position, GenVecFieldAction));
+
+            /*StartCoroutine(GenerateSurroundingVectorField(currentTileData, currentTileData.tile.sector,
+                path, proximityFlowFieldRadius));*/
+        }
+        
+        foreach (var t in inverseTilePath)
+        {
+            Debug.Log("Gen Proximity Vec Field...");
+            IEnumerator x = GenerateSurroundingVectorField(t, path, proximityFlowFieldRadius);
+            while (x.MoveNext())
+            {
+                                
+            }
+        }
+
+        endPositionTilesTMPTEST.ForEach(tileData =>
+        {
+            if (tileData.lastTile != null)
+            {
+                tileData.flowFieldDirection = tileData.GetPosition() - tileData.lastTile.position;
+            }
+            StartCoroutine(DrawFlowFieldTEMPTESTNEW(tileData, tileData.tile.sector, path));
+        });
+        
+        
+
+        /*if (debugPathGeneration)
+        {
+            yield return new WaitForSeconds(5);
+            endPositionTilesTMPTEST.ForEach(entry =>
+                StartCoroutine(DrawFlowFieldTEMPTEST(entry, entry.tile.sector, path)));
+            //StartCoroutine(DrawFlowFieldTEMPTEST(path.tilePath[0], path.tilePath[0].tile.sector, path));
+        }*/
+        
+        
+        Debug.Log("Done with function...");
+        onDoneAction?.Invoke(path); // TODO: Theres a chance that not all vectorfields are calculated at this point...
+        yield return 0;
+    }
+
+    private IEnumerator DrawFlowFieldTEMPTEST(PathFinderSectorTileData currentTileData, PathFinderSector sector, PathFinderPath path)
     {
         var rayStartPos = currentTileData.GetPosition();
         rayStartPos.y += 0.2f;
@@ -337,7 +477,31 @@ public class PathFinderController : MonoBehaviour
         yield return 0;
     }
     
-    public IEnumerator GenerateVectorField(PathFinderSectorTileData currentTileData, PathFinderSector sector, PathFinderPath path)
+    private IEnumerator DrawFlowFieldTEMPTESTNEW(PathFinderSectorTileData currentTileData, PathFinderSector sector, PathFinderPath path)
+    {
+        var rayStartPos = currentTileData.GetPosition();
+        rayStartPos.y += 0.2f;
+        Debug.DrawRay(rayStartPos-(currentTileData.flowFieldDirection/2), currentTileData.flowFieldDirection, Color.red, 30f);
+        Debug.DrawRay(rayStartPos+(currentTileData.flowFieldDirection/2*.3f),currentTileData.flowFieldDirection*.3f, Color.yellow, 30f);
+        currentTileData.vecDirDrawed = true;
+        yield return new WaitForEndOfFrame();
+
+        if (currentTileData?.tile?.neighbourTiles != null)
+        {
+            foreach (var neighbourTile in currentTileData.tile.neighbourTiles)
+            {
+                if (neighbourTile == null || (sector != null && neighbourTile.sector != sector)) continue;
+                path.tileDataList.TryGetValue(neighbourTile, out var neighbourTileData);
+                if(neighbourTileData == null || neighbourTileData.vecDirDrawed) continue;
+
+                yield return StartCoroutine(DrawFlowFieldTEMPTEST(neighbourTileData, sector, path));
+            }
+        }
+
+        yield return 0;
+    }
+
+    private IEnumerator GenerateVectorField(PathFinderSectorTileData currentTileData, PathFinderSector sector, PathFinderPath path)
     {
         if (currentTileData?.tile == null || !currentTileData.flowFieldDirection.Equals(Vector3.negativeInfinity))
             yield break;
@@ -397,6 +561,194 @@ public class PathFinderController : MonoBehaviour
         });
             
         yield return null;
+    }
+    
+    public int c = 0;
+    public int calcs = 0;
+    public int noFlowFieldNum = 0;
+    
+    private IEnumerator GenerateSurroundingVectorField(PathFinderSectorTileData currentTileData, 
+        PathFinderPath path, Action onDoneAction, int depth = -1)
+    {
+        yield return StartCoroutine(GenerateSurroundingVectorField(currentTileData, path, depth));
+        onDoneAction?.Invoke();
+        yield return 0;
+    }
+    
+    // -1 = unlimited
+    public IEnumerator GenerateSurroundingVectorField(PathFinderSectorTileData currentTileData, PathFinderPath path, int depth = -1)
+    {
+        if (currentTileData?.tile == null || depth == 0)
+            yield break;
+        
+        /*if(depth == proximityFlowFieldRadius) // TODO HACK
+            yield return new WaitForSeconds(2);*/
+        
+        c++;
+        if (currentTileData.flowFieldDirection.Equals(Vector3.negativeInfinity))
+        {
+            calcs++;
+            // Calculate Flow Field Direction
+            PathFinderSectorTileData leftTileData = null, rightTileData = null, topTileData = null, bottomTileData = null;
+            PathFinderSectorTile leftTile = currentTileData.tile.GetLeftTile(),
+                rightTile = currentTileData.tile.GetRightTile(),
+                topTile = currentTileData.tile.GetTopTile(),
+                bottomTile = currentTileData.tile.GetBottomTile();
+            if(leftTile != null) path.tileDataList.TryGetValue(leftTile, out leftTileData);
+            if(rightTile != null) path.tileDataList.TryGetValue(rightTile, out rightTileData);
+            if(topTile != null) path.tileDataList.TryGetValue(topTile, out topTileData);
+            if(bottomTile != null) path.tileDataList.TryGetValue(bottomTile, out bottomTileData);
+
+            
+            var dirVector = new Vector3((leftTileData?.flowFieldDistanceToTarget ?? currentTileData.flowFieldDistanceToTarget) - (rightTileData?.flowFieldDistanceToTarget ?? currentTileData.flowFieldDistanceToTarget), 
+                0, 
+                (bottomTileData?.flowFieldDistanceToTarget ?? currentTileData.flowFieldDistanceToTarget) - (topTileData?.flowFieldDistanceToTarget ?? currentTileData.flowFieldDistanceToTarget));
+
+            /*if (dirVector.Equals(Vector3.zero) && currentTileData.lastTileData != null){
+                noFlowFieldNum++;
+
+                dirVector.x = currentTileData.lastTileData.flowFieldDistanceToTarget -
+                              currentTileData.flowFieldDistanceToTarget;
+                dirVector.z = currentTileData.lastTileData.flowFieldDistanceToTarget -
+                              currentTileData.flowFieldDistanceToTarget;
+            }*/
+            
+            currentTileData.flowFieldDirection = dirVector.normalized;
+        }
+
+        var newDepth = depth == -1 ? depth : depth - 1;
+        currentTileData.tile.neighbourTiles?.ForEach(neighbourTile =>
+        {
+            if (neighbourTile == null) return;
+            path.tileDataList.TryGetValue(neighbourTile, out var neighbourTileData);
+            if (neighbourTileData == null || !neighbourTileData.flowFieldDirection.Equals(Vector3.negativeInfinity) || currentTileData.tile.sector != neighbourTile.sector) return;
+            
+            var generateVectorField = GenerateSurroundingVectorField(neighbourTileData, path, newDepth);
+            while(generateVectorField.MoveNext())
+            {
+            }
+        });
+            
+        yield return null;
+    }
+
+    /*public void GenerateSurroundingVectorField(PathFinderSectorTileData tileData, PathFinderPath path)
+    {
+        IEnumerator x = GenerateSurroundingVectorField(tileData, tileData.tile.sector, path,
+            proximityFlowFieldRadius);
+        while (x.MoveNext())
+        {
+                                
+        }
+    }*/
+    
+    private IEnumerator GenerateHeatmap(PathFinderSectorTileData currentTileData, PathFinderSector sector,
+        PathFinderPath path, Vector3 targetPosition, Action onDoneAction)
+    {
+        yield return StartCoroutine(GenerateHeatmap(currentTileData, sector, path, targetPosition));
+        onDoneAction?.Invoke();
+        yield return 0;
+    }
+    
+    private IEnumerator GenerateHeatmap(PathFinderSectorTileData currentTileData, PathFinderSector sector, PathFinderPath path, Vector3 targetPosition)
+    {
+        if (currentTileData.GetPosition() == targetPosition)
+        {
+            currentTileData.flowFieldDistanceToTarget = 0;
+        }
+            
+        var neighboursToEvaluate = new List<PathFinderSectorTileData>();
+        currentTileData.tile.neighbourTiles?.ForEach(neighbourTile =>
+        {
+            if (neighbourTile == null || (sector != null && neighbourTile.sector != sector)) return;
+            path.tileDataList.TryGetValue(neighbourTile, out var neighbourTileData);
+            if (neighbourTileData == null)
+            {
+                neighbourTileData = new PathFinderSectorTileData(neighbourTile);
+                path.AddTileData(neighbourTileData);
+            }
+                
+            var distToTargetNotSetYet = neighbourTileData.flowFieldDistanceToTarget < 0;
+            if (distToTargetNotSetYet || neighbourTileData.flowFieldDistanceToTarget > currentTileData.flowFieldDistanceToTarget + 1)
+            {
+                neighbourTileData.flowFieldLastTile = currentTileData.tile;
+                neighbourTileData.flowFieldLastTileData = currentTileData;
+                neighbourTileData.flowFieldDistanceToTarget = currentTileData.flowFieldDistanceToTarget + 1;
+                neighboursToEvaluate.Add(neighbourTileData);
+            }
+        });
+
+        foreach (var neighbourTileData in neighboursToEvaluate)
+        {
+            if (neighbourTileData == null || (sector != null && neighbourTileData.tile.sector != sector)) continue;
+            //yield return StartCoroutine(GenerateHeatmap(neighbourTileData, sector, path, targetPosition));
+            IEnumerator genItr = GenerateHeatmap(neighbourTileData, sector, path, targetPosition);
+            while (genItr.MoveNext())
+            {
+                
+            }
+        }
+
+        yield return 0;
+    }
+    
+    private IEnumerator GenerateSurroundingHeatmap(PathFinderSectorTileData currentTileData,
+        PathFinderPath path, Vector3 targetPosition, Action onDoneAction, int depth = -1)
+    {
+        yield return StartCoroutine(GenerateSurroundingHeatmap(currentTileData, path, targetPosition, depth));
+        onDoneAction?.Invoke();
+        yield return 0;
+    }
+    
+    private IEnumerator GenerateSurroundingHeatmap(PathFinderSectorTileData currentTileData, PathFinderPath path, Vector3 targetPosition, int depth = -1, int currentDistanceToTarget = 0)
+    {
+        if (currentTileData.GetPosition() == targetPosition && currentTileData.flowFieldDistanceToTarget < 0)
+        {
+            currentTileData.flowFieldDistanceToTarget = 0;
+            currentTileData.flowFieldSurroundingTargetTileData = currentTileData;
+        }
+            
+        var neighboursToEvaluate = new List<PathFinderSectorTileData>();
+        currentTileData.tile.neighbourTiles?.ForEach(neighbourTile =>
+        {
+            if (neighbourTile == null) return;
+            path.tileDataList.TryGetValue(neighbourTile, out var neighbourTileData);
+            if (neighbourTileData == null)
+            {
+                neighbourTileData = new PathFinderSectorTileData(neighbourTile);
+                path.AddTileData(neighbourTileData);
+            }
+                
+            if (neighbourTileData.flowFieldDistanceToTarget < 0 ||
+                (neighbourTileData.flowFieldSurroundingTargetTileData.Equals(currentTileData) &&
+                 neighbourTileData.flowFieldDistanceToTarget > currentDistanceToTarget + 1))
+            {
+                neighbourTileData.flowFieldLastTile = currentTileData.tile;
+                neighbourTileData.flowFieldLastTileData = currentTileData;
+                neighbourTileData.flowFieldDistanceToTarget = currentDistanceToTarget + 1;
+                neighbourTileData.flowFieldSurroundingTargetTileData = currentTileData;
+                //neighboursToEvaluate.Add(neighbourTileData);
+            }
+            neighboursToEvaluate.Add(neighbourTileData);
+        });
+
+        if (depth != 0)
+        {
+            var newDepth = depth == -1 ? -1 : depth - 1;
+            foreach (var neighbourTileData in neighboursToEvaluate)
+            {
+                if (neighbourTileData == null) continue;
+                //yield return StartCoroutine(GenerateHeatmap(neighbourTileData, sector, path, targetPosition));
+                IEnumerator genItr = GenerateSurroundingHeatmap(neighbourTileData, path, targetPosition, newDepth, currentDistanceToTarget+1);
+                while (genItr.MoveNext())
+                {
+                
+                }
+            }
+        }
+        
+
+        yield return 0;
     }
     
     private static List<PathFinderSectorTileData> CreateWaypointsListFromTileData(PathFinderSectorTileData targetTileData)

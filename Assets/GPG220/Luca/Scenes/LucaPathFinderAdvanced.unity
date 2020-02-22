@@ -707,7 +707,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 307105683}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 36.55, y: 0.2, z: 36.9}
+  m_LocalPosition: {x: 66.83, y: 0.2, z: 26.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1263,6 +1263,11 @@ MonoBehaviour:
     - Name: resourcesMax
       Entry: 6
       Data: 
+  dropInventoryOnDeath: 1
+  dropOutAcceleration: 4
+  dropOutAngle: 30
+  dropOutMaxStack: 5
+  timeBetweenDropOuts: 1
 --- !u!114 &939108496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1292,27 +1297,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 588dec328ee109948963e35100b668c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: currentPath
-      Entry: 6
-      Data: 
+  syncMode: 0
+  syncInterval: 0.1
   unitStats: {fileID: 939108496}
   inventory: {fileID: 939108495}
   rb: {fileID: 939108498}
   pfController: {fileID: 953189119}
   calculateFlowFieldPath: 1
-  move: 0
-  stopMovingBelowDistToTarget: 2
+  move: 1
+  stopMovingBelowDistToTarget: -1
   testTarget: {fileID: 307105683}
-  acceleration: 1
+  acceleration: 10
 --- !u!54 &939108498
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1321,7 +1316,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 939108494}
   serializedVersion: 2
-  m_Mass: 0.1
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 1
@@ -1500,6 +1495,10 @@ MonoBehaviour:
     rgba: 4294901868
   - serializedVersion: 2
     rgba: 4294901822
+  proximityFlowFieldRadius: 10
+  c: 0
+  calcs: 0
+  noFlowFieldNum: 0
 --- !u!1 &997499172
 GameObject:
   m_ObjectHideFlags: 0
@@ -1656,6 +1655,11 @@ MonoBehaviour:
     - Name: resourcesMax
       Entry: 6
       Data: 
+  dropInventoryOnDeath: 1
+  dropOutAcceleration: 4
+  dropOutAngle: 30
+  dropOutMaxStack: 5
+  timeBetweenDropOuts: 1
 --- !u!114 &1009864719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1685,27 +1689,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 588dec328ee109948963e35100b668c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: currentPath
-      Entry: 6
-      Data: 
+  syncMode: 0
+  syncInterval: 0.1
   unitStats: {fileID: 1009864719}
   inventory: {fileID: 1009864718}
   rb: {fileID: 1009864721}
   pfController: {fileID: 953189119}
   calculateFlowFieldPath: 1
-  move: 0
-  stopMovingBelowDistToTarget: 2
+  move: 1
+  stopMovingBelowDistToTarget: -1
   testTarget: {fileID: 307105683}
-  acceleration: 1
+  acceleration: 10
 --- !u!54 &1009864721
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1714,7 +1708,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1009864717}
   serializedVersion: 2
-  m_Mass: 0.1
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 1
@@ -1846,6 +1840,11 @@ MonoBehaviour:
     - Name: resourcesMax
       Entry: 6
       Data: 
+  dropInventoryOnDeath: 1
+  dropOutAcceleration: 4
+  dropOutAngle: 30
+  dropOutMaxStack: 5
+  timeBetweenDropOuts: 1
 --- !u!114 &1135143678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1875,27 +1874,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 588dec328ee109948963e35100b668c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: currentPath
-      Entry: 6
-      Data: 
+  syncMode: 0
+  syncInterval: 0.1
   unitStats: {fileID: 1135143678}
   inventory: {fileID: 1135143677}
   rb: {fileID: 1135143680}
   pfController: {fileID: 953189119}
   calculateFlowFieldPath: 1
-  move: 0
-  stopMovingBelowDistToTarget: 2
+  move: 1
+  stopMovingBelowDistToTarget: -1
   testTarget: {fileID: 307105683}
-  acceleration: 1
+  acceleration: 10
 --- !u!54 &1135143680
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1904,7 +1893,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1135143676}
   serializedVersion: 2
-  m_Mass: 0.1
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 1
@@ -2142,6 +2131,11 @@ MonoBehaviour:
     - Name: resourcesMax
       Entry: 6
       Data: 
+  dropInventoryOnDeath: 1
+  dropOutAcceleration: 4
+  dropOutAngle: 30
+  dropOutMaxStack: 5
+  timeBetweenDropOuts: 1
 --- !u!114 &1301452641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2171,27 +2165,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 588dec328ee109948963e35100b668c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: currentPath
-      Entry: 6
-      Data: 
+  syncMode: 0
+  syncInterval: 0.1
   unitStats: {fileID: 1301452641}
   inventory: {fileID: 1301452640}
   rb: {fileID: 1301452643}
   pfController: {fileID: 953189119}
   calculateFlowFieldPath: 1
-  move: 0
-  stopMovingBelowDistToTarget: 2
+  move: 1
+  stopMovingBelowDistToTarget: -1
   testTarget: {fileID: 307105683}
-  acceleration: 1
+  acceleration: 10
 --- !u!54 &1301452643
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2200,7 +2184,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1301452639}
   serializedVersion: 2
-  m_Mass: 0.1
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 1
@@ -2756,27 +2740,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 588dec328ee109948963e35100b668c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: currentPath
-      Entry: 6
-      Data: 
+  syncMode: 0
+  syncInterval: 0.1
   unitStats: {fileID: 1645079187}
   inventory: {fileID: 1645079186}
   rb: {fileID: 1645079181}
   pfController: {fileID: 953189119}
   calculateFlowFieldPath: 1
-  move: 0
-  stopMovingBelowDistToTarget: 2
+  move: 1
+  stopMovingBelowDistToTarget: -1
   testTarget: {fileID: 307105683}
-  acceleration: 1
+  acceleration: 10
 --- !u!54 &1645079181
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2785,7 +2759,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1645079179}
   serializedVersion: 2
-  m_Mass: 0.1
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 1
@@ -2894,6 +2868,11 @@ MonoBehaviour:
     - Name: resourcesMax
       Entry: 6
       Data: 
+  dropInventoryOnDeath: 1
+  dropOutAcceleration: 4
+  dropOutAngle: 30
+  dropOutMaxStack: 5
+  timeBetweenDropOuts: 1
 --- !u!114 &1645079187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3038,6 +3017,11 @@ MonoBehaviour:
     - Name: resourcesMax
       Entry: 6
       Data: 
+  dropInventoryOnDeath: 1
+  dropOutAcceleration: 4
+  dropOutAngle: 30
+  dropOutMaxStack: 5
+  timeBetweenDropOuts: 1
 --- !u!114 &1685650584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3067,27 +3051,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 588dec328ee109948963e35100b668c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: currentPath
-      Entry: 6
-      Data: 
+  syncMode: 0
+  syncInterval: 0.1
   unitStats: {fileID: 1685650584}
   inventory: {fileID: 1685650583}
   rb: {fileID: 1685650586}
   pfController: {fileID: 953189119}
   calculateFlowFieldPath: 1
-  move: 0
-  stopMovingBelowDistToTarget: 2
+  move: 1
+  stopMovingBelowDistToTarget: -1
   testTarget: {fileID: 307105683}
-  acceleration: 1
+  acceleration: 10
 --- !u!54 &1685650586
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3096,7 +3070,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1685650582}
   serializedVersion: 2
-  m_Mass: 0.1
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 1

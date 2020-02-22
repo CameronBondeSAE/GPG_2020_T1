@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ namespace GPG220.Luca.Scripts.Pathfinding
 {
     public class PathFinderPath
     {
-        public PathFinderController controller;
+        private readonly PathFinderController controller;
         
         [NonSerialized, HideInInspector]
         public Dictionary<PathFinderSectorTile, PathFinderSectorTileData> tileDataList = new Dictionary<PathFinderSectorTile, PathFinderSectorTileData>();
@@ -14,6 +15,7 @@ namespace GPG220.Luca.Scripts.Pathfinding
         public List<PathFinderSectorTileData> tilePath;
 
         public bool flowFieldAvailable = false;
+        public bool continuousFlowField = false;
         
         // TODO? MAYBE DELETE
         public List<Vector3> waypoints;
@@ -51,9 +53,25 @@ namespace GPG220.Luca.Scripts.Pathfinding
 
             if (tileDataList == null)
                 return position-tile.position;
-            
-            if(flowFieldAvailable && flowDirIfAvail && tileData != null)
-                return tileData?.flowFieldDirection ?? default;
+
+            if (flowFieldAvailable && flowDirIfAvail && tileData != null)
+            {
+                var dir = tileData.flowFieldDirection;
+                if (dir.Equals(Vector3.negativeInfinity))
+                {
+                    
+                    
+                    var x = controller.GenerateSurroundingVectorField(tileData, this,
+                        controller.proximityFlowFieldRadius);
+                    while (x.MoveNext())
+                    {
+                                
+                    }
+                    
+                }
+                
+                return dir.Equals(Vector3.negativeInfinity) ? Vector3.zero : dir;
+            }
 
             return position - (GetNextTileOnPath(position)?.GetPosition() ?? tile.position);
         }
@@ -103,7 +121,7 @@ namespace GPG220.Luca.Scripts.Pathfinding
                 return default;
             var tileData = tileDataList[tile];
 
-            return tileData?.flowFieldDistanceToTarget ?? -1f;
+            return tileData?.flowFieldDistanceToTarget ?? -1f; // TODO Not working with this kind of flowfields over several sectors...
         }
     }
 }
