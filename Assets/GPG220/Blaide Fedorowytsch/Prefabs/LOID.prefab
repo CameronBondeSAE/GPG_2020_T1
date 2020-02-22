@@ -46,7 +46,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7804094275734304555}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -27.17, y: 37.672695, z: 1.0116957}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2155327993376895753}
@@ -65,9 +65,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbb2133337e70274cbe16cd9308cfc1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayEndRadius: 12
+  rayEndRadius: 13
   rayStartlength: 0.6
-  resolution: 4
+  resolution: 6
   addCentreRay: 1
   rayLength: 15
 --- !u!114 &926150090195218380
@@ -98,7 +98,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rB: {fileID: 0}
-  forceMultiplier: 12
+  forceMultiplier: 35
+  turnAroundDirections: []
+  turnAroundDirectionIndex: 0
+  CentreHitLast: 0
+  centreHitTimeOut: 5
+  centrehitTimer: 0
 --- !u!114 &310603719334014210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,7 +145,7 @@ MonoBehaviour:
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
-  forceMultiplier: 555
+  forceMultiplier: 1200
 --- !u!114 &2046152140815430580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,14 +153,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7804094275734304555}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7bc31c0c85055d04cbe4c63edb77fa6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rB: {fileID: 0}
   forceMultiplier: 1
-  timeScale: 1
+  timeScale: 0.3
 --- !u!135 &2890676816422390443
 SphereCollider:
   m_ObjectHideFlags: 0

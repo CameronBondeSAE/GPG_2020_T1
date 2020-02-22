@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7552762406064883721}
   - component: {fileID: 7552762406064883718}
   m_Layer: 0
-  m_Name: LoidSpawner (1)
+  m_Name: LoidSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,9 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fbc8b687c81daa4ba56cef48ce82ddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loidPrefab: {fileID: 8122360784518642092, guid: 7df75f92e88828844b09d7da3f1bcc0f,
+  loidPrefab: {fileID: 7804094275734304555, guid: 7df75f92e88828844b09d7da3f1bcc0f,
     type: 3}
   loidSpawnbuffer: 100
   timesinceLastSpawn: 0
-  spawnDelay: 1.5
+  spawnDelay: 3
   spawnedLoids: []

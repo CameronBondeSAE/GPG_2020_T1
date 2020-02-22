@@ -6,12 +6,31 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Loids.Steering_Behaviours
     public class Avoidance : SteeringBehaviourBase
     {
         public float forceMultiplier;
+        public Vector3[] turnAroundDirections;
+        public int turnAroundDirectionIndex;
+        public bool CentreHitLast;
+        public float centreHitTimeOut;
+        public float centrehitTimer;
         public override void Start()
         {
             base.Start();
             GetComponent<RayConeArray>().RayConeArrayHitEvent += OnRayHit;
+            turnAroundDirections = new Vector3[]{transform.up,transform.forward,-transform.up,-transform.forward};
         }
 
+        public void FixedUpdate()
+        {
+            if (CentreHitLast)
+            {
+                centrehitTimer += Time.deltaTime;
+                if (centrehitTimer >= centreHitTimeOut)
+                {
+                    CycleTurnDirection();
+                    centrehitTimer = 0;
+                }
+            }
+
+        }
 
 
         // Avoiding 
@@ -26,10 +45,36 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Loids.Steering_Behaviours
                    rB.AddForceAtPosition(((centreLine.GetPoint(hit.distance) - hit.point )* 1/hit.distance) * forceMultiplier /rayConeArrayHitData.coneRay.Length,hit.point);
                 }
             }
+            
+            // 
             if (rayConeArrayHitData.centreHit.collider != null)
             {
                 rB.AddForce(-((transform.forward) * forceMultiplier*10 * 15/rayConeArrayHitData.centreHit.distance));
-                rB.AddTorque(transform.right * forceMultiplier*10 * 2/rayConeArrayHitData.centreHit.distance);
+
+                if (!CentreHitLast)
+                {
+                    CycleTurnDirection();
+                }
+
+                rB.AddTorque(turnAroundDirections[turnAroundDirectionIndex] * forceMultiplier*10 * 2/rayConeArrayHitData.centreHit.distance);
+                
+                CentreHitLast = true;
+            }
+            else
+            {
+                CentreHitLast = false;
+            }
+        }
+
+        void CycleTurnDirection()
+        {
+            if (turnAroundDirectionIndex >= turnAroundDirections.Length-1)
+            {
+                turnAroundDirectionIndex = 0;
+            }
+            else
+            {
+                turnAroundDirectionIndex++;
             }
         }
     }

@@ -48,10 +48,9 @@ public class LoidSpawner : MonoBehaviour
         spawnedLoids.Add(gameObject);
 
     }
-    [Button(Style = ButtonStyle.FoldoutButton, Name = "spawn Multiple Loids")]
-    void SpawnMultipleLoids(int ammount, float delay)
+    [Button(Style = ButtonStyle.FoldoutButton, Name = "Add Loids to spawn Que")]
+    void AddLoidsToQue(int ammount)
     {
-        spawnDelay = delay;
         loidSpawnbuffer += ammount;
 
     }
@@ -65,6 +64,30 @@ public class LoidSpawner : MonoBehaviour
             Destroy(spawnedLoids[i]);
         }
         spawnedLoids.Clear();
+        
+    }
+
+    [Button(Name = "Reinstance Spawned Loids")]
+    void reinstanceSpawnedLoids()
+    {
+        List<GameObject> newLoids = new List<GameObject>();
+        while (spawnedLoids.Count >0)
+        {
+            GameObject tempGameObject = spawnedLoids[0];
+            spawnedLoids.Remove(spawnedLoids[0]);
+            Transform tempTransform = tempGameObject.transform;
+            Destroy(tempGameObject);
+            
+            GameObject newLoid = Instantiate(loidPrefab, tempTransform.position, tempTransform.rotation);
+            newLoids.Add(newLoid);
+        }
+        spawnedLoids.Clear();
+
+        foreach (GameObject loid in newLoids)
+        {
+            spawnedLoids.Add(loid);
+        }
+        newLoids.Clear();
         
     }
 
