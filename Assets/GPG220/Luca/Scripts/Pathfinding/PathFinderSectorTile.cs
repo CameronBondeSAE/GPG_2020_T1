@@ -10,6 +10,8 @@ public class PathFinderSectorTile : IEquatable<PathFinderSectorTile>
     public Vector3 position;
     public Rect tileRect;
 
+    public float terrainSlope = -1f;
+
     //public readonly List<PathFinderSectorTile> neighbourTiles = new List<PathFinderSectorTile>();
     public readonly Dictionary<PathFinderSectorTile, float> neighbourTiles = new Dictionary<PathFinderSectorTile, float>(); // <Tile, slope>
     
@@ -19,7 +21,7 @@ public class PathFinderSectorTile : IEquatable<PathFinderSectorTile>
     {
         if (_leftTile == null)
             FindAdjacentTiles();
-        return _leftTile == null || (maxSlope >= 0 && neighbourTiles[_leftTile] > maxSlope) ? null : _leftTile;
+        return _leftTile == null || (maxSlope >= 0 && (neighbourTiles[_leftTile] > maxSlope || _leftTile.terrainSlope > maxSlope)) ? null : _leftTile;
     }
 
     [ShowInInspector]
@@ -28,7 +30,7 @@ public class PathFinderSectorTile : IEquatable<PathFinderSectorTile>
     {
         if (_rightTile == null)
             FindAdjacentTiles();
-        return _rightTile == null || (maxSlope >= 0 && neighbourTiles[_rightTile] > maxSlope) ? null : _rightTile;
+        return _rightTile == null || (maxSlope >= 0 && (neighbourTiles[_rightTile] > maxSlope || _rightTile.terrainSlope > maxSlope)) ? null : _rightTile;
     }
     [ShowInInspector]
     private PathFinderSectorTile _topTile;
@@ -36,7 +38,7 @@ public class PathFinderSectorTile : IEquatable<PathFinderSectorTile>
     {
         if (_topTile == null)
             FindAdjacentTiles();
-        return _topTile == null || (maxSlope >= 0 && neighbourTiles[_topTile] > maxSlope) ? null : _topTile;
+        return _topTile == null || (maxSlope >= 0 && (neighbourTiles[_topTile] > maxSlope || _topTile.terrainSlope > maxSlope)) ? null : _topTile;
     }
     [ShowInInspector]
     private PathFinderSectorTile _bottomTile;
@@ -44,7 +46,7 @@ public class PathFinderSectorTile : IEquatable<PathFinderSectorTile>
     {
         if (_bottomTile == null)
             FindAdjacentTiles();
-        return _bottomTile == null || (maxSlope >= 0 && neighbourTiles[_bottomTile] > maxSlope) ? null : _bottomTile;
+        return _bottomTile == null || (maxSlope >= 0 && (neighbourTiles[_bottomTile] > maxSlope || _bottomTile.terrainSlope > maxSlope)) ? null : _bottomTile;
     }
 
     private void FindAdjacentTiles()

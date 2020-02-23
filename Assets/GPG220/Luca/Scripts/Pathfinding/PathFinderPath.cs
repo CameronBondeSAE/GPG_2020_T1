@@ -51,8 +51,8 @@ namespace GPG220.Luca.Scripts.Pathfinding
             
             tileDataList.TryGetValue(tile, out var tileData);
 
-            if (tileDataList == null)
-                return position-tile.position;
+            if (tileData == null)
+                return tile.position-position;
 
             if (flowFieldAvailable && flowDirIfAvail && tileData != null)
             {
@@ -67,13 +67,14 @@ namespace GPG220.Luca.Scripts.Pathfinding
                     {
                                 
                     }
-                    
+
+                    dir = tileData.flowFieldDirection;
                 }
                 
                 return dir.Equals(Vector3.negativeInfinity) ? Vector3.zero : dir;
             }
 
-            return position - (GetNextTileOnPath(position)?.GetPosition() ?? tile.position);
+            return (position - (GetNextTileOnPath(position)?.GetPosition() ?? tile.position)).normalized;
         }
 
         // TODO NOT WORKING YET
@@ -111,7 +112,7 @@ namespace GPG220.Luca.Scripts.Pathfinding
                 lastTileData = tileData;
             }
 
-            return null;
+            return lastTileData;
         }
 
         public float GetAproxDistanceToTargetAtPos(Vector3 position)
