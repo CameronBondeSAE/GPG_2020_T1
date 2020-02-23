@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using GPG220.Luca.Scripts.Pathfinding;
 using Sirenix.OdinInspector;
@@ -16,6 +17,7 @@ public class PathFinderSector : MonoBehaviour
     
     
     public float sectorTileSize = 1;
+    public float maxSlope = 45; // Degrees
     
     public Bounds bounds;
 
@@ -93,7 +95,16 @@ public class PathFinderSector : MonoBehaviour
                     startPoint.y += sectorTileSize/2;
                     //Debug.DrawLine(startPoint, startPoint + Vector3.down * 5, Color.yellow, 2f);
                     // Obstacle Check
-                    if (!Physics.CheckBox(startPoint, checkBoxExtents, Quaternion.identity, ~(walkableMask | ignoreMask))) // !Physics.CheckSphere(hit.point, sectorTileSize, ~(walkableMask | ignoreMask))
+                    var slopeAtPos = 0f;
+                    var terrainAtPos = GetTerrainAtPos(startPoint);
+                    if (terrainAtPos != null)
+                    {
+                        var terrainPos = startPoint - terrainAtPos.transform.position;
+                        var posOnTerrain = new Vector2(terrainPos.x / terrainAtPos.terrainData.size.x, terrainPos.z / terrainAtPos.terrainData.size.z);
+                        slopeAtPos = terrainAtPos.terrainData.GetSteepness(posOnTerrain.x,posOnTerrain.y);
+                    }
+                    
+                    if (slopeAtPos <= maxSlope && !Physics.CheckBox(startPoint, checkBoxExtents, Quaternion.identity, ~(walkableMask | ignoreMask))) // !Physics.CheckSphere(hit.point, sectorTileSize, ~(walkableMask | ignoreMask))
                     {
                         var tile = new PathFinderSectorTile
                         {
@@ -169,6 +180,11 @@ public class PathFinderSector : MonoBehaviour
         }
 
         sectorTileGrid = tiles;
+    }
+
+    private Terrain GetTerrainAtPos(Vector3 position)
+    {
+        return Terrain.activeTerrains.FirstOrDefault(ter => ter.terrainData.bounds.Contains(position));
     }
     
     public PathFinderSectorTile GetNearestNode(Vector3 position)

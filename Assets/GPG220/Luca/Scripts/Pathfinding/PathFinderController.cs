@@ -29,6 +29,9 @@ namespace GPG220.Luca.Scripts.Pathfinding
         [FoldoutGroup("Sector Generation")]
         public GameObject tileObjectPrefab;
 
+
+        [FoldoutGroup("Sector Generation")] public float maxSlope = 45; // Degrees
+        
         private void Start()
         {
             if(autoGenerateSectors)
@@ -405,6 +408,7 @@ namespace GPG220.Luca.Scripts.Pathfinding
 
             yield return 0;
         }
+/*
 
         [ShowInInspector]
         private RecursiveCoroutineCounter TMPDebugCurrentRCC = null;
@@ -415,7 +419,7 @@ namespace GPG220.Luca.Scripts.Pathfinding
         [ShowInInspector]
         private RecursiveCoroutineCounter TMPDebugCurrentRCC3 = null;
         [ShowInInspector]
-        private RecursiveCoroutineCounter TMPDebugCurrentRCC4 = null;
+        private RecursiveCoroutineCounter TMPDebugCurrentRCC4 = null;*/
         private IEnumerator FindFlowFieldPathInProximity(PathFinderPath path, Action<PathFinderPath> onDoneAction = null)
         {
             path.flowFieldAvailable = true;
@@ -451,7 +455,7 @@ namespace GPG220.Luca.Scripts.Pathfinding
                 onDoneAction?.Invoke(path);
             };
             var rccHeatmaps = new RecursiveCoroutineCounter(path, onHeatmapsCalcDone); // Counts executions of heatmap generation, calls onDone when all heatmaps are done calcualting
-            TMPDebugCurrentRCC = rccHeatmaps;
+            //TMPDebugCurrentRCC = rccHeatmaps;
             for (int i = 0; i < inverseTilePath.Count; i++)
             {
                 var currentTileData = inverseTilePath[i];
@@ -487,13 +491,12 @@ namespace GPG220.Luca.Scripts.Pathfinding
                     Action<PathFinderPath> onHeatMapDone = (p) =>
                     {
                         rccHeatmaps.Decrease();
-                        Debug.Log("Swush..");
                     };
                     var rccHeatmap = new RecursiveCoroutineCounter(path, onHeatMapDone) {maxCount = 20};
-                    if (TMPDebugCurrentRCC1 == null) TMPDebugCurrentRCC1 = rccHeatmap;
+                    /*if (TMPDebugCurrentRCC1 == null) TMPDebugCurrentRCC1 = rccHeatmap;
                     else if (TMPDebugCurrentRCC2 == null) TMPDebugCurrentRCC2 = rccHeatmap;
                     else if (TMPDebugCurrentRCC3 == null) TMPDebugCurrentRCC3 = rccHeatmap;
-                    else if (TMPDebugCurrentRCC4 == null) TMPDebugCurrentRCC4 = rccHeatmap;
+                    else if (TMPDebugCurrentRCC4 == null) TMPDebugCurrentRCC4 = rccHeatmap;*/
                     
                     StartCoroutine(GenerateHeatmap(currentTileData, currentTileData.tile.sector, path, currentTileData.tile.position, rccHeatmap));
                     /*var heatmapEnumeration = GenerateHeatmap(currentTileData, currentTileData.tile.sector, path, currentTileData.tile.position, GenVecFieldAction);
