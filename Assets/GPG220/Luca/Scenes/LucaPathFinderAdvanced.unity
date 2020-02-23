@@ -1305,7 +1305,7 @@ MonoBehaviour:
   move: 1
   stopMovingBelowDistToTarget: -1
   testTarget: {fileID: 307105683}
-  acceleration: 20
+  acceleration: 12
 --- !u!54 &939108498
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1454,7 +1454,7 @@ MonoBehaviour:
   sectorLayer: 11
   tileObjectPrefab: {fileID: 4367888579796516851, guid: 74bc25ec0bbe5484d9f20db3bb79a9a0,
     type: 3}
-  maxSlope: 5
+  maxSlope: 20
   _debugPathGeneration: 1
   _debugPathGenerationDelay: 0
   _debugPathGenerationDataDeletionDelay: 5
@@ -1676,7 +1676,7 @@ MonoBehaviour:
   move: 1
   stopMovingBelowDistToTarget: -1
   testTarget: {fileID: 307105683}
-  acceleration: 20
+  acceleration: 12
 --- !u!54 &1009864721
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1861,7 +1861,7 @@ MonoBehaviour:
   move: 1
   stopMovingBelowDistToTarget: -1
   testTarget: {fileID: 307105683}
-  acceleration: 20
+  acceleration: 12
 --- !u!54 &1135143680
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2152,7 +2152,7 @@ MonoBehaviour:
   move: 1
   stopMovingBelowDistToTarget: -1
   testTarget: {fileID: 307105683}
-  acceleration: 20
+  acceleration: 12
 --- !u!54 &1301452643
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2727,7 +2727,7 @@ MonoBehaviour:
   move: 1
   stopMovingBelowDistToTarget: -1
   testTarget: {fileID: 307105683}
-  acceleration: 20
+  acceleration: 12
 --- !u!54 &1645079181
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3037,7 +3037,7 @@ MonoBehaviour:
   move: 1
   stopMovingBelowDistToTarget: -1
   testTarget: {fileID: 307105683}
-  acceleration: 20
+  acceleration: 12
 --- !u!54 &1685650586
 Rigidbody:
   m_ObjectHideFlags: 0

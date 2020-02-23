@@ -10,47 +10,48 @@ public class PathFinderSectorTile : IEquatable<PathFinderSectorTile>
     public Vector3 position;
     public Rect tileRect;
 
-    public readonly List<PathFinderSectorTile> neighbourTiles = new List<PathFinderSectorTile>();
+    //public readonly List<PathFinderSectorTile> neighbourTiles = new List<PathFinderSectorTile>();
+    public readonly Dictionary<PathFinderSectorTile, float> neighbourTiles = new Dictionary<PathFinderSectorTile, float>(); // <Tile, slope>
     
     [ShowInInspector]
     private PathFinderSectorTile _leftTile;
-    public PathFinderSectorTile GetLeftTile()
+    public PathFinderSectorTile GetLeftTile(float maxSlope = -1) // -1 do deactivate
     {
         if (_leftTile == null)
             FindAdjacentTiles();
-        return _leftTile;
+        return _leftTile == null || (maxSlope >= 0 && neighbourTiles[_leftTile] > maxSlope) ? null : _leftTile;
     }
 
     [ShowInInspector]
     private PathFinderSectorTile _rightTile;
-    public PathFinderSectorTile GetRightTile()
+    public PathFinderSectorTile GetRightTile(float maxSlope = -1)
     {
         if (_rightTile == null)
             FindAdjacentTiles();
-        return _rightTile;
+        return _rightTile == null || (maxSlope >= 0 && neighbourTiles[_rightTile] > maxSlope) ? null : _rightTile;
     }
     [ShowInInspector]
     private PathFinderSectorTile _topTile;
-    public PathFinderSectorTile GetTopTile()
+    public PathFinderSectorTile GetTopTile(float maxSlope = -1)
     {
         if (_topTile == null)
             FindAdjacentTiles();
-        return _topTile;
+        return _topTile == null || (maxSlope >= 0 && neighbourTiles[_topTile] > maxSlope) ? null : _topTile;
     }
     [ShowInInspector]
     private PathFinderSectorTile _bottomTile;
-    public PathFinderSectorTile GetBottomTile()
+    public PathFinderSectorTile GetBottomTile(float maxSlope = -1)
     {
         if (_bottomTile == null)
             FindAdjacentTiles();
-        return _bottomTile;
+        return _bottomTile == null || (maxSlope >= 0 && neighbourTiles[_bottomTile] > maxSlope) ? null : _bottomTile;
     }
 
     private void FindAdjacentTiles()
     {
         if (neighbourTiles == null || neighbourTiles.Count == 0)
             return;
-        foreach (var neighbour in neighbourTiles)
+        foreach (var neighbour in neighbourTiles.Keys)
         {
             var horSame = Mathf.Approximately(neighbour.position.x, position.x);
             var vertSame = Mathf.Approximately(neighbour.position.z,position.z);
@@ -88,6 +89,26 @@ public class PathFinderSectorTile : IEquatable<PathFinderSectorTile>
     {
         if (ReferenceEquals(null, other)) return false;
         return Equals(sector, other.sector) && position.Equals(other.position);
+    }
+
+    public float GetSlopeBetweenTiles(PathFinderSectorTile otherTile)
+    {
+        //var slopeAtPos = 0f;
+        var forward = otherTile.position - position;
+        forward.y = 0;
+        // TODO Maybe not accurate
+        return Vector3.Angle(otherTile.position - position, forward);
+        //return (Mathf.Approximately(position.y,0) || Mathf.Approximately(otherTile.position.y,0)) ? 0 : Vector3.Angle(otherTile.position-position, Vector3.up);
+        /*var terrainAtPos1 = GetTerrainAtPos(tile1.position);
+        var terrainAtPos2 = GetTerrainAtPos(tile2.position);
+        if (terrainAtPos1 != null && terrainAtPos2 != null)
+        {
+            var terrainPos1 = tile1.position - terrainAtPos1.transform.position;
+            var posOnTerrain1 = new Vector2(terrainPos1.x / terrainAtPos1.terrainData.size.x, terrainPos1.z / terrainAtPos1.terrainData.size.z);
+            var terrainPos2 = tile2.position - terrainAtPos2.transform.position;
+            var posOnTerrain2 = new Vector2(terrainPos2.x / terrainAtPos2.terrainData.size.x, terrainPos2.z / terrainAtPos2.terrainData.size.z);
+            slopeAtPos = terrainAtPos.terrainData.GetSteepness(posOnTerrain.x,posOnTerrain.y);
+        }*/
     }
     
 }

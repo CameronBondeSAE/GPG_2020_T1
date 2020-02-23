@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Sirenix.Utilities;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -36,7 +37,7 @@ namespace GPG220.Luca.Scripts.Pathfinding
             }
             
             var neighboursToEvaluate = new List<PathFinderSectorTileData>();
-            currentTileData.tile.neighbourTiles?.ForEach(neighbourTile =>
+            currentTileData.tile.neighbourTiles?.Keys.ForEach(neighbourTile =>
             {
                 if (neighbourTile == null || (sector != null && neighbourTile.sector != sector)) return;
                 path.tileDataList.TryGetValue(neighbourTile, out var neighbourTileData);

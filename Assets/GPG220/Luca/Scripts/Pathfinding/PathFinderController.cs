@@ -122,7 +122,7 @@ namespace GPG220.Luca.Scripts.Pathfinding
         
             currentTileData.vecDirDrawed = true;
             yield return new WaitForEndOfFrame();
-            currentTileData.tile.neighbourTiles?.ForEach(neighbourTile =>
+            currentTileData.tile.neighbourTiles?.Keys.ForEach(neighbourTile =>
             {
                 if (neighbourTile == null || (sector != null && neighbourTile.sector != sector)) return;
                 path.tileDataList.TryGetValue(neighbourTile, out var neighbourTileData);
@@ -148,7 +148,7 @@ namespace GPG220.Luca.Scripts.Pathfinding
 
             if (currentTileData?.tile?.neighbourTiles != null)
             {
-                foreach (var neighbourTile in currentTileData.tile.neighbourTiles)
+                foreach (var neighbourTile in currentTileData.tile.neighbourTiles.Keys)
                 {
                     if (neighbourTile == null || (sector != null && neighbourTile.sector != sector)) continue;
                     path.tileDataList.TryGetValue(neighbourTile, out var neighbourTileData);
@@ -228,7 +228,12 @@ namespace GPG220.Luca.Scripts.Pathfinding
         {
             foreach (var borderTileObject in sector.borderTileObjects)
             {
-                borderTileObject.Tile?.neighbourTiles.AddRange(borderTileObject.GetNeighbourTileObjects(true).Select(obj => obj.Tile).ToList());
+                //borderTileObject.Tile?.neighbourTiles.AddRange(borderTileObject.GetNeighbourTileObjects(true).Select(obj => obj.Tile).ToList());
+                borderTileObject.GetNeighbourTileObjects(true).Select(obj => obj.Tile).ForEach(neighbourTile =>
+                {
+                    borderTileObject.Tile?.neighbourTiles.Add(neighbourTile,borderTileObject.Tile.GetSlopeBetweenTiles(neighbourTile));
+                });
+                
             }
             yield return 0;
         }
@@ -354,11 +359,11 @@ namespace GPG220.Luca.Scripts.Pathfinding
             
                 foreach (var neighbourTile in currentTileData.tile.neighbourTiles)
                 {
-                    if(neighbourTile == null) continue;
+                    if(neighbourTile.Key == null || neighbourTile.Value > maxSlope) continue;
                 
-                    path.tileDataList.TryGetValue(neighbourTile, out var neighbourTileData);
+                    path.tileDataList.TryGetValue(neighbourTile.Key, out var neighbourTileData);
                     if(neighbourTileData == null)
-                        neighbourTileData = new PathFinderSectorTileData(neighbourTile);
+                        neighbourTileData = new PathFinderSectorTileData(neighbourTile.Key);
                     currentTileData.neighbourTiles.Add(neighbourTileData);
                 
                     if(redTilesData.Contains(neighbourTileData)) continue;
@@ -369,14 +374,15 @@ namespace GPG220.Luca.Scripts.Pathfinding
                         tmpDebugPathList.Add(neighbourTileData);
                     }
 
-                    var neighbourGCost = Vector3.Distance(neighbourTile.position, currentTileData.tile.position) +
+                    var neighbourGCost = Vector3.Distance(neighbourTile.Key.position, currentTileData.tile.position) +
                                          currentTileData.GCost;
-                    var neighbourHCost = PathFinderSectorTileData.CalculateHCost(neighbourTile, targetTile);
+                    var neighbourHCost = PathFinderSectorTileData.CalculateHCost(neighbourTile.Key, targetTile);
                     var neighbourFCost = neighbourGCost + neighbourHCost;
 
-                    if ((neighbourTileData.fCost >= 0 && neighbourFCost < neighbourTileData.fCost) ||
-                        !greenTilesData.Contains(neighbourTileData))
+                    if (/*neighbourTile.Value <= maxSlope &&*/ ((neighbourTileData.fCost >= 0 && neighbourFCost < neighbourTileData.fCost) ||
+                        !greenTilesData.Contains(neighbourTileData)))
                     {
+                        
                         neighbourTileData.GCost = neighbourGCost;
                         neighbourTileData.HCost = neighbourHCost;
                         neighbourTileData.lastTile = currentTileData.tile;
@@ -570,12 +576,12 @@ namespace GPG220.Luca.Scripts.Pathfinding
             {
                 // Calculate Flow Field Direction
                 PathFinderSectorTileData leftTileData = null, rightTileData = null, topTileData = null, bottomTileData = null;
-                PathFinderSectorTile leftTile = currentTileData.tile.GetLeftTile(),
-                    rightTile = currentTileData.tile.GetRightTile(),
-                    topTile = currentTileData.tile.GetTopTile(),
-                    bottomTile = currentTileData.tile.GetBottomTile();
+                PathFinderSectorTile leftTile = currentTileData.tile.GetLeftTile(maxSlope),
+                    rightTile = currentTileData.tile.GetRightTile(maxSlope),
+                    topTile = currentTileData.tile.GetTopTile(maxSlope),
+                    bottomTile = currentTileData.tile.GetBottomTile(maxSlope);
             
-                // ITs IMPORTANT THAT this method is being called for each node END to Start... 
+                // ITs IMPORTANT THAT this method is being called for each node END to Start...  // TODO HACKY; May contain redundant checks
                 if(leftTile != null) path.tileDataList.TryGetValue(leftTile, out leftTileData);
                 var leftTileDist = leftTile == null || leftTileData == null ? currentTileData.flowFieldDistanceToTarget : leftTile.sector != sector ? currentTileData.flowFieldDistanceToTarget/*currentTileData.flowFieldDistanceToTarget+1*/ : leftTileData.flowFieldDistanceToTarget;
             
@@ -599,6 +605,9 @@ namespace GPG220.Luca.Scripts.Pathfinding
             
                 // ITs IMPORTANT THAT this method is being called for each node END to Start... 
                 var dirVector = new Vector3(leftTileDist-rightTileDist,0,bottomTileDist - topTileDist);
+                
+                
+                
 /*
 
             if (leftTile?.sector != currentTileData.tile.sector &&
@@ -630,7 +639,7 @@ namespace GPG220.Luca.Scripts.Pathfinding
             if (currentTileData.tile.sector != sector) yield break;
 
             var newDepth = depth == -1 ? depth : depth - 1;
-            currentTileData.tile.neighbourTiles?.ForEach(neighbourTile =>
+            currentTileData.tile.neighbourTiles?.Keys.ForEach(neighbourTile =>
             {
                 if (neighbourTile == null) return;
                 path.tileDataList.TryGetValue(neighbourTile, out var neighbourTileData);
@@ -660,12 +669,12 @@ namespace GPG220.Luca.Scripts.Pathfinding
             
             if (rcc != null && rcc.maxCount >= 0 && rcc.Counter >= rcc.maxCount)
             {
-                rcc?.IncreaseWaiting();
+                rcc.IncreaseWaiting();
                 while (rcc.Counter >= rcc.maxCount)
                 {
                     yield return 0;
                 }
-                rcc?.DecreaseWaiting();
+                rcc.DecreaseWaiting();
             }
             rcc?.Increase();
             if (currentTileData.GetPosition() == targetPosition)
@@ -677,11 +686,12 @@ namespace GPG220.Luca.Scripts.Pathfinding
             //int itr = 0;
             currentTileData.tile.neighbourTiles?.ForEach(neighbourTile =>
             {
-                if (neighbourTile == null || (sector != null && neighbourTile.sector != sector)) return;
-                path.tileDataList.TryGetValue(neighbourTile, out var neighbourTileData);
+                // TODO @ neighbourTile.Value > maxSlope Idea: leave it out of here... add check to Vectorfield generation
+                if (neighbourTile.Key == null || (sector != null && neighbourTile.Key.sector != sector) || neighbourTile.Value > maxSlope) return;
+                path.tileDataList.TryGetValue(neighbourTile.Key, out var neighbourTileData);
                 if (neighbourTileData == null)
                 {
-                    neighbourTileData = new PathFinderSectorTileData(neighbourTile);
+                    neighbourTileData = new PathFinderSectorTileData(neighbourTile.Key);
                     path.AddTileData(neighbourTileData);
                 }
                 
@@ -691,6 +701,9 @@ namespace GPG220.Luca.Scripts.Pathfinding
                     neighbourTileData.flowFieldLastTile = currentTileData.tile;
                     neighbourTileData.flowFieldLastTileData = currentTileData;
                     neighbourTileData.flowFieldDistanceToTarget = currentTileData.flowFieldDistanceToTarget + 1;
+                    
+                    // TODO Maybe increase cost if the slope is at a specific angle?
+                    
                     neighboursToEvaluate.Add(neighbourTileData);
                     //neighboursToEvaluate[itr] = neighbourTileData;
                     //itr++;

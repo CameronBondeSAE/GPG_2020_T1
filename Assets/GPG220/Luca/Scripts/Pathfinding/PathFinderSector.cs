@@ -95,16 +95,16 @@ public class PathFinderSector : MonoBehaviour
                     startPoint.y += sectorTileSize/2;
                     //Debug.DrawLine(startPoint, startPoint + Vector3.down * 5, Color.yellow, 2f);
                     // Obstacle Check
-                    var slopeAtPos = 0f;
+                    /*var slopeAtPos = 0f;
                     var terrainAtPos = GetTerrainAtPos(startPoint);
                     if (terrainAtPos != null)
                     {
                         var terrainPos = startPoint - terrainAtPos.transform.position;
                         var posOnTerrain = new Vector2(terrainPos.x / terrainAtPos.terrainData.size.x, terrainPos.z / terrainAtPos.terrainData.size.z);
                         slopeAtPos = terrainAtPos.terrainData.GetSteepness(posOnTerrain.x,posOnTerrain.y);
-                    }
+                    }*/
                     
-                    if (slopeAtPos <= maxSlope && !Physics.CheckBox(startPoint, checkBoxExtents, Quaternion.identity, ~(walkableMask | ignoreMask))) // !Physics.CheckSphere(hit.point, sectorTileSize, ~(walkableMask | ignoreMask))
+                    if (/*slopeAtPos <= maxSlope &&*/ !Physics.CheckBox(startPoint, checkBoxExtents, Quaternion.identity, ~(walkableMask | ignoreMask))) // !Physics.CheckSphere(hit.point, sectorTileSize, ~(walkableMask | ignoreMask))
                     {
                         var tile = new PathFinderSectorTile
                         {
@@ -152,29 +152,29 @@ public class PathFinderSector : MonoBehaviour
                 var tile = tiles[x,z];
                 if (tile == null) continue;
                 if (x > 0 && tiles[x - 1, z] != null) // Left
-                    tile.neighbourTiles.Add(tiles[x - 1, z]);
+                    tile.neighbourTiles.Add(tiles[x - 1, z],tile.GetSlopeBetweenTiles(tiles[x - 1, z]));
                 if (x < rowsX-1 && tiles[x + 1, z] != null) // Right
-                    tile.neighbourTiles.Add(tiles[x + 1, z]);
+                    tile.neighbourTiles.Add(tiles[x + 1, z],tile.GetSlopeBetweenTiles(tiles[x + 1, z]));
 
                 if (z > 0)
                 {
                     if(tiles[x, z - 1] != null)
-                        tile.neighbourTiles.Add(tiles[x, z - 1]);// Bottom
+                        tile.neighbourTiles.Add(tiles[x, z - 1],tile.GetSlopeBetweenTiles(tiles[x, z - 1]));// Bottom
                     if(x > 0 && tiles[x - 1, z - 1] != null)
-                        tile.neighbourTiles.Add(tiles[x - 1, z - 1]); // Bottom Left
+                        tile.neighbourTiles.Add(tiles[x - 1, z - 1],tile.GetSlopeBetweenTiles(tiles[x - 1, z - 1])); // Bottom Left
                     if(x < rowsX-1 && tiles[x + 1, z - 1] != null)
-                        tile.neighbourTiles.Add(tiles[x + 1, z - 1]); // Bottom Right
+                        tile.neighbourTiles.Add(tiles[x + 1, z - 1],tile.GetSlopeBetweenTiles(tiles[x + 1, z - 1])); // Bottom Right
                 }
                         
                     
                 if (z < rowsZ - 1) 
                 {
                     if(tiles[x, z + 1] != null)
-                        tile.neighbourTiles.Add(tiles[x, z + 1]);// Top
+                        tile.neighbourTiles.Add(tiles[x, z + 1],tile.GetSlopeBetweenTiles(tiles[x, z + 1]));// Top
                     if(x > 0 && tiles[x - 1, z + 1] != null)
-                        tile.neighbourTiles.Add(tiles[x - 1, z + 1]); // Top Left
+                        tile.neighbourTiles.Add(tiles[x - 1, z + 1],tile.GetSlopeBetweenTiles(tiles[x - 1, z + 1])); // Top Left
                     if(x < rowsX-1 && tiles[x + 1, z + 1] != null)
-                        tile.neighbourTiles.Add(tiles[x + 1, z + 1]); // Top Right
+                        tile.neighbourTiles.Add(tiles[x + 1, z + 1],tile.GetSlopeBetweenTiles(tiles[x + 1, z + 1])); // Top Right
                 }
             }
         }
@@ -251,7 +251,7 @@ public class PathFinderSector : MonoBehaviour
 
                 if (tile.neighbourTiles.Count > 0)
                 {
-                    foreach (var neighbour in tile.neighbourTiles)
+                    foreach (var neighbour in tile.neighbourTiles.Keys)
                     {
                         if(neighbour == null)continue;
                         Gizmos.color = Color.black;
