@@ -7,7 +7,7 @@ namespace GPG220.Luca.Scripts.Pathfinding
 {
     public class PathFinderPath
     {
-        private readonly PathFinderController controller;
+        public readonly PathFinderController controller;
         
         [NonSerialized, HideInInspector]
         public Dictionary<PathFinderSectorTile, PathFinderSectorTileData> tileDataList = new Dictionary<PathFinderSectorTile, PathFinderSectorTileData>();

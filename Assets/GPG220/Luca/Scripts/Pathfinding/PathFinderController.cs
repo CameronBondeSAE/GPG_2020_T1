@@ -405,7 +405,17 @@ namespace GPG220.Luca.Scripts.Pathfinding
 
             yield return 0;
         }
-        
+
+        [ShowInInspector]
+        private RecursiveCoroutineCounter TMPDebugCurrentRCC = null;
+        [ShowInInspector]
+        private RecursiveCoroutineCounter TMPDebugCurrentRCC1 = null;
+        [ShowInInspector]
+        private RecursiveCoroutineCounter TMPDebugCurrentRCC2 = null;
+        [ShowInInspector]
+        private RecursiveCoroutineCounter TMPDebugCurrentRCC3 = null;
+        [ShowInInspector]
+        private RecursiveCoroutineCounter TMPDebugCurrentRCC4 = null;
         private IEnumerator FindFlowFieldPathInProximity(PathFinderPath path, Action<PathFinderPath> onDoneAction = null)
         {
             path.flowFieldAvailable = true;
@@ -420,6 +430,28 @@ namespace GPG220.Luca.Scripts.Pathfinding
             var inverseTilePath = new List<PathFinderSectorTileData>(path.tilePath);
         
             inverseTilePath.Reverse();
+            
+            Action<PathFinderPath> onHeatmapsCalcDone = (p) =>
+            {
+                foreach (var t in inverseTilePath)
+                {
+                    IEnumerator x = GenerateSurroundingVectorField(t, t.tile.sector, path, proximityFlowFieldRadius);
+                    while (x.MoveNext())
+                    {
+                                
+                    }
+                }
+                
+                endPositionTilesTMPTEST.ForEach(tileData =>
+                {
+                    if(_debugPathGeneration)
+                        StartCoroutine(DrawFlowFieldTEMPTESTNEW(tileData, tileData.tile.sector, path));
+                });
+            
+                onDoneAction?.Invoke(path);
+            };
+            var rccHeatmaps = new RecursiveCoroutineCounter(path, onHeatmapsCalcDone); // Counts executions of heatmap generation, calls onDone when all heatmaps are done calcualting
+            TMPDebugCurrentRCC = rccHeatmaps;
             for (int i = 0; i < inverseTilePath.Count; i++)
             {
                 var currentTileData = inverseTilePath[i];
@@ -432,7 +464,7 @@ namespace GPG220.Luca.Scripts.Pathfinding
                     if(_debugPathGeneration)
                         Debug.DrawRay(currentTileData.GetPosition(), Vector3.up*5, Color.cyan,30f);
                 
-                    Action GenVecFieldAction = () =>
+                    /*Action GenVecFieldAction = () =>
                     {
                         /*foreach (var t in inverseTilePath)
                     {
@@ -445,37 +477,59 @@ namespace GPG220.Luca.Scripts.Pathfinding
                                 
                             }
                         }
-                    }*/
+                    }#1#
                         //StartCoroutine(DrawFlowFieldTEMPTESTNEW(currentTileData, currentTileData.tile.sector, path));
-                    };
+                    };*/
                     endPositionTilesTMPTEST.Add(currentTileData);
-                    yield return StartCoroutine(GenerateHeatmap(currentTileData, currentTileData.tile.sector, path, currentTileData.tile.position, GenVecFieldAction));
+                    //yield return StartCoroutine(GenerateHeatmap(currentTileData, currentTileData.tile.sector, path, currentTileData.tile.position, GenVecFieldAction));
+                    //float tmpHeatMapTime = Time.realtimeSinceStartup;
+                    rccHeatmaps.Increase();
+                    Action<PathFinderPath> onHeatMapDone = (p) =>
+                    {
+                        rccHeatmaps.Decrease();
+                        Debug.Log("Swush..");
+                    };
+                    var rccHeatmap = new RecursiveCoroutineCounter(path, onHeatMapDone) {maxCount = 20};
+                    if (TMPDebugCurrentRCC1 == null) TMPDebugCurrentRCC1 = rccHeatmap;
+                    else if (TMPDebugCurrentRCC2 == null) TMPDebugCurrentRCC2 = rccHeatmap;
+                    else if (TMPDebugCurrentRCC3 == null) TMPDebugCurrentRCC3 = rccHeatmap;
+                    else if (TMPDebugCurrentRCC4 == null) TMPDebugCurrentRCC4 = rccHeatmap;
+                    
+                    StartCoroutine(GenerateHeatmap(currentTileData, currentTileData.tile.sector, path, currentTileData.tile.position, rccHeatmap));
+                    /*var heatmapEnumeration = GenerateHeatmap(currentTileData, currentTileData.tile.sector, path, currentTileData.tile.position, GenVecFieldAction);
+                    while (heatmapEnumeration.MoveNext())
+                    {
+                                
+                    }*/
+                    //Debug.Log("Generate Heatmap time: "+(Time.realtimeSinceStartup-tmpHeatMapTime).ToString());
                 
                 }
             }
         
-            foreach (var t in inverseTilePath)
+            /*foreach (var t in inverseTilePath)
             {
                 IEnumerator x = GenerateSurroundingVectorField(t, t.tile.sector, path, proximityFlowFieldRadius);
                 while (x.MoveNext())
                 {
                                 
                 }
-            }
+            }*/
 
-            endPositionTilesTMPTEST.ForEach(tileData =>
+            /*endPositionTilesTMPTEST.ForEach(tileData =>
             {
                 /*if (tileData.lastTile != null)
             {
                 tileData.flowFieldDirection = tileData.GetPosition() - tileData.lastTile.position;
-            }*/
+            }#1#
                 if(_debugPathGeneration)
                     StartCoroutine(DrawFlowFieldTEMPTESTNEW(tileData, tileData.tile.sector, path));
             });
         
-            onDoneAction?.Invoke(path);
+            onDoneAction?.Invoke(path);*/
             yield return 0;
         }
+        
+        
 
         /// <summary>
         /// Calculates the vector field around given <paramref name="currentTileData"/>. This is a recursive function
@@ -588,22 +642,36 @@ namespace GPG220.Luca.Scripts.Pathfinding
             yield return null;
         }
     
-        private IEnumerator GenerateHeatmap(PathFinderSectorTileData currentTileData, PathFinderSector sector,
-            PathFinderPath path, Vector3 targetPosition, Action onDoneAction)
+        /*private IEnumerator GenerateHeatmap(PathFinderSectorTileData currentTileData, PathFinderSector sector,
+            PathFinderPath path, Vector3 targetPosition, Action onDoneAction, RecursiveCoroutineCounter rcc = null)
         {
-            yield return StartCoroutine(GenerateHeatmap(currentTileData, sector, path, targetPosition));
+            yield return StartCoroutine(GenerateHeatmap(currentTileData, sector, path, targetPosition, rcc));
             onDoneAction?.Invoke();
             yield return 0;
-        }
+        }*/
     
-        private IEnumerator GenerateHeatmap(PathFinderSectorTileData currentTileData, PathFinderSector sector, PathFinderPath path, Vector3 targetPosition)
+        private IEnumerator GenerateHeatmap(PathFinderSectorTileData currentTileData, PathFinderSector sector, PathFinderPath path, Vector3 targetPosition, RecursiveCoroutineCounter rcc = null)
         {
+            if(currentTileData == null)
+                yield break;
+            
+            if (rcc != null && rcc.maxCount >= 0 && rcc.Counter >= rcc.maxCount)
+            {
+                rcc?.IncreaseWaiting();
+                while (rcc.Counter >= rcc.maxCount)
+                {
+                    yield return 0;
+                }
+                rcc?.DecreaseWaiting();
+            }
+            rcc?.Increase();
             if (currentTileData.GetPosition() == targetPosition)
             {
                 currentTileData.flowFieldDistanceToTarget = 0;
             }
-            
-            var neighboursToEvaluate = new List<PathFinderSectorTileData>();
+
+            var neighboursToEvaluate = new List<PathFinderSectorTileData>();//new PathFinderSectorTileData[currentTileData.tile.neighbourTiles.Count];
+            //int itr = 0;
             currentTileData.tile.neighbourTiles?.ForEach(neighbourTile =>
             {
                 if (neighbourTile == null || (sector != null && neighbourTile.sector != sector)) return;
@@ -621,20 +689,28 @@ namespace GPG220.Luca.Scripts.Pathfinding
                     neighbourTileData.flowFieldLastTileData = currentTileData;
                     neighbourTileData.flowFieldDistanceToTarget = currentTileData.flowFieldDistanceToTarget + 1;
                     neighboursToEvaluate.Add(neighbourTileData);
+                    //neighboursToEvaluate[itr] = neighbourTileData;
+                    //itr++;
                 }
             });
 
             foreach (var neighbourTileData in neighboursToEvaluate)
             {
-                if (neighbourTileData == null || (sector != null && neighbourTileData.tile.sector != sector)) continue;
+                //if (neighbourTileData == null || (sector != null && neighbourTileData.tile.sector != sector)) continue; // Alrdy checked in alst iterator
                 //yield return StartCoroutine(GenerateHeatmap(neighbourTileData, sector, path, targetPosition));
-                IEnumerator genItr = GenerateHeatmap(neighbourTileData, sector, path, targetPosition);
+
+                
+                
+                StartCoroutine(GenerateHeatmap(neighbourTileData, sector, path, targetPosition, rcc));
+                /*IEnumerator genItr = GenerateHeatmap(neighbourTileData, sector, path, targetPosition);
                 while (genItr.MoveNext())
                 {
-                
-                }
+                    
+                }*/
             }
-
+            
+            rcc?.Decrease();
+            
             yield return 0;
         }
     
@@ -959,6 +1035,50 @@ while (x.MoveNext())
             return pfs;
         }
 
+        private class RecursiveCoroutineCounter
+        {
+            [ShowInInspector]
+            private readonly Action<PathFinderPath> _doneFunction = null;
+            [ShowInInspector]
+            private readonly PathFinderPath _path = null;
+            [ShowInInspector]
+            private int _counter = 0;
+            public int Counter => _counter;
+            
+            [ShowInInspector]
+            private int _counterWaiting = 0;
+
+            public int CounterWaiting => _counterWaiting;
+
+            public int maxCount = -1; // -1 Unlimited
+
+            public RecursiveCoroutineCounter(PathFinderPath path, Action<PathFinderPath> onDoneFunction = null)
+            {
+                _doneFunction = onDoneFunction;
+                _path = path;
+            }
+
+            public void Increase() => _counter++;
+
+            public void Decrease()
+            {
+                if (_counter > 0)
+                    _counter--;
+                if (_counter <= 0 && _counterWaiting <= 0)
+                {
+                    _doneFunction?.Invoke(_path);
+                }
+            }
+
+            public void IncreaseWaiting() => _counterWaiting++;
+
+            public void DecreaseWaiting()
+            {
+                if (_counterWaiting <= 0)
+                    return;
+                _counterWaiting--;
+            }
+        }
 
 
         /*public void CreateSectors()
