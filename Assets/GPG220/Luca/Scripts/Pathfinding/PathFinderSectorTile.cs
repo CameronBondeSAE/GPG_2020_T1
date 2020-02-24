@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using GPG220.Luca.Scripts.Pathfinding;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -17,36 +19,40 @@ public class PathFinderSectorTile : IEquatable<PathFinderSectorTile>
     
     [ShowInInspector]
     private PathFinderSectorTile _leftTile;
-    public PathFinderSectorTile GetLeftTile(float maxSlope = -1) // -1 do deactivate
+    public PathFinderSectorTile GetLeftTile(float maxSlope = -1, float stepHeight = -1) // -1 do deactivate
     {
         if (_leftTile == null)
             FindAdjacentTiles();
-        return _leftTile == null || (maxSlope >= 0 && (neighbourTiles[_leftTile] > maxSlope || _leftTile.terrainSlope > maxSlope)) ? null : _leftTile;
+        return _leftTile != null && (maxSlope < 0 && stepHeight < 0) || CanTraverseToNeighbour(_leftTile, maxSlope, stepHeight) ? _leftTile : null;
+        //return _leftTile == null || (maxSlope >= 0 && (neighbourTiles[_leftTile] > maxSlope || _leftTile.terrainSlope > maxSlope)) ? null : _leftTile;
     }
 
     [ShowInInspector]
     private PathFinderSectorTile _rightTile;
-    public PathFinderSectorTile GetRightTile(float maxSlope = -1)
+    public PathFinderSectorTile GetRightTile(float maxSlope = -1, float stepHeight = -1)
     {
         if (_rightTile == null)
             FindAdjacentTiles();
-        return _rightTile == null || (maxSlope >= 0 && (neighbourTiles[_rightTile] > maxSlope || _rightTile.terrainSlope > maxSlope)) ? null : _rightTile;
+        return _rightTile != null && (maxSlope < 0 && stepHeight < 0) || CanTraverseToNeighbour(_rightTile, maxSlope, stepHeight) ? _rightTile : null;
+        //return _rightTile == null || (maxSlope >= 0 && (neighbourTiles[_rightTile] > maxSlope || _rightTile.terrainSlope > maxSlope)) ? null : _rightTile;
     }
     [ShowInInspector]
     private PathFinderSectorTile _topTile;
-    public PathFinderSectorTile GetTopTile(float maxSlope = -1)
+    public PathFinderSectorTile GetTopTile(float maxSlope = -1, float stepHeight = -1)
     {
         if (_topTile == null)
             FindAdjacentTiles();
-        return _topTile == null || (maxSlope >= 0 && (neighbourTiles[_topTile] > maxSlope || _topTile.terrainSlope > maxSlope)) ? null : _topTile;
+        return _topTile != null && (maxSlope < 0 && stepHeight < 0) || CanTraverseToNeighbour(_topTile, maxSlope, stepHeight) ? _topTile : null;
+        //return _topTile == null || (maxSlope >= 0 && (neighbourTiles[_topTile] > maxSlope || _topTile.terrainSlope > maxSlope)) ? null : _topTile;
     }
     [ShowInInspector]
     private PathFinderSectorTile _bottomTile;
-    public PathFinderSectorTile GetBottomTile(float maxSlope = -1)
+    public PathFinderSectorTile GetBottomTile(float maxSlope = -1, float stepHeight = -1)
     {
         if (_bottomTile == null)
             FindAdjacentTiles();
-        return _bottomTile == null || (maxSlope >= 0 && (neighbourTiles[_bottomTile] > maxSlope || _bottomTile.terrainSlope > maxSlope)) ? null : _bottomTile;
+        return _bottomTile != null && (maxSlope < 0 && stepHeight < 0) || CanTraverseToNeighbour(_bottomTile, maxSlope, stepHeight) ? _bottomTile : null;
+        //return _bottomTile == null || (maxSlope >= 0 && (neighbourTiles[_bottomTile] > maxSlope || _bottomTile.terrainSlope > maxSlope)) ? null : _bottomTile;
     }
 
     private void FindAdjacentTiles()
@@ -111,6 +117,20 @@ public class PathFinderSectorTile : IEquatable<PathFinderSectorTile>
             var posOnTerrain2 = new Vector2(terrainPos2.x / terrainAtPos2.terrainData.size.x, terrainPos2.z / terrainAtPos2.terrainData.size.z);
             slopeAtPos = terrainAtPos.terrainData.GetSteepness(posOnTerrain.x,posOnTerrain.y);
         }*/
+    }
+
+    public bool HasImpassableNeighbour(float maxSlope, float stepHeight)
+    {
+        return neighbourTiles.Count(t => !CanTraverseToNeighbour(t.Key, maxSlope, stepHeight)) > 0;
+    }
+
+    public bool CanTraverseToNeighbour(PathFinderSectorTile neighbour, float maxSlope, float stepHeight)
+    {
+        return neighbour != null &&
+               neighbourTiles.ContainsKey(neighbour) &&
+               ((neighbour.terrainSlope <= maxSlope &&
+                 neighbourTiles[neighbour] <= maxSlope) ||
+                Mathf.Abs(position.y-neighbour.position.y) <= stepHeight);
     }
     
 }

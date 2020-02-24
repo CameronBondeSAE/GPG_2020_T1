@@ -9,6 +9,7 @@ namespace GPG220.Luca.Scripts.Pathfinding
     public class TestUnit : UnitBase
     {
         public Rigidbody rb;
+        public Collider col;
         public PathFinderController pfController;
         
         public bool calculateFlowFieldPath = true;
@@ -45,19 +46,28 @@ namespace GPG220.Luca.Scripts.Pathfinding
         {
             move = true;
         }
+
+        public float unitHeight = 1;
         
         // Start is called before the first frame update
         void Start()
         {
             rb = GetComponent<Rigidbody>();
-
+            col = GetComponent<Collider>();
             if (pfController == null)
                 pfController = FindObjectOfType<PathFinderController>();
+
+            unitHeight = GetComponent<Collider>().bounds.size.y;
         }
+
+        public bool grounded = false;
 
         // Update is called once per frame
         void Update()
         {
+            var r = new Ray(transform.position, Vector3.down);
+            grounded = Physics.Raycast(transform.position, Vector3.down, ((unitHeight / 2) + 0.5f));//col.Raycast(r, out var info, ((unitHeight / 2) + 0.1f));
+            
             if (move && currentPath != null)
             {
                 if (stopMovingBelowDistToTarget >= 0 && currentPath.GetAproxDistanceToTargetAtPos(transform.position) <=
@@ -78,6 +88,7 @@ namespace GPG220.Luca.Scripts.Pathfinding
             {
                 move = true;
             }
+            
         }
 
         private void MoveAlongPath()
@@ -88,13 +99,15 @@ namespace GPG220.Luca.Scripts.Pathfinding
         private void MoveOnFlowField()
         {
             var moveDir = currentPath.GetDirectionAtPos(transform.position);
+            moveDir.y *= Physics.gravity.y; // TODO HACK to increase up force...
             Move(moveDir);
         }
 
         public float acceleration = 10;
         private void Move(Vector3 dir)
         {
-            rb.AddForce(rb.mass * acceleration* dir);
+            if(grounded)
+                rb.AddForce(rb.mass * acceleration* dir);
         }
     }
 }

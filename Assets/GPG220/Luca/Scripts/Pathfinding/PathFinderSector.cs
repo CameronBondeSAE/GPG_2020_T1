@@ -90,7 +90,7 @@ public class PathFinderSector : MonoBehaviour
                 
                 if (Physics.SphereCast(currentPos, sectorTileSize/2, Vector3.down, out var hit,
                     bounds.size.y, walkableMask))
-                {
+                {   
                     var startPoint = hit.point;
                     startPoint.y += sectorTileSize/2;
                     //Debug.DrawLine(startPoint, startPoint + Vector3.down * 5, Color.yellow, 2f);
@@ -110,7 +110,7 @@ public class PathFinderSector : MonoBehaviour
                         var terrainAtPos = GetTerrainAtPos(startPoint);
                         if (terrainAtPos != null)
                         {
-                            var terrainPos = startPoint - terrainAtPos.transform.position;
+                            var terrainPos = hit.point - terrainAtPos.transform.position;
                             var posOnTerrain = new Vector2(terrainPos.x / terrainAtPos.terrainData.size.x, terrainPos.z / terrainAtPos.terrainData.size.z);
                             slopeAtPos = terrainAtPos.terrainData.GetSteepness(posOnTerrain.x,posOnTerrain.y);
                         }

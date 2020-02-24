@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace GPG220.Luca.Scripts.Pathfinding
@@ -17,9 +18,12 @@ namespace GPG220.Luca.Scripts.Pathfinding
         public bool flowFieldAvailable = false;
         public bool continuousFlowField = false;
         
+        
         // TODO? MAYBE DELETE
         public List<Vector3> waypoints;
         public List<PathFinderFlowField> flowFields;
+
+        public bool currentlyCalculatingExpansion = false;
 
         public PathFinderPath(PathFinderController pfController)
         {
@@ -45,16 +49,38 @@ namespace GPG220.Luca.Scripts.Pathfinding
 
         public Vector3 GetDirectionAtPos(Vector3 position, bool flowDirIfAvail = true)
         {
-            var tile = controller.GetNearestNode(position);
+            var tile = controller.GetNearestNode(position, false);
             if (tile == null)
                 return default;
             
             tileDataList.TryGetValue(tile, out var tileData);
 
             if (tileData == null)
-                return tile.position-position;
+            {
+                var nextTileOnPath = GetNextTileOnPath(position);
+                if (nextTileOnPath == null)
+                    return default;
+                
+                //var secCount = tilePath.Count(td => td.tile.sector == tile.sector);
+                var tCount = tile.neighbourTiles.Keys.Count(nt => tileDataList.ContainsKey(nt)); // TODO HACK
+                
+                if (!currentlyCalculatingExpansion && tCount == 0)
+                {
+                    Debug.Log("Start Expanding!");
+                    currentlyCalculatingExpansion = true;
+                    Action<PathFinderPath> onDoneCallback = p => {currentlyCalculatingExpansion = false;Debug.Log("Done Expanding!");};
+                
+                    controller.ExpandPathFlowFieldData(this, position, nextTileOnPath.GetPosition(), onDoneCallback);
+                    return default;
+                }
+                return default;
+            }
+/*
 
-            if (flowFieldAvailable && flowDirIfAvail && tileData != null)
+            if (tileData == null)
+                return (tile.position-position).normalized;*/
+
+            if (flowFieldAvailable && flowDirIfAvail)
             {
                 var dir = tileData.flowFieldDirection;
                 if (dir.Equals(Vector3.negativeInfinity))
@@ -80,16 +106,31 @@ namespace GPG220.Luca.Scripts.Pathfinding
         // TODO NOT WORKING YET
         private PathFinderSectorTileData GetNextTileOnPath(Vector3 position)
         {
-            Debug.LogError("!!! PathFinderPath.GetNextTileOnPath() Not working yet. Needs impl.");
+            //Debug.LogError("!!! PathFinderPath.GetNextTileOnPath() Not working yet. Needs impl.");
             /*position.x = Mathf.Abs(position.x);
             position.y = Mathf.Abs(position.y);
             position.z = Mathf.Abs(position.z);*/
         
             PathFinderSectorTileData lastTileData = null;
-            var lastTileRelPos = Vector3.zero;
+            var lastDistance = 0f;
+            //var lastTileRelPos = Vector3.zero;
             foreach (var tileData in tilePath)
             {
-                var relPos = tileData.GetPosition()-position;
+                var dist = Vector3.Distance(position, tileData.GetPosition());
+                
+
+                // TODO Possible improvement: fCost must be set anyways in tiles pof the path?
+                if (lastTileData == null || 
+                    dist < lastDistance/* &&
+                    (flowFieldAvailable &&
+                      tileData.flowFieldDistanceToTarget < lastTileData.flowFieldDistanceToTarget ||
+                      tileData.fCost >= 0 && lastTileData.fCost >= 0 && tileData.fCost < lastTileData.fCost)*/) // TODO
+                {
+                    lastTileData = tileData;
+                    lastDistance = dist;
+                }
+                
+                /*var relPos = tileData.GetPosition()-position;
                 relPos.x = Mathf.Abs(relPos.x);
                 relPos.y = Mathf.Abs(relPos.y);
                 relPos.z = Mathf.Abs(relPos.z);
@@ -109,7 +150,7 @@ namespace GPG220.Luca.Scripts.Pathfinding
                     return tileData;
                 }
                 
-                lastTileData = tileData;
+                lastTileData = tileData;*/
             }
 
             return lastTileData;
