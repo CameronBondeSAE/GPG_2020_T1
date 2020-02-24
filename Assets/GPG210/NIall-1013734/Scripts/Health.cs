@@ -4,33 +4,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-    public class Health : MonoBehaviour
+public class Health : MonoBehaviour
+{
+
+    public int startingHealth;
+
+    public int CurrentHealth { get; set; }
+
+     public event Action deathEvent;
+
+    private void Awake()
     {
+        CurrentHealth = startingHealth;
+    }
 
-        public int startingHealth;
+    public void ChangeHealth(int amount)
+    {
+        CurrentHealth += amount;
+        CheckForDeath();
+    }
 
-        [SerializeField]
-        private int currentHealth;
-
-        public event Action deathEvent;
-
-        private void Awake()
+    public void CheckForDeath()
+    {
+        if (CurrentHealth <= 0 && deathEvent != null)
         {
-            currentHealth = startingHealth;
-        }
-
-        public void ChangeHealth(int amount)
-        {
-            currentHealth += amount;
-            CheckForDeath();
-        }
-
-        public void CheckForDeath()
-        {
-            if (currentHealth <= 0 && deathEvent != null)
-            {
-                deathEvent.Invoke();
-            }
-
+            deathEvent.Invoke();
         }
     }
+}
