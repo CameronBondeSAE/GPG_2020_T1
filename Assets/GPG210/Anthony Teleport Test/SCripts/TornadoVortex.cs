@@ -16,10 +16,12 @@ public class TornadoVortex : MonoBehaviour
       if (other.gameObject.GetComponent<Rigidbody>())
       {
          pullObj = other.gameObject;
+         
          //if the object is pullable move it towards the tornado.
-         pullObj.GetComponent<Rigidbody>().AddForce(Vector3.MoveTowards(pullObj.transform.position, this.transform.position, pullSpeed * Time.deltaTime),ForceMode.Impulse); 
+        pullObj.GetComponent<Rigidbody>().AddForce(Vector3.MoveTowards(pullObj.transform.position, this.transform.position, (pullSpeed/2) * Time.deltaTime),ForceMode.Acceleration); 
             
-         pullObj.transform.RotateAround(Vector3.zero, transform.up,  rotateSpeed * Time.deltaTime);
+         pullObj.transform.RotateAround(transform.position, Vector3.up,rotateSpeed * Time.deltaTime);
+         
       }
    }
 }
