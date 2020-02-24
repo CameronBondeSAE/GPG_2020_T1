@@ -106,11 +106,21 @@ public class PathFinderSector : MonoBehaviour
                     
                     if (/*slopeAtPos <= maxSlope &&*/ !Physics.CheckBox(startPoint, checkBoxExtents, Quaternion.identity, ~(walkableMask | ignoreMask))) // !Physics.CheckSphere(hit.point, sectorTileSize, ~(walkableMask | ignoreMask))
                     {
+                        var slopeAtPos = 0f;
+                        var terrainAtPos = GetTerrainAtPos(startPoint);
+                        if (terrainAtPos != null)
+                        {
+                            var terrainPos = startPoint - terrainAtPos.transform.position;
+                            var posOnTerrain = new Vector2(terrainPos.x / terrainAtPos.terrainData.size.x, terrainPos.z / terrainAtPos.terrainData.size.z);
+                            slopeAtPos = terrainAtPos.terrainData.GetSteepness(posOnTerrain.x,posOnTerrain.y);
+                        }
+                        
                         var tile = new PathFinderSectorTile
                         {
                             position = hit.point,
                             tileRect = new Rect(hit.point.x, hit.point.z, sectorTileSize, sectorTileSize),
-                            sector = this
+                            sector = this,
+                            terrainSlope = slopeAtPos
                         };
                         tiles[x, z] = tile;
 

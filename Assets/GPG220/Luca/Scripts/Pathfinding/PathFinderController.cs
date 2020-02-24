@@ -359,7 +359,7 @@ namespace GPG220.Luca.Scripts.Pathfinding
             
                 foreach (var neighbourTile in currentTileData.tile.neighbourTiles)
                 {
-                    if(neighbourTile.Key == null || neighbourTile.Value > maxSlope) continue;
+                    if(neighbourTile.Key == null) continue;
                 
                     path.tileDataList.TryGetValue(neighbourTile.Key, out var neighbourTileData);
                     if(neighbourTileData == null)
@@ -379,7 +379,7 @@ namespace GPG220.Luca.Scripts.Pathfinding
                     var neighbourHCost = PathFinderSectorTileData.CalculateHCost(neighbourTile.Key, targetTile);
                     var neighbourFCost = neighbourGCost + neighbourHCost;
 
-                    if (/*neighbourTile.Value <= maxSlope &&*/ ((neighbourTileData.fCost >= 0 && neighbourFCost < neighbourTileData.fCost) ||
+                    if (/*neighbourTile.Value <= maxSlope &&*/(neighbourTile.Value <= maxSlope || neighbourTile.Key.terrainSlope <= maxSlope) && ((neighbourTileData.fCost >= 0 && neighbourFCost < neighbourTileData.fCost) ||
                         !greenTilesData.Contains(neighbourTileData)))
                     {
                         
@@ -583,16 +583,16 @@ namespace GPG220.Luca.Scripts.Pathfinding
             
                 // ITs IMPORTANT THAT this method is being called for each node END to Start...  // TODO HACKY; May contain redundant checks
                 if(leftTile != null) path.tileDataList.TryGetValue(leftTile, out leftTileData);
-                var leftTileDist = leftTile == null || leftTileData == null ? currentTileData.flowFieldDistanceToTarget : leftTile.sector != sector ? currentTileData.flowFieldDistanceToTarget/*currentTileData.flowFieldDistanceToTarget+1*/ : leftTileData.flowFieldDistanceToTarget;
+                var leftTileDist = leftTile == null || leftTileData == null ? currentTileData.flowFieldDistanceToTarget : leftTile.sector != sector ? currentTileData.flowFieldDistanceToTarget/*currentTileData.flowFieldDistanceToTarget+1*/ : leftTileData.flowFieldDistanceToTarget >= 0 ? leftTileData.flowFieldDistanceToTarget : currentTileData.flowFieldDistanceToTarget;
             
                 if(rightTile != null) path.tileDataList.TryGetValue(rightTile, out rightTileData);
-                var rightTileDist = rightTile == null || rightTileData == null ? currentTileData.flowFieldDistanceToTarget : rightTile.sector != sector ? currentTileData.flowFieldDistanceToTarget/*currentTileData.flowFieldDistanceToTarget+1*/ : rightTileData.flowFieldDistanceToTarget;
+                var rightTileDist = rightTile == null || rightTileData == null ? currentTileData.flowFieldDistanceToTarget : rightTile.sector != sector ? currentTileData.flowFieldDistanceToTarget/*currentTileData.flowFieldDistanceToTarget+1*/ : rightTileData.flowFieldDistanceToTarget >= 0 ? rightTileData.flowFieldDistanceToTarget : currentTileData.flowFieldDistanceToTarget;
             
                 if(topTile != null) path.tileDataList.TryGetValue(topTile, out topTileData);
-                var topTileDist = topTile == null || topTileData == null ? currentTileData.flowFieldDistanceToTarget : topTile.sector != sector ? currentTileData.flowFieldDistanceToTarget/*currentTileData.flowFieldDistanceToTarget+1*/ : topTileData.flowFieldDistanceToTarget;
+                var topTileDist = topTile == null || topTileData == null ? currentTileData.flowFieldDistanceToTarget : topTile.sector != sector ? currentTileData.flowFieldDistanceToTarget/*currentTileData.flowFieldDistanceToTarget+1*/ : topTileData.flowFieldDistanceToTarget >= 0 ? topTileData.flowFieldDistanceToTarget : currentTileData.flowFieldDistanceToTarget;
             
                 if(bottomTile != null) path.tileDataList.TryGetValue(bottomTile, out bottomTileData);
-                var bottomTileDist = bottomTile == null || bottomTileData == null ? currentTileData.flowFieldDistanceToTarget : bottomTile.sector != sector ? currentTileData.flowFieldDistanceToTarget/*currentTileData.flowFieldDistanceToTarget+1*/ : bottomTileData.flowFieldDistanceToTarget;
+                var bottomTileDist = bottomTile == null || bottomTileData == null ? currentTileData.flowFieldDistanceToTarget : bottomTile.sector != sector ? currentTileData.flowFieldDistanceToTarget/*currentTileData.flowFieldDistanceToTarget+1*/ : bottomTileData.flowFieldDistanceToTarget >= 0 ? bottomTileData.flowFieldDistanceToTarget : currentTileData.flowFieldDistanceToTarget;
 
                 if (leftTileData != null && currentTileData.tile.sector != sector && leftTile?.sector == sector)
                     rightTileDist = leftTileData.flowFieldDistanceToTarget + 2;
@@ -605,7 +605,11 @@ namespace GPG220.Luca.Scripts.Pathfinding
             
                 // ITs IMPORTANT THAT this method is being called for each node END to Start... 
                 var dirVector = new Vector3(leftTileDist-rightTileDist,0,bottomTileDist - topTileDist);
-                
+
+                if (path.tilePath.Contains(currentTileData))
+                {
+                    Debug.Log(dirVector.normalized+" leftTileDist: "+leftTileDist+" rightTileDist: "+rightTileDist+" bottomTileDist: "+bottomTileDist+" topTileDist: "+topTileDist);
+                }
                 
                 
 /*
@@ -639,12 +643,19 @@ namespace GPG220.Luca.Scripts.Pathfinding
             if (currentTileData.tile.sector != sector) yield break;
 
             var newDepth = depth == -1 ? depth : depth - 1;
-            currentTileData.tile.neighbourTiles?.Keys.ForEach(neighbourTile =>
+            currentTileData.tile.neighbourTiles?.ForEach(neighbourTile =>
             {
-                if (neighbourTile == null) return;
-                path.tileDataList.TryGetValue(neighbourTile, out var neighbourTileData);
+                if (neighbourTile.Key == null) return;
+                path.tileDataList.TryGetValue(neighbourTile.Key, out var neighbourTileData);
                 if (neighbourTileData == null || !neighbourTileData.flowFieldDirection.Equals(Vector3.negativeInfinity)/* || currentTileData.tile.sector != neighbourTile.sector*/) return;
-            
+
+                if (neighbourTile.Value > maxSlope || neighbourTile.Key.terrainSlope > maxSlope)
+                {
+                    neighbourTileData.flowFieldDirection =
+                        currentTileData.GetPosition() - neighbourTileData.GetPosition();
+                    return;
+                }
+                
                 var generateVectorField = GenerateSurroundingVectorField(neighbourTileData, sector, path, newDepth);
                 while(generateVectorField.MoveNext())
                 {
@@ -687,13 +698,15 @@ namespace GPG220.Luca.Scripts.Pathfinding
             currentTileData.tile.neighbourTiles?.ForEach(neighbourTile =>
             {
                 // TODO @ neighbourTile.Value > maxSlope Idea: leave it out of here... add check to Vectorfield generation
-                if (neighbourTile.Key == null || (sector != null && neighbourTile.Key.sector != sector) || neighbourTile.Value > maxSlope) return;
+                if (neighbourTile.Key == null || (sector != null && neighbourTile.Key.sector != sector)) return;
                 path.tileDataList.TryGetValue(neighbourTile.Key, out var neighbourTileData);
                 if (neighbourTileData == null)
                 {
                     neighbourTileData = new PathFinderSectorTileData(neighbourTile.Key);
                     path.AddTileData(neighbourTileData);
                 }
+
+                if (neighbourTile.Value > maxSlope || neighbourTile.Key.terrainSlope > maxSlope) return;
                 
                 var distToTargetNotSetYet = neighbourTileData.flowFieldDistanceToTarget < 0;
                 if (distToTargetNotSetYet || neighbourTileData.flowFieldDistanceToTarget > currentTileData.flowFieldDistanceToTarget + 1)
@@ -1039,7 +1052,7 @@ while (x.MoveNext())
             sectorGO.layer = sectorLayer;
             PathFinderSector pfs = sectorGO.AddComponent<PathFinderSector>();
             pfs.bounds = bounds;
-            pfs.sectorTileSize = 1;
+            pfs.sectorTileSize = sectorTileSize;
             pfs.walkableMask = walkableMask;
             pfs.ignoreMask = ignoreMask;
             pfs.tileObjectPrefab = tileObjectPrefab;
