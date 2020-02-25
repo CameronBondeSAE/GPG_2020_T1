@@ -822,7 +822,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 307105683}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 63.9, y: 6.74, z: 57.9}
+  m_LocalPosition: {x: 45.6, y: 2.08, z: 27.37}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1687,6 +1687,8 @@ MonoBehaviour:
     type: 3}
   maxSlope: 30
   stepHeight: 0.1
+  maxHeatmapAreasCoroutines: 3
+  maxHeatmapRecursionCoroutines: 10
   _debugPathGeneration: 0
   _debugPathGenerationDelay: 0
   _debugPathGenerationDataDeletionDelay: 15

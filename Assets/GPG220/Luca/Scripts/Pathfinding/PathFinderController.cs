@@ -33,6 +33,12 @@ namespace GPG220.Luca.Scripts.Pathfinding
         [FoldoutGroup("Agent Settings")] public float maxSlope = 45; // Degrees
         [FoldoutGroup("Agent Settings")] public float stepHeight = .2f; // Degrees
         
+        
+        [FoldoutGroup("Performance Settings"), ShowInInspector, SerializeField]
+        private int maxHeatmapAreasCoroutines = 3;
+        [FoldoutGroup("Performance Settings"), ShowInInspector, SerializeField]
+        private int maxHeatmapRecursionCoroutines = 10;
+        
         private void Start()
         {
             if(autoGenerateSectors)
@@ -470,7 +476,7 @@ namespace GPG220.Luca.Scripts.Pathfinding
             
                 onDoneAction?.Invoke(path);
             };
-            var rccHeatmaps = new RecursiveCoroutineCounter(path, onHeatmapsCalcDone); // Counts executions of heatmap generation, calls onDone when all heatmaps are done calcualting
+            var rccHeatmaps = new RecursiveCoroutineCounter(path, onHeatmapsCalcDone){maxCount = maxHeatmapAreasCoroutines}; // Counts executions of heatmap generation, calls onDone when all heatmaps are done calcualting
             //TMPDebugCurrentRCC = rccHeatmaps;
             for (int i = 0; i < inverseTilePath.Count; i++)
             {
@@ -503,12 +509,23 @@ namespace GPG220.Luca.Scripts.Pathfinding
                     endPositionTilesTMPTEST.Add(currentTileData);
                     //yield return StartCoroutine(GenerateHeatmap(currentTileData, currentTileData.tile.sector, path, currentTileData.tile.position, GenVecFieldAction));
                     //float tmpHeatMapTime = Time.realtimeSinceStartup;
-                    rccHeatmaps.Increase();
+                    if (rccHeatmaps != null && rccHeatmaps.maxCount >= 0 && rccHeatmaps.Counter >= rccHeatmaps.maxCount)
+                    {
+                        rccHeatmaps.IncreaseWaiting();
+                        while (rccHeatmaps.Counter >= rccHeatmaps.maxCount)
+                        {
+                            yield return 0;
+                        }
+                        rccHeatmaps.Increase();
+                        rccHeatmaps.DecreaseWaiting();
+                    }else{
+                        rccHeatmaps.Increase();
+                    }
                     Action<PathFinderPath> onHeatMapDone = (p) =>
                     {
                         rccHeatmaps.Decrease();
                     };
-                    var rccHeatmap = new RecursiveCoroutineCounter(path, onHeatMapDone) {maxCount = 20};
+                    var rccHeatmap = new RecursiveCoroutineCounter(path, onHeatMapDone) {maxCount = maxHeatmapRecursionCoroutines};
                     
                     StartCoroutine(GenerateHeatmap(currentTileData, currentTileData.tile.sector, path, currentTileData.tile.position, rccHeatmap));
                     /*var heatmapEnumeration = GenerateHeatmap(currentTileData, currentTileData.tile.sector, path, currentTileData.tile.position, GenVecFieldAction);
@@ -702,9 +719,12 @@ namespace GPG220.Luca.Scripts.Pathfinding
                 {
                     yield return 0;
                 }
+                rcc.Increase();
                 rcc.DecreaseWaiting();
             }
-            rcc?.Increase();
+            else{
+                rcc?.Increase();
+            }
             if (currentTileData.GetPosition() == targetPosition)
             {
                 currentTileData.flowFieldDistanceToTarget = 0;
@@ -712,39 +732,41 @@ namespace GPG220.Luca.Scripts.Pathfinding
 
             var neighboursToEvaluate = new List<PathFinderSectorTileData>();//new PathFinderSectorTileData[currentTileData.tile.neighbourTiles.Count];
             //int itr = 0;
+            
             currentTileData.tile.neighbourTiles?.ForEach(neighbourTile =>
-            {
-                // TODO @ neighbourTile.Value > maxSlope Idea: leave it out of here... add check to Vectorfield generation
-                if (neighbourTile.Key == null || (sector != null && neighbourTile.Key.sector != sector) || !currentTileData.tile.CanTraverseToNeighbour(neighbourTile.Key, maxSlope, stepHeight)) return;
-                path.tileDataList.TryGetValue(neighbourTile.Key, out var neighbourTileData);
-                if (neighbourTileData == null)
-                {
-                    neighbourTileData = new PathFinderSectorTileData(neighbourTile.Key);
-                    path.AddTileData(neighbourTileData);
-                }
-
-                /*var heightDif = Mathf.Abs(currentTileData.GetPosition().y - neighbourTile.Key.position.y);
-                if (heightDif > stepHeight || neighbourTile.Value > maxSlope || neighbourTile.Key.terrainSlope > maxSlope) return;*/
-                /*if (!currentTileData.tile.CanTraverseToNeighbour(neighbourTile.Key, maxSlope, stepHeight))
-                    return;*/
-                
-                var distToTargetNotSetYet = neighbourTileData.flowFieldDistanceToTarget < 0;
-                if (distToTargetNotSetYet || neighbourTileData.flowFieldDistanceToTarget > currentTileData.flowFieldDistanceToTarget + 1)
-                {
-                    neighbourTileData.flowFieldLastTile = currentTileData.tile;
-                    neighbourTileData.flowFieldLastTileData = currentTileData;
-                    neighbourTileData.flowFieldDistanceToTarget = currentTileData.flowFieldDistanceToTarget + 1;
-                    
-                    if (neighbourTile.Key.HasImpassableNeighbour(maxSlope, stepHeight))
-                        neighbourTileData.flowFieldDistanceToTarget += 1; // TODO HACK
-                    
-                    // TODO Maybe increase cost if the slope is at a specific angle?
-                    
-                    neighboursToEvaluate.Add(neighbourTileData);
-                    //neighboursToEvaluate[itr] = neighbourTileData;
-                    //itr++;
-                }
-            });
+             {
+                 // TODO @ neighbourTile.Value > maxSlope Idea: leave it out of here... add check to Vectorfield generation
+                 if (neighbourTile.Key == null || (sector != null && neighbourTile.Key.sector != sector) || !currentTileData.tile.CanTraverseToNeighbourInsecure(neighbourTile.Key, neighbourTile.Value, maxSlope, stepHeight)) return;
+                 path.tileDataList.TryGetValue(neighbourTile.Key, out var neighbourTileData);
+                 
+                 if (neighbourTileData == null)
+                 {
+                     neighbourTileData = new PathFinderSectorTileData(neighbourTile.Key);
+                     path.AddTileData(neighbourTileData);
+                 }
+ 
+                 /*var heightDif = Mathf.Abs(currentTileData.GetPosition().y - neighbourTile.Key.position.y);
+                 if (heightDif > stepHeight || neighbourTile.Value > maxSlope || neighbourTile.Key.terrainSlope > maxSlope) return;*/
+                 /*if (!currentTileData.tile.CanTraverseToNeighbour(neighbourTile.Key, maxSlope, stepHeight))
+                     return;*/
+                 
+                 var distToTargetNotSetYet = neighbourTileData.flowFieldDistanceToTarget < 0;
+                 if (distToTargetNotSetYet || neighbourTileData.flowFieldDistanceToTarget > currentTileData.flowFieldDistanceToTarget + 1)
+                 {
+                     neighbourTileData.flowFieldLastTile = currentTileData.tile;
+                     neighbourTileData.flowFieldLastTileData = currentTileData;
+                     neighbourTileData.flowFieldDistanceToTarget = currentTileData.flowFieldDistanceToTarget + 1;
+                     
+                     if (neighbourTile.Key.HasImpassableNeighbour(maxSlope, stepHeight))
+                         neighbourTileData.flowFieldDistanceToTarget += 1; // TODO HACK
+                     
+                     // TODO Maybe increase cost if the slope is at a specific angle?
+                     
+                     neighboursToEvaluate.Add(neighbourTileData);
+                     //neighboursToEvaluate[itr] = neighbourTileData;
+                     //itr++;
+                 }
+             });
 
             foreach (var neighbourTileData in neighboursToEvaluate)
             {

@@ -121,7 +121,7 @@ public class PathFinderSectorTile : IEquatable<PathFinderSectorTile>
 
     public bool HasImpassableNeighbour(float maxSlope, float stepHeight)
     {
-        return neighbourTiles.Count(t => !CanTraverseToNeighbour(t.Key, maxSlope, stepHeight)) > 0;
+        return neighbourTiles.Count(t => !CanTraverseToNeighbourInsecure(t.Key, t.Value, maxSlope, stepHeight)) > 0;
     }
 
     public bool CanTraverseToNeighbour(PathFinderSectorTile neighbour, float maxSlope, float stepHeight)
@@ -130,6 +130,15 @@ public class PathFinderSectorTile : IEquatable<PathFinderSectorTile>
                neighbourTiles.ContainsKey(neighbour) &&
                ((neighbour.terrainSlope <= maxSlope &&
                  neighbourTiles[neighbour] <= maxSlope) ||
+                Mathf.Abs(position.y-neighbour.position.y) <= stepHeight);
+    }
+
+    // Insecure cuz we're not actually checking if given neighbour is an acutal neighbour - but more efficient.
+    public bool CanTraverseToNeighbourInsecure(PathFinderSectorTile neighbour, float slopeToNeighbour, float maxSlope, float stepHeight)
+    {
+        return neighbour != null &&
+               ((neighbour.terrainSlope <= maxSlope &&
+                 slopeToNeighbour <= maxSlope) ||
                 Mathf.Abs(position.y-neighbour.position.y) <= stepHeight);
     }
     
