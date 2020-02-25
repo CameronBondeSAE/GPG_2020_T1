@@ -8,7 +8,6 @@ namespace GPG220.Luca.Scripts.Pathfinding
 {
     public class TestUnit : UnitBase
     {
-        public Rigidbody rb;
         public Collider col;
         public PathFinderController pfController;
         

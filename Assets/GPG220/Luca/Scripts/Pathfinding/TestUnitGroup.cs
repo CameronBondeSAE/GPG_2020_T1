@@ -11,6 +11,7 @@ public class TestUnitGroup : MonoBehaviour
 {
     public PathFinderPath currentPath;
     public List<TestUnit> controlledUnits;
+    public List<MedicUnit> controlledMedicUnits;
     
     public bool calculateFlowFieldPath = true;
     public PathFinderController pfController;
@@ -51,6 +52,23 @@ public class TestUnitGroup : MonoBehaviour
             }*/
 
             PathCalculationDone(path);
+        };
+        pfController.FindPathTo(CalculateStartPosition(), testTarget.transform.position, calculateFlowFieldPath, onDoneFunc);
+        //StartCoroutine(pfController.FindPath(transform.position, testTarget.transform.position, onDoneFunc));
+    }
+    
+    [Button("Recalculate Path (MEDIC UNIT)"), DisableInEditorMode]
+    public void CalculatePathToTargetMedic()
+    {
+        controlledMedicUnits?.ForEach(unit => unit.move = false);
+        
+        Action<PathFinderPath> onDoneFunc = path =>
+        {
+            controlledMedicUnits?.ForEach(unit =>
+            {
+                unit.currentPath = path;
+                unit.move = true;
+            });
         };
         pfController.FindPathTo(CalculateStartPosition(), testTarget.transform.position, calculateFlowFieldPath, onDoneFunc);
         //StartCoroutine(pfController.FindPath(transform.position, testTarget.transform.position, onDoneFunc));

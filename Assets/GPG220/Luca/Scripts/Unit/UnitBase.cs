@@ -15,12 +15,16 @@ namespace GPG220.Luca.Scripts.Unit
         // TODO Unit Abilities
         public UnitStats unitStats;
         public Inventory inventory;
+        public Rigidbody rb;
+        public Health health;
         
 
         protected virtual void Initialize()
         {
             unitStats = GetComponent<UnitStats>();
             inventory = GetComponent<Inventory>();
+            rb = GetComponent<Rigidbody>();
+            health = GetComponent<Health>();
         }
 
         public virtual bool Selectable()
