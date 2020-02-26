@@ -17,6 +17,7 @@ namespace GPG220.Luca.Scripts.Pathfinding
         public bool move = false;
         public float stopMovingBelowDistToTarget = 2f;
         
+        public bool grounded = false;
         public GameObject testTarget;
         [Button("Recalculate Path"), DisableInEditorMode]
         public void RecalculatePathToTarget()
@@ -51,6 +52,12 @@ namespace GPG220.Luca.Scripts.Pathfinding
         // Start is called before the first frame update
         void Start()
         {
+            Initialize();
+        }
+
+        protected override void Initialize()
+        {
+            base.Initialize();
             rb = GetComponent<Rigidbody>();
             col = GetComponent<Collider>();
             if (pfController == null)
@@ -59,7 +66,6 @@ namespace GPG220.Luca.Scripts.Pathfinding
             unitHeight = GetComponent<Collider>().bounds.size.y;
         }
 
-        public bool grounded = false;
 
         // Update is called once per frame
         void Update()

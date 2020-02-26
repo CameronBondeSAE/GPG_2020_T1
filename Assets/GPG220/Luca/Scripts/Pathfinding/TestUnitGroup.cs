@@ -40,6 +40,9 @@ public class TestUnitGroup : MonoBehaviour
     [Button("Recalculate Path (Proximity)"), DisableInEditorMode]
     public void RecalculatePathToTargetProximity()
     {
+        if (controlledUnits == null || controlledUnits.Count == 0)
+            return;
+        
         controlledUnits?.ForEach(unit => unit.move = false);
         
         Action<PathFinderPath> onDoneFunc = path =>
@@ -60,18 +63,34 @@ public class TestUnitGroup : MonoBehaviour
     [Button("Recalculate Path (MEDIC UNIT)"), DisableInEditorMode]
     public void CalculatePathToTargetMedic()
     {
+        if (controlledMedicUnits == null || controlledMedicUnits.Count == 0 ||
+            controlledMedicUnits.Count(unit => unit.gameObject.activeInHierarchy) == 0)
+            return;
+        
         controlledMedicUnits?.ForEach(unit => unit.move = false);
         
         Action<PathFinderPath> onDoneFunc = path =>
         {
             controlledMedicUnits?.ForEach(unit =>
             {
+                if(!unit.gameObject.activeInHierarchy)
+                    return;
                 unit.currentPath = path;
                 unit.move = true;
             });
         };
-        pfController.FindPathTo(CalculateStartPosition(), testTarget.transform.position, calculateFlowFieldPath, onDoneFunc);
+        pfController.FindPathTo(CalculateStartPositionMedics(), testTarget.transform.position, calculateFlowFieldPath, onDoneFunc);
         //StartCoroutine(pfController.FindPath(transform.position, testTarget.transform.position, onDoneFunc));
+    }
+    public Vector3 CalculateStartPositionMedics()
+    {
+        var center = Vector3.zero;
+
+        if (controlledMedicUnits.Count <= 0) return center;
+        center = controlledMedicUnits.Where(unit => unit.gameObject.activeInHierarchy).Aggregate(center, (current, unit) => current + unit.transform.position);
+        center /= ( controlledMedicUnits.Count+1 );
+
+        return center;
     }
 
     public Vector3 CalculateStartPosition()
@@ -79,7 +98,7 @@ public class TestUnitGroup : MonoBehaviour
         var center = Vector3.zero;
 
         if (controlledUnits.Count <= 0) return center;
-        center = controlledUnits.Aggregate(center, (current, unit) => current + unit.transform.position);
+        center = controlledUnits.Where(unit => unit.gameObject.activeInHierarchy).Aggregate(center, (current, unit) => current + unit.transform.position);
         center /= ( controlledUnits.Count+1 );
 
         return center;

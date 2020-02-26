@@ -7,8 +7,10 @@ using GPG220.Luca.Scripts.Unit;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Experimental.PlayerLoop;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace GPG220.Luca.Scripts.Editor
@@ -113,6 +115,13 @@ namespace GPG220.Luca.Scripts.Editor
         private void Awake()
         {
             EditorApplication.playModeStateChanged += OnPlayModeState;
+            EditorSceneManager.activeSceneChangedInEditMode += OnSceneChanged;
+            EditorSceneManager.activeSceneChanged += OnSceneChanged;
+        }
+
+        private void OnSceneChanged(Scene arg0, Scene arg1)
+        {
+            ReloadAll();
         }
 
         private void OnPlayModeState(PlayModeStateChange state)
@@ -121,14 +130,19 @@ namespace GPG220.Luca.Scripts.Editor
             {
                 case PlayModeStateChange.EnteredEditMode:
                 case PlayModeStateChange.EnteredPlayMode:
-                    LoadAllUnits();
-                    LoadSelectedUnits();
-                    UpdateFilteredList();
+                    ReloadAll();
                     break;
                 case PlayModeStateChange.ExitingEditMode:
                 case PlayModeStateChange.ExitingPlayMode:
                     break;
             }
+        }
+
+        private void ReloadAll()
+        {
+            LoadAllUnits();
+            LoadSelectedUnits();
+            UpdateFilteredList();
         }
 
 
@@ -228,15 +242,18 @@ namespace GPG220.Luca.Scripts.Editor
         private readonly Dictionary<int,Rect> _unitEntryRects = new Dictionary<int,Rect>();
         private void DrawUnitListElement(UnitBase unit, int index = 0)
         {
-            var style = new GUIStyle {};
+            var style = new GUIStyle ();
             //style.normal.background = MakeTex((int)unitListAreaRect.width, (int)unitListAreaRect.height, infoBoxBackgroundColor);
             var r = EditorGUILayout.BeginHorizontal(style);
             GUI.DrawTexture(r, MakeTex((int)unitListAreaRect.width, (int)unitListAreaRect.height, (selectedIndex == index ? _listElementHighlightedColor : (index%2 == 0 ? _listElementEvenColor :_listElementUnevenColor))), ScaleMode.StretchToFill);
-            EditorGUILayout.LabelField("Player [X]", GUILayout.MaxWidth(80));
-            EditorGUILayout.LabelField("("+unit.GetType().Name+")", GUILayout.MaxWidth(150));
+            
+            var labelStyle = new GUIStyle (EditorStyles.label){};
+            labelStyle.normal.textColor = Color.black;
+            EditorGUILayout.LabelField("Player [X]", labelStyle, GUILayout.MaxWidth(80));
+            EditorGUILayout.LabelField("("+unit.GetType().Name+")", labelStyle, GUILayout.MaxWidth(150));
 
             var health = unit.GetComponent<Health>();
-            EditorGUILayout.LabelField("Health: "+(health != null?"[X]/[Max]":"N/A"), GUILayout.MaxWidth(130)); // TODO No access to health currently...
+            EditorGUILayout.LabelField("Health: "+(health != null?health.CurrentHealth+"/"+health.startingHealth:"N/A"), labelStyle, GUILayout.MaxWidth(130)); // TODO Add max health?
             
             if (GUILayout.Button("Go To", EditorStyles.miniButtonLeft))
             {
@@ -253,7 +270,7 @@ namespace GPG220.Luca.Scripts.Editor
                 SceneView.FrameLastActiveSceneViewWithLock();
             }
 
-            if (health == null)
+            if (health == null || health.CurrentHealth <= 0)
                 GUI.enabled = false;
             GUIStyle killBtnStyle = new GUIStyle(EditorStyles.miniButtonRight);
             killBtnStyle.normal.background = MakeTex((int) unitListAreaRect.width, (int) unitListAreaRect.height,
@@ -262,7 +279,7 @@ namespace GPG220.Luca.Scripts.Editor
             killBtnStyle.fontStyle = FontStyle.Bold;
             if (GUILayout.Button("Kill", killBtnStyle) && health != null)
             {
-                health.ChangeHealth(health.startingHealth * -10); // TODO Can't get current health due to visibility ....
+                health.ChangeHealth(-health.CurrentHealth);
             }
             GUI.enabled = true;
                 
@@ -331,7 +348,7 @@ namespace GPG220.Luca.Scripts.Editor
             // Load Btn
             if (GUILayout.Button("Refresh List"))
             {
-                LoadAllUnits();
+                ReloadAll();
             }
             EditorGUILayout.Space();
             EditorGUILayout.Space();
@@ -514,6 +531,10 @@ namespace GPG220.Luca.Scripts.Editor
                 Selection.activeGameObject = unit.gameObject;
                 SceneView.FrameLastActiveSceneViewWithLock();
             }
+
+            if (unitHealth == null || unitHealth.CurrentHealth <= 0)
+                GUI.enabled = false;
+            
             GUIStyle killBtnStyle = new GUIStyle(EditorStyles.miniButtonRight);
             killBtnStyle.normal.background = MakeTex((int) unitListAreaRect.width, (int) unitListAreaRect.height,
                 new Color32(150,0,0,255));
@@ -523,8 +544,10 @@ namespace GPG220.Luca.Scripts.Editor
             {
                 if (unitHealth == null)
                     return;
-                unitHealth.ChangeHealth(unitHealth.startingHealth * -10); // TODO Can't get current health due to visibility ....
+                unitHealth.ChangeHealth(-unitHealth.CurrentHealth);
             }
+
+            GUI.enabled = true;
             EditorGUILayout.EndHorizontal();
             
             
@@ -555,49 +578,55 @@ namespace GPG220.Luca.Scripts.Editor
             EditorGUILayout.LabelField("Unit Inventory",titleStyle);
 
             var resStyle = new GUIStyle {fontSize = 12, alignment = TextAnchor.MiddleLeft, clipping = TextClipping.Clip, stretchWidth = false, fontStyle = FontStyle.Bold};
-            foreach (var kvp in unitInventory.GetResourceQuantities())
+
+            var invResourceQuantities = unitInventory.GetResourceQuantities();
+            if (invResourceQuantities != null)
             {
-                var entryRect = EditorGUILayout.BeginHorizontal();
-                var x = EditorGUILayout.GetControlRect(GUILayout.MaxWidth(50), GUILayout.MaxHeight(50));
-                if(kvp.Key.ResourceThumbnail != null)
-                    GUI.DrawTexture(x, kvp.Key.ResourceThumbnail.texture,ScaleMode.ScaleToFit);
-                else
-                    GUI.DrawTexture(x, MakeTex(50, 50, Color.white), ScaleMode.ScaleToFit);
-                
-                EditorGUILayout.BeginVertical();
-                
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField(kvp.Key.ResourceName, resStyle, GUILayout.MaxWidth(100));
-                EditorGUILayout.LabelField(kvp.Value.ToString(), resStyle, GUILayout.MaxWidth(100));
-                EditorGUILayout.EndHorizontal();
-                
-                EditorGUILayout.BeginHorizontal();
-                if (GUILayout.Button("-5", EditorStyles.miniButtonLeft))
+                foreach (var kvp in invResourceQuantities)
                 {
-                    unitInventory.RemoveResources(kvp.Key, 5);
-                }
-                if (GUILayout.Button("-1", EditorStyles.miniButtonMid))
-                {
-                    unitInventory.RemoveResources(kvp.Key, 1);
-                }
-                if (GUILayout.Button("0", EditorStyles.miniButtonMid))
-                {
-                    unitInventory.RemoveResources(kvp.Key, kvp.Value);
-                }
-                if (GUILayout.Button("+1", EditorStyles.miniButtonMid))
-                {
-                    unitInventory.AddResources(kvp.Key, 1);
-                }
-                if (GUILayout.Button("+5", EditorStyles.miniButtonRight))
-                {
-                    unitInventory.AddResources(kvp.Key, 5);
-                }
-                EditorGUILayout.EndHorizontal();
+                    var entryRect = EditorGUILayout.BeginHorizontal();
+                    var x = EditorGUILayout.GetControlRect(GUILayout.MaxWidth(50), GUILayout.MaxHeight(50));
+                    if(kvp.Key.ResourceThumbnail != null)
+                        GUI.DrawTexture(x, kvp.Key.ResourceThumbnail.texture,ScaleMode.ScaleToFit);
+                    else
+                        GUI.DrawTexture(x, MakeTex(50, 50, Color.white), ScaleMode.ScaleToFit);
                 
-                EditorGUILayout.EndVertical();
+                    EditorGUILayout.BeginVertical();
                 
-                EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField(kvp.Key.ResourceName, resStyle, GUILayout.MaxWidth(100));
+                    EditorGUILayout.LabelField(kvp.Value.ToString(), resStyle, GUILayout.MaxWidth(100));
+                    EditorGUILayout.EndHorizontal();
+                
+                    EditorGUILayout.BeginHorizontal();
+                    if (GUILayout.Button("-5", EditorStyles.miniButtonLeft))
+                    {
+                        unitInventory.RemoveResources(kvp.Key, 5);
+                    }
+                    if (GUILayout.Button("-1", EditorStyles.miniButtonMid))
+                    {
+                        unitInventory.RemoveResources(kvp.Key, 1);
+                    }
+                    if (GUILayout.Button("0", EditorStyles.miniButtonMid))
+                    {
+                        unitInventory.RemoveResources(kvp.Key, kvp.Value);
+                    }
+                    if (GUILayout.Button("+1", EditorStyles.miniButtonMid))
+                    {
+                        unitInventory.AddResources(kvp.Key, 1);
+                    }
+                    if (GUILayout.Button("+5", EditorStyles.miniButtonRight))
+                    {
+                        unitInventory.AddResources(kvp.Key, 5);
+                    }
+                    EditorGUILayout.EndHorizontal();
+                
+                    EditorGUILayout.EndVertical();
+                
+                    EditorGUILayout.EndHorizontal();
+                }
             }
+            
             
             EditorGUILayout.Space();
             EditorGUILayout.Space();
@@ -615,14 +644,6 @@ namespace GPG220.Luca.Scripts.Editor
             
             
             EditorGUILayout.EndHorizontal();
-            /*
-
-            if (GUILayout.Button("Kill Unit"))
-            {
-                if (unitHealth == null)
-                    return;
-                unitHealth.ChangeHealth(unitHealth.startingHealth * -10); // TODO Can't get current health due to visibility ....
-            }*/
             
             EditorGUILayout.Space();
             EditorGUILayout.Space();
@@ -680,7 +701,7 @@ namespace GPG220.Luca.Scripts.Editor
                     if (unit == null) return;
                     var unitHealth = unit.GetComponent<Health>();
                     if (unitHealth == null) return;
-                    unitHealth.ChangeHealth(unitHealth.startingHealth * -10); // TODO Can't get current health due to visibility ....
+                    unitHealth.ChangeHealth(-unitHealth.CurrentHealth);
                 });
             }
             

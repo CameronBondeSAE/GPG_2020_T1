@@ -198,6 +198,7 @@ namespace GPG220.Luca.Scripts.Pathfinding
             // Load all sectors
             //sectorsInScene.ForEach(s => StartCoroutine(LoadSector(s, reloadExisting, false)));
 
+            Debug.Log("Start loading sectors...");
             foreach (var sec in sectorsInScene)
             {
                 var x = LoadSector(sec, reloadExisting, false);
@@ -206,9 +207,12 @@ namespace GPG220.Luca.Scripts.Pathfinding
                 
                 }
             }
+            Debug.Log("End loading sectors...");
         
+            Debug.Log("Start conencting sectors...");
             // Connect all sectors
             sectorsInScene.ForEach(s => StartCoroutine(ConnectSector(s)));
+            Debug.Log("End conencting sectors...");
         }
     
         private IEnumerator LoadSector(PathFinderSector sector, bool reload = false, bool connectSector = false)

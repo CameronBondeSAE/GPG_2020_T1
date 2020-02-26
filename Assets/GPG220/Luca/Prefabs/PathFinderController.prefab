@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1644269673050844453
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1644269673050844455}
+  - component: {fileID: 1644269673050844454}
+  m_Layer: 11
+  m_Name: PathFinderController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1644269673050844455
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1644269673050844453}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 326.89917, y: -80.52115, z: 188.67459}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1644269673050844454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1644269673050844453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c834d10967644944c879e4896c0f7cfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goToNearestPossiblePos: 1
+  proximityFlowFieldRadius: 4
+  sectors: []
+  autoGenerateSectors: 1
+  maxSectorSize: 50
+  sectorTileSize: 1
+  walkableMask:
+    serializedVersion: 2
+    m_Bits: 256
+  ignoreMask:
+    serializedVersion: 2
+    m_Bits: 6710
+  sectorLayer: 11
+  tileObjectPrefab: {fileID: 4367888579796516851, guid: 74bc25ec0bbe5484d9f20db3bb79a9a0,
+    type: 3}
+  maxSlope: 45
+  stepHeight: 0.2
+  maxHeatmapAreasCoroutines: 3
+  maxHeatmapRecursionCoroutines: 10
+  _debugPathGeneration: 0
+  _debugPathGenerationDelay: 0
+  _debugPathGenerationDataDeletionDelay: 3
+  _debugStartColor:
+    serializedVersion: 2
+    rgba: 3372154880
+  _debugEndColor:
+    serializedVersion: 2
+    rgba: 3358771455
+  _debugGreenColor:
+    serializedVersion: 2
+    rgba: 3358785330
+  _debugRedColor:
+    serializedVersion: 2
+    rgba: 3355443455
+  _debugPathColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  _testStartPos: {fileID: 0}
+  _testEndPos: {fileID: 0}
+  _calculateFlowField: 0

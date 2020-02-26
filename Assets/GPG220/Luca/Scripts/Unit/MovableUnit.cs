@@ -63,6 +63,11 @@ namespace GPG220.Luca.Scripts.Unit
 
         private void Update()
         {
+            HandleMovement();
+        }
+
+        protected virtual void HandleMovement()
+        {
             grounded = Physics.Raycast(transform.position, Vector3.down, distanceToGround);
             
             if (repathCountdown > 0)

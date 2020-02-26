@@ -1,18 +1,23 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace GPG220.Luca.Scripts.Abilities
 {
     public abstract class AbilityBase : MonoBehaviour
     {
         public string abilityName;
+        [TextArea]
         public string abilityDescription;
         public Sprite abilityImg;
         public float cooldown;
         
         public float currentCooldown; // Info: Public so UI could get current cooldown for example
 
-        public delegate void OnAbilityExecutedDel(AbilityBase abilityBase, GameObject executor);
-        public event OnAbilityExecutedDel OnAbilityExecuted;
+        /*public delegate void OnAbilityExecutedDel(AbilityBase abilityBase, GameObject executor);
+        public event OnAbilityExecutedDel OnAbilityExecuted;*/
+
+        public event Action<AbilityBase, GameObject> AbilityExecutionStartEvent;
+        public event Action<AbilityBase, GameObject> AbilityExecutionEndEvent;
 
         /// <summary>
         /// Sets the cooldown and invokes the OnAbilityExecuted event.
@@ -21,7 +26,16 @@ namespace GPG220.Luca.Scripts.Abilities
         protected virtual void NotifyAbilityExecuted(GameObject executor)
         {
             currentCooldown = cooldown;
-            OnAbilityExecuted?.Invoke(this, executor);
+            AbilityExecutionEndEvent?.Invoke(this, executor);
+        }
+        
+        /// <summary>
+        /// Sets the cooldown and invokes the OnAbilityExecuted event.
+        /// </summary>
+        /// <param name="executor"></param>
+        protected virtual void NotifyAbilityStartExecution(GameObject executor)
+        {
+            AbilityExecutionStartEvent?.Invoke(this, executor);
         }
 
         void Update()
@@ -38,12 +52,13 @@ namespace GPG220.Luca.Scripts.Abilities
         {
             return currentCooldown <= 0;
         }
-
+        
         /// <summary>
         /// Function to execute the ability.
         /// </summary>
         /// <param name="executorGameObject">The gameobject that executes the cast.</param>
+        /// <param name="targets">Any kind of gameobject targets that might be passed</param>
         /// <returns>Returns true if the ability could be executed, else false.</returns>
-        protected abstract bool Execute(GameObject executorGameObject);
+        public abstract bool Execute(GameObject executorGameObject, GameObject[] targets = null);
     }
 }

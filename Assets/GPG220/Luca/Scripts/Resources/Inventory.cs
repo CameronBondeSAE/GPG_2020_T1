@@ -42,7 +42,7 @@ namespace GPG220.Luca.Scripts.Resources
         /// it implies that the amount is 0.
         /// </summary>
         [ShowInInspector, OdinSerialize]
-        private Dictionary<ResourceType, int> _resources;
+        private Dictionary<ResourceType, int> _resources = new Dictionary<ResourceType, int>();
         
         /// <summary>
         /// Resets <paramref name="resourcesMax"/> and fills it with all active resources. Default value is -1 (Unlimited amounts).
@@ -215,7 +215,7 @@ namespace GPG220.Luca.Scripts.Resources
         public Dictionary<ResourceType, int> GetResourceQuantities()
         {
             
-            return new Dictionary<ResourceType, int>(_resources);
+            return _resources != null ? new Dictionary<ResourceType, int>(_resources) : null;
         }
         
     }
