@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using GPG220.Luca.Scripts.Unit;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace GPG220.Luca.Scripts.Abilities
 {
@@ -38,7 +39,6 @@ namespace GPG220.Luca.Scripts.Abilities
             NotifyAbilityStartExecution(executorGameObject);
             
             _isExecuting = true;
-            Debug.Log("Now executing....");
             StartCoroutine(SpawnAndExpandHealSphere(executorGameObject));
             
             NotifyAbilityExecuted(executorGameObject);
@@ -50,12 +50,13 @@ namespace GPG220.Luca.Scripts.Abilities
             var healSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             healSphere.transform.SetParent(executorGameObject.transform, false);
             healSphere.GetComponent<SphereCollider>().isTrigger = true;
-            healSphere.GetComponent<Renderer>().material = sphereMaterial;
+            MeshRenderer mr = healSphere.GetComponent<MeshRenderer>();
+            mr.material = sphereMaterial;
+            mr.shadowCastingMode = ShadowCastingMode.Off;
             healSphere.transform.localScale = new Vector3(0.1f,0.1f,0.1f);
             var colNot = healSphere.AddComponent<CollisionNotifier>();
             colNot.TriggerEnterEvent += OnHealSphereTriggerEntered;
             yield return new WaitForEndOfFrame();
-            Debug.Log("Spawning....");
             while (healSphere.transform.localScale.x < radius)
             {
                 var increment = expansionSpeed * Time.deltaTime;
@@ -63,7 +64,6 @@ namespace GPG220.Luca.Scripts.Abilities
                 
                 yield return new WaitForEndOfFrame();
             }
-            Debug.Log("End Expansion....");
             
 
             Destroy( colNot.gameObject);

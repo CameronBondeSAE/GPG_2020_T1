@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 2939113266008733346}
   - component: {fileID: 2939113266008733345}
   - component: {fileID: 2939113266008733344}
+  - component: {fileID: 9074724514544672835}
   - component: {fileID: 2939113266008733350}
   - component: {fileID: 2939113266008733354}
   m_Layer: 12
@@ -179,7 +180,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneId: 0
   serverOnly: 0
-  m_AssetId: 
+  m_AssetId: ae46586e6e892d44f839db11e880ba25
 --- !u!114 &2939113266008733344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,6 +208,20 @@ MonoBehaviour:
   grounded: 0
   ability: {fileID: 2939113266008733350}
   HACKExecuteAbility: 0
+--- !u!114 &9074724514544672835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2939113266008733375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34aefdaaccff11643b2142106719ca64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autoLoadAbilities: 1
+  defaultAbilityIndex: 0
 --- !u!114 &2939113266008733350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,7 +252,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2939113266008733375}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5917e1035fc94e12baaf7fc840123c02, type: 3}
   m_Name: 

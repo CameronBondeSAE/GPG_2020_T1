@@ -7,7 +7,6 @@ namespace GPG220.Luca.Scripts.Unit
     [RequireComponent(typeof(CharacterController))]
     public class MedicUnit : MovableUnit
     {
-        public AbilityBase ability = null;
         
         // Start is called before the first frame update
         void Start()
@@ -21,8 +20,8 @@ namespace GPG220.Luca.Scripts.Unit
         {
             base.Initialize();
 
-            if (ability == null)
-                ability = GetComponent<AbilityBase>();
+            if (abilityController == null)
+                abilityController = GetComponent<AbilityController>();
         }
 
         public bool HACKExecuteAbility = false;
@@ -61,9 +60,8 @@ namespace GPG220.Luca.Scripts.Unit
 
         public override void OnExecuteAction(Vector3 worldPosition, GameObject g)
         {
-            Debug.Log("SWUSH!");
             base.OnExecuteAction(worldPosition, g);
-            ability?.Execute(gameObject);
+            abilityController.ExecuteDefaultAbility();
             
         }
         

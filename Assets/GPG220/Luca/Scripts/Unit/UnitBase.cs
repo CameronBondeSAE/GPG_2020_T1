@@ -1,4 +1,6 @@
-﻿using GPG220.Blaide_Fedorowytsch.Scripts.Interfaces;
+﻿using System;
+using GPG220.Blaide_Fedorowytsch.Scripts.Interfaces;
+using GPG220.Luca.Scripts.Abilities;
 using GPG220.Luca.Scripts.Resources;
 using Mirror;
 using Sirenix.OdinInspector;
@@ -9,14 +11,18 @@ namespace GPG220.Luca.Scripts.Unit
     /// <summary>
     /// Base class for units. (A unit can be a building, movable unit, ...)
     /// </summary>
-    [RequireComponent(typeof(Rigidbody), typeof(Health), typeof(Inventory))]
+    [RequireComponent(typeof(Rigidbody), typeof(Health), typeof(Inventory)), RequireComponent(typeof(AbilityController))]
     public abstract class UnitBase : NetworkBehaviour, ISelectable
     {
+        public static event Action<UnitBase> SpawnStaticEvent;
+        public static event Action<UnitBase> DespawnStaticEvent;
+        
         // TODO Unit Abilities
         public UnitStats unitStats;
         public Inventory inventory;
         public Rigidbody rb;
         public Health health;
+        public AbilityController abilityController;
         
 
         protected virtual void Initialize()
@@ -25,6 +31,14 @@ namespace GPG220.Luca.Scripts.Unit
             inventory = GetComponent<Inventory>();
             rb = GetComponent<Rigidbody>();
             health = GetComponent<Health>();
+            abilityController = GetComponent<AbilityController>();
+            
+            SpawnStaticEvent?.Invoke(this);
+        }
+
+        protected virtual void Unload()
+        {
+            DespawnStaticEvent?.Invoke(this);
         }
 
         public virtual bool Selectable()
@@ -50,6 +64,11 @@ namespace GPG220.Luca.Scripts.Unit
         public virtual void OnExecuteAction(Vector3 worldPosition, GameObject g)
         {
             
+        }
+
+        private void OnDestroy()
+        {
+            Unload();
         }
     }
 }
