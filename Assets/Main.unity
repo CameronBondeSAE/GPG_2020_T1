@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -445,6 +445,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1072271919620222198, guid: 29860fa07d47c7e45b170f367357314a,
+        type: 3}
+      propertyPath: sceneId
+      value: 65998973
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29860fa07d47c7e45b170f367357314a, type: 3}
@@ -928,7 +933,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acde98e7835e96a40a0208e5732898ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thing: {fileID: 0}
+  yourPrefab: {fileID: 0}
+  xAmount: 0
+  yAmount: 0
+  spacing: 0
 --- !u!4 &1625785527
 Transform:
   m_ObjectHideFlags: 0
@@ -1112,7 +1120,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 0
-  currentHealth: 0
 --- !u!1001 &2098836741
 PrefabInstance:
   m_ObjectHideFlags: 0
