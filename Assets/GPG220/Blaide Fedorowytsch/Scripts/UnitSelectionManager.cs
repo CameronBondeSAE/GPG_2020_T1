@@ -106,12 +106,6 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             selectKeyDown = false;
 
 
-            DrawRectangle();
-            AdjustTriggerBox();
-            
-
-            
-            
             if (Vector3.Distance(selectionRect[0], selectionRect[2]) <= minimumSelectionSize)
             {
                 if (targetObject != null)
@@ -122,14 +116,14 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                         s.OnSelected();
                         ApplyOutlineToObject(((MonoBehaviour) s).gameObject);
                         selectedIselectables.Add(s);
-                        Debug.Log("single Selection");
                     }
                 }
             }
             else
             {
+                DrawRectangle();
+                AdjustTriggerBox();
                 lineRenderer.SetPositions(new Vector3[4] {Vector3.zero, Vector3.zero, Vector3.zero, Vector3.zero});
-
                 foreach (ISelectable s in iSelectablesInSelection)
                 {
                     s.OnSelected();
@@ -156,7 +150,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         // This is just detecting objects using a box Collider set to trigger, It doesn't work unless they have rigidbodies
         private void OnTriggerEnter(Collider other)
         {
-            if (other.GetComponent<ISelectable>() != null)
+            if (other.GetComponent<ISelectable>() != null && selectKeyDown)
             {
                 ISelectable i = other.GetComponent<ISelectable>();
                 if (i.Selectable() &&  !iSelectablesInSelection.Contains(i))
@@ -167,7 +161,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         }
         private void OnTriggerExit(Collider other)
         {
-            if (other.GetComponent<ISelectable>() != null)
+            if (other.GetComponent<ISelectable>() != null )
             {
                 ISelectable i = other.GetComponent<ISelectable>();
                 if (iSelectablesInSelection.Contains(i))
