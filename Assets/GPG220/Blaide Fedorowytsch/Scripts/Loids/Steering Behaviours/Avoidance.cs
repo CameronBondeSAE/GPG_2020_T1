@@ -14,7 +14,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Loids.Steering_Behaviours
         public override void Start()
         {
             base.Start();
-            GetComponent<RayConeArray>().RayConeArrayHitEvent += OnRayHit;
+            GetComponent<RayConeArray>().rayConeArrayHitEvent += OnRayHit;
             turnAroundDirections = new Vector3[]{transform.TransformDirection(Vector3.right),transform.TransformDirection(-Vector3.right)};
         }
 

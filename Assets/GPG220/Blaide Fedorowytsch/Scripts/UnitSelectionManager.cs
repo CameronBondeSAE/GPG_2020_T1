@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using GPG220.Blaide_Fedorowytsch.Scripts.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -25,6 +26,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         public Vector3 targetPoint;
         public GameObject targetObject;
         public Vector3[] selectionRect;
+        public float minimumSelectionSize = 0.1f;
         
     
         public BoxCollider boxCollider;
@@ -34,12 +36,15 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         public LayerMask worldLayerMask;
         public LayerMask unitLayerMask;
 
+        public Action<List<ISelectable>> onSelectionChanged;
+        
+        public Action<ISelectable> mouseOverIselectable;
+        
         [SerializeField]
         private List<ISelectable> iSelectablesInSelection;
 
         public List<ISelectable> selectedIselectables;
-
-
+        
         public Outline outline;
         // Start is called before the first frame update
         private void Awake()
@@ -86,34 +91,51 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         {
             selectionRect[0] = new Vector3(targetPoint.x,targetPoint.y + heightOffset,targetPoint.z);
             selectKeyDown = true;
+            
+            foreach (ISelectable s in selectedIselectables)
+            {
+                RemoveOutlineFromObject(((MonoBehaviour)s).gameObject);
+            }
+            selectedIselectables.Clear();
         }
 
         void SelectKeyReleased(InputAction.CallbackContext ctx)
         {
+            
             selectionRect[2] = new Vector3(targetPoint.x,targetPoint.y + heightOffset,targetPoint.z + heightOffset);
             selectKeyDown = false;
-            
+
+
             DrawRectangle();
             AdjustTriggerBox();
             
-            foreach (ISelectable s in selectedIselectables)
+
+            
+            
+            if (Vector3.Distance(selectionRect[0], selectionRect[2]) <= minimumSelectionSize)
             {
-                if (!iSelectablesInSelection.Contains(s))
+                if (targetObject != null)
                 {
-                    RemoveOutlineFromObject(((MonoBehaviour)s).gameObject);
+                    if (targetObject.GetComponent<ISelectable>() != null)
+                    {
+                        ISelectable s = targetObject.GetComponent<ISelectable>();
+                        s.OnSelected();
+                        ApplyOutlineToObject(((MonoBehaviour) s).gameObject);
+                        selectedIselectables.Add(s);
+                        Debug.Log("single Selection");
+                    }
                 }
-                
             }
-            selectedIselectables.Clear();
-            
-            
-            lineRenderer.SetPositions(new Vector3[4]{Vector3.zero,Vector3.zero,Vector3.zero,Vector3.zero});
-            
-            foreach (ISelectable s in iSelectablesInSelection)
+            else
             {
-                s.OnSelected();
-                ApplyOutlineToObject(((MonoBehaviour)s).gameObject);
-                selectedIselectables.Add(s);
+                lineRenderer.SetPositions(new Vector3[4] {Vector3.zero, Vector3.zero, Vector3.zero, Vector3.zero});
+
+                foreach (ISelectable s in iSelectablesInSelection)
+                {
+                    s.OnSelected();
+                    ApplyOutlineToObject(((MonoBehaviour) s).gameObject);
+                    selectedIselectables.Add(s);
+                }
             }
         }
 
@@ -137,7 +159,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             if (other.GetComponent<ISelectable>() != null)
             {
                 ISelectable i = other.GetComponent<ISelectable>();
-                if (i.Selectable())
+                if (i.Selectable() &&  !iSelectablesInSelection.Contains(i))
                 {
                     iSelectablesInSelection.Add(other.gameObject.GetComponent<ISelectable>());
                 }
@@ -148,7 +170,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             if (other.GetComponent<ISelectable>() != null)
             {
                 ISelectable i = other.GetComponent<ISelectable>();
-                if (i.Selectable())
+                if (iSelectablesInSelection.Contains(i))
                 {
                     iSelectablesInSelection.Remove(other.gameObject.GetComponent<ISelectable>());
                 }

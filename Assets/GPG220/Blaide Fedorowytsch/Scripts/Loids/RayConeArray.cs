@@ -18,11 +18,11 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Loids
         public RaycastHit centreHit;
         
         private Vector3 endCentre;
-        public class RayConeArrayHit: UnityEvent<RayConeArrayHitData> {}
+        //public class RayConeArrayHit: UnityEvent<RayConeArrayHitData> {}
         //[SerializeField] RayConeArrayHit rayConeArrayHit;
 
 
-        public Action<RayConeArrayHitData> RayConeArrayHitEvent;
+        public Action<RayConeArrayHitData> rayConeArrayHitEvent;
         // Start is called before the first frame update
         void Start()
         {
@@ -51,7 +51,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Loids
                 RayConeArrayHitData rayConeArrayHitData = new RayConeArrayHitData(coneRay,coneHit,endCentre,centreHit,centreRay);
                 if (rayConeArrayHitData != null)
                 {
-                    RayConeArrayHitEvent.Invoke(rayConeArrayHitData);
+                    rayConeArrayHitEvent.Invoke(rayConeArrayHitData);
                 }
             }
         }

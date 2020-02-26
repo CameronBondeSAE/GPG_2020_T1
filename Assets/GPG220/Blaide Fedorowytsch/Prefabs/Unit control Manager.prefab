@@ -55,6 +55,12 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
+    - Name: onSelectionChanged
+      Entry: 6
+      Data: 
+    - Name: mouseOverIselectable
+      Entry: 6
+      Data: 
     - Name: iSelectablesInSelection
       Entry: 7
       Data: 0|System.Collections.Generic.List`1[[GPG220.Blaide_Fedorowytsch.Scripts.Interfaces.ISelectable,
@@ -150,6 +156,7 @@ MonoBehaviour:
   targetPoint: {x: 0, y: 0, z: 0}
   targetObject: {fileID: 0}
   selectionRect: []
+  minimumSelectionSize: 0
   boxCollider: {fileID: 0}
   lineRenderer: {fileID: 0}
   heightOffset: 0.02
@@ -285,7 +292,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineMode: 0
   outlineColor: {r: 0.69573957, g: 1, b: 0.514151, a: 1}
-  outlineWidth: 2
+  outlineWidth: 3.38
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
