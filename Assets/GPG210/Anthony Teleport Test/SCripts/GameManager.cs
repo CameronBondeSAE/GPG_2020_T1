@@ -8,28 +8,39 @@ using UnityEngine.UI;
 
 public class GameManager : UnitBase
 {
-   public List<UnitBase> playerUnitBases = new List<UnitBase>(10);
-   public List<UnitBase> enemyUnitBases = new List<UnitBase>(10);
+    public static int numberOfPlayers;
+    public static int numberOfEnemies;
 
-   public List<UnitBase> PlayerUnitBases
-   {
-       get => playerUnitBases;
-       set => playerUnitBases = value;
-   }
+   
+    
+  
+   public List<UnitBase> enemyUnitBases = new List<UnitBase>(numberOfEnemies);
+   public List<UnitBase> playerUnitBases = new List<UnitBase>(numberOfPlayers);
+  
 
    protected override void Initialize()
    {
        base.Initialize();
    }
 
-
-   /*public List<UnitBase> PlayerUnitBases => playerUnitBases.Remove(DespawnStaticEvent);
-   public void AddPlayer()
+  /* void Main()
    {
-        UnitBase.SpawnStaticEvent();
-       //subscribe to the event
-       playerUnitBases.Add(SpawnStaticEvent);
+       UnitBase.DespawnStaticEvent += RemovePlayer  ;
+   }
+   public List<UnitBase> PlayerUnitBases => playerUnitBases.Remove(DespawnStaticEvent);
+   static void AddPlayer()
+   {
+       for()
+     
+      
+   }
+
+    void RemovePlayer()
+    {
+      
+       enemyUnitBases.Remove(+=DespawnStaticEvent())
    }*/
+    
 
   
     
