@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 1404205552856636576}
   - component: {fileID: 1530850841574439630}
   - component: {fileID: 68299660218663067}
+  - component: {fileID: -5808497921224969720}
   m_Layer: 0
   m_Name: RankupUnit
   m_TagString: Untagged
@@ -133,6 +134,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 9cbb5f267f07afd42a34a20a447fa4db, type: 2}
   - {fileID: 2100000, guid: b0a018a71784efd468dd99fd103d1f46, type: 2}
   - {fileID: 2100000, guid: 4e1150fbc8faf2747ba9a2d683fbe81f, type: 2}
+  currentKillState: 0
 --- !u!114 &114009500597666366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,18 +160,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea0a088a58d3c714daaecf3078b5adf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes: []
+  syncMode: 0
+  syncInterval: 0.1
   unitStats: {fileID: 0}
   inventory: {fileID: 0}
-  UnitSpeed: 0.3
+  rb: {fileID: 54844123311866720}
+  health: {fileID: 1404205552856636576}
+  UnitSpeed: 2
+  target: {x: 0, y: 0, z: 0}
   currentState: 0
 --- !u!114 &1404205552856636576
 MonoBehaviour:
@@ -184,7 +182,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 10
-  currentHealth: 0
 --- !u!114 &1530850841574439630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,6 +211,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distance: 5
   damage: 5
+--- !u!114 &-5808497921224969720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1440955559183952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  m_AssetId: 
 --- !u!1 &1686169348673056
 GameObject:
   m_ObjectHideFlags: 0
