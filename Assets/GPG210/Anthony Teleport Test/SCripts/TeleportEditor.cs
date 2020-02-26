@@ -15,6 +15,7 @@ public class TeleportEditor : UnitBase
     public int damage;
 
     private Rigidbody rb;
+    public GameObject showFloatingText;
 
 
     public override void OnSelected()
@@ -36,6 +37,8 @@ public class TeleportEditor : UnitBase
         {
             currentTarget = g.transform;
         }
+
+        showFloatingText();
         
         Teleporting();
     }
@@ -53,7 +56,11 @@ public class TeleportEditor : UnitBase
        Destroy(gameObject);
    }
 
-   
+   //shows text for character description
+   public void ShowFloatingText()
+   {
+       
+   }
 
    private void OnCollisionEnter(Collision other)
    {
