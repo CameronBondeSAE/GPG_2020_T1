@@ -16,8 +16,8 @@ namespace GPG220.Luca.Scripts.Abilities
         public Material sphereMaterial;
         public GameObject targetParticleEffect;
         
-        private bool _isExecuting;
-        private readonly List<UnitBase> _healedUnits = new List<UnitBase>();
+        private bool isExecuting;
+        private readonly List<UnitBase> healedUnits = new List<UnitBase>();
         
         // Start is called before the first frame update
         private void Start()
@@ -25,10 +25,10 @@ namespace GPG220.Luca.Scripts.Abilities
             abilityName = "Heal Sphere";
         }
 
-        protected override bool CheckRequirements()
+        public override bool CheckRequirements()
         {
             
-            return !_isExecuting && base.CheckRequirements();
+            return !isExecuting && base.CheckRequirements();
         }
 
         public override bool Execute(GameObject executorGameObject, GameObject[] targets = null)
@@ -38,7 +38,7 @@ namespace GPG220.Luca.Scripts.Abilities
 
             NotifyAbilityStartExecution(executorGameObject);
             
-            _isExecuting = true;
+            isExecuting = true;
             StartCoroutine(SpawnAndExpandHealSphere(executorGameObject));
             
             NotifyAbilityExecuted(executorGameObject);
@@ -67,17 +67,17 @@ namespace GPG220.Luca.Scripts.Abilities
             
 
             Destroy( colNot.gameObject);
-            _healedUnits.Clear();
-            _isExecuting = false;
+            healedUnits.Clear();
+            isExecuting = false;
             yield return 0;
         }
 
         private void OnHealSphereTriggerEntered(Collider obj)
         {
             var unit = obj.GetComponent<UnitBase>();
-            if (unit == null || _healedUnits.Contains(unit)) return;
+            if (unit == null || healedUnits.Contains(unit)) return;
             unit.health.ChangeHealth((int)healAmount);
-            _healedUnits.Add(unit);
+            healedUnits.Add(unit);
             StartCoroutine(SpawnHealEffect(unit.transform));
         }
 

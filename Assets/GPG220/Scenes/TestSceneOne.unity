@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -451,6 +451,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1555321804470288115, guid: 91458b95eb965ac4baf5c3fd0c4c25e5,
+        type: 3}
+      propertyPath: m_Name
+      value: Unit control Manager
+      objectReference: {fileID: 0}
     - target: {fileID: 1555321804470288113, guid: 91458b95eb965ac4baf5c3fd0c4c25e5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -516,11 +521,6 @@ PrefabInstance:
       propertyPath: unitLayerMask.m_Bits
       value: 4097
       objectReference: {fileID: 0}
-    - target: {fileID: 1555321804470288115, guid: 91458b95eb965ac4baf5c3fd0c4c25e5,
-        type: 3}
-      propertyPath: m_Name
-      value: Unit control Manager
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91458b95eb965ac4baf5c3fd0c4c25e5, type: 3}
 --- !u!1 &1546998596
@@ -572,32 +572,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1567506570 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2939113266008733375, guid: ae46586e6e892d44f839db11e880ba25,
-    type: 3}
-  m_PrefabInstance: {fileID: 2015536309}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &1567506571
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1567506570}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 2, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1567506574 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2939113266008733344, guid: ae46586e6e892d44f839db11e880ba25,
     type: 3}
   m_PrefabInstance: {fileID: 2015536309}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1567506570}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c01ff5337361f2b46b01d9f01530e33f, type: 3}
@@ -697,6 +678,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2939113266008733375, guid: ae46586e6e892d44f839db11e880ba25,
+        type: 3}
+      propertyPath: m_Name
+      value: MedicUnit (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 2939113266008733345, guid: ae46586e6e892d44f839db11e880ba25,
         type: 3}
       propertyPath: sceneId
@@ -762,11 +748,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2939113266008733375, guid: ae46586e6e892d44f839db11e880ba25,
-        type: 3}
-      propertyPath: m_Name
-      value: MedicUnit (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae46586e6e892d44f839db11e880ba25, type: 3}

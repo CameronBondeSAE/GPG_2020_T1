@@ -1458,6 +1458,7 @@ MonoBehaviour:
   inventory: {fileID: 939108495}
   rb: {fileID: 939108498}
   health: {fileID: 0}
+  abilityController: {fileID: 0}
   col: {fileID: 0}
   pfController: {fileID: 953189119}
   calculateFlowFieldPath: 1
@@ -1960,6 +1961,7 @@ MonoBehaviour:
   inventory: {fileID: 1009864718}
   rb: {fileID: 1009864721}
   health: {fileID: 0}
+  abilityController: {fileID: 0}
   col: {fileID: 0}
   pfController: {fileID: 953189119}
   calculateFlowFieldPath: 1
@@ -2163,6 +2165,7 @@ MonoBehaviour:
   inventory: {fileID: 1135143677}
   rb: {fileID: 1135143680}
   health: {fileID: 0}
+  abilityController: {fileID: 0}
   col: {fileID: 0}
   pfController: {fileID: 953189119}
   calculateFlowFieldPath: 1
@@ -2474,6 +2477,7 @@ MonoBehaviour:
   inventory: {fileID: 1301452640}
   rb: {fileID: 1301452643}
   health: {fileID: 0}
+  abilityController: {fileID: 0}
   col: {fileID: 0}
   pfController: {fileID: 953189119}
   calculateFlowFieldPath: 1
@@ -2990,6 +2994,7 @@ MonoBehaviour:
   inventory: {fileID: 1645079186}
   rb: {fileID: 1645079181}
   health: {fileID: 0}
+  abilityController: {fileID: 0}
   col: {fileID: 0}
   pfController: {fileID: 953189119}
   calculateFlowFieldPath: 1
@@ -3318,6 +3323,7 @@ MonoBehaviour:
   inventory: {fileID: 1685650583}
   rb: {fileID: 1685650586}
   health: {fileID: 0}
+  abilityController: {fileID: 0}
   col: {fileID: 0}
   pfController: {fileID: 953189119}
   calculateFlowFieldPath: 1
@@ -4014,6 +4020,30 @@ MonoBehaviour:
   forceMultiplier: 2
   pushCooldown: 0
   pushCooldownCounter: 0
+--- !u!114 &2001614095 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2939113266008733354, guid: ae46586e6e892d44f839db11e880ba25,
+    type: 3}
+  m_PrefabInstance: {fileID: 2939113265911225552}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5917e1035fc94e12baaf7fc840123c02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2001614096 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2939113266008733350, guid: ae46586e6e892d44f839db11e880ba25,
+    type: 3}
+  m_PrefabInstance: {fileID: 2939113265911225552}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bbfda71a0cdff34580f8d688f028401, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2025130261
 GameObject:
   m_ObjectHideFlags: 0
@@ -4457,6 +4487,50 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074724514544672835, guid: ae46586e6e892d44f839db11e880ba25,
+        type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074724514544672835, guid: ae46586e6e892d44f839db11e880ba25,
+        type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074724514544672835, guid: ae46586e6e892d44f839db11e880ba25,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 9074724514544672835, guid: ae46586e6e892d44f839db11e880ba25,
+        type: 3}
+    - target: {fileID: 9074724514544672835, guid: ae46586e6e892d44f839db11e880ba25,
+        type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[0]
+      value: 
+      objectReference: {fileID: 2001614096}
+    - target: {fileID: 9074724514544672835, guid: ae46586e6e892d44f839db11e880ba25,
+        type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[1]
+      value: 
+      objectReference: {fileID: 2001614095}
+    - target: {fileID: 9074724514544672835, guid: ae46586e6e892d44f839db11e880ba25,
+        type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[0]
+      value: '"path":"abilities","value":{"$id":0,"$type":"System.Collections.Generic.SortedList`2[[System.Int32,
+        mscorlib],[GPG220.Luca.Scripts.Abilities.AbilityBase, Assembly-CSharp]], System","$rlength":2,"$rcontent":[{"$type":"System.Collections.Generic.KeyValuePair`2[[System.Int32,
+        mscorlib],[GPG220.Luca.Scripts.Abilities.AbilityBase, Assembly-CSharp]], mscorlib",0,$eref:0},{"$type":"System.Collections.Generic.KeyValuePair`2[[System.Int32,
+        mscorlib],[GPG220.Luca.Scripts.Abilities.AbilityBase, Assembly-CSharp]], mscorlib",1,$eref:1}]}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074724514544672835, guid: ae46586e6e892d44f839db11e880ba25,
+        type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[1]
+      value: '"path":"abilities.{0si}","value":$eref:0'
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074724514544672835, guid: ae46586e6e892d44f839db11e880ba25,
+        type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[2]
+      value: '"path":"abilities.{1si}","value":$eref:1'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae46586e6e892d44f839db11e880ba25, type: 3}

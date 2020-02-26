@@ -47,8 +47,8 @@ namespace GPG220.Luca.Scripts.Abilities
         /// <summary>
         /// Checks some requirements such as if there is an active cooldown to determine if the ability can be executed.
         /// </summary>
-        /// <returns></returns>
-        protected virtual bool CheckRequirements()
+        /// <returns>Returns true if the ability can be executed.</returns>
+        public virtual bool CheckRequirements()
         {
             return currentCooldown <= 0;
         }
