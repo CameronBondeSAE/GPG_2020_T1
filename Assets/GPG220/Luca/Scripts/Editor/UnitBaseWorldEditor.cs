@@ -2,6 +2,7 @@
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
+using GPG220.Luca.Scripts.Abilities;
 using GPG220.Luca.Scripts.Resources;
 using GPG220.Luca.Scripts.Unit;
 using Sirenix.OdinInspector;
@@ -434,6 +435,9 @@ namespace GPG220.Luca.Scripts.Editor
                             DrawInfoBoxUnitComponent(unit);
                             EditorGUILayout.Space();
                             EditorGUILayout.Space();
+                            DrawInfoBoxAbilities(unit);
+                            EditorGUILayout.Space();
+                            EditorGUILayout.Space();
                         }
                         
                     }
@@ -648,6 +652,68 @@ namespace GPG220.Luca.Scripts.Editor
             EditorGUILayout.Space();
             EditorGUILayout.Space();
             EditorGUILayout.EndVertical();
+        }
+
+        Color32 boxBgColor = new Color32(100,100,100,255);
+        private void DrawInfoBoxAbilities(UnitBase unit)
+        {
+            var abilityController = unit?.abilityController ?? unit?.GetComponent<AbilityController>();
+            if (unit == null || abilityController == null) return;
+            var infoBoxStyle = new GUIStyle {/*padding = infoBoxPadding*/};
+            infoBoxStyle.padding.left = infoBoxPaddingF;
+            infoBoxStyle.padding.right = infoBoxPaddingF;
+            infoBoxStyle.padding.top = infoBoxPaddingF;
+            infoBoxStyle.padding.bottom = infoBoxPaddingF;
+            
+            var r = EditorGUILayout.BeginVertical(infoBoxStyle);
+            GUI.DrawTexture(r, MakeTex((int)unitListAreaRect.width, (int)unitListAreaRect.height, infoBoxBackgroundColor), ScaleMode.StretchToFill);
+            //GUI.backgroundColor = infoBoxBackgroundColor;
+
+            var titleStyle = new GUIStyle {fontSize = 15, fontStyle = FontStyle.Bold};
+            EditorGUILayout.LabelField("Unit Abilities",titleStyle);
+
+            var resStyle = new GUIStyle {fontSize = 12, alignment = TextAnchor.MiddleLeft, clipping = TextClipping.Clip, stretchWidth = false, fontStyle = FontStyle.Bold};
+
+            EditorGUILayout.Space();
+            EditorGUILayout.Space();
+            if (abilityController.abilities != null)
+            {
+                foreach (var kvp in abilityController.abilities)
+                {
+                    var entryRect = EditorGUILayout.BeginHorizontal(infoBoxStyle);
+                    GUI.DrawTexture(entryRect, MakeTex((int)unitListAreaRect.width, (int)unitListAreaRect.height, boxBgColor), ScaleMode.StretchToFill);
+                    //var x = EditorGUILayout.GetControlRect(GUILayout.MaxWidth(50), GUILayout.MaxHeight(50));
+                    
+                    EditorGUILayout.BeginVertical();
+
+                    EditorGUILayout.BeginHorizontal();
+                    if(!kvp.Value.CheckRequirements())
+                        GUI.enabled = false;
+                    if (GUILayout.Button("Execute", EditorStyles.miniButton))
+                    {
+                        abilityController.ExecuteAbility(kvp.Value);
+                    }
+                    GUI.enabled = true;
+                    EditorGUILayout.LabelField("ID: "+kvp.Key);
+                    EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.Space();
+                    
+                    var editor = UnityEditor.Editor.CreateEditor( kvp.Value );
+                    editor.DrawDefaultInspector();
+                    
+                    
+                    EditorGUILayout.EndVertical();
+                
+                    EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.Space();
+                    EditorGUILayout.Space();
+                }
+            }
+            
+            EditorGUILayout.Space();
+            EditorGUILayout.Space();
+            EditorGUILayout.EndVertical();
+            
         }
         
         private void DrawInfoBoxMultiple()

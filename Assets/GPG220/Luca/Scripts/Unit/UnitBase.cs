@@ -17,7 +17,6 @@ namespace GPG220.Luca.Scripts.Unit
         public static event Action<UnitBase> SpawnStaticEvent;
         public static event Action<UnitBase> DespawnStaticEvent;
         
-        // TODO Unit Abilities
         public UnitStats unitStats;
         public Inventory inventory;
         public Rigidbody rb;
