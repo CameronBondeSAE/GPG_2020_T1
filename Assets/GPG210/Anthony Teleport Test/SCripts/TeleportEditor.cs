@@ -1,4 +1,5 @@
-﻿using GPG220.Luca.Scripts.Unit;
+﻿using System;
+using GPG220.Luca.Scripts.Unit;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -15,7 +16,7 @@ public class TeleportEditor : UnitBase
     public int damage;
 
     private Rigidbody rb;
-    public string popup;
+   
     
 
 
@@ -24,8 +25,7 @@ public class TeleportEditor : UnitBase
         base.OnSelected();
         Debug.Log("Selected!");
 
-        PopUpText popUpText = GameObject.FindGameObjectWithTag("Game Manager").GetComponent<PopUpText>();
-        popUpText.PopUp(popup);
+        
     }
 
     public override void OnDeSelected()
@@ -90,7 +90,12 @@ public class TeleportEditor : UnitBase
         player.SetActive(true);
     }
 
-    
-
-    
+    /* void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            PopUpText popUpText = GameObject.FindGameObjectWithTag("Game Manager").GetComponent<PopUpText>();
+        popUpText.PopUp(popup);
+        }
+    }*/
 }
