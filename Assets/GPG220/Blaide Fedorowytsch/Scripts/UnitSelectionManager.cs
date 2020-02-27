@@ -27,6 +27,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         public GameObject targetObject;
         public Vector3[] selectionRect;
         public float minimumSelectionSize = 0.1f;
+        public bool cursorOverUI;
         
     
         public BoxCollider boxCollider;
@@ -36,7 +37,9 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         public LayerMask worldLayerMask;
         public LayerMask unitLayerMask;
 
-        public Action<List<ISelectable>> onSelectionChanged;
+        public Action<List<ISelectable>> onSelection;
+        public Action<List<ISelectable>> onDeselection;
+        
         
         public Action<ISelectable> mouseOverIselectable;
         
@@ -84,51 +87,64 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         // Update is called once per frame
         void Update()
         {
-        
+            //cursorOverUI = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject != null;
+            cursorOverUI = UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
+
         }
 
         void SelectKeyPressed(InputAction.CallbackContext ctx)
         {
-            selectionRect[0] = new Vector3(targetPoint.x,targetPoint.y + heightOffset,targetPoint.z);
-            selectKeyDown = true;
-            
-            foreach (ISelectable s in selectedIselectables)
+            //Check for UI element at this cursorPosition;
+            if (cursorOverUI)
             {
-                RemoveOutlineFromObject(((MonoBehaviour)s).gameObject);
             }
-            selectedIselectables.Clear();
+            else
+            {
+                selectionRect[0] = new Vector3(targetPoint.x, targetPoint.y + heightOffset, targetPoint.z);
+                selectKeyDown = true;
+
+                foreach (ISelectable s in selectedIselectables)
+                {
+                    RemoveOutlineFromObject(((MonoBehaviour) s).gameObject);
+                }
+
+                selectedIselectables.Clear();
+            }
         }
 
         void SelectKeyReleased(InputAction.CallbackContext ctx)
         {
-            
-            selectionRect[2] = new Vector3(targetPoint.x,targetPoint.y + heightOffset,targetPoint.z + heightOffset);
-            selectKeyDown = false;
-
-
-            if (Vector3.Distance(selectionRect[0], selectionRect[2]) <= minimumSelectionSize)
+            if (selectKeyDown)
             {
-                if (targetObject != null)
+                selectionRect[2] =
+                    new Vector3(targetPoint.x, targetPoint.y + heightOffset, targetPoint.z + heightOffset);
+                selectKeyDown = false;
+
+
+                if (Vector3.Distance(selectionRect[0], selectionRect[2]) <= minimumSelectionSize)
                 {
-                    if (targetObject.GetComponent<ISelectable>() != null)
+                    if (targetObject != null)
                     {
-                        ISelectable s = targetObject.GetComponent<ISelectable>();
+                        if (targetObject.GetComponent<ISelectable>() != null)
+                        {
+                            ISelectable s = targetObject.GetComponent<ISelectable>();
+                            s.OnSelected();
+                            ApplyOutlineToObject(((MonoBehaviour) s).gameObject);
+                            selectedIselectables.Add(s);
+                        }
+                    }
+                }
+                else
+                {
+                    DrawRectangle();
+                    AdjustTriggerBox();
+                    lineRenderer.SetPositions(new Vector3[4] {Vector3.zero, Vector3.zero, Vector3.zero, Vector3.zero});
+                    foreach (ISelectable s in iSelectablesInSelection)
+                    {
                         s.OnSelected();
                         ApplyOutlineToObject(((MonoBehaviour) s).gameObject);
                         selectedIselectables.Add(s);
                     }
-                }
-            }
-            else
-            {
-                DrawRectangle();
-                AdjustTriggerBox();
-                lineRenderer.SetPositions(new Vector3[4] {Vector3.zero, Vector3.zero, Vector3.zero, Vector3.zero});
-                foreach (ISelectable s in iSelectablesInSelection)
-                {
-                    s.OnSelected();
-                    ApplyOutlineToObject(((MonoBehaviour) s).gameObject);
-                    selectedIselectables.Add(s);
                 }
             }
         }
