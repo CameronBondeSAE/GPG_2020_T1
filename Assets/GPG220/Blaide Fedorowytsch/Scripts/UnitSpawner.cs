@@ -22,7 +22,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         void Start()
         {
             gameManager = FindObjectOfType<GameManager>();
-            
+            gameManager.startGameEvent += RandomSpawns;
+
         }
 
         public void SpawnUnit(UnitBase unit, Vector3 position,Quaternion rotation)
