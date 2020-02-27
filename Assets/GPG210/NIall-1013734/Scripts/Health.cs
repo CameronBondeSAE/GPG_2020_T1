@@ -11,8 +11,8 @@ public class Health : MonoBehaviour
 
     public int CurrentHealth { get; set; }
 
-     public event Action deathEvent;
-     public static event Action deathStaticEvent;
+     public event Action<Health> deathEvent;
+     public static event Action<Health> deathStaticEvent;
 
     private void Awake()
     {
@@ -29,8 +29,8 @@ public class Health : MonoBehaviour
     {
         if (CurrentHealth <= 0 && deathEvent != null)
         {
-            deathEvent.Invoke();
-            deathStaticEvent.Invoke();
+            deathEvent.Invoke(this);
+            deathStaticEvent.Invoke(this);
         }
     }
     

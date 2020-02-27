@@ -90,7 +90,7 @@ namespace GPG220.Luca.Scripts.Resources
         }
 
         [Button("Drop All Items")]
-        public void DropAllItems()
+        public void DropAllItems(Health health)
         {
             StartCoroutine(DropItems());
         }

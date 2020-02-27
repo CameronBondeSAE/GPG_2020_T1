@@ -12,21 +12,25 @@ public class GameManager : MonoBehaviour
    public List<UnitBase> playerUnitBases = new List<UnitBase>();
 
    public event Action gameOverEvent;
+   public PlayMenu playMenu;
+   
    
 
    private void Start()
    {
        UnitBase.SpawnStaticEvent += UnitBaseOnSpawnStaticEvent;
-       UnitBase.DespawnStaticEvent += UnitBaseOnDespawnStaticEvent;
-       Health.deathStaticEvent += HealthOndeathStaticEvent;
+       //UnitBase.DespawnStaticEvent += UnitBaseOnDespawnStaticEvent;
+       playMenu.playEvent += PlayMenuOnplayEvent;
    }
 
-   private void HealthOndeathStaticEvent()
+   private void PlayMenuOnplayEvent()
    {
-       if (gameObject.GetComponent<Health>().CurrentHealth <= 0)
-       {
-           HealthOndeathStaticEvent();
-       }
+      
+   }
+
+   private void HealthOndeathStaticEvent(Health health)
+   {
+      
       
    }
 
@@ -41,6 +45,8 @@ public class GameManager : MonoBehaviour
        // TODO Define Enemies and Players
        playerUnitBases.Add(obj);
        enemyUnitBases.Add(obj);
+       obj.GetComponent<Health>().deathEvent+= HealthOndeathStaticEvent;
+
    }
 
    public void CheckIfGameOver()
@@ -57,5 +63,5 @@ public class GameManager : MonoBehaviour
   
     
 
-    
+    // 
 }

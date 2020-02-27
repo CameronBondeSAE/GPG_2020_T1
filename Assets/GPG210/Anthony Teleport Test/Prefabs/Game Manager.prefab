@@ -43,13 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff733bf49effb4f419f902f038c19168, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  unitStats: {fileID: 0}
-  inventory: {fileID: 0}
-  rb: {fileID: 0}
-  health: {fileID: 0}
-  abilityController: {fileID: 0}
   enemyUnitBases: []
   playerUnitBases:
   - {fileID: 0}
@@ -62,3 +55,4 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  playMenu: {fileID: 1375059197, guid: 298228f203107444691db63a0ad56f1a, type: 3}

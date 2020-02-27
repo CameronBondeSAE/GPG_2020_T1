@@ -127,7 +127,7 @@ public class StatemachMinion : UnitBase
         }
     }
 
-    void Die()
+    void Die(Health health)
     {
         currentState = States.Dead;
     }
