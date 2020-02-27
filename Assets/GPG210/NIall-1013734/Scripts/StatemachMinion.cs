@@ -36,6 +36,7 @@ public class StatemachMinion : UnitBase
     void Start()
     {
         GetComponent<Health>().deathEvent += Die;
+        Initialize();
     }
 
     public override void OnSelected()
@@ -117,12 +118,12 @@ public class StatemachMinion : UnitBase
         
         if (unitlvlup.Kills == 2)
         {
-            UnitSpeed = 3f;
+            UnitSpeed = 5f;
         }
 
         if (unitlvlup.Kills >= 3)
         {
-            UnitSpeed = 4f;
+            UnitSpeed = 6f;
         }
     }
 

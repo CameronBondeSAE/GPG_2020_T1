@@ -21,9 +21,8 @@ public class AntennaRC : MonoBehaviour
     {
         RaycastHit hit;
         if (Physics.Raycast(t.position, t.forward, distance))
-        {
+        { 
             rb.AddTorque(0, turnSpeed, 0);
-            
         }
         
     }

@@ -167,7 +167,7 @@ MonoBehaviour:
   rb: {fileID: 54844123311866720}
   health: {fileID: 1404205552856636576}
   abilityController: {fileID: 0}
-  UnitSpeed: 2
+  UnitSpeed: 4
   target: {x: 0, y: 0, z: 0}
   currentState: 0
 --- !u!114 &1404205552856636576
