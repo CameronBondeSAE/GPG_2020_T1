@@ -11,7 +11,7 @@ public class DeathPoint : MonoBehaviour
         GetComponent<Health>().deathEvent += Death;
     }
 
-    public void Death()
+    public void Death(Health health)
     {
         Destroy(gameObject);
     }
