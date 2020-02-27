@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8471641904857410152}
   - component: {fileID: 4069609011016073252}
   - component: {fileID: 1072271919620222198}
+  - component: {fileID: -3977877765726984574}
   m_Layer: 0
   m_Name: Test Unit
   m_TagString: Untagged
@@ -126,11 +127,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  usm: {fileID: 0}
-  position: {x: 0, y: 0, z: 0}
+  owner: {fileID: 0}
+  unitStats: {fileID: 0}
+  inventory: {fileID: 0}
+  rb: {fileID: 0}
+  health: {fileID: 0}
+  abilityController: {fileID: 0}
   moving: 0
   target: {x: 0, y: 0, z: 0}
   HeightOffset: 0.5
+  usm: {fileID: 0}
 --- !u!114 &1072271919620222198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,3 +152,16 @@ MonoBehaviour:
   sceneId: 0
   serverOnly: 0
   m_AssetId: 
+--- !u!114 &-3977877765726984574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3773638092200980733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3266ec32201a0694a8a80c5131a2d2ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 999999999

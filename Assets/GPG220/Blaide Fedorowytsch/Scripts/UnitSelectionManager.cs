@@ -97,14 +97,14 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         void Update()
         {
             //cursorOverUI = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject != null;
-            cursorOverUI = UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
+            cursorOverUI = false;//= UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
             hadFocusLastFrame = windowHasFocus;
         }
 
         void SelectKeyPressed(InputAction.CallbackContext ctx)
         {
             //Check for UI element at this cursorPosition;
-            if (cursorOverUI || !hadFocusLastFrame )
+            if (cursorOverUI )//|| !hadFocusLastFrame )
             {
             }
             else

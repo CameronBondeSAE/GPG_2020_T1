@@ -61,11 +61,11 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit,boundrySize.y*3,SpawnableSurfaces,QueryTriggerInteraction.Ignore))
                 {
-                    if (Physics.CheckBox(hit.point + new Vector3(0, + 30, 0),Extents/2))
-                    {
+                    //if (Physics.CheckBox(hit.point + new Vector3(0, + 30, 0),Extents/2))
+                   // {
                         p = hit.point +  new Vector3(0, 10, 0);
                         clear = true;
-                    }
+                  //  }
                 }
             }
             return p;
