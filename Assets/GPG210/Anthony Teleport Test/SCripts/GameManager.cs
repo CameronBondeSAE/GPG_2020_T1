@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
    public List<UnitBase> playerUnitBases = new List<UnitBase>();
 
    public event Action gameOverEvent;
+   public event Action startGameEvent;
    public PlayMenu playMenu;
    
    
@@ -25,7 +26,12 @@ public class GameManager : MonoBehaviour
 
    private void PlayMenuOnplayEvent()
    {
-      
+       if(startGameEvent != null)
+       {
+           startGameEvent.Invoke();
+       }
+
+
    }
 
    private void HealthOndeathStaticEvent(Health health)
@@ -63,5 +69,5 @@ public class GameManager : MonoBehaviour
   
     
 
-    // 
+    
 }
