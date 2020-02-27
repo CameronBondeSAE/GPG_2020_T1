@@ -1,4 +1,5 @@
 ﻿using System;
+using GPG220.Blaide_Fedorowytsch.Scripts;
 using GPG220.Blaide_Fedorowytsch.Scripts.Interfaces;
 using GPG220.Luca.Scripts.Abilities;
 using GPG220.Luca.Scripts.Resources;
@@ -16,7 +17,10 @@ namespace GPG220.Luca.Scripts.Unit
     {
         public static event Action<UnitBase> SpawnStaticEvent;
         public static event Action<UnitBase> DespawnStaticEvent;
-        
+                
+        // TODO set owner somewhere
+        public PlayerBase owner;
+
         public UnitStats unitStats;
         public Inventory inventory;
         public Rigidbody rb;
@@ -67,6 +71,7 @@ namespace GPG220.Luca.Scripts.Unit
 
         private void OnDestroy()
         {
+            // TODO this only will work if the actual GO is destroyed. It won't work if the unit's death code, doesn't actually destroy itself
             Unload();
         }
     }
