@@ -55,7 +55,10 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: onSelectionChanged
+    - Name: onSelection
+      Entry: 6
+      Data: 
+    - Name: onDeselection
       Entry: 6
       Data: 
     - Name: mouseOverIselectable
@@ -157,9 +160,10 @@ MonoBehaviour:
   targetObject: {fileID: 0}
   selectionRect: []
   minimumSelectionSize: 0
+  cursorOverUI: 0
   boxCollider: {fileID: 0}
   lineRenderer: {fileID: 0}
-  heightOffset: 0.02
+  heightOffset: 0.3
   worldLayerMask:
     serializedVersion: 2
     m_Bits: 256
@@ -212,7 +216,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.05
+    widthMultiplier: 0.3
     widthCurve:
       serializedVersion: 2
       m_Curve:

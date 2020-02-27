@@ -7,6 +7,9 @@ public class UnitLevelUp : MonoBehaviour
     public int Kills;
     public Material[] material;
     private Renderer rend;
+    public GameObject outerProng;
+    public GameObject centreProng;
+    
 
 
     public void Start()
@@ -15,6 +18,7 @@ public class UnitLevelUp : MonoBehaviour
         rend = GetComponent<Renderer>();
         rend.enabled = true;
         rend.sharedMaterial = material[0];
+
     }
 
     public enum KillState
@@ -34,12 +38,16 @@ public class UnitLevelUp : MonoBehaviour
             case KillState.LevelOne:
 
                 rend.sharedMaterial = material[0];
-            {
+                
+                outerProng.SetActive(false);
+                centreProng.SetActive(true);
+                
                 if (Kills >= 2 && Kills <= 3)
                 {
                     currentKillState = KillState.LevelTwo;
+
                 }
-            }
+            
 
                 break;
 
@@ -47,18 +55,25 @@ public class UnitLevelUp : MonoBehaviour
                 
                 rend.sharedMaterial = material[1];
                 
-            {
+              
+                outerProng.SetActive(true);
+                centreProng.SetActive(false);
                 if (Kills >= 4)
                 {
                     currentKillState = KillState.LevelThree;
+                    
+               
                 }
-            }
+            
 
                 break;
             
             case KillState.LevelThree:
                 
                 rend.sharedMaterial = material[2];
+                
+                outerProng.SetActive(true);
+                centreProng.SetActive(true);
                 
                 break;
         }
