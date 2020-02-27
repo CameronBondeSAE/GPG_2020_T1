@@ -30,7 +30,7 @@ public class Health : MonoBehaviour
         if (CurrentHealth <= 0 && deathEvent != null)
         {
             deathEvent.Invoke(this);
-            deathStaticEvent.Invoke(this);
+            if (deathStaticEvent != null) deathStaticEvent.Invoke(this);
         }
     }
     
