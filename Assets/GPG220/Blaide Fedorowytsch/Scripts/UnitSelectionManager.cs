@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using GPG220.Blaide_Fedorowytsch.Scripts.Interfaces;
 using Sirenix.OdinInspector;
+using Sirenix.Utilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
@@ -22,6 +23,9 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         public InputAction actionKey;
         public InputAction cursorMove;
 
+        public bool hadFocusLastFrame;
+        public bool windowHasFocus;
+        
         public Vector2 cursorPoint;
         public Vector3 targetPoint;
         public GameObject targetObject;
@@ -59,6 +63,11 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 
         }
 
+        private void OnApplicationFocus(bool hasFocus)
+        {
+            windowHasFocus = hasFocus;
+        }
+
         private void OnEnable()
         {
             selectKeyPressed.Enable();
@@ -89,13 +98,13 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         {
             //cursorOverUI = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject != null;
             cursorOverUI = UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
-
+            hadFocusLastFrame = windowHasFocus;
         }
 
         void SelectKeyPressed(InputAction.CallbackContext ctx)
         {
             //Check for UI element at this cursorPosition;
-            if (cursorOverUI)
+            if (cursorOverUI || !hadFocusLastFrame )
             {
             }
             else
@@ -230,8 +239,11 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         void CursorMove(InputAction.CallbackContext ctx)
         {
             cursorPoint = ctx.ReadValue<Vector2>();
+
+            cursorPoint = cursorPoint.Clamp(Vector2.zero, new Vector2(mainCam.scaledPixelWidth, mainCam.scaledPixelHeight));
+            
             RaycastHit hit;
-            Ray ray = mainCam.ScreenPointToRay(ctx.ReadValue<Vector2>());
+            Ray ray = mainCam.ScreenPointToRay(cursorPoint);
 
             if (Physics.Raycast(ray, out hit,1000,worldLayerMask,QueryTriggerInteraction.Ignore))
             {
@@ -253,6 +265,10 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                 AdjustTriggerBox();
             }
         }
-    
+
+        private void OnDrawGizmos()
+        {
+           // Gizmos.DrawSphere(targetPoint, 1);
+        }
     }
 }
