@@ -9,6 +9,8 @@ TagManager:
   - Building
   - Tornado
   - Pullable
+  - Ground
+  - Game Manager
   layers:
   - Default
   - TransparentFX

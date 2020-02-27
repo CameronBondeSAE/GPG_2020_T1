@@ -15,23 +15,23 @@ public class TeleportEditor : UnitBase
     public int damage;
 
     private Rigidbody rb;
-    public GameObject floatingTextPrefab;
+    public string popup;
+    
 
 
     public override void OnSelected()
     {
         base.OnSelected();
         Debug.Log("Selected!");
-        
-        if(floatingTextPrefab)
-        {
-            ShowFloatingText();
-        }
+
+        PopUpText popUpText = GameObject.FindGameObjectWithTag("Game Manager").GetComponent<PopUpText>();
+        popUpText.PopUp(popup);
     }
 
     public override void OnDeSelected()
     {
         base.OnDeSelected();
+        
     }
 
     public override void OnExecuteAction(Vector3 worldPosition, GameObject g)
@@ -42,9 +42,8 @@ public class TeleportEditor : UnitBase
         {
             currentTarget = g.transform;
         }
-   
-        
-        
+
+       
         Teleporting();
     }
 
@@ -63,10 +62,7 @@ public class TeleportEditor : UnitBase
    }
 
    //shows text for character description
-   public void ShowFloatingText()
-   {
-       Instantiate(floatingTextPrefab, transform.position, Quaternion.identity);
-   }
+  
 
    private void OnCollisionEnter(Collision other)
    {

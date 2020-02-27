@@ -33,4 +33,5 @@ public class Health : MonoBehaviour
             deathStaticEvent.Invoke();
         }
     }
+    
 }
