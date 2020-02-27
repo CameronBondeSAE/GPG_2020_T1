@@ -48,7 +48,9 @@ public class PauseMenu : MonoBehaviour
         Debug.Log("Exiting Game");
         PlayMenuUI.PlayMenuUI.SetActive(true);
         PauseMenuUI.SetActive(false);
-        
+        Application.LoadLevel(Application.loadedLevel);
+        IsPaused = false;
+
     }
 
 }
