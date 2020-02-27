@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
         GetComponent<Health>().deathEvent += Death;
     }
 
-    public void Death()
+    public void Death(Health health)
     {
         Instantiate(blood, transform.position, Quaternion.identity);
         Destroy(gameObject);

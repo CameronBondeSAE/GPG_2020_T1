@@ -56,7 +56,7 @@ public class TeleportEditor : UnitBase
        Initialize();
    }
 
-   public void Death()
+   public void Death(Health health1)
    {
        Destroy(gameObject);
    }
