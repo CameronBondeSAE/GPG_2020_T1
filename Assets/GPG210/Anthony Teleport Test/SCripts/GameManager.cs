@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
    public List<UnitBase> playerUnitBases = new List<UnitBase>();
 
    public event Action gameOverEvent;
+   public PlayMenu playMenu;
+   
    
 
    private void Start()
@@ -19,6 +21,12 @@ public class GameManager : MonoBehaviour
        UnitBase.SpawnStaticEvent += UnitBaseOnSpawnStaticEvent;
        UnitBase.DespawnStaticEvent += UnitBaseOnDespawnStaticEvent;
        Health.deathStaticEvent += HealthOndeathStaticEvent;
+       playMenu.playEvent += PlayMenuOnplayEvent;
+   }
+
+   private void PlayMenuOnplayEvent()
+   {
+      PlayMenuOnplayEvent();
    }
 
    private void HealthOndeathStaticEvent()
