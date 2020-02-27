@@ -120,6 +120,31 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &453582845 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1467525419389158911, guid: 298228f203107444691db63a0ad56f1a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1467525417988085002}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &453582847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 453582845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fa795535ee896a498fd7570f42e6c6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayMenuUI: {fileID: 722276430}
+--- !u!1 &722276430 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1467525418692213408, guid: 298228f203107444691db63a0ad56f1a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1467525417988085002}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1467525417988085002
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -192,35 +217,45 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1467525418194576299, guid: 298228f203107444691db63a0ad56f1a,
+    - target: {fileID: 1467525418692213408, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: m_Name
+      value: PlayUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 1467525418692213414, guid: 298228f203107444691db63a0ad56f1a,
         type: 3}
       propertyPath: m_Color.r
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1467525418194576299, guid: 298228f203107444691db63a0ad56f1a,
+    - target: {fileID: 1467525418692213414, guid: 298228f203107444691db63a0ad56f1a,
         type: 3}
       propertyPath: m_Color.g
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1467525418194576299, guid: 298228f203107444691db63a0ad56f1a,
+    - target: {fileID: 1467525418692213414, guid: 298228f203107444691db63a0ad56f1a,
         type: 3}
       propertyPath: m_Color.b
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1467525417439534438, guid: 298228f203107444691db63a0ad56f1a,
+    - target: {fileID: 1467525418692213414, guid: 298228f203107444691db63a0ad56f1a,
         type: 3}
-      propertyPath: m_Color.r
-      value: 1
+      propertyPath: m_Color.a
+      value: 0.15294118
       objectReference: {fileID: 0}
-    - target: {fileID: 1467525417439534438, guid: 298228f203107444691db63a0ad56f1a,
+    - target: {fileID: 1467525418668814692, guid: 298228f203107444691db63a0ad56f1a,
         type: 3}
-      propertyPath: m_Color.g
-      value: 1
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 453582847}
+    - target: {fileID: 1467525418668814692, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Play
       objectReference: {fileID: 0}
-    - target: {fileID: 1467525417439534438, guid: 298228f203107444691db63a0ad56f1a,
+    - target: {fileID: 1467525418668814692, guid: 298228f203107444691db63a0ad56f1a,
         type: 3}
-      propertyPath: m_Color.b
-      value: 1
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 298228f203107444691db63a0ad56f1a, type: 3}
