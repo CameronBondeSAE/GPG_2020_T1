@@ -24,10 +24,21 @@ public class PlayMenu : MonoBehaviour
     public void Play()
     {
        PlayMenuUI.SetActive(false);
-       SetupMenuUI.SetUpMenuUI.SetActive(true);
        playEvent.Invoke();
        
     }
+
+    public void Options()
+    {
+        
+    }
+
+    public void Setup()
+    {
+        SetupMenuUI.SetUpMenuUI.SetActive(true);
+        PlayMenuUI.SetActive(false);
+    }
+    
 
     public void Exit()
     {
