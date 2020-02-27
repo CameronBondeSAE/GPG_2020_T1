@@ -9,8 +9,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 {
     public class UnitSpawner : MonoBehaviour
     {
-        public Vector3 position;
-        public Vector3 boundryCentre;
+        Vector3 position;
         public Vector3 boundrySize;
         public List<UnitBase> unitBases;
         public GameManager gameManager;
@@ -23,13 +22,11 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         {
             gameManager = FindObjectOfType<GameManager>();
             gameManager.startGameEvent += RandomSpawns;
-
         }
 
         public void SpawnUnit(UnitBase unit, Vector3 position,Quaternion rotation)
         {
             Instantiate(unit.gameObject, position, rotation);
-            
         }
         
         [Button (Name = "RandomSpawn")]
@@ -53,13 +50,13 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         {
             bool clear = false;
             int attempts = 0; 
-            Vector3 p = boundryCentre;
+            Vector3 p = transform.position;
             while (!clear && attempts <= 30 )
             {
                 attempts++;
                 float x = Random.Range(-boundrySize.x, boundrySize.x);
                 float z = Random.Range(-boundrySize.z, boundrySize.z);
-                Vector3 o = boundryCentre + new Vector3(x,boundrySize.y,z);
+                Vector3 o = transform.position + new Vector3(x,boundrySize.y,z);
                 Ray ray = new Ray(o,Vector3.down);
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit,boundrySize.y*3,SpawnableSurfaces,QueryTriggerInteraction.Ignore))
@@ -76,7 +73,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 
         private void OnDrawGizmos()
         {
-            Gizmos.DrawWireCube(boundryCentre,boundrySize);
+            Gizmos.DrawWireCube(transform.position,boundrySize);
             
         }
     }
