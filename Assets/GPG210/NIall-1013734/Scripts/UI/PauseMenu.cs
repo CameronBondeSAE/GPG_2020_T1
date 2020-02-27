@@ -9,7 +9,7 @@ public class PauseMenu : MonoBehaviour
     public static bool IsPaused = false;
 
     public GameObject PauseMenuUI;
-    public PlayMenu PlaymenuUI;
+    public PlayMenu PlayMenuUI;
     
     
     
@@ -43,15 +43,14 @@ public class PauseMenu : MonoBehaviour
         IsPaused = true;
     }
 
-    public void LoadMenu()
-    {
-        Debug.Log("Loading Menu");
-    }
-
-    public void ExitGame()
+   public void ExitGame()
     {
         Debug.Log("Exiting Game");
-        PlaymenuUI.PlayMenuUI.SetActive(true);
+        PlayMenuUI.PlayMenuUI.SetActive(true);
+        PauseMenuUI.SetActive(false);
+        Application.LoadLevel(Application.loadedLevel);
+        IsPaused = false;
+
     }
 
 }
