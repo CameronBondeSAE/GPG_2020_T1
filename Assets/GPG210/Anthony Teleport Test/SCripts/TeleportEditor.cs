@@ -15,13 +15,18 @@ public class TeleportEditor : UnitBase
     public int damage;
 
     private Rigidbody rb;
-    public GameObject showFloatingText;
+    public GameObject floatingTextPrefab;
 
 
     public override void OnSelected()
     {
         base.OnSelected();
         Debug.Log("Selected!");
+        
+        if(floatingTextPrefab)
+        {
+            ShowFloatingText();
+        }
     }
 
     public override void OnDeSelected()
@@ -37,8 +42,8 @@ public class TeleportEditor : UnitBase
         {
             currentTarget = g.transform;
         }
-
-        showFloatingText();
+   
+        
         
         Teleporting();
     }
@@ -49,6 +54,7 @@ public class TeleportEditor : UnitBase
    void Start()
    {
        GetComponent<Health>().deathEvent += Death;
+       Initialize();
    }
 
    public void Death()
@@ -59,7 +65,7 @@ public class TeleportEditor : UnitBase
    //shows text for character description
    public void ShowFloatingText()
    {
-       
+       Instantiate(floatingTextPrefab, transform.position, Quaternion.identity);
    }
 
    private void OnCollisionEnter(Collision other)
