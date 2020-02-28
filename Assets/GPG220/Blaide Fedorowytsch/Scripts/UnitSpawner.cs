@@ -29,7 +29,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             Instantiate(unit.gameObject, position, rotation);
         }
         
-        [Button (Name = "RandomSpawn")]
+        //[Button (Name = "RandomSpawn" )]
         public void RandomSpawns()
         {
             for (int i = 0; i < spawnNumber; i++)

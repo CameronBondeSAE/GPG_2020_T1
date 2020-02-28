@@ -197,18 +197,28 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         {
             if (other.GetComponent<ISelectable>() != null && selectKeyDown)
             {
+                
                 ISelectable i = other.GetComponent<ISelectable>();
-                if (i.Selectable() &&  !iSelectablesInSelection.Contains(i))
-                {
-                    iSelectablesInSelection.Add(other.gameObject.GetComponent<ISelectable>());
-                }
                 
-                
+                 
                 if(((MonoBehaviour)i).gameObject.GetComponent<Health>() != null)
                 {
                         
                     Health health = ((MonoBehaviour)i).gameObject.GetComponent<Health>();
                     health.deathEvent += IselectableDeadOrDestroyed;
+                }
+                
+                if (i.Selectable() &&  !iSelectablesInSelection.Contains(i))
+                {
+                    iSelectablesInSelection.Add(other.gameObject.GetComponent<ISelectable>());
+                }
+            }
+
+            for (int i = 0; i < iSelectablesInSelection.Count; i++)
+            {
+                if (iSelectablesInSelection[i] == null)
+                {
+                    iSelectablesInSelection.RemoveAt(i);
                 }
             }
         }
