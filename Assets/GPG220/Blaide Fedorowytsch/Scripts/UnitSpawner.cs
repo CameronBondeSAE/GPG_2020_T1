@@ -36,36 +36,52 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             {
                 int randIndex = Random.Range(0,unitBases.Count);
 
-                position = RandomPointInBounds(unitExtents(unitBases[randIndex]));
+                position = RandomGroundPointInBounds(unitExtents(unitBases[randIndex]));
                 SpawnUnit( unitBases[randIndex], position, Quaternion.Euler(Vector3.forward));
             }
         }
 
         public Vector3 unitExtents(UnitBase unit)
         {
-            return unit.GetComponent<Collider>().bounds.extents;
+            //TODO Figure out a nicer collision check.
+           // return unit.gameObject.GetComponent<Collider>().bounds.extents; // this always returns vector3.zero
+           return unit.gameObject.GetComponent<Renderer>().bounds.extents; // Not ideal as the physical collider could easily be different to the renderer Bounds... 
+           
         }
 
-        public Vector3 RandomPointInBounds(Vector3 Extents)
+        public Vector3 RandomGroundPointInBounds(Vector3 Extents)
         {
             bool clear = false;
             int attempts = 0; 
             Vector3 p = transform.position;
+            
+            Bounds spawnBounds = new Bounds(transform.position,boundrySize);
             while (!clear && attempts <= 30 )
             {
                 attempts++;
-                float x = Random.Range(-boundrySize.x, boundrySize.x);
-                float z = Random.Range(-boundrySize.z, boundrySize.z);
-                Vector3 o = transform.position + new Vector3(x,boundrySize.y,z);
+                float randX = Random.Range(spawnBounds.min.x, spawnBounds.max.x);
+                float randZ = Random.Range(spawnBounds.min.z, spawnBounds.max.z);
+                Vector3 o = new Vector3(randX,spawnBounds.max.y,randZ);
                 Ray ray = new Ray(o,Vector3.down);
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit,boundrySize.y*3,SpawnableSurfaces,QueryTriggerInteraction.Ignore))
                 {
-                    //if (Physics.CheckBox(hit.point + new Vector3(0, + 30, 0),Extents/2))
-                   // {
-                        p = hit.point +  new Vector3(0, 10, 0);
-                        clear = true;
-                  //  }
+                    Vector3 offsetPosition = hit.point + new Vector3(0,+Extents.y,0);
+                    Bounds prespawnCheckBounds = new Bounds( offsetPosition,Extents);
+
+
+                    while (prespawnCheckBounds.Contains(hit.point))
+                    {
+                        offsetPosition += Vector3.up *0.1f; 
+                        prespawnCheckBounds.center = offsetPosition;
+                    }
+
+                    if (!Physics.CheckBox(prespawnCheckBounds.center, prespawnCheckBounds.extents))
+                    {
+                        p = offsetPosition;
+                        clear = true;  
+                    }
+
                 }
             }
             return p;

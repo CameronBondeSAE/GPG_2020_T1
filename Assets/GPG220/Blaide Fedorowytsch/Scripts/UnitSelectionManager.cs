@@ -16,7 +16,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
     public class UnitSelectionManager : SerializedMonoBehaviour
     {
         private Camera mainCam;
-    
+        public GameObject mouseFollowerObject;
         public InputAction selectKeyPressed;
         public InputAction selectKeyReleased;
         public bool selectKeyDown;
@@ -96,15 +96,14 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         // Update is called once per frame
         void Update()
         {
-            //cursorOverUI = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject != null;
-            cursorOverUI = false;//= UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
+            cursorOverUI =  UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
             hadFocusLastFrame = windowHasFocus;
         }
 
         void SelectKeyPressed(InputAction.CallbackContext ctx)
         {
             //Check for UI element at this cursorPosition;
-            if (cursorOverUI )//|| !hadFocusLastFrame )
+            if (cursorOverUI|| !hadFocusLastFrame )
             {
             }
             else
@@ -120,6 +119,14 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                 selectedIselectables.Clear();
             }
         }
+
+        void IselectableDeadOrDestroyed( Health h)
+        {
+            ISelectable i = h.GetComponent<ISelectable>();
+                
+            selectedIselectables.Remove(i);
+            iSelectablesInSelection.Remove(i);
+;        }
 
         void SelectKeyReleased(InputAction.CallbackContext ctx)
         {
@@ -138,7 +145,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                         {
                             ISelectable s = targetObject.GetComponent<ISelectable>();
                             s.OnSelected();
-                            ApplyOutlineToObject(((MonoBehaviour) s).gameObject);
+                            ApplyOutlineToObject(((MonoBehaviour)s).gameObject);
                             selectedIselectables.Add(s);
                         }
                     }
@@ -155,7 +162,20 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                         selectedIselectables.Add(s);
                     }
                 }
+
+                foreach (ISelectable s in selectedIselectables)
+                {
+                    if(((MonoBehaviour)s).gameObject.GetComponent<Health>() != null)
+                    {
+                        
+                        Health health = ((MonoBehaviour)s).gameObject.GetComponent<Health>();
+                        health.deathEvent += IselectableDeadOrDestroyed;
+                    }
+                }
             }
+            
+            boxCollider.center = new Vector3(0,100000,0);
+            boxCollider.size = Vector3.zero;
         }
 
         void DrawRectangle()
@@ -181,6 +201,14 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                 if (i.Selectable() &&  !iSelectablesInSelection.Contains(i))
                 {
                     iSelectablesInSelection.Add(other.gameObject.GetComponent<ISelectable>());
+                }
+                
+                
+                if(((MonoBehaviour)i).gameObject.GetComponent<Health>() != null)
+                {
+                        
+                    Health health = ((MonoBehaviour)i).gameObject.GetComponent<Health>();
+                    health.deathEvent += IselectableDeadOrDestroyed;
                 }
             }
         }
@@ -248,6 +276,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             if (Physics.Raycast(ray, out hit,1000,worldLayerMask,QueryTriggerInteraction.Ignore))
             {
                 targetPoint = hit.point;
+                mouseFollowerObject.transform.position = targetPoint;
             }
 
             if (Physics.Raycast(ray, out hit, 1000, unitLayerMask, QueryTriggerInteraction.Ignore))
@@ -264,6 +293,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                 DrawRectangle();
                 AdjustTriggerBox();
             }
+            
         }
 
         private void OnDrawGizmos()
