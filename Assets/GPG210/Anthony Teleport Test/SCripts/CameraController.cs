@@ -1,4 +1,5 @@
 ﻿
+using System;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -11,27 +12,41 @@ public class CameraController : MonoBehaviour
     public float minY = 20f;
     public float maxY = 120f;
 
+    public GameManager gameManager;
+
+    void Start()
+    {
+        gameManager = FindObjectOfType<GameManager>();
+        gameManager.startGameEvent += CameraMovement;
+
+    }
+
     // Update is called once per frame
     void Update()
     {
+       CameraMovement();
+    }
+
+    void CameraMovement()
+    {
         Vector3 pos = transform.position;
         
-        if (Input.GetKey("w") || Input.mousePosition.y >= Screen.height - panBorderThickness) //panning up
+        if (Input.GetKey("w"))// || Input.mousePosition.y >= Screen.height - panBorderThickness) //panning up
         {
             pos.z += panSpeed * Time.deltaTime;
         }
 
-        if (Input.GetKey("s") || Input.mousePosition.y <= panBorderThickness) //panning down
+        if (Input.GetKey("s"))// || Input.mousePosition.y <= panBorderThickness) //panning down
         {
             pos.z -= panSpeed * Time.deltaTime; 
         }
         
-        if (Input.GetKey("d") || Input.mousePosition.x >=Screen.width - panBorderThickness) //panning right
+        if (Input.GetKey("d"))// || Input.mousePosition.x >=Screen.width - panBorderThickness) //panning right
         {
             pos.x += panSpeed * Time.deltaTime; 
         }
        
-        if (Input.GetKey("a") || Input.mousePosition.x <= panBorderThickness) //panning left
+        if (Input.GetKey("a"))// || Input.mousePosition.x <= panBorderThickness) //panning left
         {
             pos.x -= panSpeed * Time.deltaTime; 
         }
