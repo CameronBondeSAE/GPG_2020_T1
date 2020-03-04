@@ -13,12 +13,12 @@ public class TestGlobalStatics : SerializedMonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        Health.deathStaticEvent += OndeathStaticEvent;
+        Health.deathStaticEvent += OnDeathStaticEvent;
     }
 
-    private void OndeathStaticEvent(int i, GameObject o, Health arg3)
+    private void OnDeathStaticEvent(Health health)
     {
-        Debug.Log(i);
+        // Debug.Log(i);
     }
 
 
