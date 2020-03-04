@@ -14,6 +14,9 @@ GameObject:
   - component: {fileID: 146123023775967663}
   - component: {fileID: 8471641904857410152}
   - component: {fileID: 4069609011016073252}
+  - component: {fileID: 8631953537707219309}
+  - component: {fileID: 3716184969492281802}
+  - component: {fileID: 8701368955511257789}
   - component: {fileID: 1072271919620222198}
   - component: {fileID: -3977877765726984574}
   m_Layer: 0
@@ -137,6 +140,77 @@ MonoBehaviour:
   target: {x: 0, y: 0, z: 0}
   HeightOffset: 0.5
   usm: {fileID: 0}
+--- !u!114 &8631953537707219309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3773638092200980733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34aefdaaccff11643b2142106719ca64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: abilities
+      Entry: 6
+      Data: 
+  autoLoadAbilities: 1
+  defaultAbilityIndex: 0
+--- !u!114 &3716184969492281802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3773638092200980733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ec0d918dabd23e4fa0d5b78a92c859e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityName: 
+  abilityDescription: 
+  abilityImg: {fileID: 0}
+  cooldown: 0
+  currentCooldown: 0
+  moving: 0
+  usm: {fileID: 0}
+  collider: {fileID: 0}
+--- !u!114 &8701368955511257789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3773638092200980733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5917e1035fc94e12baaf7fc840123c02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityName: 
+  abilityDescription: 
+  abilityImg: {fileID: 0}
+  cooldown: 0
+  currentCooldown: 0
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  range: 10
+  sphereCastRadius: 2
+  healthAmount: 0
+  targetParticleEffect: {fileID: 0}
+  testExecutor: {fileID: 0}
 --- !u!114 &1072271919620222198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,7 +225,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneId: 0
   serverOnly: 0
-  m_AssetId: 
+  m_AssetId: 29860fa07d47c7e45b170f367357314a
 --- !u!114 &-3977877765726984574
 MonoBehaviour:
   m_ObjectHideFlags: 0

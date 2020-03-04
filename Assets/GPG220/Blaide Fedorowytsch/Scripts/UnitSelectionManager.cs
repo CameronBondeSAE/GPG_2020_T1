@@ -16,7 +16,9 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
     public class UnitSelectionManager : SerializedMonoBehaviour
     {
         private Camera mainCam;
+        
         public GameObject mouseFollowerObject;
+        
         public InputAction selectKeyPressed;
         public InputAction selectKeyReleased;
         public bool selectKeyDown;
@@ -27,8 +29,10 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         public bool windowHasFocus;
         
         public Vector2 cursorPoint;
-        public Vector3 targetPoint;
-        public GameObject targetObject;
+        public Vector3 targetPoint; 
+        
+        public GameObject targetObject; 
+
         public Vector3[] selectionRect;
         public float minimumSelectionSize = 0.1f;
         public bool cursorOverUI;
