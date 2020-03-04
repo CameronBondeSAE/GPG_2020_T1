@@ -22,9 +22,15 @@ public class StatemachMinion : UnitBase
     {
         Idle,
         Moving,
-        Attacking,
         Dead
     }
+
+  //  public enum States 
+  //  {
+        
+  //      Attacking,
+  //      NotAttacking
+  //  }
 
     public States currentState;
 
@@ -92,10 +98,6 @@ public class StatemachMinion : UnitBase
 
                 // transform.Translate(Vector3.forward * UnitSpeed);
 
-                break;
-
-            case States.Attacking:
-                //   print("Unit is Attacking");
                 break;
             case States.Dead:
                 // Destroys unit if State is set to Dead.
