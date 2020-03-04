@@ -90,12 +90,5 @@ public class TeleportEditor : UnitBase
         player.SetActive(true);
     }
 
-    /* void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            PopUpText popUpText = GameObject.FindGameObjectWithTag("Game Manager").GetComponent<PopUpText>();
-        popUpText.PopUp(popup);
-        }
-    }*/
+    
 }
