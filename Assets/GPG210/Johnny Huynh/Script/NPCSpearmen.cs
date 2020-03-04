@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
-using GPG220.Blaide_Fedorowytsch.Scripts;
-using UnityEditor.Experimental.TerrainAPI;
+﻿using GPG220.Blaide_Fedorowytsch.Scripts;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
