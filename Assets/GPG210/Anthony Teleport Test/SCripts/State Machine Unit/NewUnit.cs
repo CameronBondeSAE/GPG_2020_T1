@@ -14,7 +14,7 @@ public class NewUnit : UnitBase
 
     public StateBase idleState;
     public StateBase walkingState;
-    public StateBase attackingBase;
+    public StateBase attackingState;
     
     void Update()
     {
@@ -23,7 +23,7 @@ public class NewUnit : UnitBase
         if (Input.GetKeyDown(KeyCode.Space))
         {
             // HACK: Hard ref
-             currentState = idleState;
+             currentState = attackingState;
         }
     }
 
