@@ -3,17 +3,22 @@ using System.Collections.Generic;
 using AnthonyY;
 using UnityEngine;
 
-public class IdleState : StateBase
+namespace AnthonyY
 {
-    // Start is called before the first frame update
-    void Start()
+    public class IdleState : StateBase
     {
+        // Start is called before the first frame update
+        void Start()
+        {
         
-    }
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
+        // Update is called once per frame
+        void Update()
+        {
         
+        }
     }
 }
+
+
