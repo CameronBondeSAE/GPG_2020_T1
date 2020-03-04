@@ -2,20 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeadState : LRStateBase
+namespace LRStates
 {
-    private void OnEnable()
+    public class DeadState : LRStateBase
     {
-        
-    }
+        private void OnEnable()
+        {
 
-    public void Update()
-    {
-        
-    }
+        }
 
-    private void OnDisable()
-    {
-        
+        public void Update()
+        {
+
+        }
+
+        private void OnDisable()
+        {
+
+        }
     }
 }

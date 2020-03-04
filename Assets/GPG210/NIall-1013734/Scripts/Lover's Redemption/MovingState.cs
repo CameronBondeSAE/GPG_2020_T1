@@ -3,22 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovingState : LRStateBase
+namespace LRStates
 {
-    
-    
-    private void OnEnable()
+    public class MovingState : LRStateBase
     {
-        
-    }
 
-    public void Update()
-    {
-        
-    }
 
-    private void OnDisable()
-    {
-        
+        private void OnEnable()
+        {
+
+        }
+
+        public void Update()
+        {
+
+        }
+
+        private void OnDisable()
+        {
+
+        }
     }
 }
