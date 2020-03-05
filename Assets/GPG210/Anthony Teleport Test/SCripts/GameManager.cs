@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using GPG220.Blaide_Fedorowytsch.Scripts;
 using GPG220.Luca.Scripts.Unit;
 using Mirror;
@@ -75,6 +76,8 @@ public event Action gameOverEvent;
        // TODO Define Enemies and Players
       globalUnitBases.Add(obj);
       obj.GetComponent<Health>().deathEvent+= HealthOndeathStaticEvent;
+     // obj.GetComponent<SpawnPoint>[Random.Range(listOfSpawns)]();
+      
    }
 
    

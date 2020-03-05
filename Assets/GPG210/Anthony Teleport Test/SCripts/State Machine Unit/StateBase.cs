@@ -13,7 +13,7 @@ namespace AnthonyY
 
         public virtual void Execute()
         {
-      
+            Debug.Log("Base Executed!");
         }
 
         public virtual void Exit()

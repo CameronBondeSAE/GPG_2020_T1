@@ -10,8 +10,6 @@ namespace AnthonyY
     {
         public Rigidbody rb;
 
-       
-
         void Start()
         {
             rb = GetComponent<Rigidbody>();
@@ -19,12 +17,17 @@ namespace AnthonyY
         }
 
         // Update is called once per frame
-        void Update()
+        public override void Execute()
         {
+            base.Execute();
             transform.Translate(Vector3.forward * Time.deltaTime);
             rb.constraints = RigidbodyConstraints.FreezePositionY;
-
         }
+
+       
+
+        
+       
     }
 
 }
