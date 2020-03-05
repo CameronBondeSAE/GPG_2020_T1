@@ -4,10 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using GPG220.Blaide_Fedorowytsch.Scripts;
 using GPG220.Luca.Scripts.Unit;
+using Mirror;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using Random = System.Random;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -15,9 +18,9 @@ public class GameManager : MonoBehaviour
    public List<UnitBase> playerUnitBases = new List<UnitBase>();
   public List<SpawnPoint> listOfSpawns = new List<SpawnPoint>();
 
-   
+  private RTSNetworkManager networkManager;
 
-   public event Action gameOverEvent;
+public event Action gameOverEvent;
    public event Action startGameEvent;
 
    public PlayMenu playMenu;
@@ -30,7 +33,9 @@ public class GameManager : MonoBehaviour
        UnitBase.SpawnStaticEvent += UnitBaseOnSpawnStaticEvent;
        //UnitBase.DespawnStaticEvent += UnitBaseOnDespawnStaticEvent;
        playMenu.playEvent += PlayMenuOnplayEvent;
-      
+       
+
+
    }
 
    private void PlayMenuOnplayEvent()
@@ -42,6 +47,7 @@ public class GameManager : MonoBehaviour
 
 
    }
+   
 
    private void HealthOndeathStaticEvent(Health health)
    {
@@ -63,6 +69,8 @@ public class GameManager : MonoBehaviour
        obj.GetComponent<Health>().deathEvent+= HealthOndeathStaticEvent;
    
        listOfSpawns = FindObjectsOfType<SpawnPoint>().ToList();
+      
+       
 
    }
 
