@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using GPG220.Blaide_Fedorowytsch.Scripts.Interfaces;
+using GPG220.Luca.Scripts.Unit;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEngine;
@@ -56,6 +57,9 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         private LayerMask worldLayerMask;
         [SerializeField]
         private LayerMask unitLayerMask;
+
+        private GameManager gameManager;
+        private RTSNetworkManager rtsNetworkManager;
 
         /// <summary>
         /// Called every time a selection is made.
@@ -122,6 +126,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             lineRenderer = GetComponent<LineRenderer>();
             selectionRect = new Vector3[4];
             boxCollider = GetComponent<BoxCollider>();
+            gameManager = FindObjectOfType<GameManager>();
+            rtsNetworkManager = FindObjectOfType<RTSNetworkManager>();
         }
 
         // Update is called once per frame
@@ -157,6 +163,22 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             
 ;        }
 
+        PlayerBase FindLocalPlayer()
+        {
+            PlayerBase retPlayerBase = null;
+            if (gameManager != null)
+            { retPlayerBase = gameManager.listofPlayerBases[1];
+                foreach (PlayerBase pbs in gameManager.listofPlayerBases )
+                {
+                    if (pbs.isLocalPlayer)
+                    {
+                        retPlayerBase = pbs;
+                    }
+                }
+            }
+            return retPlayerBase;
+        }
+
         void SelectKeyReleased(InputAction.CallbackContext ctx)
         {
             if (selectKeyDown)
@@ -170,12 +192,17 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                 {
                     if (targetObject != null)
                     {
-                        if (targetObject.GetComponent<ISelectable>() != null)
+                        if (targetObject.GetComponent<ISelectable>() != null )
                         {
                             ISelectable s = targetObject.GetComponent<ISelectable>();
-                            s.OnSelected();
-                            ApplyOutlineToObject(((MonoBehaviour)s).gameObject);
-                            selectedIselectables.Add(s);
+
+                            if (((UnitBase) s).netId == FindLocalPlayer().netId )
+                            {
+                                s.OnSelected();
+                                ApplyOutlineToObject(((MonoBehaviour)s).gameObject);
+                                selectedIselectables.Add(s);
+                            }
+
                         }
                     }
                 }
@@ -186,9 +213,12 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                     lineRenderer.SetPositions(new Vector3[4] {Vector3.zero, Vector3.zero, Vector3.zero, Vector3.zero});
                     foreach (ISelectable s in iSelectablesInSelection)
                     {
-                        s.OnSelected();
-                        ApplyOutlineToObject(((MonoBehaviour) s).gameObject);
-                        selectedIselectables.Add(s);
+                        if (((UnitBase) s).netId == FindLocalPlayer().netId)
+                        {
+                            s.OnSelected();
+                            ApplyOutlineToObject(((MonoBehaviour) s).gameObject);
+                            selectedIselectables.Add(s);
+                        }
                     }
                 }
 
