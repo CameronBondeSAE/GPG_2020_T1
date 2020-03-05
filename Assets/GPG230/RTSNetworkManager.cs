@@ -9,8 +9,7 @@ public class RTSNetworkManager : NetworkManager
 {
 
     public event Action <NetworkConnection> OnClientConnectedEvent;
-
-    public PlayerBase Player;
+    
     
     // Start is called before the first frame update
     void Start()
@@ -30,7 +29,7 @@ public class RTSNetworkManager : NetworkManager
     {
         base.OnClientConnect(conn);
         
-        OnClientConnectedEvent.Invoke(conn);
+        OnClientConnectedEvent?.Invoke(conn);
         
     }
 

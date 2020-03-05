@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 933689560544922516}
   - component: {fileID: 933689560544922517}
   - component: {fileID: 933689560544922523}
+  - component: {fileID: -541796320783626495}
   m_Layer: 0
   m_Name: RTSNetworkManager
   m_TagString: Untagged
@@ -102,3 +103,18 @@ MonoBehaviour:
   NoDelay: 1
   serverMaxMessageSize: 16384
   clientMaxMessageSize: 16384
+--- !u!114 &-541796320783626495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 933689560544922518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6442dc8070ceb41f094e44de0bf87274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showGUI: 1
+  offsetX: 0
+  offsetY: 0

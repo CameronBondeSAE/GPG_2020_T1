@@ -26,6 +26,8 @@ namespace GPG220.Luca.Scripts.Unit
         public Rigidbody rb;
         public Health health;
         public AbilityController abilityController;
+
+        private uint netID;
         
 
         protected virtual void Initialize()
