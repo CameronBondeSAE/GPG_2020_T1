@@ -27,7 +27,9 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 
         public void SpawnUnit(UnitBase unit, Vector3 position,Quaternion rotation)
         {
-            Instantiate(unit.gameObject, position, rotation);
+            GameObject g = Instantiate(unit.gameObject, position, rotation);
+            g.GetComponent<UnitBase>().owner = owner;
+
         }
         
         //[Button (Name = "RandomSpawn" )]
