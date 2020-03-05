@@ -17,7 +17,9 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
     public class UnitSelectionManager : SerializedMonoBehaviour
     {
         private Camera mainCam;
-
+        [SerializeField]
+        private uint localnetID;
+        
         public InputAction selectKeyPressed;
         public InputAction selectKeyReleased;
         [SerializeField]
@@ -183,7 +185,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 
         uint GetOwnerID()
         {
-            return FindLocalPlayer().netId;
+            localnetID = FindLocalPlayer().netId;
+            return localnetID;
         }
         
 
