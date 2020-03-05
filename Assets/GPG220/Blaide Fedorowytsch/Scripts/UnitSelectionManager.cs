@@ -16,39 +16,63 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
     public class UnitSelectionManager : SerializedMonoBehaviour
     {
         private Camera mainCam;
-        
-        public GameObject mouseFollowerObject;
-        
+
         public InputAction selectKeyPressed;
         public InputAction selectKeyReleased;
-        public bool selectKeyDown;
+        [SerializeField]
+        private bool selectKeyDown;
         public InputAction actionKey;
         public InputAction cursorMove;
-
-        public bool hadFocusLastFrame;
-        public bool windowHasFocus;
         
+        private bool hadFocusLastFrame;
+        private bool windowHasFocus;
+        
+        /// <summary>
+        /// screenSpace Cursor location.
+        /// </summary>
         public Vector2 cursorPoint;
+        
+        /// <summary>
+        /// WorldSpace location the point on the ground that the mouse is over.
+        /// </summary>
         public Vector3 targetPoint; 
         
-        public GameObject targetObject; 
+        /// <summary>
+        /// The current object the mouse cursor is over.
+        /// </summary>
+        public GameObject targetObject;
+        private Vector3[] selectionRect;
+        [SerializeField]
+        private float minimumSelectionSize = 0.1f;
 
-        public Vector3[] selectionRect;
-        public float minimumSelectionSize = 0.1f;
-        public bool cursorOverUI;
-        
-    
-        private BoxCollider boxCollider;
+        private bool cursorOverUI;
+
+        public BoxCollider boxCollider;
+
         private LineRenderer lineRenderer;
-        public float heightOffset;
+        [SerializeField]
+        private float heightOffset;
+        [SerializeField]
+        private LayerMask worldLayerMask;
+        [SerializeField]
+        private LayerMask unitLayerMask;
 
-        public LayerMask worldLayerMask;
-        public LayerMask unitLayerMask;
-
-        public Action<List<ISelectable>> onSelection;
-        public Action<List<ISelectable>> onDeselection;
+        /// <summary>
+        /// Called every time a selection is made.
+        /// </summary>
+        [HideInInspector]
+        public Action<List<ISelectable>> onSelectionEvent;
         
+        /// <summary>
+        /// called every time any units are deselected, including when units die and leave the selection.
+        /// </summary>
+        [HideInInspector] 
+        public Action<List<ISelectable>> onDeselectionEvent;
         
+        /// <summary>
+        /// called when the mouse is over an Iselectable;
+        /// </summary>
+        [HideInInspector]
         public Action<ISelectable> mouseOverIselectable;
         
         [SerializeField]
@@ -60,7 +84,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         /// </summary>
         public List<ISelectable> selectedIselectables;
         
-        public Outline outline;
+        private Outline outline;
         // Start is called before the first frame update
         private void Awake()
         {
@@ -129,7 +153,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             iSelectablesInSelection.Remove(i);
             List<ISelectable> iList = new List<ISelectable>();
             iList.Add(i);
-            onDeselection.Invoke(iList);
+            onDeselectionEvent.Invoke(iList);
             
 ;        }
 
@@ -184,7 +208,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 
             if (selectedIselectables.Count > 0)
             {
-                onSelection.Invoke(selectedIselectables);
+                onSelectionEvent.Invoke(selectedIselectables);
             }
         }
 
@@ -256,7 +280,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 
             List<ISelectable> removedIselectables = selectedIselectables;
             selectedIselectables.Clear();
-            onDeselection.Invoke(removedIselectables);
+            onDeselectionEvent.Invoke(removedIselectables);
         }
 
         void ApplyOutlineToObject(GameObject selectedGameObject)
@@ -311,7 +335,6 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             if (Physics.Raycast(ray, out hit,1000,worldLayerMask,QueryTriggerInteraction.Ignore))
             {
                 targetPoint = hit.point;
-                mouseFollowerObject.transform.position = targetPoint;
             }
 
             if (Physics.Raycast(ray, out hit, 1000, unitLayerMask, QueryTriggerInteraction.Ignore))
