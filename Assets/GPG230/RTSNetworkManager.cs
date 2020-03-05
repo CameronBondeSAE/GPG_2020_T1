@@ -7,31 +7,20 @@ using UnityEngine;
 
 public class RTSNetworkManager : NetworkManager
 {
-
     public event Action <NetworkConnection> OnClientConnectedEvent;
-    
-    
-    // Start is called before the first frame update
-    void Start()
+
+    public void OnServerConnect(NetworkConnection conn)
     {
-        
+        base.OnServerConnect(conn);
         
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void OnServerAddPlayer(NetworkConnection conn)
     {
-        
-    }
-
-    public override void OnServerConnect(NetworkConnection conn)
-    {
-        base.OnClientConnect(conn);
+        base.OnServerAddPlayer(conn);
         
         OnClientConnectedEvent?.Invoke(conn);
         
     }
-
-
 }
