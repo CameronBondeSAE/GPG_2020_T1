@@ -15,9 +15,8 @@ using Random = System.Random;
 
 public class GameManager : MonoBehaviour
 {
-    public List<UnitBase> enemyUnitBases = new List<UnitBase>();
-   public List<UnitBase> playerUnitBases = new List<UnitBase>();
-  public List<SpawnPoint> listOfSpawns = new List<SpawnPoint>();
+    public List<UnitBase> globalUnitBases = new List<UnitBase>();
+    public List<SpawnPoint> listOfSpawns = new List<SpawnPoint>();
   public List<PlayerBase> listofPlayerBases = new List<PlayerBase>();
 
   public RTSNetworkManager networkManager;
@@ -67,24 +66,22 @@ public event Action gameOverEvent;
 
    private void UnitBaseOnDespawnStaticEvent(UnitBase obj)
    {
-       playerUnitBases.Remove(obj);
-       enemyUnitBases.Remove(obj);
-       listOfSpawns = FindObjectsOfType<SpawnPoint>().ToList();
+     globalUnitBases.Remove(obj);
+     listOfSpawns = FindObjectsOfType<SpawnPoint>().ToList();
    }
 
    private void UnitBaseOnSpawnStaticEvent(UnitBase obj)
    {
        // TODO Define Enemies and Players
-       playerUnitBases.Add(obj);
-       enemyUnitBases.Add(obj);
-       obj.GetComponent<Health>().deathEvent+= HealthOndeathStaticEvent;
+      globalUnitBases.Add(obj);
+      obj.GetComponent<Health>().deathEvent+= HealthOndeathStaticEvent;
    }
 
    
 
    public void CheckIfGameOver()
    {
-       if (playerUnitBases.Count == 0 || enemyUnitBases.Count == 0 && gameOverEvent != null)
+       if (globalUnitBases.Count == 0  && gameOverEvent != null)
        {
            gameOverEvent.Invoke();
        }
