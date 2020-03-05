@@ -9,32 +9,31 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 {
     public class UnitSpawner : MonoBehaviour
     {
-        Vector3 position;
+        
         public Vector3 boundrySize;
         public List<UnitBase> unitBases;
         public GameManager gameManager;
         public int spawnNumber = 60;
         public PlayerBase owner;
-
         public LayerMask SpawnableSurfaces;
 
         // Start is called before the first frame update
         void Start()
         {
             gameManager = FindObjectOfType<GameManager>();
-            gameManager.startGameEvent += RandomSpawns;
+            if (gameManager != null) gameManager.startGameEvent += RandomSpawns;
         }
 
         public void SpawnUnit(UnitBase unit, Vector3 position,Quaternion rotation)
         {
             GameObject g = Instantiate(unit.gameObject, position, rotation);
             g.GetComponent<UnitBase>().owner = owner;
-
         }
         
         //[Button (Name = "RandomSpawn" )]
         public void RandomSpawns()
         {
+            Vector3 position;
             for (int i = 0; i < spawnNumber; i++)
             {
                 int randIndex = Random.Range(0,unitBases.Count);
