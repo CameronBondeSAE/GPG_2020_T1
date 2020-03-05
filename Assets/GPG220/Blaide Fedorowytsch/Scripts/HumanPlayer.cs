@@ -2,12 +2,13 @@
 
 namespace GPG220.Blaide_Fedorowytsch.Scripts
 {
-    public class LocalPlayer : PlayerBase
+    public class HumanPlayer : PlayerBase
     {
         public UnitSpawner unitSpawner;
         
         // HACK
         public uint netIdMine;
+        public bool isLocalPlayerMine;
         
         // Start is called before the first frame update
         public override void BuildUnits()
@@ -24,6 +25,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         // HACK
         private void Update()
         {
+            isLocalPlayerMine = isLocalPlayer;
             netIdMine = netId;
         }
     }
