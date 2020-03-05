@@ -9,8 +9,11 @@
         {
             base.BuildUnits();
 
-            unitSpawner.owner = this;
-            unitSpawner.RandomSpawns();
+            if (unitSpawner != null)
+            {
+                unitSpawner.owner = this;
+                unitSpawner.RandomSpawns();
+            }
         }
     }
 }
