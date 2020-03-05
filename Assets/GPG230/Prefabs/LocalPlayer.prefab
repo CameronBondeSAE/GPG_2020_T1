@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 894108321244952483}
   - component: {fileID: 7557855231570532343}
   - component: {fileID: 9016229784908242576}
+  - component: {fileID: 5723615086693862567}
   m_Layer: 0
-  m_Name: Player 1
+  m_Name: LocalPLayerPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,3 +65,25 @@ MonoBehaviour:
   units: []
   playerColour: {r: 0.6862745, g: 1, b: 0.32941177, a: 0}
   playerName: 
+  unitSpawner: {fileID: 0}
+--- !u!114 &5723615086693862567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8542780475567812279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 763516cae5e273d4f95a6d3d13bb5bff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boundrySize: {x: 0, y: 0, z: 0}
+  unitBases:
+  - {fileID: 2939113266008733344, guid: ae46586e6e892d44f839db11e880ba25, type: 3}
+  gameManager: {fileID: 0}
+  spawnNumber: 3
+  owner: {fileID: 0}
+  SpawnableSurfaces:
+    serializedVersion: 2
+    m_Bits: 0
