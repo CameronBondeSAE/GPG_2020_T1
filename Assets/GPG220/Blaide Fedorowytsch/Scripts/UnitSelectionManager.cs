@@ -142,6 +142,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             //Check for UI element at this cursorPosition;
             if (cursorOverUI|| !hadFocusLastFrame )
             {
+                
             }
             else
             {
@@ -167,7 +168,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         {
             PlayerBase retPlayerBase = null;
             if (gameManager != null)
-            { retPlayerBase = gameManager.listofPlayerBases[1];
+            { 
+                retPlayerBase = gameManager.listofPlayerBases[0];
                 foreach (PlayerBase pbs in gameManager.listofPlayerBases )
                 {
                     if (pbs.isLocalPlayer)
@@ -196,7 +198,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                         {
                             ISelectable s = targetObject.GetComponent<ISelectable>();
 
-                            if (((UnitBase) s).netId == FindLocalPlayer().netId )
+                            if (((UnitBase) s).owner == FindLocalPlayer() )
                             {
                                 s.OnSelected();
                                 ApplyOutlineToObject(((MonoBehaviour)s).gameObject);
@@ -213,7 +215,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                     lineRenderer.SetPositions(new Vector3[4] {Vector3.zero, Vector3.zero, Vector3.zero, Vector3.zero});
                     foreach (ISelectable s in iSelectablesInSelection)
                     {
-                        if (((UnitBase) s).netId == FindLocalPlayer().netId)
+                        if (((UnitBase) s).owner == FindLocalPlayer())
                         {
                             s.OnSelected();
                             ApplyOutlineToObject(((MonoBehaviour) s).gameObject);
@@ -303,14 +305,17 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 /// </summary>
         public void DeselectAll()
         {
-            foreach (ISelectable s in selectedIselectables)
+            if (selectedIselectables.Count > 0)
             {
-                RemoveOutlineFromObject(((MonoBehaviour) s).gameObject);
-            }
+                foreach (ISelectable s in selectedIselectables)
+                {
+                    RemoveOutlineFromObject(((MonoBehaviour) s).gameObject);
+                }
 
-            List<ISelectable> removedIselectables = selectedIselectables;
-            selectedIselectables.Clear();
-            onDeselectionEvent.Invoke(removedIselectables);
+                List<ISelectable> removedIselectables = selectedIselectables;
+                selectedIselectables.Clear();
+                onDeselectionEvent.Invoke(removedIselectables);
+            }
         }
 
         void ApplyOutlineToObject(GameObject selectedGameObject)
