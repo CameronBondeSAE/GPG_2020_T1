@@ -23,7 +23,7 @@ public class NewUnit : UnitBase
         if (Input.GetKeyDown(KeyCode.Space))
         {
             // HACK: Hard ref
-             currentState = attackingState;
+             currentState = idleState;
         }
     }
 

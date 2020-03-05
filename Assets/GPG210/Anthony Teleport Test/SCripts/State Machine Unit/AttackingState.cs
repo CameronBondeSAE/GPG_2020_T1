@@ -11,6 +11,7 @@ namespace AnthonyY
         // Start is called before the first frame update
         public int damage = 100;
         private Rigidbody rb;
+        public GameObject NewUnit;
         public float force;
         public GameObject blood;
        
@@ -20,11 +21,13 @@ namespace AnthonyY
         {
             rb = GetComponent<Rigidbody>();
             GetComponent<Health>().deathEvent += Death;
+            NewUnit = GetComponent<GameObject>();
         }
 
        void Update()
        {
-           rb.AddForce(0,0,force,ForceMode.Impulse);
+           FlingToEnemy();
+           
            //rb.transform.localScale += new Vector3(1,4,0); //rescale on runtime
        }
 
@@ -38,6 +41,16 @@ namespace AnthonyY
                 other.gameObject.GetComponent<Health>().ChangeHealth(-damage);
             }
         }
+
+        public void FlingToEnemy()
+        {
+            if(Input.GetKeyDown("space"))
+            { 
+                rb.AddForce(0,0,force,ForceMode.Impulse);
+            }
+        }
+
+       
         public void Death(Health health)
         {
             Instantiate(blood, transform.position, Quaternion.identity);
