@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 9016229784908242576}
   - component: {fileID: 5723615086693862567}
   m_Layer: 0
-  m_Name: LocalPlayer
+  m_Name: HumanPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66,6 +66,8 @@ MonoBehaviour:
   playerColour: {r: 0.6862745, g: 1, b: 0.32941177, a: 0}
   playerName: 
   unitSpawner: {fileID: 5723615086693862567}
+  netIdMine: 0
+  isLocalPlayerMine: 0
 --- !u!114 &5723615086693862567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,8 +84,9 @@ MonoBehaviour:
   unitBases:
   - {fileID: 2939113266008733344, guid: ae46586e6e892d44f839db11e880ba25, type: 3}
   gameManager: {fileID: 0}
-  spawnNumber: 3
+  spawnNumber: 1
   owner: {fileID: 0}
+  ownerNetID: 0
   SpawnableSurfaces:
     serializedVersion: 2
     m_Bits: 0
