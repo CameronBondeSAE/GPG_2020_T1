@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using GPG220.Blaide_Fedorowytsch.Scripts.Interfaces;
 using GPG220.Luca.Scripts.Unit;
 using Mirror;
 using Sirenix.OdinInspector;
@@ -16,6 +17,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         public GameManager gameManager;
         public int spawnNumber = 60;
         public PlayerBase owner;
+        public uint ownerNetID;
         public LayerMask SpawnableSurfaces;
 
         // Start is called before the first frame update
@@ -31,8 +33,9 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 
             // Networking
             NetworkServer.Spawn(g);
-
-            g.GetComponent<UnitBase>().owner = owner;
+            UnitBase uB = g.GetComponent<UnitBase>();
+            uB.owner = owner;
+            uB.ownerNetID = ownerNetID;
         }
         
         //[Button (Name = "RandomSpawn" )]
