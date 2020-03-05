@@ -8,7 +8,7 @@ using UnityEngine;
 public class RTSNetworkManager : NetworkManager
 {
 
-    public event Action <NetworkConnection> OnClientConnected;
+    public event Action <NetworkConnection> OnClientConnectedEvent;
 
     public PlayerBase Player;
     
@@ -30,7 +30,7 @@ public class RTSNetworkManager : NetworkManager
     {
         base.OnClientConnect(conn);
         
-        OnClientConnected.Invoke(conn);
+        OnClientConnectedEvent.Invoke(conn);
         
     }
 
