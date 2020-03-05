@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using GPG220.Blaide_Fedorowytsch.Scripts.Interfaces;
 using GPG220.Luca.Scripts.Unit;
 using Sirenix.OdinInspector;
@@ -168,11 +169,15 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 
         PlayerBase FindLocalPlayer()
         {
+            //HACK 
+            //Todo Fix this crap,
+            List<PlayerBase> playerBases = FindObjectsOfType<PlayerBase>().ToList();
+            
             PlayerBase retPlayerBase = null;
-            if (gameManager != null && gameManager.listofPlayerBases.Count > 0)
+            if (gameManager != null && playerBases.Count > 0)
             { 
-                retPlayerBase = gameManager.listofPlayerBases[0];
-                foreach (PlayerBase pbs in gameManager.listofPlayerBases )
+                retPlayerBase = playerBases[0];
+                foreach (PlayerBase pbs in playerBases )
                 {
                     if (pbs.isLocalPlayer)
                     {
@@ -182,7 +187,6 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             }
             return retPlayerBase;
         }
-
         uint GetOwnerID()
         {
             localnetID = FindLocalPlayer().netId;
