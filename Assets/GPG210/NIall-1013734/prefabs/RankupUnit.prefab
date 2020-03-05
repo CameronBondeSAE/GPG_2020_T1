@@ -17,7 +17,6 @@ GameObject:
   - component: {fileID: 114009500597666366}
   - component: {fileID: 114733390339695892}
   - component: {fileID: 1404205552856636576}
-  - component: {fileID: 1530850841574439630}
   - component: {fileID: 68299660218663067}
   - component: {fileID: -5808497921224969720}
   m_Layer: 0
@@ -59,7 +58,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1440955559183952}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -166,6 +165,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   owner: {fileID: 0}
+  netIDOwner: 0
   unitStats: {fileID: 0}
   inventory: {fileID: 0}
   rb: {fileID: 54844123311866720}
@@ -173,6 +173,7 @@ MonoBehaviour:
   abilityController: {fileID: 0}
   UnitSpeed: 4
   target: {x: 0, y: 0, z: 0}
+  pathFinderController: {fileID: 0}
   currentState: 0
 --- !u!114 &1404205552856636576
 MonoBehaviour:
@@ -187,21 +188,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 10
---- !u!114 &1530850841574439630
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1440955559183952}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d51cbb69db1c23343a1ae0d868e2feac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distance: 10
-  turnSpeed: 80
-  rb: {fileID: 54844123311866720}
 --- !u!114 &68299660218663067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,6 +201,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distance: 4
+  fire: 1
+  fireRate: 0
   damage: 10
 --- !u!114 &-5808497921224969720
 MonoBehaviour:
@@ -279,7 +267,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1686169348673056}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -420,7 +408,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5790095715907482745}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -498,7 +486,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6130498198004698428}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1

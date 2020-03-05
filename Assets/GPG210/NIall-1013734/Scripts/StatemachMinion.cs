@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using GPG220.Luca.Scripts.Pathfinding;
 using GPG220.Luca.Scripts.Unit;
 using UnityEditor;
 using UnityEngine;
@@ -17,6 +18,8 @@ public class StatemachMinion : UnitBase
     public Vector3 target;
     private bool moving = false;
 
+
+    public PathFinderController pathFinderController;
 
     public enum States
     {
@@ -37,6 +40,7 @@ public class StatemachMinion : UnitBase
     void Awake()
     {
         unitlvlup = GetComponent<UnitLevelUp>();
+       // pathFinderController = FindObjectOfType<PathFinderPath>();
     }
 
     void Start()
