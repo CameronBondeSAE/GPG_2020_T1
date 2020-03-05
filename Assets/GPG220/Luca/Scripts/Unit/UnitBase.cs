@@ -20,6 +20,7 @@ namespace GPG220.Luca.Scripts.Unit
                 
         // TODO set owner somewhere
         public PlayerBase owner;
+        [SyncVar]
         public uint ownerNetID;
         public UnitStats unitStats;
         public Inventory inventory;
