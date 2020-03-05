@@ -24,12 +24,11 @@ namespace AnthonyY
             NewUnit = GetComponent<GameObject>();
         }
 
-       void Update()
-       {
-           FlingToEnemy();
-           
-           //rb.transform.localScale += new Vector3(1,4,0); //rescale on runtime
-       }
+        public override void Execute()
+        {
+            rb.AddForce(0,0,force,ForceMode.Impulse);
+            //rb.transform.localScale += new Vector3(1,4,0); //rescale on runtime
+          }
 
 
         void OnCollisionEnter(Collision other)
@@ -41,16 +40,7 @@ namespace AnthonyY
                 other.gameObject.GetComponent<Health>().ChangeHealth(-damage);
             }
         }
-
-        public void FlingToEnemy()
-        {
-            if(Input.GetKeyDown("space"))
-            { 
-                rb.AddForce(0,0,force,ForceMode.Impulse);
-            }
-        }
-
-       
+        
         public void Death(Health health)
         {
             Instantiate(blood, transform.position, Quaternion.identity);
