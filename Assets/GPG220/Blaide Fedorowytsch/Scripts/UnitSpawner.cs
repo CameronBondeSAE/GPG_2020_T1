@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using GPG220.Luca.Scripts.Unit;
+using Mirror;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -27,6 +28,10 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         public void SpawnUnit(UnitBase unit, Vector3 position,Quaternion rotation)
         {
             GameObject g = Instantiate(unit.gameObject, position, rotation);
+
+            // Networking
+            NetworkServer.Spawn(g);
+
             g.GetComponent<UnitBase>().owner = owner;
         }
         
