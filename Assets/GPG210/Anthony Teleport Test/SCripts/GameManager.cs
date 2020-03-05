@@ -5,6 +5,7 @@ using System.Linq;
 using GPG220.Blaide_Fedorowytsch.Scripts;
 using GPG220.Luca.Scripts.Unit;
 using Mirror;
+using Mirror.Examples.Basic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -17,8 +18,9 @@ public class GameManager : MonoBehaviour
     public List<UnitBase> enemyUnitBases = new List<UnitBase>();
    public List<UnitBase> playerUnitBases = new List<UnitBase>();
   public List<SpawnPoint> listOfSpawns = new List<SpawnPoint>();
+  public List<PlayerBase> listofPlayerBases = new List<PlayerBase>();
 
-  private RTSNetworkManager networkManager;
+  public RTSNetworkManager networkManager;
 
 public event Action gameOverEvent;
    public event Action startGameEvent;
@@ -31,11 +33,18 @@ public event Action gameOverEvent;
    private void Start()
    {
        UnitBase.SpawnStaticEvent += UnitBaseOnSpawnStaticEvent;
-       //UnitBase.DespawnStaticEvent += UnitBaseOnDespawnStaticEvent;
+       UnitBase.DespawnStaticEvent += UnitBaseOnDespawnStaticEvent;
        playMenu.playEvent += PlayMenuOnplayEvent;
-       
+        networkManager.OnClientConnectedEvent += NetworkManagerOnClientConnectedEvent;
+   }
 
-
+   private void NetworkManagerOnClientConnectedEvent(NetworkConnection conn)
+   {
+       if (networkManager != null)
+       {
+           listofPlayerBases.Add(conn.identity.GetComponent<PlayerBase>());
+       }
+      
    }
 
    private void PlayMenuOnplayEvent()
@@ -59,6 +68,7 @@ public event Action gameOverEvent;
    {
        playerUnitBases.Remove(obj);
        enemyUnitBases.Remove(obj);
+       listOfSpawns = FindObjectsOfType<SpawnPoint>().ToList();
    }
 
    private void UnitBaseOnSpawnStaticEvent(UnitBase obj)
@@ -67,11 +77,6 @@ public event Action gameOverEvent;
        playerUnitBases.Add(obj);
        enemyUnitBases.Add(obj);
        obj.GetComponent<Health>().deathEvent+= HealthOndeathStaticEvent;
-   
-       listOfSpawns = FindObjectsOfType<SpawnPoint>().ToList();
-      
-       
-
    }
 
    
