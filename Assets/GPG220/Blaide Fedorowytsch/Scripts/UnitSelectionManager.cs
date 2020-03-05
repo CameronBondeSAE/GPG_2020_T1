@@ -181,9 +181,9 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             return retPlayerBase;
         }
 
-        uint GetiID()
+        uint GetOwnerID()
         {
-            return 0;
+            return FindLocalPlayer().netId;
         }
         
 
@@ -204,7 +204,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                         {
                             ISelectable s = targetObject.GetComponent<ISelectable>();
 
-                            if (((UnitBase) s).owner == FindLocalPlayer() )
+                            //if (((UnitBase) s).owner == FindLocalPlayer() )
+                            if (((UnitBase) s).ownerNetID == GetOwnerID())
                             {
                                 s.OnSelected();
                                 ApplyOutlineToObject(((MonoBehaviour)s).gameObject);
@@ -221,7 +222,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                     lineRenderer.SetPositions(new Vector3[4] {Vector3.zero, Vector3.zero, Vector3.zero, Vector3.zero});
                     foreach (ISelectable s in iSelectablesInSelection)
                     {
-                        if (((UnitBase) s).owner == FindLocalPlayer())
+                        if (((UnitBase) s).ownerNetID == GetOwnerID())
                         {
                             s.OnSelected();
                             ApplyOutlineToObject(((MonoBehaviour) s).gameObject);
@@ -315,7 +316,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             {
                 foreach (ISelectable s in selectedIselectables)
                 {
-                    RemoveOutlineFromObject(((MonoBehaviour) s).gameObject);
+                    var selectedGameObject = ((MonoBehaviour) s).gameObject;
+                    if (selectedGameObject != null) RemoveOutlineFromObject(selectedGameObject);
                 }
 
                 List<ISelectable> removedIselectables = selectedIselectables;
