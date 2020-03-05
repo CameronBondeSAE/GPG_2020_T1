@@ -43,6 +43,7 @@ public event Action gameOverEvent;
        if (networkManager != null)
        {
            listofPlayerBases.Add(conn.identity.GetComponent<PlayerBase>());
+           conn.identity.GetComponent<PlayerBase>().BuildUnits();
        }
       
    }
