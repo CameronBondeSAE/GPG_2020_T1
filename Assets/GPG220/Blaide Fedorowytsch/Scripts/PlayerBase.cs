@@ -11,5 +11,10 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         public List<UnitBase> units;
         public Color playerColour;
         public string playerName;
+
+        public virtual void BuildUnits()
+        {
+            
+        }
     }
 }
