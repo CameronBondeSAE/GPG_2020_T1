@@ -35,7 +35,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             NetworkServer.Spawn(g);
             UnitBase uB = g.GetComponent<UnitBase>();
             uB.owner = owner;
-            uB.ownerNetID = ownerNetID;
+            uB.ownerNetID = owner.netId;
         }
         
         //[Button (Name = "RandomSpawn" )]
