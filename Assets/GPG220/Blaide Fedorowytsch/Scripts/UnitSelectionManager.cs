@@ -167,7 +167,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         PlayerBase FindLocalPlayer()
         {
             PlayerBase retPlayerBase = null;
-            if (gameManager != null)
+            if (gameManager != null && gameManager.listofPlayerBases.Count > 0)
             { 
                 retPlayerBase = gameManager.listofPlayerBases[0];
                 foreach (PlayerBase pbs in gameManager.listofPlayerBases )
@@ -180,6 +180,12 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             }
             return retPlayerBase;
         }
+
+        uint GetiID()
+        {
+            return 0;
+        }
+        
 
         void SelectKeyReleased(InputAction.CallbackContext ctx)
         {
@@ -240,7 +246,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 
             if (selectedIselectables.Count > 0)
             {
-                onSelectionEvent.Invoke(selectedIselectables);
+                onSelectionEvent?.Invoke(selectedIselectables);
             }
         }
 
@@ -314,7 +320,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 
                 List<ISelectable> removedIselectables = selectedIselectables;
                 selectedIselectables.Clear();
-                onDeselectionEvent.Invoke(removedIselectables);
+                onDeselectionEvent?.Invoke(removedIselectables);
             }
         }
 
@@ -375,6 +381,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             if (Physics.Raycast(ray, out hit, 1000, unitLayerMask, QueryTriggerInteraction.Ignore))
             {
                 targetObject = hit.collider.gameObject;
+                ISelectable targetIselectable = targetObject.GetComponent<ISelectable>();
+                if (targetIselectable != null) mouseOverIselectable?.Invoke(targetIselectable);
             }
             else
             {
