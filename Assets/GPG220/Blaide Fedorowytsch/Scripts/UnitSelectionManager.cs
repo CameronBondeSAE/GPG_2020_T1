@@ -38,8 +38,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         public bool cursorOverUI;
         
     
-        public BoxCollider boxCollider;
-        public LineRenderer lineRenderer;
+        private BoxCollider boxCollider;
+        private LineRenderer lineRenderer;
         public float heightOffset;
 
         public LayerMask worldLayerMask;
@@ -54,6 +54,10 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         [SerializeField]
         private List<ISelectable> iSelectablesInSelection;
 
+        /// <summary>
+        /// List of selected Iselectables, To get the UnitBases You Will need to cast it as UnitBase like (UnitBase)selectedIselectables[i].whatever
+        /// 
+        /// </summary>
         public List<ISelectable> selectedIselectables;
         
         public Outline outline;
@@ -64,7 +68,6 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             selectKeyReleased.performed += SelectKeyReleased;
             actionKey.performed += DoAction;
             cursorMove.performed += CursorMove;
-
         }
 
         private void OnApplicationFocus(bool hasFocus)
@@ -114,13 +117,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             {
                 selectionRect[0] = new Vector3(targetPoint.x, targetPoint.y + heightOffset, targetPoint.z);
                 selectKeyDown = true;
-
-                foreach (ISelectable s in selectedIselectables)
-                {
-                    RemoveOutlineFromObject(((MonoBehaviour) s).gameObject);
-                }
-
-                selectedIselectables.Clear();
+                DeselectAll();
             }
         }
 
@@ -130,6 +127,10 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                 
             selectedIselectables.Remove(i);
             iSelectablesInSelection.Remove(i);
+            List<ISelectable> iList = new List<ISelectable>();
+            iList.Add(i);
+            onDeselection.Invoke(iList);
+            
 ;        }
 
         void SelectKeyReleased(InputAction.CallbackContext ctx)
@@ -180,6 +181,11 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             
             boxCollider.center = new Vector3(0,100000,0);
             boxCollider.size = Vector3.zero;
+
+            if (selectedIselectables.Count > 0)
+            {
+                onSelection.Invoke(selectedIselectables);
+            }
         }
 
         void DrawRectangle()
@@ -237,11 +243,26 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                 }
             }
         }
+        
+/// <summary>
+/// This Just deselectes all the Iselectables.
+/// </summary>
+        public void DeselectAll()
+        {
+            foreach (ISelectable s in selectedIselectables)
+            {
+                RemoveOutlineFromObject(((MonoBehaviour) s).gameObject);
+            }
+
+            List<ISelectable> removedIselectables = selectedIselectables;
+            selectedIselectables.Clear();
+            onDeselection.Invoke(removedIselectables);
+        }
 
         void ApplyOutlineToObject(GameObject selectedGameObject)
         {
             
-            if (selectedGameObject.GetComponent<Outline>() == null)
+            if (selectedGameObject.GetComponent<Outline>() == null && selectedGameObject.GetComponent<MeshRenderer>() != null)
             {
                 Outline o = selectedGameObject.AddComponent<Outline>();
                 o.OutlineColor = outline.OutlineColor;
