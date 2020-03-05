@@ -14,6 +14,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         public List<UnitBase> unitBases;
         public GameManager gameManager;
         public int spawnNumber = 60;
+        public PlayerBase owner;
 
         public LayerMask SpawnableSurfaces;
 
