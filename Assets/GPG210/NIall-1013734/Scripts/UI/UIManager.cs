@@ -17,13 +17,18 @@ public class UIManager : MonoBehaviour
     public List<UnitBase> units;
 
     public TextMeshProUGUI[] textMeshProUguis;
+    public GameObject abilitySelectionUI;
 
     public void Start()
     {
         unitSelectionManager = FindObjectOfType<UnitSelectionManager>();
         unitSelectionManager.onSelectionEvent += OnSelection;
         Debug.Log(units.Count.ToString());
+        abilitySelectionUI.SetActive(false);
     }
+
+
+
 
 
     private void OnSelection(List<ISelectable> selectables)
@@ -39,6 +44,7 @@ public class UIManager : MonoBehaviour
 
         if (selectables.Count == 1)
         {
+           abilitySelectionUI.SetActive(true);
             var abilityControllerAbilities = ((UnitBase)selectables[0]).abilityController.abilities;
 
             int counter = 0;
@@ -54,5 +60,11 @@ public class UIManager : MonoBehaviour
 
             }
         }
+
+        if (selectables.Count <= 0)
+        {
+            abilitySelectionUI.SetActive(false);
+        }
+
     }
 }

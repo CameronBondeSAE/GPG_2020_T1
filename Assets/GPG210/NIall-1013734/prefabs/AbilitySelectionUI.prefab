@@ -118,6 +118,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   units: []
+  textMeshProUguis: []
+  abilitySelectionUI: {fileID: 4185516348687593664}
 --- !u!1 &4185516346889226178
 GameObject:
   m_ObjectHideFlags: 0
