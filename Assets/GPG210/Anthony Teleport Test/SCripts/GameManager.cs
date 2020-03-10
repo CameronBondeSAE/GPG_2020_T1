@@ -27,6 +27,8 @@ public event Action gameOverEvent;
 
    public PlayMenu playMenu;
 
+
+  
     
    
 
@@ -68,7 +70,7 @@ public event Action gameOverEvent;
    private void UnitBaseOnDespawnStaticEvent(UnitBase obj)
    {
      globalUnitBases.Remove(obj);
-     listOfSpawns = FindObjectsOfType<SpawnPoint>().ToList();
+     
    }
 
    private void UnitBaseOnSpawnStaticEvent(UnitBase obj)
@@ -76,8 +78,10 @@ public event Action gameOverEvent;
        // TODO Define Enemies and Players
       globalUnitBases.Add(obj);
       obj.GetComponent<Health>().deathEvent+= HealthOndeathStaticEvent;
-     // obj.GetComponent<SpawnPoint>[Random.Range(listOfSpawns)]();
+      listOfSpawns = FindObjectsOfType<SpawnPoint>().ToList();
       
+      //listOfSpawns = globalUnitBases[(Random.Range(0,listOfSpawns.Count))];
+
    }
 
    
