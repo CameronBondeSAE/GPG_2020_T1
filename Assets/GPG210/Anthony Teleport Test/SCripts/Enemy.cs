@@ -15,7 +15,7 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         
-        transform.Translate(Vector3.forward * speed);
+        //transform.Translate(Vector3.forward * speed);
     }
 
     public void Death(Health health)
