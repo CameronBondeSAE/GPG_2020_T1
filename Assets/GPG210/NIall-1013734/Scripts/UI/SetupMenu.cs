@@ -22,7 +22,7 @@ public class SetupMenu : MonoBehaviour
 
     public void MultiPlayer()
     {
-        
+        SetUpMenuUI.SetActive(false);
     }
 
     public void ControlsGuide()

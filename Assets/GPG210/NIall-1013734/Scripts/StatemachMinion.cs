@@ -109,8 +109,7 @@ public class StatemachMinion : UnitBase
 
                 Destroy(gameObject);
                 break;
-            default:
-                throw new ArgumentOutOfRangeException();
+            
         }
 
         if (moving == true)

@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using GPG220.Luca.Scripts.Abilities;
 using UnityEngine;
 
-public class UnitLevelUp : MonoBehaviour
+public class UnitLevelUp : AbilityBase
 {
     public int Kills;
     public Material[] material;
@@ -78,6 +79,9 @@ public class UnitLevelUp : MonoBehaviour
                 break;
         }
     }
-    
-    
+
+    public override bool Execute(GameObject executorGameObject, GameObject[] targets = null)
+    {
+        throw new System.NotImplementedException();
+    }
 }
