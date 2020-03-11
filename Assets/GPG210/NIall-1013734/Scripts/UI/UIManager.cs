@@ -23,12 +23,10 @@ public class UIManager : MonoBehaviour
     {
         unitSelectionManager = FindObjectOfType<UnitSelectionManager>();
         unitSelectionManager.onSelectionEvent += OnSelection;
+        unitSelectionManager.onDeselectionEvent += OnDeselection;
         Debug.Log(units.Count.ToString());
         abilitySelectionUI.SetActive(false);
     }
-
-
-
 
 
     private void OnSelection(List<ISelectable> selectables)
@@ -44,27 +42,27 @@ public class UIManager : MonoBehaviour
 
         if (selectables.Count == 1)
         {
-           abilitySelectionUI.SetActive(true);
-            var abilityControllerAbilities = ((UnitBase)selectables[0]).abilityController.abilities;
+            abilitySelectionUI.SetActive(true);
+            var abilityControllerAbilities = ((UnitBase) selectables[0]).abilityController.abilities;
 
             int counter = 0;
             foreach (var item in abilityControllerAbilities)
             {
                 counter++;
-                
+
                 Debug.Log(item.Value.abilityName);
                 Debug.Log(item.Value.abilityDescription);
 
-//                buttonItems[counter].text = abilityname;
                 textMeshProUguis[counter].text = item.Value.abilityName;
-
             }
         }
+    }
 
+    private void OnDeselection(List<ISelectable> selectables)
+    {
         if (selectables.Count <= 0)
         {
             abilitySelectionUI.SetActive(false);
         }
-
     }
 }
