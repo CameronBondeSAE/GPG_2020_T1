@@ -1080,7 +1080,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 1.32e-43, y: 0, z: 9.8e-44, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1294,6 +1294,10 @@ PrefabInstance:
         type: 3}
       propertyPath: m_UiScaleMode
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1793977684, guid: 298228f203107444691db63a0ad56f1a, type: 3}
+      propertyPath: m_Text
+      value: Test
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 298228f203107444691db63a0ad56f1a, type: 3}
@@ -1595,6 +1599,29 @@ PrefabInstance:
       propertyPath: m_Name
       value: RTSNetworkManager
       objectReference: {fileID: 0}
+    - target: {fileID: 933689560544922517, guid: 18825b8ec10c5c944bedba252d160eb8,
+        type: 3}
+      propertyPath: spawnPrefabs.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 933689560544922517, guid: 18825b8ec10c5c944bedba252d160eb8,
+        type: 3}
+      propertyPath: spawnPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 1127377614303666354, guid: 034d145f47743a348bfc3c6557f64867,
+        type: 3}
+    - target: {fileID: 933689560544922517, guid: 18825b8ec10c5c944bedba252d160eb8,
+        type: 3}
+      propertyPath: spawnPrefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 1440955559183952, guid: 20c1442531b654d4da6e53eca7291655,
+        type: 3}
+    - target: {fileID: 933689560544922517, guid: 18825b8ec10c5c944bedba252d160eb8,
+        type: 3}
+      propertyPath: spawnPrefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 577926091930366374, guid: b2ddfa75df058774db6b0b3a4e67bbed,
+        type: 3}
     - target: {fileID: 933689560544922516, guid: 18825b8ec10c5c944bedba252d160eb8,
         type: 3}
       propertyPath: m_LocalPosition.x
