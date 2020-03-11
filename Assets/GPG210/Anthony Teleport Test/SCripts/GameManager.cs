@@ -27,14 +27,18 @@ public class GameManager : MonoBehaviour
 
     public PlayMenu playMenu;
 
+    
+
 
     private void Start()
     {
         UnitBase.SpawnStaticEvent += UnitBaseOnSpawnStaticEvent;
         UnitBase.DespawnStaticEvent += UnitBaseOnDespawnStaticEvent;
         playMenu.playEvent += PlayMenuOnplayEvent;
-        networkManager.OnClientConnectedEvent += NetworkManagerOnClientConnectedEvent;
+        networkManager.OnClientPlayerSpawnEvent += NetworkManagerOnClientConnectedEvent;
         networkManager.OnClientDisconnectedEvent += NetworkManagerOnOnClientDisconnectedEvent;
+        
+        
     }
 
     private void NetworkManagerOnOnClientDisconnectedEvent(NetworkConnection conn)
@@ -42,7 +46,7 @@ public class GameManager : MonoBehaviour
         if (networkManager != null)
         {
             listofPlayerBases.Remove(conn.identity.GetComponent<PlayerBase>());
-            conn.identity.GetComponent<PlayerBase>().BuildUnits();
+            //conn.identity.GetComponent<PlayerBase>().BuildUnits();
             //conn.identity.GetComponent<UnitBase>().owner.units
         }
     }
@@ -61,7 +65,9 @@ public class GameManager : MonoBehaviour
         if (startGameEvent != null)
         {
             startGameEvent.Invoke();
+            
         }
+        
     }
 
 
@@ -81,7 +87,7 @@ public class GameManager : MonoBehaviour
         globalUnitBases.Add(obj);
         obj.GetComponent<Health>().deathEvent += HealthOndeathStaticEvent;
         listOfSpawns = FindObjectsOfType<SpawnPoint>().ToList();
-
+       
         //listOfSpawns = globalUnitBases[(Random.Range(0,listOfSpawns.Count))];
     }
 
@@ -91,6 +97,7 @@ public class GameManager : MonoBehaviour
         if (globalUnitBases.Count == 0 && gameOverEvent != null)
         {
             gameOverEvent.Invoke();
+           
         }
     }
 }
