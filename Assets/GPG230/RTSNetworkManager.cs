@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class RTSNetworkManager : NetworkManager
 {
-    public event Action<NetworkConnection> OnClientConnectedEvent;
+    public event Action<NetworkConnection> OnClientPlayerSpawnEvent;
     public event Action<NetworkConnection> OnClientDisconnectedEvent;
 
     public void OnServerConnect(NetworkConnection conn)
@@ -19,14 +19,16 @@ public class RTSNetworkManager : NetworkManager
     {
         base.OnServerAddPlayer(conn);
 
-        OnClientConnectedEvent?.Invoke(conn);
+        OnClientPlayerSpawnEvent?.Invoke(conn);
     }
+    
 
-    public override void OnServerRemovePlayer(NetworkConnection conn, NetworkIdentity player)
+    public override void OnClientDisconnect(NetworkConnection conn)
     {
-        base.OnServerRemovePlayer(conn, player);
-
         OnClientDisconnectedEvent?.Invoke(conn);
+        
+        base.OnClientDisconnect(conn);
+        
     }
 
     public void SetHostname(string hostname)
