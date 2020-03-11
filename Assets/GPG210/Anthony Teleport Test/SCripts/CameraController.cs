@@ -7,6 +7,7 @@ public class CameraController : MonoBehaviour
     public float panSpeed = 20f; //camera movement speed
     public float panBorderThickness = 10f;
     public Vector2 panLimit;
+   
     
     public float scrollSpeed = 20;
     public float minY = 20f;
@@ -18,6 +19,7 @@ public class CameraController : MonoBehaviour
     {
         gameManager = FindObjectOfType<GameManager>();
         gameManager.startGameEvent += CameraMovement;
+       
 
     }
 

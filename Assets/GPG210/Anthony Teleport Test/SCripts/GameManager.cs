@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
         UnitBase.SpawnStaticEvent += UnitBaseOnSpawnStaticEvent;
         UnitBase.DespawnStaticEvent += UnitBaseOnDespawnStaticEvent;
         playMenu.playEvent += PlayMenuOnplayEvent;
-        networkManager.OnClientPlayerSpawnEvent += NetworkManagerOnClientConnectedEvent;
+        networkManager.OnClientPlayerSpawnEvent += NetworkManagerOnOnClientPlayerSpawnEvent;
         networkManager.OnClientDisconnectedEvent += NetworkManagerOnOnClientDisconnectedEvent;
         
         
@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void NetworkManagerOnClientConnectedEvent(NetworkConnection conn)
+    private void NetworkManagerOnOnClientPlayerSpawnEvent(NetworkConnection conn)
     {
         if (networkManager != null)
         {

@@ -15,10 +15,9 @@ public class NewUnit : MonoBehaviour
     
     void Update()
     {
-        if(currentState != null)
-        {}
+       
         
-        currentState.Update();
+        //currentState.Update();
         
         if (Input.GetKeyDown(KeyCode.Space))
         {

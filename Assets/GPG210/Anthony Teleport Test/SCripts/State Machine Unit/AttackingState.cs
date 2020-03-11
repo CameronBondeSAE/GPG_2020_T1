@@ -2,11 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using AnthonyY;
+using GPG220.Luca.Scripts.Abilities;
 using UnityEngine;
 
 namespace AnthonyY
 {
-    public class AttackingState : StateBase
+    public class AttackingState : AbilityBase
     {
         // Start is called before the first frame update
         public int damage = 100;
@@ -20,18 +21,16 @@ namespace AnthonyY
         void Start()
         {
             rb = GetComponent<Rigidbody>();
-            GetComponent<Health>().deathEvent += Death;
+            
             NewUnit = GetComponent<GameObject>();
         }
-
-        public override void Update()
+        
+        public override bool Execute(GameObject executorGameObject, GameObject[] targets = null)
         {
-            
             rb.AddForce(0,0,force,ForceMode.Impulse);
             //rb.transform.localScale += new Vector3(1,4,0); //rescale on runtime
+            return true;
         }
-
-        
 
 
         void OnCollisionEnter(Collision other)
@@ -44,11 +43,7 @@ namespace AnthonyY
             }
         }
         
-        public void Death(Health health)
-        {
-            Instantiate(blood, transform.position, Quaternion.identity);
-            Destroy(gameObject);
-        }
+        
     }
 }
 
