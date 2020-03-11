@@ -1,25 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-
     public static bool IsPaused = false;
 
     public GameObject PauseMenuUI;
     public PlayMenu PlayMenuUI;
-    
-    
-    
-    
-    
+
+    private RTSNetworkManager rtsNetworkManager;
+
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            
             if (IsPaused)
             {
                 Resume();
@@ -37,20 +35,31 @@ public class PauseMenu : MonoBehaviour
         IsPaused = false;
     }
 
-   public  void Pause()
+    private void Pause()
     {
         PauseMenuUI.SetActive(true);
         IsPaused = true;
     }
 
-   public void ExitGame()
+    public void ExitGame()
     {
         Debug.Log("Exiting Game");
         PlayMenuUI.PlayMenuUI.SetActive(true);
         PauseMenuUI.SetActive(false);
         Application.LoadLevel(Application.loadedLevel);
         IsPaused = false;
+        
+        
+        //TODO: Client disconnects only disconnects client from server / host disconnects so server disconnects along side host client.
 
+        if (NetworkClient.isLocalClient == true)
+        {
+            rtsNetworkManager.isNetworkActive = true;
+        }
+
+        else
+        {
+            rtsNetworkManager.isNetworkActive = false;
+        }
     }
-
 }

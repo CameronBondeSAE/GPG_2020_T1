@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 23687213564703660}
   - component: {fileID: 65591278077150376}
   - component: {fileID: 54844123311866720}
+  - component: {fileID: 1404205552856636576}
+  - component: {fileID: 114733390339695892}
   - component: {fileID: 114481657677577802}
   - component: {fileID: 114009500597666366}
-  - component: {fileID: 114733390339695892}
-  - component: {fileID: 1404205552856636576}
   - component: {fileID: 68299660218663067}
   - component: {fileID: -5808497921224969720}
   m_Layer: 0
@@ -117,6 +117,44 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1404205552856636576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1440955559183952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3266ec32201a0694a8a80c5131a2d2ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 10
+--- !u!114 &114733390339695892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1440955559183952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea0a088a58d3c714daaecf3078b5adf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  owner: {fileID: 0}
+  ownerNetID: 0
+  unitStats: {fileID: 0}
+  inventory: {fileID: 0}
+  rb: {fileID: 54844123311866720}
+  health: {fileID: 1404205552856636576}
+  abilityController: {fileID: 0}
+  UnitSpeed: 4
+  target: {x: 0, y: 0, z: 0}
+  pathFinderController: {fileID: 0}
+  currentState: 0
 --- !u!114 &114481657677577802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,6 +167,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4b3c9c3d60df0943889dbbf7b6e38ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilityName: Promotion!
+  abilityDescription: slighty increase units statistics.
+  abilityImg: {fileID: 0}
+  cooldown: 0
+  currentCooldown: 0
   Kills: 0
   material:
   - {fileID: 2100000, guid: 9cbb5f267f07afd42a34a20a447fa4db, type: 2}
@@ -150,44 +193,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitLevelUp: {fileID: 114481657677577802}
---- !u!114 &114733390339695892
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1440955559183952}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea0a088a58d3c714daaecf3078b5adf4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  owner: {fileID: 0}
-  netIDOwner: 0
-  unitStats: {fileID: 0}
-  inventory: {fileID: 0}
-  rb: {fileID: 54844123311866720}
-  health: {fileID: 1404205552856636576}
-  abilityController: {fileID: 0}
-  UnitSpeed: 4
-  target: {x: 0, y: 0, z: 0}
-  pathFinderController: {fileID: 0}
-  currentState: 0
---- !u!114 &1404205552856636576
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1440955559183952}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3266ec32201a0694a8a80c5131a2d2ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingHealth: 10
 --- !u!114 &68299660218663067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,7 +221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneId: 0
+  sceneId: 910661110
   serverOnly: 0
   m_AssetId: 
 --- !u!1 &1686169348673056
