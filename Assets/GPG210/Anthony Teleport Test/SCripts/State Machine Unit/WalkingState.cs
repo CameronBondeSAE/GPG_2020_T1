@@ -17,16 +17,14 @@ namespace AnthonyY
         }
 
         // Update is called once per frame
-        public override void Execute()
+        public override void Update()
         {
-            base.Execute();
+            
             transform.Translate(Vector3.forward * Time.deltaTime);
             rb.constraints = RigidbodyConstraints.FreezePositionY;
         }
 
        
-
-        
        
     }
 

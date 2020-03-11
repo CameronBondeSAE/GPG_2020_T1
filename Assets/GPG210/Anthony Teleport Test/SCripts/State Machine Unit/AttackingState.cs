@@ -24,11 +24,14 @@ namespace AnthonyY
             NewUnit = GetComponent<GameObject>();
         }
 
-        public override void Execute()
+        public override void Update()
         {
+            
             rb.AddForce(0,0,force,ForceMode.Impulse);
             //rb.transform.localScale += new Vector3(1,4,0); //rescale on runtime
-          }
+        }
+
+        
 
 
         void OnCollisionEnter(Collision other)

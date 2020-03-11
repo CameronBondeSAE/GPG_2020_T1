@@ -8,17 +8,17 @@ namespace AnthonyY
     {
         public virtual void Enter()
         {
-      
+
         }
 
-        public virtual void Execute()
+        public virtual void Update()
         {
-            Debug.Log("Base Executed!");
+
         }
 
         public virtual void Exit()
         {
-      
+
         }
     }
 
