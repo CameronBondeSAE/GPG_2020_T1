@@ -23,11 +23,11 @@ public class RTSNetworkManager : NetworkManager
     }
     
 
-    public override void OnClientDisconnect(NetworkConnection conn)
+    public override void OnServerDisconnect(NetworkConnection conn)
     {
         OnClientDisconnectedEvent?.Invoke(conn);
         
-        base.OnClientDisconnect(conn);
+        base.OnServerDisconnect(conn);
         
     }
 
