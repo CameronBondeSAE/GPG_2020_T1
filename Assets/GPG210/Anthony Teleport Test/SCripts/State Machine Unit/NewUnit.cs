@@ -15,7 +15,11 @@ public class NewUnit : MonoBehaviour
     
     void Update()
     {
-        currentState.Execute();
+        if(currentState != null)
+        {}
+        
+        currentState.Update();
+        
         if (Input.GetKeyDown(KeyCode.Space))
         {
             // HACK: Hard ref
