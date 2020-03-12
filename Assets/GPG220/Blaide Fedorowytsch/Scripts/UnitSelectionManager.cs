@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GPG220.Blaide_Fedorowytsch.Scripts.Interfaces;
 using GPG220.Luca.Scripts.Unit;
+using QuickOutline;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEngine;
@@ -91,7 +92,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         /// </summary>
         public List<ISelectable> selectedIselectables;
         
-        private Outline outline;
+        private QuickOutline.Outline outline;
         // Start is called before the first frame update
         private void Awake()
         {

@@ -70,6 +70,7 @@ MonoBehaviour:
   - {fileID: 114733390339695892, guid: 20c1442531b654d4da6e53eca7291655, type: 3}
   - {fileID: 4069609011016073252, guid: 29860fa07d47c7e45b170f367357314a, type: 3}
   - {fileID: 2939113266008733344, guid: ae46586e6e892d44f839db11e880ba25, type: 3}
+  - {fileID: 4218702445721345300, guid: 9330195a9c0f596449e04b872f2bd245, type: 3}
   gameManager: {fileID: 0}
   spawnNumber: 1
   owner: {fileID: 0}

@@ -1,4 +1,5 @@
-﻿using GPG220.Luca.Scripts.Abilities;
+﻿using DG.Tweening;
+using GPG220.Luca.Scripts.Abilities;
 using UnityEngine;
 
 public class GetBigAbility : AbilityBase
@@ -8,7 +9,7 @@ public class GetBigAbility : AbilityBase
 
     public override bool SelectedExecute()
     {
-        camMonster.transform.localScale = Vector3.one * scale;
+        camMonster.transform.DOScale(Vector3.one * scale, 0.5f).SetEase(Ease.OutBounce);
 
         return base.SelectedExecute();
     }

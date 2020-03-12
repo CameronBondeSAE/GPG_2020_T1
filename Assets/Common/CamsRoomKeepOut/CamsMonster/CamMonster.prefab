@@ -145,7 +145,7 @@ MonoBehaviour:
   abilityImg: {fileID: 0}
   cooldown: 0
   currentCooldown: 0
-  camMonster: {fileID: 0}
+  camMonster: {fileID: 3776347446129422645}
   scale: 2
 --- !u!114 &1574884746106495472
 MonoBehaviour:
@@ -164,7 +164,7 @@ MonoBehaviour:
   abilityImg: {fileID: 0}
   cooldown: 0
   currentCooldown: 0
-  camMonster: {fileID: 0}
+  camMonster: {fileID: 3776347446129422645}
   scale: 0.5
 --- !u!114 &-3855243417948868038
 MonoBehaviour:

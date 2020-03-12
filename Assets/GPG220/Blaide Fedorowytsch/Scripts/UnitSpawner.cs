@@ -55,7 +55,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         {
             //TODO Figure out a nicer collision check.
            // return unit.gameObject.GetComponent<Collider>().bounds.extents; // this always returns vector3.zero
-           return unit.gameObject.GetComponent<Renderer>().bounds.extents; // Not ideal as the physical collider could easily be different to the renderer Bounds... 
+           return unit.gameObject.GetComponentInChildren<Renderer>().bounds.extents; // Not ideal as the physical collider could easily be different to the renderer Bounds... 
            
         }
 
