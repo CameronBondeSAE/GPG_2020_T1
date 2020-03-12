@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2937991697066462823}
   - component: {fileID: 2937991697066462840}
+  - component: {fileID: 3398339021096822533}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -43,16 +44,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff733bf49effb4f419f902f038c19168, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyUnitBases: []
-  playerUnitBases:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  playMenu: {fileID: 1375059197, guid: 298228f203107444691db63a0ad56f1a, type: 3}
+  globalUnitBases: []
+  listOfSpawns: []
+  listofPlayerBases: []
+  defaultUnitBases: []
+  networkManager: {fileID: 0}
+  playMenu: {fileID: 0}
+  unitSpawner: {fileID: 0}
+--- !u!114 &3398339021096822533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2937991697066462841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 763516cae5e273d4f95a6d3d13bb5bff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boundrySize: {x: 0, y: 0, z: 0}
+  unitBases: []
+  gameManager: {fileID: 0}
+  spawnNumber: 60
+  owner: {fileID: 0}
+  ownerNetID: 0
+  SpawnableSurfaces:
+    serializedVersion: 2
+    m_Bits: 0

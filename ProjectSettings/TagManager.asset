@@ -11,6 +11,7 @@ TagManager:
   - Pullable
   - Ground
   - Game Manager
+  - target
   layers:
   - Default
   - TransparentFX

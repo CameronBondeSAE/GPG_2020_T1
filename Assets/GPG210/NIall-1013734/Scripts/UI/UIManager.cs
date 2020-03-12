@@ -28,10 +28,6 @@ public class UIManager : MonoBehaviour
         abilitySelectionUI.SetActive(false);
     }
 
-    private void ClickedButton()
-    {
-        Debug.Log("yEYEEE");
-    }
 
 
     private void OnSelection(List<ISelectable> selectables)
@@ -59,7 +55,7 @@ public class UIManager : MonoBehaviour
                 Debug.Log(item.Value.abilityDescription);
 
                 buttons[counter].GetComponentInChildren<TextMeshProUGUI>().text = item.Value.abilityName;
-                buttons[counter].onClick.AddListener(ClickedButton);
+                buttons[counter].GetComponent<AbilityButton>().abilityBase = item.Value;
             }
         }
     }
@@ -71,20 +67,19 @@ public class UIManager : MonoBehaviour
         {
             abilitySelectionUI.SetActive(false);
         }
-        
-        abilitySelectionUI.SetActive(true);
+
+        // abilitySelectionUI.SetActive(true);
         var abilityControllerAbilities = ((UnitBase) selectables[0]).abilityController.abilities;
 
         int counter = 0;
         foreach (var item in abilityControllerAbilities)
         {
-            counter++;
-
             Debug.Log(item.Value.abilityName);
             Debug.Log(item.Value.abilityDescription);
 
             buttons[counter].GetComponentInChildren<TextMeshProUGUI>().text = "";
-            buttons[counter].onClick.RemoveListener(ClickedButton);
+
+            counter++;
         }
     }
 }

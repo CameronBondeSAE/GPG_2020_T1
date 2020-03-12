@@ -10,7 +10,6 @@ public class UnitLevelUp : AbilityBase
     private Renderer rend;
     public GameObject outerProng;
     public GameObject centreProng;
-    
 
 
     public void Start()
@@ -19,7 +18,6 @@ public class UnitLevelUp : AbilityBase
         rend = GetComponent<Renderer>();
         rend.enabled = true;
         rend.sharedMaterial = material[0];
-
     }
 
     public enum KillState
@@ -27,66 +25,56 @@ public class UnitLevelUp : AbilityBase
         LevelOne,
         LevelTwo,
         LevelThree
-
     }
 
     public KillState currentKillState;
-    
-    public void Update()
+
+    public override bool SelectedExecute()
     {
+
         switch (currentKillState)
         {
             case KillState.LevelOne:
 
                 rend.sharedMaterial = material[0];
-                
+
                 outerProng.SetActive(false);
                 centreProng.SetActive(true);
-                
+
                 if (Kills >= 2 && Kills <= 3)
                 {
                     currentKillState = KillState.LevelTwo;
-
                 }
-            
+
 
                 break;
 
             case KillState.LevelTwo:
-                
+
                 rend.sharedMaterial = material[1];
-                
-              
+
+
                 outerProng.SetActive(true);
                 centreProng.SetActive(false);
                 if (Kills >= 4)
                 {
                     currentKillState = KillState.LevelThree;
-                    
-               
                 }
-            
+
 
                 break;
-            
+
             case KillState.LevelThree:
-                
+
                 rend.sharedMaterial = material[2];
-                
+
                 outerProng.SetActive(true);
                 centreProng.SetActive(true);
-                
+
                 break;
         }
-    }
 
-    public override bool Execute(GameObject executorGameObject, GameObject[] targets = null)
-    {
-        
-        
-        
-        
-        
-        return true;
+
+        return base.SelectedExecute();
     }
 }

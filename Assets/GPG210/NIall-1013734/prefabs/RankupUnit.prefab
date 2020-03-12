@@ -15,10 +15,12 @@ GameObject:
   - component: {fileID: 54844123311866720}
   - component: {fileID: 1404205552856636576}
   - component: {fileID: 114733390339695892}
+  - component: {fileID: -7197862813521790675}
   - component: {fileID: 114481657677577802}
   - component: {fileID: 114009500597666366}
   - component: {fileID: 68299660218663067}
   - component: {fileID: -5808497921224969720}
+  - component: {fileID: 7390116288092270522}
   m_Layer: 0
   m_Name: RankupUnit
   m_TagString: Untagged
@@ -155,6 +157,32 @@ MonoBehaviour:
   target: {x: 0, y: 0, z: 0}
   pathFinderController: {fileID: 0}
   currentState: 0
+--- !u!114 &-7197862813521790675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1440955559183952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34aefdaaccff11643b2142106719ca64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: abilities
+      Entry: 6
+      Data: 
+  autoLoadAbilities: 1
+  defaultAbilityIndex: 0
 --- !u!114 &114481657677577802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,7 +200,7 @@ MonoBehaviour:
   abilityImg: {fileID: 0}
   cooldown: 0
   currentCooldown: 0
-  Kills: 0
+  Kills: 1
   material:
   - {fileID: 2100000, guid: 9cbb5f267f07afd42a34a20a447fa4db, type: 2}
   - {fileID: 2100000, guid: b0a018a71784efd468dd99fd103d1f46, type: 2}
@@ -221,9 +249,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneId: 910661110
+  sceneId: 0
   serverOnly: 0
   m_AssetId: 
+--- !u!135 &7390116288092270522
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1440955559183952}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 4
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1686169348673056
 GameObject:
   m_ObjectHideFlags: 0

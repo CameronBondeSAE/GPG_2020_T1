@@ -14,11 +14,12 @@ public class BigState : StateBase
         camMonster.abilityController.ExecuteAbility<GetBigAbility>();
     }
 
-    public override void Update()
+    public override void Execute()
     {
-        base.Update();
+        base.Execute();
     }
 
+   
     public override void Exit()
     {
         base.Exit();

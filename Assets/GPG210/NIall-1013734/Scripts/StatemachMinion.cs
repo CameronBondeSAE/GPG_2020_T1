@@ -105,7 +105,7 @@ public class StatemachMinion : UnitBase
                 break;
             case States.Dead:
                 // Destroys unit if State is set to Dead.
-                Debug.Log(gameObject.name + "Unit is Dead");
+                Debug.Log(gameObject.name + " has Died.");
 
                 Destroy(gameObject);
                 break;
@@ -126,7 +126,7 @@ public class StatemachMinion : UnitBase
             UnitSpeed = 5f;
         }
 
-        if (unitlvlup.Kills >= 3)
+        if (unitlvlup.Kills >= 4)
         {
             UnitSpeed = 6f;
         }
