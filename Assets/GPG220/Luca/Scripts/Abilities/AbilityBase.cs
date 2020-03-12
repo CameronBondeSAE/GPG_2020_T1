@@ -60,6 +60,17 @@ namespace GPG220.Luca.Scripts.Abilities
         /// <param name="executorGameObject">The gameobject that executes the cast.</param>
         /// <param name="targets">Any kind of gameobject targets that might be passed</param>
         /// <returns>Returns true if the ability could be executed, else false.</returns>
+        /// TODO Remove
         public abstract bool Execute(GameObject executorGameObject, GameObject[] targets = null);
+
+        public virtual bool SelectedExecute(GameObject executorGameObject)
+        {
+            return true;
+        }
+
+        public virtual bool TargetExecute(GameObject executorGameObject, GameObject[] targets = null)
+        {
+            return true;
+        }
     }
 }
