@@ -145,6 +145,8 @@ MonoBehaviour:
   abilityImg: {fileID: 0}
   cooldown: 0
   currentCooldown: 0
+  camMonster: {fileID: 0}
+  scale: 2
 --- !u!114 &1574884746106495472
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,6 +164,8 @@ MonoBehaviour:
   abilityImg: {fileID: 0}
   cooldown: 0
   currentCooldown: 0
+  camMonster: {fileID: 0}
+  scale: 0.5
 --- !u!114 &-3855243417948868038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,7 +238,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 15303, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

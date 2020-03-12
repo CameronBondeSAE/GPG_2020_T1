@@ -50,7 +50,7 @@ MonoBehaviour:
   defaultUnitBases: []
   networkManager: {fileID: 0}
   playMenu: {fileID: 0}
-  unitSpawner: {fileID: 0}
+  unitSpawner: {fileID: 3398339021096822533}
 --- !u!114 &3398339021096822533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,9 +64,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boundrySize: {x: 0, y: 0, z: 0}
-  unitBases: []
+  unitBases:
+  - {fileID: 3776347446129422645, guid: 034d145f47743a348bfc3c6557f64867, type: 3}
+  - {fileID: 577926091930366375, guid: b2ddfa75df058774db6b0b3a4e67bbed, type: 3}
+  - {fileID: 114733390339695892, guid: 20c1442531b654d4da6e53eca7291655, type: 3}
+  - {fileID: 4069609011016073252, guid: 29860fa07d47c7e45b170f367357314a, type: 3}
+  - {fileID: 2939113266008733344, guid: ae46586e6e892d44f839db11e880ba25, type: 3}
   gameManager: {fileID: 0}
-  spawnNumber: 60
+  spawnNumber: 1
   owner: {fileID: 0}
   ownerNetID: 0
   SpawnableSurfaces:

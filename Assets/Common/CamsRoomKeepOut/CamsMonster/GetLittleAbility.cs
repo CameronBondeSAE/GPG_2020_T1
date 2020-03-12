@@ -3,10 +3,13 @@ using UnityEngine;
 
 public class GetLittleAbility : AbilityBase
 {
-    public override bool Execute(GameObject executorGameObject, GameObject[] targets = null)
+    public CamMonster camMonster;
+    public float scale;
+    
+    public override bool SelectedExecute()
     {
-        Debug.Log("LITTLE!");
+        camMonster.transform.localScale = Vector3.one * scale;
 
-        return true;
+        return base.SelectedExecute();
     }
 }

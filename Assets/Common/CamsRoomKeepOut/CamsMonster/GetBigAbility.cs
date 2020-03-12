@@ -3,10 +3,13 @@ using UnityEngine;
 
 public class GetBigAbility : AbilityBase
 {
-    public override bool Execute(GameObject executorGameObject, GameObject[] targets = null)
+    public CamMonster camMonster;
+    public float scale;
+
+    public override bool SelectedExecute()
     {
-        Debug.Log("BIG!");
-        
-        return true;
+        camMonster.transform.localScale = Vector3.one * scale;
+
+        return base.SelectedExecute();
     }
 }
