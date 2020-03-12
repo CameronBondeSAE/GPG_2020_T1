@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneId: 0
+  sceneId: 457703098
   serverOnly: 0
   m_AssetId: 
 --- !u!114 &9016229784908242576
@@ -62,7 +62,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  units: []
+  units:
+  - {fileID: 0}
+  - {fileID: 0}
   playerColour: {r: 0.6862745, g: 1, b: 0.32941177, a: 0}
   playerName: 
   unitSpawner: {fileID: 5723615086693862567}

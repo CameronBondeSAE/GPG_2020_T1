@@ -17,8 +17,8 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
-        gameManager = FindObjectOfType<GameManager>();
-        gameManager.startGameEvent += CameraMovement;
+   
+        gameManager.startGameEvent += CameraMovementEvent;
        
 
     }
@@ -26,10 +26,10 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       CameraMovement();
+       CameraMovementEvent();
     }
 
-    void CameraMovement()
+    private void CameraMovementEvent()
     {
         Vector3 pos = transform.position;
         

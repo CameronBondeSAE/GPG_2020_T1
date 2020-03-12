@@ -6,18 +6,29 @@ using UnityEngine;
 
 namespace AnthonyY
 {
-    public class IdleState : AbilityBase
+    public class IdleState : StateBase
     {
+        public override void Enter()
+        {
+            base.Enter();
+        }
+
+        public override void Execute()
+        {
+            base.Execute();
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+        }
+
         // Start is called before the first frame update
         void Start()
         {
         
         }
-
-        public override bool Execute(GameObject executorGameObject, GameObject[] targets = null)
-        {
-            throw new System.NotImplementedException();
-        }
+        
     }
 }
 

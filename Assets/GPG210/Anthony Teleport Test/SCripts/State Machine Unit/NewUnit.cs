@@ -7,22 +7,22 @@ using UnityEngine;
 
 public class NewUnit : MonoBehaviour
 {
+    
     public StateBase currentState;
 
-    public StateBase idleState;
-    public StateBase walkingState;
-    public StateBase attackingState;
+    //States created in other scripts
+    public IdleState idleState;
+    public WalkingState walkingState;
+    public AttackingState attackingState;
     
     void Update()
     {
-       
-        
-        //currentState.Update();
+         currentState.Execute();
         
         if (Input.GetKeyDown(KeyCode.Space))
         {
             // HACK: Hard ref
-             currentState = walkingState;
+             currentState = idleState;
         }
     }
 

@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public List<UnitBase> globalUnitBases = new List<UnitBase>();
     public List<SpawnPoint> listOfSpawns = new List<SpawnPoint>();
     public List<PlayerBase> listofPlayerBases = new List<PlayerBase>();
+    public List<UnitBase> defaultUnitBases = new List<UnitBase>();
 
     public RTSNetworkManager networkManager;
 
@@ -26,6 +27,8 @@ public class GameManager : MonoBehaviour
     public event Action startGameEvent;
 
     public PlayMenu playMenu;
+    public UnitSpawner unitSpawner;
+    
 
     
 
@@ -40,6 +43,7 @@ public class GameManager : MonoBehaviour
         
         
     }
+    
 
     private void NetworkManagerOnOnClientDisconnectedEvent(NetworkConnection conn)
     {
@@ -56,7 +60,9 @@ public class GameManager : MonoBehaviour
         if (networkManager != null)
         {
             listofPlayerBases.Add(conn.identity.GetComponent<PlayerBase>());
-            conn.identity.GetComponent<PlayerBase>().BuildUnits();
+            BuildUnits(conn.identity.GetComponent<PlayerBase>());
+
+
         }
     }
 
@@ -69,9 +75,20 @@ public class GameManager : MonoBehaviour
         }
         
     }
-
-
-    private void HealthOndeathStaticEvent(Health health)
+    
+    // Start is called before the first frame update
+    public void BuildUnits(PlayerBase playerBase)
+         {
+             
+             if (unitSpawner != null)
+             {
+                 unitSpawner.owner = playerBase;
+                 unitSpawner.RandomSpawns();
+             }
+         }
+    
+    
+private void HealthOndeathStaticEvent(Health health)
     {
     }
 
