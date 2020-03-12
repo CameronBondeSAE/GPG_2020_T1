@@ -247,15 +247,16 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                         health.deathEvent += IselectableDeadOrDestroyed;
                     }
                 }
+                
+                boxCollider.center = new Vector3(0,100000,0);
+                boxCollider.size = Vector3.zero;
+
+                if (selectedIselectables.Count > 0)
+                {
+                    onSelectionEvent?.Invoke(selectedIselectables);
+                }
             }
             
-            boxCollider.center = new Vector3(0,100000,0);
-            boxCollider.size = Vector3.zero;
-
-            if (selectedIselectables.Count > 0)
-            {
-                onSelectionEvent?.Invoke(selectedIselectables);
-            }
         }
 
         void DrawRectangle()

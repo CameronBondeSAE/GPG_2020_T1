@@ -58,7 +58,7 @@ namespace GPG220.Luca.Scripts.Abilities
         {
             currentCooldown = cooldown;
         }
-        
+
         /// <summary>
         /// Function to execute the ability.
         /// </summary>
@@ -67,7 +67,10 @@ namespace GPG220.Luca.Scripts.Abilities
         /// <returns>Returns true if the ability could be executed, else false.</returns>
         /// TODO Remove
         [Obsolete("Use SelectedExecute or TargetExecute instead.")]
-        public abstract bool Execute(GameObject executorGameObject, GameObject[] targets = null);
+        public virtual bool Execute(GameObject executorGameObject, GameObject[] targets = null)
+        {
+            return true;
+        }
 
         // TODO Need 2x CheckRequirements function for Selected/target execute? Need multiple new events? StartSelectedExecute/End... StartTarget.... Maybe add ApplyCooldown function?
         
