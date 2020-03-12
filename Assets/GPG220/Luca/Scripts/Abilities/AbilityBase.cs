@@ -26,7 +26,7 @@ namespace GPG220.Luca.Scripts.Abilities
         /// <param name="executor"></param>
         protected virtual void NotifyAbilityExecuted(GameObject executor)
         {
-            currentCooldown = cooldown;
+            ApplyCooldown();
             AbilityExecutionEndEvent?.Invoke(this, executor);
         }
         
@@ -53,6 +53,11 @@ namespace GPG220.Luca.Scripts.Abilities
         {
             return currentCooldown <= 0;
         }
+
+        protected virtual void ApplyCooldown()
+        {
+            currentCooldown = cooldown;
+        }
         
         /// <summary>
         /// Function to execute the ability.
@@ -61,16 +66,36 @@ namespace GPG220.Luca.Scripts.Abilities
         /// <param name="targets">Any kind of gameobject targets that might be passed</param>
         /// <returns>Returns true if the ability could be executed, else false.</returns>
         /// TODO Remove
+        [Obsolete("Use SelectedExecute or TargetExecute instead.")]
         public abstract bool Execute(GameObject executorGameObject, GameObject[] targets = null);
 
+        // TODO Need 2x CheckRequirements function for Selected/target execute? Need multiple new events? StartSelectedExecute/End... StartTarget.... Maybe add ApplyCooldown function?
+        
+        /// <summary>
+        /// Executes certain functionality when an ability is clicked on/activated
+        /// </summary>
+        /// <returns>True if the ability could be executed (No cooldown, ...)</returns>
         public virtual bool SelectedExecute()
         {
             return true;
         }
 
+        /// <summary>
+        /// Executes certain functionality with a given list of targets
+        /// </summary>
+        /// <param name="targets"></param>
+        /// <returns>True if the ability could be executed (No cooldown, ...)</returns>
         public virtual bool TargetExecute(GameObject[] targets = null)
         {
             return true;
+        }
+
+        /// <summary>
+        /// Call this function to cleanup/break/finish the execution of this ability.
+        /// </summary>
+        public virtual void Finish()
+        {
+            
         }
     }
 }
