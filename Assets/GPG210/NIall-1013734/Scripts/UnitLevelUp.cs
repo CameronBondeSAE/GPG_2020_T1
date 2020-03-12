@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using GPG220.Luca.Scripts.Abilities;
 using UnityEngine;
+using UnityEngine.Experimental.PlayerLoop;
 
 public class UnitLevelUp : AbilityBase
 {
@@ -18,7 +19,9 @@ public class UnitLevelUp : AbilityBase
         rend = GetComponent<Renderer>();
         rend.enabled = true;
         rend.sharedMaterial = material[0];
+        currentKillState = KillState.LevelOne;
     }
+
 
     public enum KillState
     {
@@ -29,9 +32,9 @@ public class UnitLevelUp : AbilityBase
 
     public KillState currentKillState;
 
-    public override bool SelectedExecute()
-    {
 
+    public void Update()
+    {
         switch (currentKillState)
         {
             case KillState.LevelOne:
@@ -73,8 +76,11 @@ public class UnitLevelUp : AbilityBase
 
                 break;
         }
+    }
 
-
+    public override bool SelectedExecute()
+    {
+        Kills += 1;
         return base.SelectedExecute();
     }
 }
