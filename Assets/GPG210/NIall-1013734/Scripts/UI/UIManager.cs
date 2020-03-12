@@ -16,7 +16,7 @@ public class UIManager : MonoBehaviour
     private UnitSelectionManager unitSelectionManager;
     public List<UnitBase> units;
 
-    public TextMeshProUGUI[] textMeshProUguis;
+    public Button[] buttons;
     public GameObject abilitySelectionUI;
 
     public void Start()
@@ -26,6 +26,11 @@ public class UIManager : MonoBehaviour
         unitSelectionManager.onDeselectionEvent += OnDeselection;
         Debug.Log(units.Count.ToString());
         abilitySelectionUI.SetActive(false);
+    }
+
+    private void ClickedButton()
+    {
+        Debug.Log("yEYEEE");
     }
 
 
@@ -53,16 +58,33 @@ public class UIManager : MonoBehaviour
                 Debug.Log(item.Value.abilityName);
                 Debug.Log(item.Value.abilityDescription);
 
-                textMeshProUguis[counter].text = item.Value.abilityName;
+                buttons[counter].GetComponentInChildren<TextMeshProUGUI>().text = item.Value.abilityName;
+                buttons[counter].onClick.AddListener(ClickedButton);
             }
         }
     }
 
     private void OnDeselection(List<ISelectable> selectables)
     {
+        // Removes UI when no Unit is Selected.
         if (selectables.Count <= 0)
         {
             abilitySelectionUI.SetActive(false);
+        }
+        
+        abilitySelectionUI.SetActive(true);
+        var abilityControllerAbilities = ((UnitBase) selectables[0]).abilityController.abilities;
+
+        int counter = 0;
+        foreach (var item in abilityControllerAbilities)
+        {
+            counter++;
+
+            Debug.Log(item.Value.abilityName);
+            Debug.Log(item.Value.abilityDescription);
+
+            buttons[counter].GetComponentInChildren<TextMeshProUGUI>().text = "";
+            buttons[counter].onClick.RemoveListener(ClickedButton);
         }
     }
 }
