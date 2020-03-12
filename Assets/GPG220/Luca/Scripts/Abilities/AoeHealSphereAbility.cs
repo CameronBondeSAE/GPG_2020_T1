@@ -31,6 +31,7 @@ namespace GPG220.Luca.Scripts.Abilities
             return !isExecuting && base.CheckRequirements();
         }
 
+        // TODO Delete
         public override bool Execute(GameObject executorGameObject, GameObject[] targets = null)
         {
             if (!CheckRequirements())
@@ -42,6 +43,20 @@ namespace GPG220.Luca.Scripts.Abilities
             StartCoroutine(SpawnAndExpandHealSphere(executorGameObject));
             
             NotifyAbilityExecuted(executorGameObject);
+            return true;
+        }
+
+        public override bool SelectedExecute()
+        {
+            if (!CheckRequirements())
+                return false;
+
+            NotifyAbilityStartExecution(gameObject);
+            
+            isExecuting = true;
+            StartCoroutine(SpawnAndExpandHealSphere(gameObject));
+            
+            NotifyAbilityExecuted(gameObject);
             return true;
         }
 
