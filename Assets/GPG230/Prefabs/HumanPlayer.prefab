@@ -83,8 +83,9 @@ MonoBehaviour:
   boundrySize: {x: 10, y: 100, z: 10}
   unitBases:
   - {fileID: 2939113266008733344, guid: ae46586e6e892d44f839db11e880ba25, type: 3}
+  - {fileID: 114733390339695892, guid: 20c1442531b654d4da6e53eca7291655, type: 3}
   gameManager: {fileID: 0}
-  spawnNumber: 1
+  spawnNumber: 5
   owner: {fileID: 0}
   ownerNetID: 0
   SpawnableSurfaces:
