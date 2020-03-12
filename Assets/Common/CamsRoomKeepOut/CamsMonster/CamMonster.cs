@@ -15,6 +15,9 @@ public class CamMonster : UnitBase
     
         // Subscribe to event
         GetComponent<Health>().deathEvent += Death;
+
+
+        abilityController.ExecuteAbility<GetLittleAbility>();
     }
 
     private void OnTriggerEnter(Collider other)
