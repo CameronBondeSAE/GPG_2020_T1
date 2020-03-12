@@ -11,12 +11,10 @@ public class AbilityButton : MonoBehaviour
 
     public void ClickedButton()
     {
-        Debug.Log("YeeYeeeee");
-        //   SelectedExecute();
-        //  TargetExecute();
-        abilityBase.SelectedExecute();
-
-
+        if (abilityBase != null)
+        {
+            abilityBase.SelectedExecute();
+        }
     }
 
 

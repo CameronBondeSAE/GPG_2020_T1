@@ -67,19 +67,5 @@ public class UIManager : MonoBehaviour
         {
             abilitySelectionUI.SetActive(false);
         }
-
-        // abilitySelectionUI.SetActive(true);
-        var abilityControllerAbilities = ((UnitBase) selectables[0]).abilityController.abilities;
-
-        int counter = 0;
-        foreach (var item in abilityControllerAbilities)
-        {
-            Debug.Log(item.Value.abilityName);
-            Debug.Log(item.Value.abilityDescription);
-
-            buttons[counter].GetComponentInChildren<TextMeshProUGUI>().text = "";
-
-            counter++;
-        }
     }
 }

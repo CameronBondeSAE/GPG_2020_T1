@@ -16,30 +16,28 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         public List<UnitBase> unitBases;
         public GameManager gameManager;
         public int spawnNumber = 60;
-        public PlayerBase owner;
-        public uint ownerNetID;
         public LayerMask SpawnableSurfaces;
 
         // Start is called before the first frame update
         void Start()
         {
-            gameManager = FindObjectOfType<GameManager>();
-            if (gameManager != null) gameManager.startGameEvent += RandomSpawns;
+            // gameManager = FindObjectOfType<GameManager>();
+            // if (gameManager != null) gameManager.startGameEvent += () => RandomSpawns();
         }
 
-        public void SpawnUnit(UnitBase unit, Vector3 position,Quaternion rotation)
+        public void SpawnUnit(PlayerBase playerBaseOwner, UnitBase unit, Vector3 position, Quaternion rotation)
         {
             GameObject g = Instantiate(unit.gameObject, position, rotation);
 
             // Networking
             NetworkServer.Spawn(g);
             UnitBase uB = g.GetComponent<UnitBase>();
-            uB.owner = owner;
-            uB.ownerNetID = owner.netId;
+            uB.owner = playerBaseOwner;
+            uB.ownerNetID = playerBaseOwner.netId;
         }
         
         //[Button (Name = "RandomSpawn" )]
-        public void RandomSpawns()
+        public void RandomSpawns(PlayerBase playerBaseOwner)
         {
             Vector3 position;
             for (int i = 0; i < spawnNumber; i++)
@@ -47,7 +45,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                 int randIndex = Random.Range(0,unitBases.Count);
 
                 position = RandomGroundPointInBounds(unitExtents(unitBases[randIndex]));
-                SpawnUnit( unitBases[randIndex], position, Quaternion.Euler(Vector3.forward));
+                SpawnUnit( playerBaseOwner, unitBases[randIndex], position, Quaternion.Euler(Vector3.forward));
             }
         }
 

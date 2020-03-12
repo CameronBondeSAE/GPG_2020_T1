@@ -28,9 +28,6 @@ public class GameManager : MonoBehaviour
 
     public PlayMenu playMenu;
     public UnitSpawner unitSpawner;
-    
-
-    
 
 
     private void Start()
@@ -40,10 +37,8 @@ public class GameManager : MonoBehaviour
         playMenu.playEvent += PlayMenuOnplayEvent;
         networkManager.OnClientPlayerSpawnEvent += NetworkManagerOnOnClientPlayerSpawnEvent;
         networkManager.OnClientDisconnectedEvent += NetworkManagerOnOnClientDisconnectedEvent;
-        
-        
     }
-    
+
 
     private void NetworkManagerOnOnClientDisconnectedEvent(NetworkConnection conn)
     {
@@ -61,8 +56,6 @@ public class GameManager : MonoBehaviour
         {
             listofPlayerBases.Add(conn.identity.GetComponent<PlayerBase>());
             BuildUnits(conn.identity.GetComponent<PlayerBase>());
-
-
         }
     }
 
@@ -71,24 +64,20 @@ public class GameManager : MonoBehaviour
         if (startGameEvent != null)
         {
             startGameEvent.Invoke();
-            
         }
-        
     }
-    
+
     // Start is called before the first frame update
     public void BuildUnits(PlayerBase playerBase)
-         {
-             
-             if (unitSpawner != null)
-             {
-                 unitSpawner.owner = playerBase;
-                 unitSpawner.RandomSpawns();
-             }
-         }
-    
-    
-private void HealthOndeathStaticEvent(Health health)
+    {
+        if (unitSpawner != null)
+        {
+            unitSpawner.RandomSpawns(playerBase);
+        }
+    }
+
+
+    private void HealthOndeathStaticEvent(Health health)
     {
     }
 
@@ -104,7 +93,7 @@ private void HealthOndeathStaticEvent(Health health)
         globalUnitBases.Add(obj);
         obj.GetComponent<Health>().deathEvent += HealthOndeathStaticEvent;
         listOfSpawns = FindObjectsOfType<SpawnPoint>().ToList();
-       
+
         //listOfSpawns = globalUnitBases[(Random.Range(0,listOfSpawns.Count))];
     }
 
@@ -114,7 +103,6 @@ private void HealthOndeathStaticEvent(Health health)
         if (globalUnitBases.Count == 0 && gameOverEvent != null)
         {
             gameOverEvent.Invoke();
-           
         }
     }
 }
