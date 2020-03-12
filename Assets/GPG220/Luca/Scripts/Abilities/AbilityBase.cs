@@ -63,12 +63,12 @@ namespace GPG220.Luca.Scripts.Abilities
         /// TODO Remove
         public abstract bool Execute(GameObject executorGameObject, GameObject[] targets = null);
 
-        public virtual bool SelectedExecute(GameObject executorGameObject)
+        public virtual bool SelectedExecute()
         {
             return true;
         }
 
-        public virtual bool TargetExecute(GameObject executorGameObject, GameObject[] targets = null)
+        public virtual bool TargetExecute(GameObject[] targets = null)
         {
             return true;
         }
