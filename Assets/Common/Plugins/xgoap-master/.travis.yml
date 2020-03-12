@@ -1,0 +1,11 @@
+language: csharp
+solution: main.csproj
+dotnet: 2.2.401
+mono: none
+before_script:
+    - ./test.sh
+script:
+    - dotnet test -c Debug
+    - dotnet test -c Release -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+after_script:
+    - bash <(curl -s https://codecov.io/bash)
