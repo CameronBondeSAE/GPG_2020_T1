@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Mirror;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
@@ -10,7 +11,7 @@ namespace GPG220.Luca.Scripts.Abilities
     /// <summary>
     /// Controls a set of abilities. It can store an unlimited amount of abilities. Abilities are identified by an integer.
     /// </summary>
-    public class AbilityController : SerializedMonoBehaviour
+    public class AbilityController : NetworkBehaviour
     {
         // Automatically loads abilities added to the same gameobject on Start()
         public bool autoLoadAbilities = true;
@@ -181,6 +182,7 @@ namespace GPG220.Luca.Scripts.Abilities
             abilities.TryGetValue(abilityIndex, out var ability);
 
             return ability?.Execute(gameObject, targets) ?? false;
+            
         }
 
         /// <summary>
@@ -191,11 +193,16 @@ namespace GPG220.Luca.Scripts.Abilities
         /// <returns>Returns true if the ability could be executed.</returns>
         public bool SelectedExecuteAbility(int abilityIndex)
         {
+            return RpcSelectedExecuteAbility(abilityIndex);
+            
+        }
+        [ClientRpc]
+        public bool RpcSelectedExecuteAbility(int abilityIndex)
+        {
             abilities.TryGetValue(abilityIndex, out var ability);
 
             return ability?.SelectedExecute() ?? false;
         }
-
         /// <summary>
         /// Executes the ability with given ability-index (identifier).
         /// </summary>
