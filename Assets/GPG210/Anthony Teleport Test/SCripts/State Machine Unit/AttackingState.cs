@@ -31,9 +31,16 @@ namespace AnthonyY
         public override void Execute()
         {
             base.Execute();
+            StartCoroutine(AttackSequence());
+
+        }
+
+        IEnumerator AttackSequence()
+        {
             rb.AddForce(0,0,force,ForceMode.Impulse);
             //rb.transform.localScale += new Vector3(1,4,0); //rescale on runtime
-            
+            GetComponent<NewUnit>().currentState = GetComponent<NewUnit>().idleState;
+            yield return new WaitForSeconds(1f);
         }
 
         public override void Exit()

@@ -5,7 +5,7 @@ using AnthonyY;
 using GPG220.Luca.Scripts.Unit;
 using UnityEngine;
 
-public class NewUnit : MonoBehaviour
+public class NewUnit : UnitBase
 {
     
     public StateBase currentState;
@@ -14,7 +14,12 @@ public class NewUnit : MonoBehaviour
     public IdleState idleState;
     public WalkingState walkingState;
     public AttackingState attackingState;
-    
+
+    private void Start()
+    {
+        Initialize();
+    }
+
     void Update()
     {
          currentState.Execute();
@@ -22,7 +27,7 @@ public class NewUnit : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             // HACK: Hard ref
-             currentState = idleState;
+            ChangeState(walkingState);
         }
     }
 
