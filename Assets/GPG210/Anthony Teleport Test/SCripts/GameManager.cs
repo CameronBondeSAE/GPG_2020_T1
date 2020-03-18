@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     public event Action gameOverEvent;
     public event Action startGameEvent;
 
+	// Hack: No references to View UI stuff generally from 'Model' managers etc
     public PlayMenu playMenu;
     public UnitSpawner unitSpawner;
 
@@ -34,10 +35,17 @@ public class GameManager : MonoBehaviour
     {
         UnitBase.SpawnStaticEvent += UnitBaseOnSpawnStaticEvent;
         UnitBase.DespawnStaticEvent += UnitBaseOnDespawnStaticEvent;
-        playMenu.playEvent += PlayMenuOnplayEvent;
-        networkManager.OnClientPlayerSpawnEvent += NetworkManagerOnOnClientPlayerSpawnEvent;
-        networkManager.OnClientDisconnectedEvent += NetworkManagerOnOnClientDisconnectedEvent;
-    }
+		if (playMenu != null)
+		{
+			playMenu.playEvent += PlayMenuOnplayEvent;
+		}
+
+		if (networkManager != null)
+		{
+			networkManager.OnClientPlayerSpawnEvent  += NetworkManagerOnOnClientPlayerSpawnEvent;
+			networkManager.OnClientDisconnectedEvent += NetworkManagerOnOnClientDisconnectedEvent;
+		}
+	}
 
 
     private void NetworkManagerOnOnClientDisconnectedEvent(NetworkConnection conn)

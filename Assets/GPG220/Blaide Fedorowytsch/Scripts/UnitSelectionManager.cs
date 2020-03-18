@@ -93,7 +93,13 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         public List<ISelectable> selectedIselectables;
         
         private QuickOutline.Outline outline;
-        // Start is called before the first frame update
+
+		/// <summary>
+		/// Force ignoring network ID's just for testing
+		/// </summary>
+		public bool alwaysSelectDebug = false;
+
+		// Start is called before the first frame update
         private void Awake()
         {
             selectKeyPressed.performed += SelectKeyPressed;
@@ -190,8 +196,13 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         }
         uint GetOwnerID()
         {
-            localnetID = FindLocalPlayer().netId;
-            return localnetID;
+			PlayerBase findLocalPlayer = FindLocalPlayer();
+
+			if (findLocalPlayer != null)
+			{
+				localnetID = findLocalPlayer.netId;
+			}
+			return localnetID;
         }
         
 
@@ -213,7 +224,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                             ISelectable s = targetObject.GetComponent<ISelectable>();
 
                             //if (((UnitBase) s).owner == FindLocalPlayer() )
-                            if (((UnitBase) s).ownerNetID == GetOwnerID())
+                            if (((UnitBase) s).ownerNetID == GetOwnerID() || alwaysSelectDebug)
                             {
                                 s.OnSelected();
                                 ApplyOutlineToObject(((MonoBehaviour)s).gameObject);
@@ -230,7 +241,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                     lineRenderer.SetPositions(new Vector3[4] {Vector3.zero, Vector3.zero, Vector3.zero, Vector3.zero});
                     foreach (ISelectable s in iSelectablesInSelection)
                     {
-                        if (((UnitBase) s).ownerNetID == GetOwnerID())
+                        if (((UnitBase) s).ownerNetID == GetOwnerID() || alwaysSelectDebug)
                         {
                             s.OnSelected();
                             ApplyOutlineToObject(((MonoBehaviour) s).gameObject);
