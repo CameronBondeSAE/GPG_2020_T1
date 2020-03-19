@@ -22,10 +22,11 @@ public class PlayMenu : MonoBehaviour
 
 
     public void Play()
-	{
-		PlayMenuUI.SetActive(false);
-		playEvent?.Invoke();
-	}
+    {
+       PlayMenuUI.SetActive(false);
+       playEvent.Invoke();
+       
+    }
 
     public void Options()
     {
