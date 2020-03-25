@@ -13,16 +13,10 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 	{
 		public Vector3 boundrySize;
         public List<UnitBase> unitBases;
-        public GameManager gameManager;
         public int spawnNumber = 60;
         public LayerMask SpawnableSurfaces;
 
         // Start is called before the first frame update
-        void Start()
-        {
-            // gameManager = FindObjectOfType<GameManager>();
-            // if (gameManager != null) gameManager.startGameEvent += () => RandomSpawns();
-        }
 
         public void SpawnUnit(PlayerBase playerBaseOwner, UnitBase unit, Vector3 position, Quaternion rotation)
         {
@@ -36,7 +30,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 			uB.RpcSyncID(playerBaseOwner.netId);
 		}
         
-        [Button (Name = "RandomSpawn" )]
+        //[Button (Name = "RandomSpawn" )]
         public void RandomSpawns(PlayerBase playerBaseOwner)
         {
             Vector3 position;
