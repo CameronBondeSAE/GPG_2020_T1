@@ -20,7 +20,7 @@ namespace GPG220.Luca.Scripts.Unit
                 
         // TODO set owner somewhere
         public PlayerBase owner;
-        // [SyncVar]
+        [SyncVar]
         public uint ownerNetID;
         public UnitStats unitStats;
         public Inventory inventory;
@@ -28,10 +28,21 @@ namespace GPG220.Luca.Scripts.Unit
         public Health health;
         public AbilityController abilityController;
 
-        
-        
+		// Debug
+		public uint myNetID;
+		public string debug;
 
-        protected virtual void Initialize()
+		private void LateUpdate()
+		{
+			// DEBUG for inspector
+			myNetID = netId;
+
+			debug = "Auth = " + hasAuthority;
+			// debug = netIdentity.connectionToServer.
+		}
+
+
+		protected virtual void Initialize()
         {
             unitStats = GetComponent<UnitStats>();
             inventory = GetComponent<Inventory>();
