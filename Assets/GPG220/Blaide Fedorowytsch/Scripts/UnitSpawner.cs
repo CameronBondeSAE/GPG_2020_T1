@@ -36,7 +36,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 			uB.RpcSyncID(playerBaseOwner.netId);
 		}
         
-        //[Button (Name = "RandomSpawn" )]
+        [Button (Name = "RandomSpawn" )]
         public void RandomSpawns(PlayerBase playerBaseOwner)
         {
             Vector3 position;
