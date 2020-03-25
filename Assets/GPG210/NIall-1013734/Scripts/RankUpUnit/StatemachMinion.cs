@@ -17,6 +17,7 @@ public class StatemachMinion : UnitBase
     private UnitLevelUp unitlvlup;
     public Vector3 target;
     private bool moving = false;
+    public Vector3 offset = new Vector3(0f, 0.5f, 0f);
 
 
     public PathFinderController pathFinderController;
@@ -75,7 +76,7 @@ public class StatemachMinion : UnitBase
 
     void Move()
     {
-        transform.position = Vector3.MoveTowards(transform.position, target, UnitSpeed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, target + offset, UnitSpeed * Time.deltaTime);
         if (transform.position == target)
         {
             moving = false;
