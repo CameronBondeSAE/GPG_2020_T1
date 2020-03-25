@@ -10,9 +10,8 @@ using Random = UnityEngine.Random;
 namespace GPG220.Blaide_Fedorowytsch.Scripts
 {
     public class UnitSpawner : NetworkBehaviour
-    {
-        
-        public Vector3 boundrySize;
+	{
+		public Vector3 boundrySize;
         public List<UnitBase> unitBases;
         public GameManager gameManager;
         public int spawnNumber = 60;
@@ -33,8 +32,9 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             NetworkServer.Spawn(g);
             UnitBase uB = g.GetComponent<UnitBase>();
             uB.owner = playerBaseOwner;
-            uB.ownerNetID = playerBaseOwner.netId;
-        }
+            // uB.ownerNetID = playerBaseOwner.netId;
+			uB.RpcSyncID(playerBaseOwner.netId);
+		}
         
         //[Button (Name = "RandomSpawn" )]
         public void RandomSpawns(PlayerBase playerBaseOwner)

@@ -20,7 +20,7 @@ namespace GPG220.Luca.Scripts.Unit
                 
         // TODO set owner somewhere
         public PlayerBase owner;
-        [SyncVar]
+        // [SyncVar]
         public uint ownerNetID;
         public UnitStats unitStats;
         public Inventory inventory;
@@ -77,5 +77,11 @@ namespace GPG220.Luca.Scripts.Unit
             // TODO this only will work if the actual GO is destroyed. It won't work if the unit's death code, doesn't actually destroy itself
             Unload();
         }
-    }
+
+		[ClientRpc]
+		public void RpcSyncID(uint id)
+		{
+			ownerNetID = id;
+		}
+	}
 }
