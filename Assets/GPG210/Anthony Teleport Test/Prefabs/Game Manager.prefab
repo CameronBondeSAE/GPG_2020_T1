@@ -74,7 +74,7 @@ MonoBehaviour:
   - {fileID: 577926091930366375, guid: b2ddfa75df058774db6b0b3a4e67bbed, type: 3}
   - {fileID: 4069609011016073252, guid: 29860fa07d47c7e45b170f367357314a, type: 3}
   - {fileID: 4218702445721345300, guid: 9330195a9c0f596449e04b872f2bd245, type: 3}
-  gameManager: {fileID: 0}
+  gameManager: {fileID: 2937991697066462840}
   spawnNumber: 1
   SpawnableSurfaces:
     serializedVersion: 2
@@ -91,6 +91,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneId: 0
+  sceneId: 1549922500
   serverOnly: 0
-  m_AssetId: ff09ae3cace58124d96b62ccd444925e
+  m_AssetId: 
