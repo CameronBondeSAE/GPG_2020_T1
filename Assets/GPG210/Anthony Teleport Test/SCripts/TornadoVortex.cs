@@ -12,18 +12,16 @@ public class TornadoVortex : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Pullable")
-        {
-            StartCoroutine(PullObject(other, true)); //pull it in if pullable
-        }
+        StartCoroutine(PullObject(other, true)); //pull it in if pullable
+        
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Pullable")
-        {
+        
+        
             StartCoroutine(PullObject(other, false)); //dont pull it in if not pullable
-        }
+        
      
     }
 
