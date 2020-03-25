@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 
 namespace GPG220.Blaide_Fedorowytsch.Scripts
 {
-    public class UnitSpawner : MonoBehaviour
+    public class UnitSpawner : NetworkBehaviour
     {
         
         public Vector3 boundrySize;
