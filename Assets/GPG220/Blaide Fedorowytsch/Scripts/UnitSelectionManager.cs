@@ -62,7 +62,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         [SerializeField]
         private LayerMask unitLayerMask;
 
-        private GameManager gameManager;
+        public GameManager gameManager;
         private RTSNetworkManager rtsNetworkManager;
 
         /// <summary>
@@ -185,10 +185,31 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         {
             //HACK 
             //Todo Fix this crap,
-            List<PlayerBase> playerBases = FindObjectsOfType<PlayerBase>().ToList();
+            List<PlayerBase> playerBases;
+
+            if (gameManager != null)
+            {
+                playerBases = gameManager.listofPlayerBases;
+            }
+            else
+            {
+                Debug.Log("GameManager was not set in UnitSelectionManager, manually searching for GameManager.");
+                gameManager = FindObjectOfType<GameManager>();
+                if (gameManager != null)
+                {
+                    playerBases = gameManager.listofPlayerBases;
+                }
+                else
+                {
+                    playerBases = FindObjectsOfType<PlayerBase>().ToList();  
+                    Debug.Log("UnitSelectionManager could not find GameManager, manually searching for players.");
+                }
+            }
+
+            
             
             PlayerBase retPlayerBase = null;
-            if (gameManager != null && playerBases.Count > 0)
+            if ( playerBases.Count > 0)
             { 
                 retPlayerBase = playerBases[0];
                 foreach (PlayerBase pbs in playerBases )
@@ -198,6 +219,10 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                         retPlayerBase = pbs;
                     }
                 }
+            }
+            else
+            {
+                Debug.Log("UnitSelectionManager Could not find playerBases.");
             }
             return retPlayerBase;
         }
