@@ -23,17 +23,17 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             GameObject g = Instantiate(unit.gameObject, position, rotation);
 
             // Networking
-            NetworkServer.Spawn(g);
-			
-			
 			// Assign ownership of spawned units to client
-			g.GetComponent<NetworkIdentity>().AssignClientAuthority(playerBaseOwner.GetComponent<NetworkIdentity>().connectionToServer);
+            NetworkServer.Spawn(g, playerBaseOwner.gameObject);
+			
+			
+			// g.GetComponent<NetworkIdentity>().(playerBaseOwner.GetComponent<NetworkIdentity>());
             
 			
 			UnitBase uB = g.GetComponent<UnitBase>();
-            uB.owner = playerBaseOwner;
-            // uB.ownerNetID = playerBaseOwner.netId;
-			uB.RpcSyncID(playerBaseOwner.netId);
+            // uB.owner = playerBaseOwner;
+            uB.ownerNetID = playerBaseOwner.netId;
+			// uB.RpcSyncID(playerBaseOwner.netId);
 		}
         
         //[Button (Name = "RandomSpawn" )]
