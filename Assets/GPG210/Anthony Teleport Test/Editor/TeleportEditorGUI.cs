@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-[CustomEditor(typeof(TeleportEditor))]
+[CustomEditor(typeof(Teleporter))]
 public class TeleportEditorGUI : Editor
 {
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
-        TeleportEditor myScript = (TeleportEditor) target;
+        Teleporter myScript = (Teleporter) target;
 
         if (GUILayout.Button("Teleport"))
         {

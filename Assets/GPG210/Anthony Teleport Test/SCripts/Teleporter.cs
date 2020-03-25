@@ -4,7 +4,7 @@ using GPG220.Luca.Scripts.Unit;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class TeleportEditor : UnitBase
+public class Teleporter : UnitBase
 {
     public bool isTeleporting = true;
     public Transform teleportTarget;
