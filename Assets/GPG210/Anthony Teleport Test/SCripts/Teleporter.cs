@@ -79,7 +79,11 @@ public class Teleporter : UnitBase
     public void Teleporting()
     {
         Debug.Log("Teleporting Activated");
-        player.transform.position = currentTarget.transform.position;
+        if (currentTarget.transform.position != null)
+        {
+            player.transform.position = currentTarget.transform.position;
+        }
+        
 
         //player.transform.position = new Vector3(Random.Range(-Range, Range), 1, Random.Range(-Range, Range));
         player.SetActive(false);
