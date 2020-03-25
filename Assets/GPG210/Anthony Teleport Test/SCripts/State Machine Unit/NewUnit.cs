@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using AnthonyY;
+using GPG220.Luca.Scripts.Abilities;
 using GPG220.Luca.Scripts.Unit;
 using UnityEngine;
 
-public class NewUnit : MonoBehaviour
+public class NewUnit : AbilityBase
 {
     
     public StateBase currentState;
@@ -14,6 +16,7 @@ public class NewUnit : MonoBehaviour
     public IdleState idleState;
     public WalkingState walkingState;
     public AttackingState attackingState;
+    
     
     void Update()
     {

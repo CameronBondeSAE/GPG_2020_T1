@@ -18,11 +18,7 @@ public class TornadoVortex : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        
-        
-            StartCoroutine(PullObject(other, false)); //dont pull it in if not pullable
-        
-     
+        StartCoroutine(PullObject(other, false)); //dont pull it in if not pullable
     }
 
     IEnumerator PullObject(Collider other, bool shouldPull)

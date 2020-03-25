@@ -505,11 +505,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 054035b4bac289a4480b0d03e7c1e92d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityName: Walk
-  abilityDescription: Start Walking
-  abilityImg: {fileID: 0}
-  cooldown: 0
-  currentCooldown: 0
   rb: {fileID: 1291824449}
 --- !u!114 &1291824447
 MonoBehaviour:
@@ -518,16 +513,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1291824445}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b8d121dfd465384eb155487712fd18a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityName: Not Moving
-  abilityDescription: "Im not Moving\t"
-  abilityImg: {fileID: 0}
-  cooldown: 0
-  currentCooldown: 0
 --- !u!114 &1291824448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -540,11 +530,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 346baedf8b0582347a110c782e164c56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityName: Fling
-  abilityDescription: Flies towards the enemy
-  abilityImg: {fileID: 0}
-  cooldown: 0
-  currentCooldown: 0
   damage: 100
   NewUnit: {fileID: 1291824445}
   force: 1.89
@@ -650,18 +635,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34aefdaaccff11643b2142106719ca64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: abilities
-      Entry: 6
-      Data: 
+  syncMode: 0
+  syncInterval: 0.1
   autoLoadAbilities: 1
   defaultAbilityIndex: 0
 --- !u!114 &1291824456
@@ -733,15 +708,20 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1291824445}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c611ff37bf939684287e331f13635028, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilityName: 
+  abilityDescription: 
+  abilityImg: {fileID: 0}
+  cooldown: 0
+  currentCooldown: 0
   currentState: {fileID: 0}
-  idleState: {fileID: 0}
-  walkingState: {fileID: 0}
-  attackingState: {fileID: 0}
+  idleState: {fileID: 1291824447}
+  walkingState: {fileID: 1291824446}
+  attackingState: {fileID: 1291824448}
 --- !u!1 &1415536421
 GameObject:
   m_ObjectHideFlags: 0

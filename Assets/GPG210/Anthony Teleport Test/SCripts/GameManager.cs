@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour
     {
         if (globalUnitBases.Count == 0 && gameOverEvent != null)
         {
-            gameOverEvent.Invoke();
+            gameOverEvent?.Invoke();
         }
     }
 }
