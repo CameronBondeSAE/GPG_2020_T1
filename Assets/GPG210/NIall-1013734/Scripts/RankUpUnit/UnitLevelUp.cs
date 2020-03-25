@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using GPG220.Luca.Scripts.Abilities;
 using UnityEngine;
+using DG.Tweening;
+using UnityEngine.Assertions.Must;
 using UnityEngine.Experimental.PlayerLoop;
 
 public class UnitLevelUp : AbilityBase
@@ -11,6 +13,8 @@ public class UnitLevelUp : AbilityBase
     private Renderer rend;
     public GameObject outerProng;
     public GameObject centreProng;
+   // public RankUpUnit rankupunit;
+    
 
 
     public void Start()
@@ -81,6 +85,8 @@ public class UnitLevelUp : AbilityBase
     public override bool SelectedExecute()
     {
         Kills += 1;
+       // rankupunit.MustBeEqual( transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBounce));
+        
         return base.SelectedExecute();
     }
 }
