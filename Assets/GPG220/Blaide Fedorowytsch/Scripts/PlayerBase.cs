@@ -10,6 +10,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
     {
         public List<UnitBase> units;
         public Color playerColour;
+		[SyncVar]
         public string playerName;
 
     }

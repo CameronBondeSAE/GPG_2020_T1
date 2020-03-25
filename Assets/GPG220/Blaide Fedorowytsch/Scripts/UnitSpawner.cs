@@ -30,7 +30,13 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 
             // Networking
             NetworkServer.Spawn(g);
-            UnitBase uB = g.GetComponent<UnitBase>();
+			
+			
+			// Assign ownership of spawned units to client
+			g.GetComponent<NetworkIdentity>().AssignClientAuthority(playerBaseOwner.GetComponent<NetworkIdentity>().connectionToServer);
+            
+			
+			UnitBase uB = g.GetComponent<UnitBase>();
             uB.owner = playerBaseOwner;
             // uB.ownerNetID = playerBaseOwner.netId;
 			uB.RpcSyncID(playerBaseOwner.netId);

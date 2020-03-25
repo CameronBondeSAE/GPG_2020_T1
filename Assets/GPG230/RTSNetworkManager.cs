@@ -10,7 +10,14 @@ public class RTSNetworkManager : NetworkManager
     public event Action<NetworkConnection> OnClientPlayerSpawnEvent;
     public event Action<NetworkConnection> OnClientDisconnectedEvent;
 
-    public void OnServerConnect(NetworkConnection conn)
+
+	public override void Awake()
+	{
+		base.Awake();
+		
+	}
+
+	public override void OnServerConnect(NetworkConnection conn)
     {
         base.OnServerConnect(conn);
     }
