@@ -143,7 +143,14 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         // Update is called once per frame
         void Update()
         {
-            cursorOverUI =  UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
+            if (UnityEngine.EventSystems.EventSystem.current != null)
+            {
+              cursorOverUI =  UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();  
+            }
+            else
+            {
+                cursorOverUI = false;
+            }
             hadFocusLastFrame = windowHasFocus;
         }
 
