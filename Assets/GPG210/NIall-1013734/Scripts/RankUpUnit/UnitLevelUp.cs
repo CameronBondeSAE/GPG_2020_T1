@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using GPG220.Luca.Scripts.Abilities;
 using UnityEngine;
-using DG.Tweening;
 using UnityEngine.Assertions.Must;
 using UnityEngine.Experimental.PlayerLoop;
 

@@ -153,9 +153,12 @@ MonoBehaviour:
   rb: {fileID: 54844123311866720}
   health: {fileID: 1404205552856636576}
   abilityController: {fileID: 0}
+  myNetID: 0
+  debug: 
   UnitSpeed: 4
   target: {x: 0, y: 0, z: 0}
-  pathFinderController: {fileID: 0}
+  offset: {x: 0, y: 0.5, z: 0}
+  tweenDuration: 0.5
   currentState: 0
 --- !u!114 &-7197862813521790675
 MonoBehaviour:
@@ -169,18 +172,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34aefdaaccff11643b2142106719ca64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: abilities
-      Entry: 6
-      Data: 
+  syncMode: 0
+  syncInterval: 0.1
   autoLoadAbilities: 1
   defaultAbilityIndex: 0
 --- !u!114 &114481657677577802

@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 using Random = UnityEngine.Random;
+using DG.Tweening;
 
 
 public class StatemachMinion : UnitBase
@@ -18,9 +19,9 @@ public class StatemachMinion : UnitBase
     public Vector3 target;
     private bool moving = false;
     public Vector3 offset = new Vector3(0f, 0.5f, 0f);
+    public float tweenDuration;
 
-
-    public PathFinderController pathFinderController;
+    // public PathFinderController pathFinderController;
 
     public enum States
     {
@@ -54,6 +55,8 @@ public class StatemachMinion : UnitBase
     {
         base.OnSelected();
         currentState = States.Moving;
+        transform.DOShakeScale(tweenDuration, new Vector3(1f, 0f, 1f), 1, 0.2f, false);
+
     }
 
     public override void OnExecuteAction(Vector3 worldPosition, GameObject g)
