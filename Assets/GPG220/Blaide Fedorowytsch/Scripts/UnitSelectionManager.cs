@@ -263,6 +263,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                             if (((UnitBase) s).ownerNetID == GetOwnerID() || alwaysSelectDebug)
                             {
                                 s.OnSelected();
+                                
                                 ApplyOutlineToObject(((MonoBehaviour)s).gameObject);
                                 selectedIselectables.Add(s);
                             }
@@ -294,6 +295,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                         Health health = ((MonoBehaviour)s).gameObject.GetComponent<Health>();
                         health.deathEvent += IselectableDeadOrDestroyed;
                     }
+                    s.OnSelected(selectedIselectables);
                 }
                 
                 boxCollider.center = new Vector3(0,100000,0);

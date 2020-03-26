@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace GPG220.Blaide_Fedorowytsch.Scripts.Interfaces
 {
@@ -17,6 +18,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Interfaces
         /// <summary>
         /// Called by the selection Manager when the unit has been selected.
         /// </summary>
+        void OnSelected( List<ISelectable> selectionGroup);
+
         void OnSelected();
         void OnDeSelected();
         void OnExecuteAction( Vector3 clickedWorldPosition, GameObject clickedGameObject);

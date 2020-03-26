@@ -1,8 +1,9 @@
 ﻿using GPG220.Blaide_Fedorowytsch.Scripts;
+using GPG220.Luca.Scripts.Unit;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
-public class NPCSpearmen : TestUnitBase
+public class NPCSpearmen : UnitBase
 {
     public float cooldown;
     

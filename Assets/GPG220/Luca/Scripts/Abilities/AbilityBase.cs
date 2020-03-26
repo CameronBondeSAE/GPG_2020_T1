@@ -92,6 +92,11 @@ namespace GPG220.Luca.Scripts.Abilities
         {
             return true;
         }
+        
+        public virtual bool TargetExecute( Vector3 worldPos)
+        {
+            return true;
+        }
 
         /// <summary>
         /// Call this function to cleanup/break/finish the execution of this ability.

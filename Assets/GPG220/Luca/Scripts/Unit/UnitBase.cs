@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using GPG220.Blaide_Fedorowytsch.Scripts;
 using GPG220.Blaide_Fedorowytsch.Scripts.Interfaces;
 using GPG220.Luca.Scripts.Abilities;
@@ -27,8 +28,8 @@ namespace GPG220.Luca.Scripts.Unit
         public Rigidbody rb;
         public Health health;
         public AbilityController abilityController;
-
-		// Debug
+        public List<ISelectable> currentSelectionGroup;
+        // Debug
 		public uint myNetID;
 		public string debug;
 
@@ -67,20 +68,32 @@ namespace GPG220.Luca.Scripts.Unit
         {
             return true;
         }
-
         public virtual void OnSelected()
         {
             
         }
+        public virtual void OnSelected( List<ISelectable> selectionGroup )
+        {
+	        currentSelectionGroup = selectionGroup;
+        }
 
         public virtual void OnDeSelected()
         {
-            
+	        currentSelectionGroup = null;
         }
 
         public virtual void OnExecuteAction(Vector3 worldPosition, GameObject g)
         {
-            
+	        if (g != null)
+	        {
+		        GameObject[] gs = new GameObject[1];
+		        gs[0] = g;
+		        abilityController.TargetExecuteDefaultAbility(gs);
+	        }
+	        else 
+	        {
+		        abilityController.TargetExecuteDefaultAbility(worldPosition);
+	        }
         }
 
         private void OnDestroy()

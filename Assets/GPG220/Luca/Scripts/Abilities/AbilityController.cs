@@ -84,7 +84,11 @@ namespace GPG220.Luca.Scripts.Abilities
         /// <returns>Returns true if the ability could be executed.</returns>
         public bool TargetExecuteDefaultAbility(GameObject[] targets = null)
         {
-            return TargetExecuteAbility(defaultAbilityIndex);
+            return TargetExecuteAbility(defaultAbilityIndex,targets);
+        }
+        public bool TargetExecuteDefaultAbility( Vector3 worldPos)
+        {
+            return TargetExecuteAbility(defaultAbilityIndex,worldPos);
         }
 
         /// <summary>
@@ -214,6 +218,12 @@ namespace GPG220.Luca.Scripts.Abilities
             abilities.TryGetValue(abilityIndex, out var ability);
 
             return ability?.TargetExecute(targets) ?? false;
+        }
+        public bool TargetExecuteAbility(int abilityIndex, Vector3 worldPos)
+        {
+            abilities.TryGetValue(abilityIndex, out var ability);
+
+            return ability?.TargetExecute(worldPos) ?? false;
         }
     }
 }
