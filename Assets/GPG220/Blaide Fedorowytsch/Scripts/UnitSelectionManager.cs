@@ -185,11 +185,13 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         {
             //HACK 
             //Todo Fix this crap,
-            List<PlayerBase> playerBases;
-
+            List<PlayerBase> playerBases = new List<PlayerBase>();
             if (gameManager != null)
             {
-                playerBases = gameManager.listofPlayerBases;
+                if (gameManager.listofPlayerBases.Count > 0)
+                {
+                    playerBases = gameManager.listofPlayerBases;
+                }
             }
             else
             {
@@ -199,11 +201,13 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                 {
                     playerBases = gameManager.listofPlayerBases;
                 }
-                else
-                {
-                    playerBases = FindObjectsOfType<PlayerBase>().ToList();  
-                    Debug.Log("UnitSelectionManager could not find GameManager, manually searching for players.");
-                }
+            }
+            
+            // if( gameManager == null || gameManager.listofPlayerBases.Count <= 0)
+           if(playerBases.Count <= 0) 
+           {
+                playerBases = FindObjectsOfType<PlayerBase>().ToList();
+                Debug.Log("UnitSelectionManager could not find GameManager or GameManager had no list of players, manually searching for players.");
             }
 
             
