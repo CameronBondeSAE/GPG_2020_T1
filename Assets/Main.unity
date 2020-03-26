@@ -692,14 +692,10 @@ PrefabInstance:
     - target: {fileID: 9126485538190964056, guid: ff09ae3cace58124d96b62ccd444925e,
         type: 3}
       propertyPath: sceneId
-      value: 1703448838
+      value: 2900797019
       objectReference: {fileID: 0}
-    - target: {fileID: 9126485538190964056, guid: ff09ae3cace58124d96b62ccd444925e,
-        type: 3}
-      propertyPath: m_AssetId
-      value: ff09ae3cace58124d96b62ccd444925e
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9126485538190964056, guid: ff09ae3cace58124d96b62ccd444925e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ff09ae3cace58124d96b62ccd444925e, type: 3}
 --- !u!1001 &639375681
 PrefabInstance:

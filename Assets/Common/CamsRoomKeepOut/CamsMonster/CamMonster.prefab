@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3648155918811046637}
   - component: {fileID: 3776347446129422645}
   - component: {fileID: 7557236680982209879}
+  - component: {fileID: 2450234995839662397}
   - component: {fileID: 8326427771440045471}
   - component: {fileID: 1574884746106495472}
   - component: {fileID: -3855243417948868038}
@@ -102,6 +103,8 @@ MonoBehaviour:
   rb: {fileID: 0}
   health: {fileID: 0}
   abilityController: {fileID: 0}
+  myNetID: 0
+  debug: 
 --- !u!114 &7557236680982209879
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,20 +117,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34aefdaaccff11643b2142106719ca64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: abilities
-      Entry: 6
-      Data: 
+  syncMode: 0
+  syncInterval: 0.1
   autoLoadAbilities: 1
   defaultAbilityIndex: 0
+--- !u!114 &2450234995839662397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1127377614303666354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ec0d918dabd23e4fa0d5b78a92c859e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityName: 
+  abilityDescription: 
+  abilityImg: {fileID: 0}
+  cooldown: 0
+  currentCooldown: 0
+  moving: 0
+  usm: {fileID: 0}
+  collider: {fileID: 0}
+  targetPos: {x: 0, y: 0, z: 0}
 --- !u!114 &8326427771440045471
 MonoBehaviour:
   m_ObjectHideFlags: 0

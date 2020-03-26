@@ -9,13 +9,16 @@ using UnityEngine;
 public class Tests : NetworkManager
 {
     List<SpawnPoint> spawnPoints;
-    
+
+	public CamMonster camMonster;    
     
     // Start is called before the first frame update
     void Start()
     {
         spawnPoints = FindObjectsOfType<SpawnPoint>().ToList();
-    }
+
+		camMonster = FindObjectOfType<CamMonster>();
+	}
 
     // Update is called once per frame
     void Update()

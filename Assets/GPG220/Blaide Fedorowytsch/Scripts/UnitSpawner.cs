@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 
 namespace GPG220.Blaide_Fedorowytsch.Scripts
 {
-    public class UnitSpawner : NetworkBehaviour
+    public class UnitSpawner : MonoBehaviour
 	{
 		public Vector3 boundrySize;
         public List<UnitBase> unitBases;
@@ -27,7 +27,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             NetworkServer.Spawn(g, playerBaseOwner.gameObject);
 			
 			
-			// g.GetComponent<NetworkIdentity>().(playerBaseOwner.GetComponent<NetworkIdentity>());
+			// g.GetComponent<NetworkIdentity>().AssignClientAuthority(playerBaseOwner.GetComponent<NetworkIdentity>().connectionToClient);
             
 			
 			UnitBase uB = g.GetComponent<UnitBase>();
