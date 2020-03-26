@@ -1,4 +1,5 @@
 ﻿using System;
+using DG.Tweening;
 using GPG220.Luca.Scripts.Abilities;
 using GPG220.Luca.Scripts.Unit;
 using UnityEngine;
@@ -16,6 +17,8 @@ public class Teleporter : UnitBase
     public Transform currentTarget;
     public int damage;
 
+    public float tweenDuration;
+
     private Rigidbody rb;
    
     
@@ -25,8 +28,9 @@ public class Teleporter : UnitBase
     {
         base.OnSelected();
         Debug.Log("Selected!");
+        transform.DOShakeScale(tweenDuration, new Vector3(1f, 0, 2f), 1, 0.2f, false).SetEase(Ease.InCubic);
 
-        
+
     }
 
     public override void OnDeSelected()
@@ -39,11 +43,11 @@ public class Teleporter : UnitBase
     {
         base.OnExecuteAction(worldPosition, g);
 
-        if (g != null)
+        /*if (g != null)
         {
             currentTarget = g.transform;
             
-        }
+        }*/
         
 
        
@@ -81,12 +85,8 @@ public class Teleporter : UnitBase
     public void Teleporting()
     {
         Debug.Log("Teleporting Activated");
-        if (currentTarget.transform.position != null)
-        {
-            player.transform.position = currentTarget.transform.position;
-        }
+        player.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         
-
         //player.transform.position = new Vector3(Random.Range(-Range, Range), 1, Random.Range(-Range, Range));
         player.SetActive(false);
         Invoke("DelayTeleport", 1); //delay the teleporter by 1 second

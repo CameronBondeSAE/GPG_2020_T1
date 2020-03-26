@@ -755,7 +755,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &929223768
 Transform:
   m_ObjectHideFlags: 0
@@ -2085,41 +2085,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5038828844791700527, guid: 9312c56302d9dd7429ac76f5626315ad,
-        type: 3}
-      propertyPath: waypoints.Array.data[0]
-      value: 
-      objectReference: {fileID: 1375697013}
-    - target: {fileID: 5038828844791700527, guid: 9312c56302d9dd7429ac76f5626315ad,
-        type: 3}
-      propertyPath: waypoints.Array.data[1]
-      value: 
-      objectReference: {fileID: 954574192}
-    - target: {fileID: 5038828844791700527, guid: 9312c56302d9dd7429ac76f5626315ad,
-        type: 3}
-      propertyPath: waypoints.Array.data[2]
-      value: 
-      objectReference: {fileID: 1488197768}
-    - target: {fileID: 5038828844791700527, guid: 9312c56302d9dd7429ac76f5626315ad,
-        type: 3}
-      propertyPath: waypoints.Array.data[3]
-      value: 
-      objectReference: {fileID: 1246663091}
-    - target: {fileID: 5038828844791700527, guid: 9312c56302d9dd7429ac76f5626315ad,
-        type: 3}
-      propertyPath: waypoints.Array.data[4]
-      value: 
-      objectReference: {fileID: 1829439369}
-    - target: {fileID: 5038828844791700527, guid: 9312c56302d9dd7429ac76f5626315ad,
-        type: 3}
-      propertyPath: waypoints.Array.data[5]
-      value: 
-      objectReference: {fileID: 422312853}
-    - target: {fileID: 5038828844791700524, guid: 9312c56302d9dd7429ac76f5626315ad,
-        type: 3}
-      propertyPath: pullSpeed
-      value: 600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9312c56302d9dd7429ac76f5626315ad, type: 3}
