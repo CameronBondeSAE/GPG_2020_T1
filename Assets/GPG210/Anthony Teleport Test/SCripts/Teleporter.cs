@@ -39,20 +39,20 @@ public class Teleporter : UnitBase
         
     }
 
-    public override void OnExecuteAction(Vector3 worldPosition, GameObject g)
+    /*public override void OnExecuteAction(Vector3 worldPosition, GameObject g)
     {
         base.OnExecuteAction(worldPosition, g);
 
-        /*if (g != null)
+        if (g != null)
         {
             currentTarget = g.transform;
             
-        }*/
+        }
         
 
        
         Teleporting();
-    }
+    }*/
 
     
     
@@ -82,7 +82,7 @@ public class Teleporter : UnitBase
    }
 
 
-    public void Teleporting()
+   /* public void Teleporting()
     {
         Debug.Log("Teleporting Activated");
         player.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -96,6 +96,6 @@ public class Teleporter : UnitBase
     {
         player.SetActive(true);
     }
-
+*/
     
 }

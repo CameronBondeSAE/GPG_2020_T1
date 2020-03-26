@@ -10,11 +10,11 @@ public class TeleportEditorGUI : Editor
         DrawDefaultInspector();
         Teleporter myScript = (Teleporter) target;
 
-        if (GUILayout.Button("Teleport"))
+        /*if (GUILayout.Button("Teleport"))
         {
             myScript.Teleporting();
            
-        }
+        }*/
 
         
             

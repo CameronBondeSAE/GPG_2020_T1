@@ -216,7 +216,7 @@ PrefabInstance:
     - target: {fileID: 2013552115246364282, guid: e8e17d5cc7b14d2409dfea474528d91b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.720001
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 2013552115246364282, guid: e8e17d5cc7b14d2409dfea474528d91b,
         type: 3}
@@ -586,6 +586,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91458b95eb965ac4baf5c3fd0c4c25e5, type: 3}
+--- !u!1 &1164923617 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3551373137489945564, guid: b2ddfa75df058774db6b0b3a4e67bbed,
+    type: 3}
+  m_PrefabInstance: {fileID: 577926090959455300}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1254078871
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -676,7 +682,7 @@ PrefabInstance:
     - target: {fileID: 2013552115246364282, guid: e8e17d5cc7b14d2409dfea474528d91b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.84
+      value: 33.2
       objectReference: {fileID: 0}
     - target: {fileID: 2013552115246364282, guid: e8e17d5cc7b14d2409dfea474528d91b,
         type: 3}
@@ -1294,6 +1300,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 577926091930366375, guid: b2ddfa75df058774db6b0b3a4e67bbed,
+        type: 3}
+      propertyPath: tweenDuration
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 577926091930366374, guid: b2ddfa75df058774db6b0b3a4e67bbed,
         type: 3}
       propertyPath: m_Name
@@ -1394,6 +1405,22 @@ PrefabInstance:
       propertyPath: cooldown
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 2150010261681644474, guid: b2ddfa75df058774db6b0b3a4e67bbed,
+        type: 3}
+      propertyPath: go
+      value: 
+      objectReference: {fileID: 1164923617}
+    - target: {fileID: 2150010261681644474, guid: b2ddfa75df058774db6b0b3a4e67bbed,
+        type: 3}
+      propertyPath: visuals
+      value: 
+      objectReference: {fileID: 1164923617}
+    - target: {fileID: 2150010261681644474, guid: b2ddfa75df058774db6b0b3a4e67bbed,
+        type: 3}
+      propertyPath: teleportEffect
+      value: 
+      objectReference: {fileID: 8869045155054173864, guid: 1091d6bdf7e780f4c9f2d0579606f221,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2ddfa75df058774db6b0b3a4e67bbed, type: 3}
 --- !u!114 &577926090959455301 stripped
@@ -1433,7 +1460,7 @@ PrefabInstance:
     - target: {fileID: 2013552115246364282, guid: e8e17d5cc7b14d2409dfea474528d91b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 16.129997
+      value: 0.21
       objectReference: {fileID: 0}
     - target: {fileID: 2013552115246364282, guid: e8e17d5cc7b14d2409dfea474528d91b,
         type: 3}
