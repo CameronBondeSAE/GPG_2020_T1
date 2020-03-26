@@ -42,7 +42,9 @@ public class Teleporter : UnitBase
         if (g != null)
         {
             currentTarget = g.transform;
+            
         }
+        
 
        
         Teleporting();

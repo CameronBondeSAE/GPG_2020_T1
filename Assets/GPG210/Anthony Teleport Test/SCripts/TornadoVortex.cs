@@ -9,6 +9,9 @@ public class TornadoVortex : MonoBehaviour
     public Transform tornadoCenter;
     public float pullSpeed;
     public float refreshRate;
+    
+
+    
 
     private void OnTriggerEnter(Collider other)
     {
