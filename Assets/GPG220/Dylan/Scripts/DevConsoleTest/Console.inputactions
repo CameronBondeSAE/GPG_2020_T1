@@ -1,0 +1,50 @@
+{
+    "name": "Console",
+    "maps": [
+        {
+            "name": "Developer",
+            "id": "476900f5-864f-40b2-b53c-cb9efa3b7454",
+            "actions": [
+                {
+                    "name": "Console",
+                    "type": "Button",
+                    "id": "1950156a-ac38-49ea-a569-dc22e77c3529",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "9c632dd3-9190-402a-8cf8-c6acf5e0829c",
+                    "path": "<Keyboard>/backquote",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "Keyboard n Mouse",
+                    "action": "Console",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Keyboard n Mouse",
+            "bindingGroup": "Keyboard n Mouse",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": true,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}

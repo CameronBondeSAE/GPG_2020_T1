@@ -1,0 +1,244 @@
+{
+    "name": "CameraControls",
+    "maps": [
+        {
+            "name": "CameraActionMap",
+            "id": "d9442a2c-0517-45ac-a1eb-4f3eb7d7dff3",
+            "actions": [
+                {
+                    "name": "MovementControls",
+                    "type": "Button",
+                    "id": "6a885cec-d473-47cc-a818-de6adb0ec958",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Hold,Press"
+                },
+                {
+                    "name": "SpeedUpCamera",
+                    "type": "Button",
+                    "id": "92cfb879-e785-45b5-b40e-ba9252ea2e0f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Hold,Press"
+                },
+                {
+                    "name": "RotateLeft",
+                    "type": "Button",
+                    "id": "bda5f40c-6228-4d62-b181-3637cfe16e7e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press,Hold"
+                },
+                {
+                    "name": "RotateRight",
+                    "type": "Button",
+                    "id": "20b703db-682d-41cc-92eb-43efec95ed04",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press,Hold"
+                },
+                {
+                    "name": "ZoomIn",
+                    "type": "Button",
+                    "id": "9d0e02e9-e655-422b-bfeb-9f0aa5b3febf",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press,Hold"
+                },
+                {
+                    "name": "ZoomOut",
+                    "type": "Button",
+                    "id": "7d20796a-568b-46a9-abff-8e9cbea3c967",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press,Hold"
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "Movement",
+                    "id": "70621548-83d7-456f-bc7b-329c8589f132",
+                    "path": "2DVector",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MovementControls",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "b2c5e9f8-2af8-4538-b5a2-833474cdcbaf",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MovementControls",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "52e3e914-0071-498a-abfe-ac70ec41af80",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MovementControls",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "53c71d3c-7446-4ad7-a878-576043a692d4",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MovementControls",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "2865c2a5-c012-4cde-9deb-28a881cd13fe",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MovementControls",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "MovementArrow",
+                    "id": "904714b1-08ac-4e61-a6e2-0c6e771cd79c",
+                    "path": "2DVector",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MovementControls",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "81046b06-620d-4a85-abae-a5272cf4e4b2",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MovementControls",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "3b29fbfc-1e78-4399-8162-2d5a5bd601fc",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MovementControls",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "27bfffcd-870e-432b-939a-8a92e54b2ed6",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MovementControls",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "46954874-86d6-4e1e-8f45-a7eab95d4604",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MovementControls",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "3346f96f-92d9-4604-b1a1-aeedd17683fc",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "Tap",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpeedUpCamera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bf85c859-b56d-4f60-a59b-8658885be585",
+                    "path": "<Keyboard>/q",
+                    "interactions": "Hold,Tap",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RotateLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0947c6b6-4822-4788-8142-5d219dd000e5",
+                    "path": "<Keyboard>/e",
+                    "interactions": "Hold,Tap",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RotateRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8054deee-2aeb-416c-8a81-5aa7678d716e",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ZoomIn",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8cf81294-7893-425a-a738-f2060a41e3a5",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ZoomOut",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "CameraControls",
+            "bindingGroup": "CameraControls",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": true,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}
