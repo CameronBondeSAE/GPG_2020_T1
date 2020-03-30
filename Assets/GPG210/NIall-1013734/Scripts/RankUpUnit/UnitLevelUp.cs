@@ -47,7 +47,7 @@ public class UnitLevelUp : AbilityBase
                 outerProng.SetActive(false);
                 centreProng.SetActive(true);
 
-                if (Kills >= 2 && Kills <= 3)
+                if (Kills >= 1 && Kills <= 2)
                 {
                     currentKillState = KillState.LevelTwo;
                 }
@@ -62,7 +62,7 @@ public class UnitLevelUp : AbilityBase
 
                 outerProng.SetActive(true);
                 centreProng.SetActive(false);
-                if (Kills >= 4)
+                if (Kills >= 3)
                 {
                     currentKillState = KillState.LevelThree;
                 }

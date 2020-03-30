@@ -61,7 +61,7 @@ public class StatemachMinion : UnitBase
 
     public override void OnExecuteAction(Vector3 worldPosition, GameObject g)
     {
-        SetTargetPosition();
+       // SetTargetPosition();
     }
 
     void SetTargetPosition()
@@ -130,7 +130,7 @@ public class StatemachMinion : UnitBase
             UnitSpeed = 5f;
         }
 
-        if (unitlvlup.Kills >= 4)
+        if (unitlvlup.Kills >= 3)
         {
             UnitSpeed = 6f;
         }

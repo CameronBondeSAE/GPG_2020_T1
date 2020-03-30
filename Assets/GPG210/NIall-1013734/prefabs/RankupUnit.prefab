@@ -20,10 +20,10 @@ GameObject:
   - component: {fileID: 114009500597666366}
   - component: {fileID: 68299660218663067}
   - component: {fileID: -5808497921224969720}
-  - component: {fileID: 7390116288092270522}
+  - component: {fileID: -142625941682530661}
   m_Layer: 0
   m_Name: RankupUnit
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -245,19 +245,25 @@ MonoBehaviour:
   sceneId: 0
   serverOnly: 0
   m_AssetId: 
---- !u!135 &7390116288092270522
-SphereCollider:
+--- !u!114 &-142625941682530661
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1440955559183952}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 4
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ec0d918dabd23e4fa0d5b78a92c859e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityName: Move
+  abilityDescription: move to target location
+  abilityImg: {fileID: 0}
+  cooldown: 0
+  currentCooldown: 0
+  moving: 0
+  targetPos: {x: 0, y: 0, z: 0}
 --- !u!1 &1686169348673056
 GameObject:
   m_ObjectHideFlags: 0
