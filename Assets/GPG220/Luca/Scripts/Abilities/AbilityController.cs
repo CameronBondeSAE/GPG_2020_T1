@@ -17,7 +17,7 @@ namespace GPG220.Luca.Scripts.Abilities
         public bool autoLoadAbilities = true;
     
         // Sorted list of all abilities. The key is a unique integer serving as an identifier.
-        [ShowInInspector, OdinSerialize]
+        [Sirenix.OdinInspector.ShowInInspector, OdinSerialize]
         public SortedList<int,AbilityBase> abilities;
 
         // The int identifier of the default ability
@@ -200,13 +200,15 @@ namespace GPG220.Luca.Scripts.Abilities
             return RpcSelectedExecuteAbility(abilityIndex);
             
         }
-        // [ClientRpc]
+
+		// [ClientRpc]
         public bool RpcSelectedExecuteAbility(int abilityIndex)
         {
             abilities.TryGetValue(abilityIndex, out var ability);
 
             return ability?.SelectedExecute() ?? false;
         }
+		
         /// <summary>
         /// Executes the ability with given ability-index (identifier).
         /// </summary>

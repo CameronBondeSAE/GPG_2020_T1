@@ -136,9 +136,12 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             lineRenderer = GetComponent<LineRenderer>();
             selectionRect = new Vector3[4];
             boxCollider = GetComponent<BoxCollider>();
-            gameManager = FindObjectOfType<GameManager>();
             rtsNetworkManager = FindObjectOfType<RTSNetworkManager>();
-        }
+
+			// gameManager = FindObjectOfType<GameManager>();
+			// GameManager isn't spawned until the game host starts
+			rtsNetworkManager.OnStartedHost += () => gameManager = FindObjectOfType<GameManager>();
+		}
 
         // Update is called once per frame
         void Update()

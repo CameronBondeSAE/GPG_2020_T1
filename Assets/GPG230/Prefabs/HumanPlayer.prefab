@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 894108321244952483}
   - component: {fileID: 7557855231570532343}
   - component: {fileID: 9016229784908242576}
-  - component: {fileID: 4960270197269180030}
   m_Layer: 0
   m_Name: HumanPlayer
   m_TagString: Untagged
@@ -69,29 +68,3 @@ MonoBehaviour:
   playerName: 
   netIdMine: 0
   isLocalPlayerMine: 0
---- !u!114 &4960270197269180030
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8542780475567812279}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 763516cae5e273d4f95a6d3d13bb5bff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  boundrySize: {x: 100, y: 50, z: 0}
-  unitBases:
-  - {fileID: 2939113266008733344, guid: ae46586e6e892d44f839db11e880ba25, type: 3}
-  - {fileID: 3776347446129422645, guid: 034d145f47743a348bfc3c6557f64867, type: 3}
-  - {fileID: 114733390339695892, guid: 20c1442531b654d4da6e53eca7291655, type: 3}
-  - {fileID: 577926091930366375, guid: b2ddfa75df058774db6b0b3a4e67bbed, type: 3}
-  - {fileID: 4069609011016073252, guid: 29860fa07d47c7e45b170f367357314a, type: 3}
-  - {fileID: 4218702445721345300, guid: 9330195a9c0f596449e04b872f2bd245, type: 3}
-  spawnNumber: 1
-  SpawnableSurfaces:
-    serializedVersion: 2
-    m_Bits: 256

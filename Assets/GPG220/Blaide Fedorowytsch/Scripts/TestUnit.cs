@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using GPG220.Luca.Scripts.Unit;
+﻿using GPG220.Luca.Scripts.Unit;
 using Mirror;
 using UnityEngine;
-using ISelectable = GPG220.Blaide_Fedorowytsch.Scripts.Interfaces.ISelectable;
+using Random = UnityEngine.Random;
 
 namespace GPG220.Blaide_Fedorowytsch.Scripts
 {
@@ -12,14 +10,30 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
     /// 
     /// </summary>
     public class TestUnit : UnitBase
-    {
+	{
+		[SyncVar]
+		public int testNumber;
+		
         private void Start()
         {
             Initialize();
             health.deathEvent += Die;
+			
+			InvokeRepeating("MoveTestNumber", 3f, 3f);
         }
 
-        void Update()
+		private void MoveTestNumber()
+		{
+			if (isServer)
+			{
+				testNumber = Random.Range(1,100);
+				// ownerNetID = Random.Range(1, 100);
+			}
+		}
+		
+		
+
+		void Update()
         {
             if (isServer)
             {

@@ -698,7 +698,7 @@ PrefabInstance:
         type: 3}
       propertyPath: unitBases.Array.data[0]
       value: 
-      objectReference: {fileID: 3776347446129422645, guid: 034d145f47743a348bfc3c6557f64867,
+      objectReference: {fileID: 114733390339695892, guid: 20c1442531b654d4da6e53eca7291655,
         type: 3}
     - target: {fileID: 9126485538190964056, guid: ff09ae3cace58124d96b62ccd444925e,
         type: 3}
@@ -883,6 +883,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: AbilitySelectionUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 4185516348687593664, guid: cab458c032766474f80d112a9b70da6d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5259623929760448620, guid: cab458c032766474f80d112a9b70da6d,
         type: 3}

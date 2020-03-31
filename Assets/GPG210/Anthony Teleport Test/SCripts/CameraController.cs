@@ -18,7 +18,7 @@ public class CameraController : MonoBehaviour
     void Start()
     {
    
-        gameManager.startGameEvent += CameraMovementEvent;
+        // gameManager.startGameEvent += CameraMovementEvent;
        
 
     }

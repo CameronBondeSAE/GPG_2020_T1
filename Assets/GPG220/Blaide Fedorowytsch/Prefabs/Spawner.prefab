@@ -43,14 +43,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 763516cae5e273d4f95a6d3d13bb5bff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 0, y: 0, z: 0}
-  boundryCentre: {x: 150, y: 75, z: 150}
+  syncMode: 0
+  syncInterval: 0.1
   boundrySize: {x: 300, y: 150, z: 300}
   unitBases:
   - {fileID: 114733390339695892, guid: 20c1442531b654d4da6e53eca7291655, type: 3}
   - {fileID: 4069609011016073252, guid: 29860fa07d47c7e45b170f367357314a, type: 3}
-  gameManager: {fileID: 0}
-  spawnNumber: 60
+  spawnNumber: 1
   SpawnableSurfaces:
     serializedVersion: 2
     m_Bits: 256

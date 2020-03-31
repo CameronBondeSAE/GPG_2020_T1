@@ -19,10 +19,11 @@ namespace GPG220.Luca.Scripts.Unit
         public static event Action<UnitBase> SpawnStaticEvent;
         public static event Action<UnitBase> DespawnStaticEvent;
                 
-        // TODO set owner somewhere
-        public PlayerBase owner;
-        [SyncVar]
-        public uint ownerNetID;
+		[SyncVar]
+		public uint ownerNetID;
+		[SyncVar]
+		public NetworkIdentity owner;
+
         public UnitStats unitStats;
         public Inventory inventory;
         public Rigidbody rb;
@@ -31,12 +32,14 @@ namespace GPG220.Luca.Scripts.Unit
         public List<ISelectable> currentSelectionGroup;
         // Debug
 		public uint myNetID;
+		public NetworkIdentity myOwnerIdentity;
 		public string debug;
 
 		private void LateUpdate()
 		{
 			// DEBUG for inspector
 			myNetID = netId;
+			myOwnerIdentity = owner;
 
 			debug = "Auth = " + hasAuthority;
 			// debug = netIdentity.connectionToServer.
@@ -102,10 +105,11 @@ namespace GPG220.Luca.Scripts.Unit
             Unload();
         }
 
-		[ClientRpc]
-		public void RpcSyncID(uint id)
-		{
-			ownerNetID = id;
-		}
+		// [ClientRpc]
+		// public void RpcSyncID(uint id)
+		// {
+			// ownerNetID = id;
+			// print("Sync ID from server to client");
+		// }
 	}
 }

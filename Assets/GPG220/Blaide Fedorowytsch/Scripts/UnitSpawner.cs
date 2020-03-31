@@ -9,35 +9,29 @@ using Random = UnityEngine.Random;
 
 namespace GPG220.Blaide_Fedorowytsch.Scripts
 {
-    public class UnitSpawner : MonoBehaviour
+    public class UnitSpawner : NetworkBehaviour
 	{
 		public Vector3 boundrySize;
         public List<UnitBase> unitBases;
-        public int spawnNumber = 60;
+        public int spawnNumber = 1;
         public LayerMask SpawnableSurfaces;
-
-        // Start is called before the first frame update
-
-        public void SpawnUnit(PlayerBase playerBaseOwner, UnitBase unit, Vector3 position, Quaternion rotation)
+		
+		public void SpawnUnit(NetworkIdentity owner, UnitBase unit, Vector3 position, Quaternion rotation)
         {
             GameObject g = Instantiate(unit.gameObject, position, rotation);
 
             // Networking
-			// Assign ownership of spawned units to client
-            NetworkServer.Spawn(g, playerBaseOwner.gameObject);
-			
-			
-			// g.GetComponent<NetworkIdentity>().AssignClientAuthority(playerBaseOwner.GetComponent<NetworkIdentity>().connectionToClient);
-            
-			
 			UnitBase uB = g.GetComponent<UnitBase>();
-            // uB.owner = playerBaseOwner;
-            uB.ownerNetID = playerBaseOwner.netId;
-			// uB.RpcSyncID(playerBaseOwner.netId);
+			uB.owner = owner;
+			uB.ownerNetID = owner.netId;
+
+			// Assign ownership of spawned units to client
+            NetworkServer.Spawn(g, owner.gameObject);
+			// g.GetComponent<NetworkIdentity>().AssignClientAuthority(playerBaseOwner.GetComponent<NetworkIdentity>().connectionToClient);
 		}
-        
-        //[Button (Name = "RandomSpawn" )]
-        public void RandomSpawns(PlayerBase playerBaseOwner)
+
+		//[Button (Name = "RandomSpawn" )]
+        public void RandomSpawns(NetworkIdentity owner)
         {
             Vector3 position;
             for (int i = 0; i < spawnNumber; i++)
@@ -45,7 +39,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                 int randIndex = Random.Range(0,unitBases.Count);
 
                 position = RandomGroundPointInBounds(unitExtents(unitBases[randIndex]));
-                SpawnUnit( playerBaseOwner, unitBases[randIndex], position, Quaternion.Euler(Vector3.forward));
+                SpawnUnit( owner, unitBases[randIndex], position, Quaternion.Euler(Vector3.forward));
             }
         }
 

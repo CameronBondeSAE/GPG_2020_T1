@@ -63,7 +63,8 @@ public class GameManager : MonoBehaviour
         if (networkManager != null)
         {
             listofPlayerBases.Add(conn.identity.GetComponent<PlayerBase>());
-            BuildUnits(conn.identity.GetComponent<PlayerBase>());
+            Debug.Log("Build units for new player");
+			BuildUnits(conn.identity);
         }
     }
 
@@ -76,11 +77,11 @@ public class GameManager : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    public void BuildUnits(PlayerBase playerBase)
+    public void BuildUnits(NetworkIdentity owner)
     {
         if (unitSpawner != null)
         {
-            unitSpawner.RandomSpawns(playerBase);
+            unitSpawner.RandomSpawns(owner);
         }
     }
 

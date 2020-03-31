@@ -19,6 +19,9 @@ GameObject:
   - component: {fileID: 8701368955511257789}
   - component: {fileID: 1072271919620222198}
   - component: {fileID: -3977877765726984574}
+  - component: {fileID: 7279140089236905875}
+  - component: {fileID: 2112039780922109720}
+  - component: {fileID: 6363934775160260234}
   m_Layer: 0
   m_Name: Test Unit
   m_TagString: Untagged
@@ -130,16 +133,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  ownerNetID: 0
   owner: {fileID: 0}
   unitStats: {fileID: 0}
   inventory: {fileID: 0}
   rb: {fileID: 0}
   health: {fileID: 0}
   abilityController: {fileID: 0}
-  moving: 0
-  target: {x: 0, y: 0, z: 0}
-  HeightOffset: 0.5
-  usm: {fileID: 0}
+  myNetID: 0
+  debug: 
+  testNumber: 0
 --- !u!114 &8631953537707219309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,18 +155,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34aefdaaccff11643b2142106719ca64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: abilities
-      Entry: 6
-      Data: 
+  syncMode: 0
+  syncInterval: 0.1
   autoLoadAbilities: 1
   defaultAbilityIndex: 0
 --- !u!114 &3716184969492281802
@@ -184,8 +177,7 @@ MonoBehaviour:
   cooldown: 0
   currentCooldown: 0
   moving: 0
-  usm: {fileID: 0}
-  collider: {fileID: 0}
+  targetPos: {x: 0, y: 0, z: 0}
 --- !u!114 &8701368955511257789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,7 +217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneId: 0
   serverOnly: 0
-  m_AssetId: 29860fa07d47c7e45b170f367357314a
+  m_AssetId: 
 --- !u!114 &-3977877765726984574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,3 +231,86 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 999999999
+--- !u!114 &7279140089236905875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3773638092200980733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 366720d40a7e93a439ccd9369d73351a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: _resources
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[GPG220.Luca.Scripts.Resources.ResourceType,
+        Assembly-CSharp],[System.Int32, mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.ObjectEqualityComparer`1[[GPG220.Luca.Scripts.Resources.ResourceType,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: resourcesMax
+      Entry: 6
+      Data: 
+  dropInventoryOnDeath: 1
+  dropOutAcceleration: 4
+  dropOutAngle: 30
+  dropOutMaxStack: 5
+  timeBetweenDropOuts: 1
+--- !u!114 &2112039780922109720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3773638092200980733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e6a8bf08f02e254aa9a52ef0aaa1553, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  color:
+    serializedVersion: 2
+    rgba: 4278190080
+--- !u!114 &6363934775160260234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3773638092200980733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0d35a4d9a9a3d04f99bcc877e458674, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  color:
+    serializedVersion: 2
+    rgba: 4278190080
