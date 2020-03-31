@@ -8,6 +8,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Main.unity
     guid: cec24b38ad7921e40b2ccd60100c9438
+  - enabled: 1
+    path: Assets/GPG230/Mirror/Examples/Room/Scenes/OfflineScene.unity
+    guid: 9e6f14982412b2545a0911ebaaa46a23
+  - enabled: 1
+    path: Assets/GPG230/Mirror/Examples/Room/Scenes/OnlineScene.unity
+    guid: d7a6763559b31854586c9e49916273ef
+  - enabled: 1
+    path: Assets/GPG230/Mirror/Examples/Room/Scenes/RoomScene.unity
+    guid: 48478f4d522f96945b8396f376299d3a
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: ebafc1f7a9967d14a888a15d126b38d3,
       type: 2}
