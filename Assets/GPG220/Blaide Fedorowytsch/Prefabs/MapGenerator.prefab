@@ -43,8 +43,7 @@ GameObject:
   - component: {fileID: 844936440088286562}
   - component: {fileID: 844936440088286561}
   - component: {fileID: 844936440088286563}
-  - component: {fileID: 1588283112}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: MapGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -80,12 +79,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showVerts: 1
   meshResolution: {x: 20, y: 20}
-  worldSize: {x: 200, y: 200}
+  worldSize: {x: 100, y: 100}
   seed: {x: 0.1, y: 0.23}
   MeshConstructionDelay: 0.000001
-  heightMultiplier: 5.79
-  bumpiness: 2.62
-  collider: {fileID: 1588283112}
+  heightMultiplier: 2
+  bumpiness: 0.1
+  collider: {fileID: 0}
   DrawGizmos: 0
 --- !u!33 &844936440088286562
 MeshFilter:
@@ -112,7 +111,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6b4da3d98b5331947b6ac4492c634a22, type: 2}
+  - {fileID: 2100000, guid: 29b49c27a74f145918356859bd7af511, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -146,8 +145,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridSize: {x: 100, y: 100}
-  worldSize: {x: 200, y: 200}
-  obstacleHeight: 11.34
+  worldSize: {x: 100, y: 100}
+  obstacleHeight: 3
   obstacleGenerationDensity: {x: 0.06, y: 0.06}
   seed: {x: 286.7, y: 655.6}
   obstacleThreshold: 0.526
@@ -155,17 +154,3 @@ MonoBehaviour:
     type: 3}
   ObstacleHolder: {fileID: 844936439617160392}
   DrawGizmoCubes: 0
---- !u!64 &1588283112
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 844936440088286622}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 0
-  m_Mesh: {fileID: 0}
