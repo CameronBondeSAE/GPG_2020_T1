@@ -45,6 +45,19 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
             CreatGrid();
         }
 
+        void UpdateGrid()
+        {
+            foreach (Node node in grid)
+            {
+                node.walkable = !Physics.CheckSphere(node.worldPosition, nodeRadius,layerMask);
+            }
+        }
+
+        private void FixedUpdate()
+        {
+            UpdateGrid();
+        }
+
         void CreatGrid()
         {
             grid = new Node[gridSize.x,gridSize.y];

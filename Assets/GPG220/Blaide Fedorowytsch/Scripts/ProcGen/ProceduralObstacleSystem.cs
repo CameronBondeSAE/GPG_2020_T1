@@ -25,6 +25,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
         public Vector2 seed;
         [Range(0.0f,1f)]
         public float obstacleThreshold;
+        public float obstacleThresholdLast;
 
         public GameObject obstaclePrefab;
         public GameObject ObstacleHolder;
@@ -51,10 +52,14 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
         // Update is called once per frame
         void Update()
         {
-            gridSize = gridSizeLocker;
-            if (gameStarted)
+            if (obstacleThreshold != obstacleThresholdLast)
             {
-                UpdateGrids();
+                gridSize = gridSizeLocker; 
+                if (gameStarted) 
+                { 
+                    UpdateGrids();
+                }
+                obstacleThresholdLast = obstacleThreshold;
             }
         }
         
