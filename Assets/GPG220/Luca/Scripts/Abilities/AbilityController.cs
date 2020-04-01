@@ -199,18 +199,20 @@ namespace GPG220.Luca.Scripts.Abilities
         public bool SelectedExecuteAbility(int abilityIndex)
         {
             
-            return CmdSelectedExecuteAbility(abilityIndex);
-            
+            CmdSelectedExecuteAbility(abilityIndex);
+
+            return true;
+
         }
 
         [Command]
-        public bool CmdSelectedExecuteAbility(int abilityIndex)
+        public void CmdSelectedExecuteAbility(int abilityIndex)
         {
             Debug.Log(abilityIndex);
             
-            abilities.TryGetValue(abilityIndex, out var ability);
+          //  abilities.TryGetValue(abilityIndex, out var ability);
 
-            return ability?.SelectedExecute() ?? false;
+          //  return ability?.SelectedExecute() ?? false;
             
             
         }
