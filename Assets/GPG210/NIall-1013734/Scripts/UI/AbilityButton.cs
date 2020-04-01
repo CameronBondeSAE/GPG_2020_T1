@@ -15,7 +15,7 @@ public class AbilityButton : MonoBehaviour
         if (abilityBase != null)
         {
          //   abilityBase.SelectedExecute();
-         abilityBase.GetComponent<AbilityController>().SelectedExecuteAbility(abilityBase);
+         abilityBase.GetComponent<AbilityController>().SelectedExecuteAbility(index);
         }
     }
 
