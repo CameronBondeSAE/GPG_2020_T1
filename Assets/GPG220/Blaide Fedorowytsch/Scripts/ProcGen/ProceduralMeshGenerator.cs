@@ -25,10 +25,11 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
     
         private void Start()
         {
-            gameManager.startGameEvent += generateMesh;
+           // gameManager.startGameEvent += generateMesh;
             mesh = new Mesh();
             mesh.name = "generatedTerrain";
             GetComponent<MeshFilter>().mesh = mesh;
+            GenerateMesh();
 
         }
 
@@ -36,9 +37,9 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
         [Button(Name = "Regenerate Mesh")]
         void RegenerateMesh()
         {
-            generateMesh();
+            GenerateMesh();
         }
-        void generateMesh()
+        void GenerateMesh()
         {
             verticies = new Vector3[(meshResolution.x + 1) * (meshResolution.y + 1)];
 

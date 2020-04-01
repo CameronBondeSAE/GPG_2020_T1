@@ -36,8 +36,9 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
         // Start is called before the first frame update
         void Start()
         {
-            gameManager.startGameEvent += GenerateAll;
+            //gameManager.startGameEvent += GenerateAll;
                 gridSizeLocker = gridSize;
+                GenerateAll();
         }
 
         void GenerateAll()
