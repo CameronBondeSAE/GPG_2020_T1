@@ -52,7 +52,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
         // Update is called once per frame
         void Update()
         {
-            if (obstacleThreshold != obstacleThresholdLast)
+            if (Math.Abs(obstacleThreshold - obstacleThresholdLast) > 0.001f)
             {
                 gridSize = gridSizeLocker; 
                 if (gameStarted) 
