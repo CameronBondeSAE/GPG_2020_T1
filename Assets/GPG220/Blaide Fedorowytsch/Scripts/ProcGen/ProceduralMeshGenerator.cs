@@ -17,34 +17,27 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
         public float heightMultiplier;
         public float bumpiness;
         public MeshCollider collider;
+        public GameManager gameManager;
+
+        private bool meshgenerated = false;
 
         public bool DrawGizmos = false;
     
         private void Start()
         {
+            gameManager.startGameEvent += generateMesh;
             mesh = new Mesh();
             mesh.name = "generatedTerrain";
             GetComponent<MeshFilter>().mesh = mesh;
-            //StartCoroutine(generateMesh());
-            generateMesh();
+
         }
 
-        private void Update()
-        {
-            UpdateMesh();
-            collider.sharedMesh = null;
-            collider.sharedMesh = mesh;
-           // collider.
-        }
+
         [Button(Name = "Regenerate Mesh")]
         void RegenerateMesh()
         {
-            //StartCoroutine(generateMesh());
             generateMesh();
-
         }
-
-        //IEnumerator generateMesh()
         void generateMesh()
         {
             verticies = new Vector3[(meshResolution.x + 1) * (meshResolution.y + 1)];
@@ -60,7 +53,6 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
                     i++;
                 }
             }
-
             int vert = 0;
             int tris = 0;
             triangles = new int[meshResolution.x * meshResolution.y *6];
@@ -78,9 +70,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
                     tris += 6;
                 }
                 vert++;
-                //yield return  new WaitForSeconds(MeshConstructionDelay);
             }
-        
+            UpdateMesh();
         }
 
         public float GetHeightAtPosition(Vector2 v)
@@ -108,6 +99,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
                 j++;
             }
             mesh.uv = uvs;
+            collider.sharedMesh = null;
+            collider.sharedMesh = mesh;
 
         }
 
@@ -121,6 +114,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
                     Gizmos.DrawSphere(transform.position + verticies[i], 2f);
                 }
             }
+            Gizmos.color = Color.white;
+            Gizmos.DrawWireCube(transform.position + new Vector3(worldSize.x ,20,worldSize.y)*0.5f, new Vector3(worldSize.x,30,worldSize.y));
         }
     }
 }

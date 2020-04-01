@@ -29,20 +29,32 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
         public GameObject obstaclePrefab;
         public GameObject ObstacleHolder;
 
-        public bool DrawGizmoCubes = false;
+        public GameManager gameManager;
+
+        private bool gameStarted = false;
+        
         // Start is called before the first frame update
         void Start()
         {
-            gridSizeLocker = gridSize;
-        GenerateBoolGrid();
-        GenerateObjectGrid();
+            gameManager.startGameEvent += GenerateAll;
+                gridSizeLocker = gridSize;
+        }
+
+        void GenerateAll()
+        {
+            GenerateBoolGrid();
+            GenerateObjectGrid();
+            gameStarted = true;
         }
 
         // Update is called once per frame
         void Update()
         {
             gridSize = gridSizeLocker;
-        UpdateGrids();
+            if (gameStarted)
+            {
+                UpdateGrids();
+            }
         }
         
         void GenerateBoolGrid()
@@ -164,26 +176,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
                 return false;
             }
         }
-
-        private void OnDrawGizmos()
-        {
-            /*if (DrawGizmoCubes)
-            {
-                //GenerateGrid();
-                for (int x = 0; x < gridSize.x; x++)
-                {
-                    for (int y = 0; y < gridSize.y; y++)
-                    {
-                        if (obstacleBoolGrid[x,y])
-                        {
-                            Gizmos.DrawCube(new Vector3((x) *0.01f* (worldSize.x/(gridSize.x*0.01f)), obstacleHeight/2, (y) *0.01f* (worldSize.y/(gridSize.y*0.01f))), new Vector3(worldSize.x*(gridSize.x/100)*0.01f,obstacleHeight,worldSize.y* (gridSize.y/100)*0.01f));
-                        }
-                    }
-                }
-            }*/
-            
-
-        }
+        
     }
     
 }
