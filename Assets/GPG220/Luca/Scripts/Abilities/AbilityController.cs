@@ -210,11 +210,19 @@ namespace GPG220.Luca.Scripts.Abilities
         {
             Debug.Log(abilityIndex);
             
+            RpcSelectedExecuteAbility(abilityIndex);
+            
           //  abilities.TryGetValue(abilityIndex, out var ability);
 
           //  return ability?.SelectedExecute() ?? false;
-         
-            
+          
+        }
+
+        [ClientRpc]
+        public void RpcSelectedExecuteAbility(int abilityIndex)
+        {
+            abilities[abilityIndex].SelectedExecute();
+
         }
         
         
