@@ -23,7 +23,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
         public float obstacleHeight;
         public Vector2 obstacleGenerationDensity;
         public Vector2 seed;
-        [Range(0,1)]
+        [Range(0.0f,1f)]
         public float obstacleThreshold;
 
         public GameObject obstaclePrefab;
@@ -74,7 +74,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
             {
                 for (int y = 0; y < gridSize.y; y++)
                 {
-                    obstacleObjectGrid[x, y] = Instantiate(obstaclePrefab,new Vector3((x) *0.01f* (worldSize.x/(gridSize.x*0.01f)), obstacleHeight/2, (y) *0.01f* (worldSize.y/(gridSize.y*0.01f))),transform.rotation);
+                    obstacleObjectGrid[x, y] = Instantiate(obstaclePrefab,transform.position + new Vector3((x) *0.01f* (worldSize.x/(gridSize.x*0.01f)), obstacleHeight/2, (y) *0.01f* (worldSize.y/(gridSize.y*0.01f))),transform.rotation);
                     obstacleObjectGrid[x, y].transform.localScale = new Vector3(worldSize.x*(gridSize.x/100)*0.01f,obstacleHeight,worldSize.y* (gridSize.y/100)*0.01f);
 
 
@@ -155,7 +155,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
 
         public bool PerlinThresholdCheck(float threshold, Vector2 density, Vector2Int gridPosition)
         {
-            if (Mathf.PerlinNoise((gridPosition.x + seed.x )* density.x, (gridPosition.y + seed.y) * density.y ) >= threshold)
+            if (Mathf.PerlinNoise((gridPosition.x + seed.x )* density.x, (gridPosition.y + seed.y) * density.y ) >= threshold -0.1f) // HACK  > 0.1f TODO Figure out why perlin is somehow returning lower than 0.
             {
                 return true; 
             }
@@ -167,7 +167,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
 
         private void OnDrawGizmos()
         {
-            if (DrawGizmoCubes)
+            /*if (DrawGizmoCubes)
             {
                 //GenerateGrid();
                 for (int x = 0; x < gridSize.x; x++)
@@ -180,7 +180,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
                         }
                     }
                 }
-            }
+            }*/
             
 
         }

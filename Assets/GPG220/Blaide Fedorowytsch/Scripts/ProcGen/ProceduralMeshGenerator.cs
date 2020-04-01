@@ -16,6 +16,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
         public float MeshConstructionDelay = 0.0001f;
         public float heightMultiplier;
         public float bumpiness;
+        public MeshCollider collider;
 
         public bool DrawGizmos = false;
     
@@ -24,20 +25,27 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
             mesh = new Mesh();
             mesh.name = "generatedTerrain";
             GetComponent<MeshFilter>().mesh = mesh;
-            StartCoroutine(generateMesh());
+            //StartCoroutine(generateMesh());
+            generateMesh();
         }
 
         private void Update()
         {
             UpdateMesh();
+            collider.sharedMesh = null;
+            collider.sharedMesh = mesh;
+           // collider.
         }
         [Button(Name = "Regenerate Mesh")]
         void RegenerateMesh()
         {
-            StartCoroutine(generateMesh());
+            //StartCoroutine(generateMesh());
+            generateMesh();
+
         }
 
-        IEnumerator generateMesh()
+        //IEnumerator generateMesh()
+        void generateMesh()
         {
             verticies = new Vector3[(meshResolution.x + 1) * (meshResolution.y + 1)];
 
@@ -70,7 +78,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
                     tris += 6;
                 }
                 vert++;
-                yield return  new WaitForSeconds(MeshConstructionDelay);
+                //yield return  new WaitForSeconds(MeshConstructionDelay);
             }
         
         }
@@ -110,7 +118,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
                 for (int i = 0; i < verticies.Length; i++)
                 {
                     Gizmos.color = Color.red;
-                    Gizmos.DrawSphere(verticies[i], 0.1f);
+                    Gizmos.DrawSphere(transform.position + verticies[i], 2f);
                 }
             }
         }
