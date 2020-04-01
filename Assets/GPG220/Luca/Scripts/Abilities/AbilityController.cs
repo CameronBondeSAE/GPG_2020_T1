@@ -158,6 +158,7 @@ namespace GPG220.Luca.Scripts.Abilities
         /// <returns>Returns true if the ability could be executed.</returns>
         public bool SelectedExecuteAbility(AbilityBase ability, bool mustContainAbility = true)
         {
+
             return ability != null && (mustContainAbility == false || abilities.ContainsValue(ability)) && ability.SelectedExecute();
         }
 
@@ -197,17 +198,24 @@ namespace GPG220.Luca.Scripts.Abilities
         /// <returns>Returns true if the ability could be executed.</returns>
         public bool SelectedExecuteAbility(int abilityIndex)
         {
-            return RpcSelectedExecuteAbility(abilityIndex);
+            
+            return CmdSelectedExecuteAbility(abilityIndex);
             
         }
 
-		// [ClientRpc]
-        public bool RpcSelectedExecuteAbility(int abilityIndex)
+        [Command]
+        public bool CmdSelectedExecuteAbility(int abilityIndex)
         {
+            Debug.Log(abilityIndex);
+            
             abilities.TryGetValue(abilityIndex, out var ability);
 
             return ability?.SelectedExecute() ?? false;
+            
+            
         }
+        
+        
 		
         /// <summary>
         /// Executes the ability with given ability-index (identifier).
