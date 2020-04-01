@@ -7,6 +7,7 @@ public class AbilityButton : MonoBehaviour
 {
 
     public AbilityBase abilityBase;
+    public int index;
 
 
     public void ClickedButton()
