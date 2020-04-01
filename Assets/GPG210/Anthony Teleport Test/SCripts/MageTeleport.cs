@@ -12,7 +12,7 @@ public class MageTeleport : AbilityBase
     public GameObject player;
     public float Range = -10.0f;
     public GameObject visuals;
-    public GameObject teleportEffect;
+    public GameObject teleportEffectPrefab;
 
     //moving variables
     public float moveSpeed;
@@ -20,19 +20,17 @@ public class MageTeleport : AbilityBase
     public int damage;
 
     public float teleportTimer;
+    public float timeLeft;
 
     private Rigidbody rb;
-    // Start is called before the first frame update
+   
     private void Awake()
     {
         abilityName = "Teleport";
         abilityDescription = "Teleport to another player on the map killing them instantly.";
     }
 
-    // Update is called once per frame
-   
-
-   
+    
 
     public override bool TargetExecute(Vector3 worldPos)
     {
@@ -56,7 +54,8 @@ public class MageTeleport : AbilityBase
     IEnumerator DelayNumerator()
     {
         DelayTeleport();
-        Instantiate(teleportEffect, transform.position, Quaternion.identity);
+        var instantiate = Instantiate(teleportEffectPrefab, transform.position, Quaternion.identity);
+        Destroy(instantiate,4f);
         yield return new WaitForSeconds(teleportTimer);
         
     }
