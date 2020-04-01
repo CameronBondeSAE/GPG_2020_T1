@@ -1,0 +1,90 @@
+{
+    "name": "Controls",
+    "maps": [
+        {
+            "name": "RTS controls",
+            "id": "f53c733d-0550-42ae-90df-752dfb75379f",
+            "actions": [
+                {
+                    "name": "SelectionKeyPress",
+                    "type": "Button",
+                    "id": "6033e1b6-e2f8-4bca-8207-1e1703863136",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "SelectionKeyRelease",
+                    "type": "Button",
+                    "id": "cd6868c4-96eb-4c51-9c7b-7c90a51f8a1c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "CursorMove",
+                    "type": "Value",
+                    "id": "cce9274d-0826-4ede-b1d0-db7c2e88e2ab",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "ActionKeyPress",
+                    "type": "Button",
+                    "id": "6a3f943a-0401-4374-9b74-73d6d87331b2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "803c2ac6-d1c8-40be-8ff8-74cc8134f711",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SelectionKeyPress",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "701ba013-5155-468b-9027-df1daebf69c4",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SelectionKeyRelease",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e76e4860-0c69-435c-b28b-651f5c74d667",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CursorMove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8f54edf2-716b-4942-a6f9-efe1cfdf9455",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ActionKeyPress",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
