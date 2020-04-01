@@ -29,7 +29,6 @@ public class UIManager : MonoBehaviour
     }
 
 
-
     private void OnSelection(List<ISelectable> selectables)
     {
         Debug.Log(selectables.ToString());
@@ -49,14 +48,14 @@ public class UIManager : MonoBehaviour
             int counter = 0;
             foreach (var item in abilityControllerAbilities)
             {
-                counter++;
-
                 Debug.Log(item.Value.abilityName);
                 Debug.Log(item.Value.abilityDescription);
 
                 buttons[counter].GetComponentInChildren<TextMeshProUGUI>().text = item.Value.abilityName;
                 buttons[counter].GetComponent<AbilityButton>().abilityBase = item.Value;
                 buttons[counter].GetComponent<AbilityButton>().index = counter;
+
+                counter++;
             }
         }
     }
