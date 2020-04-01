@@ -158,7 +158,7 @@ namespace GPG220.Luca.Scripts.Abilities
         /// <returns>Returns true if the ability could be executed.</returns>
         public bool SelectedExecuteAbility(AbilityBase ability, bool mustContainAbility = true)
         {
-
+            CmdSelectedExecuteAbility(defaultAbilityIndex);
             return ability != null && (mustContainAbility == false || abilities.ContainsValue(ability)) && ability.SelectedExecute();
         }
 
@@ -213,7 +213,7 @@ namespace GPG220.Luca.Scripts.Abilities
           //  abilities.TryGetValue(abilityIndex, out var ability);
 
           //  return ability?.SelectedExecute() ?? false;
-            
+         
             
         }
         
