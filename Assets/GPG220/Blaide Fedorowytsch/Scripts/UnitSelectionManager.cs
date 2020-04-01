@@ -22,11 +22,19 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         [SerializeField]
         private uint localnetID;
         
-        public InputAction selectKeyPressed;
-        public InputAction selectKeyReleased;
+        public InputActionAsset controls;
+        [HideInInspector]
+        public InputActionMap actionMap;
+        [HideInInspector]
+        public InputAction selectKeyPress;
+        [HideInInspector]
+        public InputAction selectKeyRelease;
+        
         [SerializeField]
         private bool selectKeyDown;
+        [HideInInspector]
         public InputAction actionKey;
+        [HideInInspector]
         public InputAction cursorMove;
         
         private bool hadFocusLastFrame;
@@ -102,8 +110,13 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 		// Start is called before the first frame update
         private void Awake()
         {
-            selectKeyPressed.performed += SelectKeyPressed;
-            selectKeyReleased.performed += SelectKeyReleased;
+            actionMap = controls.actionMaps[0];
+            selectKeyPress = actionMap.FindAction("SelectionKeyPress");
+            selectKeyRelease = actionMap.FindAction("selectionKeyRelease");
+            actionKey = actionMap.FindAction("ActionKeyPress");
+            cursorMove = actionMap.FindAction("CursorMove");
+            selectKeyPress.performed += SelectKeyPress;
+            selectKeyRelease.performed += SelectKeyRelease;
             actionKey.performed += DoAction;
             cursorMove.performed += CursorMove;
         }
@@ -115,16 +128,16 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 
         private void OnEnable()
         {
-            selectKeyPressed.Enable();
-            selectKeyReleased.Enable();
+            selectKeyPress.Enable();
+            selectKeyRelease.Enable();
             actionKey.Enable();
             cursorMove.Enable();
         }
 
         private void OnDisable()
         {
-            selectKeyPressed.Disable();
-            selectKeyReleased.Disable();
+            selectKeyPress.Disable();
+            selectKeyRelease.Disable();
             actionKey.Disable();
             cursorMove.Disable();
         }
@@ -157,7 +170,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             hadFocusLastFrame = windowHasFocus;
         }
 
-        void SelectKeyPressed(InputAction.CallbackContext ctx)
+        void SelectKeyPress(InputAction.CallbackContext ctx)
         {
             //Check for UI element at this cursorPosition;
             if (cursorOverUI|| !hadFocusLastFrame )
@@ -245,7 +258,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         }
         
 
-        void SelectKeyReleased(InputAction.CallbackContext ctx)
+        void SelectKeyRelease(InputAction.CallbackContext ctx)
         {
             if (selectKeyDown)
             {
