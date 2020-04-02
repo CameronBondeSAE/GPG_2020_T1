@@ -126,7 +126,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
             {
                 foreach (Vector2Int g in GetNeighbourPositions(gridPosition))
                 {
-                    if (obstacleBoolGrid[g.x, g.y] == false)
+                    if (obstacleBoolGrid[g.x, g.y] == false && !openEdges.Contains(g))
                     {
                         openEdges.Add(g);
                     }
@@ -153,10 +153,9 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
                 closedEdges.Add(gridPosition);
                 foreach (Vector2Int neighbourPosition in GetNeighbourPositions(gridPosition))
                 {
-                    if (obstacleBoolGrid[neighbourPosition.x, neighbourPosition.y] == false)
+                    if (obstacleBoolGrid[neighbourPosition.x, neighbourPosition.y] == false && !openEdges.Contains(neighbourPosition))
                     {
                         openEdges.Add(neighbourPosition);
-
                     }
                 }
             }
@@ -324,6 +323,12 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
         {
             foreach (Vector2Int v in openEdges)
             {
+                Gizmos.color = Color.green;
+                Gizmos.DrawSphere(transform.position + new Vector3(v.x*(worldSize.x*0.01f),8,v.y*(worldSize.y*0.01f)), 2f);
+            }
+            foreach (Vector2Int v in closedEdges)
+            {
+                Gizmos.color = Color.red;
                 Gizmos.DrawSphere(transform.position + new Vector3(v.x*(worldSize.x*0.01f),8,v.y*(worldSize.y*0.01f)), 2f);
             }
         }
