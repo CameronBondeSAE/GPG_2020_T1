@@ -25,7 +25,7 @@ public class SayHello : AbilityBase
         }   
     }
 
-    public override bool Execute(GameObject executorGameObject, GameObject[] targets = null)
+    public override bool Execute(GameObject executorGameObject, GameObject targets = null)
     {
         throw new System.NotImplementedException();
     }

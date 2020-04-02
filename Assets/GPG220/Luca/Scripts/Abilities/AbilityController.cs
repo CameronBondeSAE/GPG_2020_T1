@@ -62,7 +62,7 @@ namespace GPG220.Luca.Scripts.Abilities
         /// <returns>Returns true if the ability could be executed.</returns>
         /// TODO DEPRECATED; DELETE
         [Obsolete("Use SelectedExecuteDefaultAbility or TargetExecuteDefaultAbility instead.")]
-        public bool ExecuteDefaultAbility(GameObject[] targets = null)
+        public bool ExecuteDefaultAbility(GameObject targets = null)
         {
             return ExecuteAbility(defaultAbilityIndex);
         }
@@ -82,13 +82,13 @@ namespace GPG220.Luca.Scripts.Abilities
         /// </summary>
         /// <param name="targets">List of any kind of targets (gameobjects).</param>
         /// <returns>Returns true if the ability could be executed.</returns>
-        public bool TargetExecuteDefaultAbility(GameObject[] targets = null)
+        public void TargetExecuteDefaultAbility(GameObject targets = null)
         {
-            return TargetExecuteAbility(defaultAbilityIndex,targets);
+            TargetExecuteAbility(defaultAbilityIndex,targets);
         }
-        public bool TargetExecuteDefaultAbility( Vector3 worldPos)
+        public void TargetExecuteDefaultAbility( Vector3 worldPos)
         {
-            return TargetExecuteAbility(defaultAbilityIndex,worldPos);
+            TargetExecuteAbility(defaultAbilityIndex,worldPos);
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace GPG220.Luca.Scripts.Abilities
         /// <returns>Returns true if the ability could be executed.</returns>
         /// TODO DEPRECATED; DELETE
         [Obsolete("Use SelectedExecuteAbility or TargetExecuteAbility instead.")]
-        public bool ExecuteAbility<T>(GameObject[] targets = null, bool executeAll = false) where T : AbilityBase
+        public bool ExecuteAbility<T>(GameObject targets = null, bool executeAll = false) where T : AbilityBase
         {
             var ability = abilities.Values.FirstOrDefault(ab => ab.GetType() == typeof(T) && ab.CheckRequirements());
             // TODO What if there are multiple abilities of the same type, execute all?
@@ -128,13 +128,13 @@ namespace GPG220.Luca.Scripts.Abilities
         /// <param name="executeAll">If set to true, it will execute all abilities of given type (If there are multiple abilities of the same type). If set to false, it will execute the first available occurence of the given ability type.</param>
         /// <typeparam name="T">Type of AbilityBase to be executed.</typeparam>
         /// <returns>Returns true if the ability could be executed.</returns>
-        public bool TargetExecuteAbility<T>(GameObject[] targets = null, bool executeAll = false) where T : AbilityBase
+       /* public bool TargetExecuteAbility<T>(GameObject[] targets = null, bool executeAll = false) where T : AbilityBase
         {
             var ability = abilities.Values.FirstOrDefault(ab => ab.GetType() == typeof(T) && ab.CheckRequirements());
             // TODO What if there are multiple abilities of the same type, execute all?
             return ability != null && abilities.ContainsValue(ability) && ability.TargetExecute(targets);
         }
-
+         */
         /// <summary>
         /// Execute given ability (Actual reference of the ability!)
         /// </summary>
@@ -144,7 +144,7 @@ namespace GPG220.Luca.Scripts.Abilities
         /// <returns>Returns true if the ability could be executed.</returns>
         /// TODO DEPRECATED; DELETE
         [Obsolete("Use SelectedExecuteAbility or TargetExecuteAbility instead.")]
-        public bool ExecuteAbility(AbilityBase ability, GameObject[] targets = null, bool mustContainAbility = true)
+        public bool ExecuteAbility(AbilityBase ability, GameObject targets = null, bool mustContainAbility = true)
         {
             return ability != null && (mustContainAbility == false || abilities.ContainsValue(ability)) && ability.Execute(gameObject, targets);
         }
@@ -169,7 +169,7 @@ namespace GPG220.Luca.Scripts.Abilities
         /// <param name="mustContainAbility">If set to true, the given <paramref name="ability"/> must be present in the <see cref="abilities"/> list. Setting it to false allows you to make the AbilityController to execute an ability which it doesn't manage.</param>
         /// <param name="targets">List of any kind of targets (gameobjects).</param>
         /// <returns>Returns true if the ability could be executed.</returns>
-        public bool TargetExecuteAbility(AbilityBase ability, GameObject[] targets = null, bool mustContainAbility = true)
+        public bool TargetExecuteAbility(AbilityBase ability, GameObject targets = null, bool mustContainAbility = true)
         {
             return ability != null && (mustContainAbility == false || abilities.ContainsValue(ability)) && ability.TargetExecute(targets);
         }
@@ -182,7 +182,7 @@ namespace GPG220.Luca.Scripts.Abilities
         /// <returns>Returns true if the ability could be executed.</returns>
         /// TODO DEPRECATED; DELETE
         [Obsolete("Use SelectedExecuteAbility or TargetExecuteAbility instead.")]
-        public bool ExecuteAbility(int abilityIndex, GameObject[] targets = null)
+        public bool ExecuteAbility(int abilityIndex, GameObject targets = null)
         {
             abilities.TryGetValue(abilityIndex, out var ability);
 
@@ -233,17 +233,48 @@ namespace GPG220.Luca.Scripts.Abilities
         /// <param name="abilityIndex">The index (identifier) of the ability.</param>
         /// <param name="targets">List of any kind of targets (gameobjects).</param>
         /// <returns>Returns true if the ability could be executed.</returns>
-        public bool TargetExecuteAbility(int abilityIndex, GameObject[] targets = null)
+        public void TargetExecuteAbility(int abilityIndex, GameObject targets = null)
+        {
+            abilities.TryGetValue(abilityIndex, out var ability);
+            
+            CmdTargetExecuteAbility(abilityIndex,targets.GetComponent<NetworkIdentity>());
+            
+            //return ability?.TargetExecute(targets) ?? false;
+        }
+        [Command]
+        public void CmdTargetExecuteAbility(int abilityIndex,NetworkIdentity targets)
+        {
+            RpcTargetExecuteAbility(abilityIndex,targets);
+        }
+        [ClientRpc]
+        public void RpcTargetExecuteAbility(int abilityIndex,NetworkIdentity targets)
         {
             abilities.TryGetValue(abilityIndex, out var ability);
 
-            return ability?.TargetExecute(targets) ?? false;
+            ability?.TargetExecute(targets.gameObject);
         }
-        public bool TargetExecuteAbility(int abilityIndex, Vector3 worldPos)
+        
+        
+        public void TargetExecuteAbility(int abilityIndex, Vector3 worldPos)
+        {
+            CmdTargetExecuteAbilityWorldPos(abilityIndex, worldPos);
+            
+            //return ability?.TargetExecute(worldPos) ?? false;
+        }
+        
+        [Command]
+        public void CmdTargetExecuteAbilityWorldPos(int abilityIndex, Vector3 worldPos)
+        {
+            RpcTargetExecuteAbilityWorldPos(abilityIndex, worldPos);
+        }
+        
+        [ClientRpc]
+        public void RpcTargetExecuteAbilityWorldPos(int abilityIndex, Vector3 worldPos)
         {
             abilities.TryGetValue(abilityIndex, out var ability);
-
-            return ability?.TargetExecute(worldPos) ?? false;
+            
+            ability?.TargetExecute(worldPos);
         }
+        
     }
 }

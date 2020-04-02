@@ -32,7 +32,7 @@ namespace GPG220.Luca.Scripts.Abilities
         }
 
         // TODO Delete
-        public override bool Execute(GameObject executorGameObject, GameObject[] targets = null)
+        public override bool Execute(GameObject executorGameObject, GameObject targets = null)
         {
             if (!CheckRequirements())
                 return false;

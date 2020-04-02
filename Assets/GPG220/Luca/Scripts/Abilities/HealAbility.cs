@@ -35,7 +35,7 @@ namespace GPG220.Luca.Scripts.Abilities
             abilityDescription = "Heals 1 unit with the lowest health within a given range infront of the executor.";
         }
 
-        public override bool Execute(GameObject executorGameObject, GameObject[] targets = null)
+        public override bool Execute(GameObject executorGameObject, GameObject targets = null)
         {
             if (!CheckRequirements())
                 return false;

@@ -67,7 +67,7 @@ namespace GPG220.Luca.Scripts.Abilities
         /// <returns>Returns true if the ability could be executed, else false.</returns>
         /// TODO Remove
         [Obsolete("Use SelectedExecute or TargetExecute instead.")]
-        public virtual bool Execute(GameObject executorGameObject, GameObject[] targets = null)
+        public virtual bool Execute(GameObject executorGameObject, GameObject targets = null)
         {
             return true;
         }
@@ -88,7 +88,7 @@ namespace GPG220.Luca.Scripts.Abilities
         /// </summary>
         /// <param name="targets"></param>
         /// <returns>True if the ability could be executed (No cooldown, ...)</returns>
-        public virtual bool TargetExecute(GameObject[] targets = null)
+        public virtual bool TargetExecute(GameObject targets = null)
         {
             return true;
         }

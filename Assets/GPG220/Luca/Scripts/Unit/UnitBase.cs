@@ -89,9 +89,8 @@ namespace GPG220.Luca.Scripts.Unit
         {
 	        if (g != null)
 	        {
-		        GameObject[] gs = new GameObject[1];
-		        gs[0] = g;
-		        abilityController.TargetExecuteDefaultAbility(gs);
+
+		        abilityController.TargetExecuteDefaultAbility(g);
 	        }
 	        else 
 	        {
