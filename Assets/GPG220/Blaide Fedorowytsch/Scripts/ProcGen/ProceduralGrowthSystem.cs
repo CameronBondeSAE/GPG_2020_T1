@@ -6,14 +6,14 @@ using Random = UnityEngine.Random;
 
 namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
 {
-    public class ProceduralObstacleSystem : MonoBehaviour
+    public class ProceduralGrowthSystem : MonoBehaviour
     {
         [HideInInspector]
-        public bool[,] obstacleBoolGrid;
+        public bool[,] BoolGrid;
         [HideInInspector]
-        public bool[,] lastObstacleBoolGrid;
+        public bool[,] lastBoolGrid;
         [HideInInspector]
-        public GameObject[,] obstacleObjectGrid;
+        public GameObject[,] ObjectGrid;
 
         
         
@@ -106,11 +106,11 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
             {
                 for (int y = 0; y < gridSize.y; y++)
                 {
-                    if (obstacleBoolGrid[x,y])
+                    if (BoolGrid[x,y])
                     {
                         foreach (Vector2Int gridposition in GetNeighbourPositions(new Vector2Int(x, y)))
                         {
-                            if (obstacleBoolGrid[gridposition.x, gridposition.y] == false)
+                            if (BoolGrid[gridposition.x, gridposition.y] == false)
                             {
                                 edges.Add(new Vector2Int(x, y));
                                 break;
@@ -126,7 +126,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
             {
                 foreach (Vector2Int g in GetNeighbourPositions(gridPosition))
                 {
-                    if (obstacleBoolGrid[g.x, g.y] == false && !openEdges.Contains(g))
+                    if (BoolGrid[g.x, g.y] == false && !openEdges.Contains(g))
                     {
                         openEdges.Add(g);
                     }
@@ -140,10 +140,10 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
             List<Vector2Int> temp = new List<Vector2Int>();
             foreach (Vector2Int gridPosition in openEdges)
             {
-                if (Random.Range(1,100) < 20 && obstacleBoolGrid[gridPosition.x, gridPosition.y] == false)
+                if (Random.Range(1,100) < 20 && BoolGrid[gridPosition.x, gridPosition.y] == false)
                 {
                     temp.Add(gridPosition);
-                    obstacleBoolGrid[gridPosition.x, gridPosition.y] = true;
+                    BoolGrid[gridPosition.x, gridPosition.y] = true;
                 }
             }
 
@@ -153,7 +153,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
                 closedEdges.Add(gridPosition);
                 foreach (Vector2Int neighbourPosition in GetNeighbourPositions(gridPosition))
                 {
-                    if (obstacleBoolGrid[neighbourPosition.x, neighbourPosition.y] == false && !openEdges.Contains(neighbourPosition))
+                    if (BoolGrid[neighbourPosition.x, neighbourPosition.y] == false && !openEdges.Contains(neighbourPosition))
                     {
                         openEdges.Add(neighbourPosition);
                     }
@@ -196,8 +196,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
 
         void GenerateBoolGrid()
         {
-            obstacleBoolGrid = new bool[gridSize.x,gridSize.y];
-            lastObstacleBoolGrid = new bool[gridSize.x,gridSize.y];
+            BoolGrid = new bool[gridSize.x,gridSize.y];
+            lastBoolGrid = new bool[gridSize.x,gridSize.y];
 
             for (int x = 0; x < gridSize.x; x++)
             {
@@ -205,12 +205,12 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
                 {
                     if (PerlinThresholdCheck(obstacleThreshold, obstacleGenerationDensity, new Vector2Int(x, y)))
                     {
-                        obstacleBoolGrid[x, y] = true;
+                        BoolGrid[x, y] = true;
 
                     }
                     else
                     {
-                        obstacleBoolGrid[x, y] = false;
+                        BoolGrid[x, y] = false;
                     }
                 }   
             }
@@ -218,22 +218,22 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
 
         void GenerateObjectGrid()
         {
-            obstacleObjectGrid = new GameObject[gridSize.x, gridSize.y];
+            ObjectGrid = new GameObject[gridSize.x, gridSize.y];
             for (int x = 0; x < gridSize.x; x++)
             {
                 for (int y = 0; y < gridSize.y; y++)
                 {
-                    obstacleObjectGrid[x, y] = Instantiate(obstaclePrefab,transform.position + new Vector3((x) *0.01f* (worldSize.x/(gridSize.x*0.01f)), obstacleHeight/2, (y) *0.01f* (worldSize.y/(gridSize.y*0.01f))),transform.rotation);
-                    obstacleObjectGrid[x, y].transform.localScale = new Vector3(worldSize.x*(gridSize.x/100)*0.01f,obstacleHeight,worldSize.y* (gridSize.y/100)*0.01f);
+                    ObjectGrid[x, y] = Instantiate(obstaclePrefab,transform.position + new Vector3((x) *0.01f* (worldSize.x/(gridSize.x*0.01f)), obstacleHeight/2, (y) *0.01f* (worldSize.y/(gridSize.y*0.01f))),transform.rotation);
+                    ObjectGrid[x, y].transform.localScale = new Vector3(worldSize.x*(gridSize.x/100)*0.01f,obstacleHeight,worldSize.y* (gridSize.y/100)*0.01f);
 
 
                     if (ObstacleHolder)
                     {
-                        obstacleObjectGrid[x, y].transform.parent = ObstacleHolder.transform;
+                        ObjectGrid[x, y].transform.parent = ObstacleHolder.transform;
                     }
                     else
                     {
-                       obstacleObjectGrid[x, y].transform.parent = transform; 
+                       ObjectGrid[x, y].transform.parent = transform; 
                     }
 
                     
@@ -241,11 +241,11 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
                     
                     if (PerlinThresholdCheck(obstacleThreshold, obstacleGenerationDensity, new Vector2Int(x, y)))
                     {
-                        obstacleObjectGrid[x,y].SetActive(true);
+                        ObjectGrid[x,y].SetActive(true);
                     }
                     else
                     {
-                        obstacleObjectGrid[x,y].SetActive(false);
+                        ObjectGrid[x,y].SetActive(false);
                     }
                 }   
             }
@@ -259,7 +259,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
             {
                 for (int y = 0; y < gridSize.y; y++)
                 {
-                    if (obstacleBoolGrid[x,y] != lastObstacleBoolGrid[x,y])
+                    if (BoolGrid[x,y] != lastBoolGrid[x,y])
                     {
                         list.Add(new Vector2Int(x,y));
                     }
@@ -274,14 +274,14 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
             {
                 for (int y = 0; y < gridSize.y; y++)
                 {
-                    lastObstacleBoolGrid[x, y] = obstacleBoolGrid[x, y];
+                    lastBoolGrid[x, y] = BoolGrid[x, y];
                     if (PerlinThresholdCheck(obstacleThreshold, obstacleGenerationDensity, new Vector2Int(x, y)))
                     {
-                        obstacleBoolGrid[x, y] = true;
+                        BoolGrid[x, y] = true;
                     }
                     else
                     {
-                        obstacleBoolGrid[x, y] = false;
+                        BoolGrid[x, y] = false;
                     }
                 }  
             }
@@ -294,13 +294,13 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
 
             foreach (Vector2Int gridPosition in gridPositions)
             {
-                if (obstacleBoolGrid[gridPosition.x, gridPosition.y])
+                if (BoolGrid[gridPosition.x, gridPosition.y])
                 {
-                    obstacleObjectGrid[gridPosition.x,gridPosition.y].SetActive(true); 
+                    ObjectGrid[gridPosition.x,gridPosition.y].SetActive(true); 
                 }
                 else
                 {
-                    obstacleObjectGrid[gridPosition.x,gridPosition.y].SetActive(false);
+                    ObjectGrid[gridPosition.x,gridPosition.y].SetActive(false);
                 }
 
                 

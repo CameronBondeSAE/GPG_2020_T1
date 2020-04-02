@@ -12,6 +12,7 @@ TagManager:
   - Ground
   - Game Manager
   - target
+  - Cube
   layers:
   - Default
   - TransparentFX
