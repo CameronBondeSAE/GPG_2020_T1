@@ -127,6 +127,7 @@ MonoBehaviour:
   - {fileID: 5259623929760448621}
   - {fileID: 6209549013327493934}
   abilitySelectionUI: {fileID: 4185516348687593664}
+  AbilityButton: {fileID: 0}
 --- !u!1 &4185516348687593664
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,20 +8,19 @@ public class AttackAntenna : MonoBehaviour
     private Transform t;
     public float distance;
     [SerializeField] private bool fire = true;
-    [SerializeField] private float fireRate;
+    [SerializeField] public float fireRate = 3f;
+    private ParticleSystem particle;
+    public int damage;
+    RaycastHit hit;
 
     void Start()
     {
         t = GetComponent<Transform>();
-        fireRate = 3f;
     }
 
-    public int damage;
 
     void FixedUpdate()
     {
-        RaycastHit hit;
-
         if (fire == true)
 
         {
@@ -32,6 +32,8 @@ public class AttackAntenna : MonoBehaviour
                     hit.transform.GetComponent<Health>().ChangeHealth(-damage);
 
                     Debug.Log(gameObject.name + hit + "Damaged Unit");
+
+                    transform.GetComponent<ParticleSystem>().Play();
 
                     GetComponent<KillAmountScript>().IncreaseKills();
 

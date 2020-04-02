@@ -43,14 +43,20 @@ public class UIManager : MonoBehaviour
         if (selectables.Count == 1)
         {
             abilitySelectionUI.SetActive(true);
-            var abilityControllerAbilities = ((UnitBase) selectables[0]).abilityController.abilities;
 
             int counter = 0;
+            foreach (Button button in buttons)
+            {
+                button.gameObject.SetActive(false);
+            }
+
+
+            var abilityControllerAbilities = ((UnitBase) selectables[0]).abilityController.abilities;
+
+
             foreach (var item in abilityControllerAbilities)
             {
-                Debug.Log(item.Value.abilityName);
-                Debug.Log(item.Value.abilityDescription);
-
+                buttons[counter].gameObject.SetActive(true);
                 buttons[counter].GetComponentInChildren<TextMeshProUGUI>().text = item.Value.abilityName;
                 buttons[counter].GetComponent<AbilityButton>().abilityBase = item.Value;
                 buttons[counter].GetComponent<AbilityButton>().index = counter;

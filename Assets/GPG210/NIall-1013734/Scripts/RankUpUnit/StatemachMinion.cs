@@ -61,7 +61,7 @@ public class StatemachMinion : UnitBase
 
     public override void OnExecuteAction(Vector3 worldPosition, GameObject g)
     {
-       // SetTargetPosition();
+        SetTargetPosition();
     }
 
     void SetTargetPosition()
