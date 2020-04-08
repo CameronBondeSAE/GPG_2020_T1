@@ -1,10 +1,12 @@
 ﻿using System;
+using Anthony;
 using TMPro;
 using UnityEngine;
+using AnthonyY;
 
 namespace GPG220.Luca.Scripts.Abilities
 {
-    public abstract class AbilityBase : MonoBehaviour
+    public abstract class AbilityBase : MonoBehaviour,IDescribable
     {
         public string abilityName;
         [TextArea]
@@ -19,6 +21,10 @@ namespace GPG220.Luca.Scripts.Abilities
 
         public event Action<AbilityBase, GameObject> AbilityExecutionStartEvent;
         public event Action<AbilityBase, GameObject> AbilityExecutionEndEvent;
+        
+        public string Name { get;}
+        public string Description { get;}
+        public Sprite Image { get; set; }
 
         /// <summary>
         /// Sets the cooldown and invokes the OnAbilityExecuted event.
@@ -105,5 +111,6 @@ namespace GPG220.Luca.Scripts.Abilities
         {
             
         }
+        
     }
 }
