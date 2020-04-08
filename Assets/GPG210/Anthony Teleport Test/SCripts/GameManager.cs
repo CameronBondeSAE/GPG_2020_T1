@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     public PlayMenu playMenu;
     public UnitSpawner unitSpawner;
 
-
+//subscribing to all the events
     private void Start()
     {
         UnitBase.SpawnStaticEvent += UnitBaseOnSpawnStaticEvent;
@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-
+//player has left the game, remove from the list
     private void NetworkManagerOnOnClientDisconnectedEvent(NetworkConnection conn)
     {
         if (networkManager != null)
@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
             //conn.identity.GetComponent<UnitBase>().owner.units
         }
     }
-
+//player has connected to the game, add to the list
     private void NetworkManagerOnOnClientPlayerSpawnEvent(NetworkConnection conn)
     {
         if (networkManager != null)
@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
 			BuildUnits(conn.identity);
         }
     }
-
+//game starts
     private void PlayMenuOnplayEvent()
     {
         if (startGameEvent != null)
@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
+    //spawn the units randomly around the map
     public void BuildUnits(NetworkIdentity owner)
     {
         if (unitSpawner != null)
@@ -89,13 +89,13 @@ public class GameManager : MonoBehaviour
     private void HealthOndeathStaticEvent(Health health)
     {
     }
-
+//player is removed from the match and unsubscribes from the health event
     private void UnitBaseOnDespawnStaticEvent(UnitBase obj)
     {
         globalUnitBases.Remove(obj);
         obj.GetComponent<Health>().deathEvent -= HealthOndeathStaticEvent;
     }
-
+//Player spawns on a spawn point within the map
     private void UnitBaseOnSpawnStaticEvent(UnitBase obj)
     {
         // TODO Define Enemies and Players
@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviour
         //listOfSpawns = globalUnitBases[(Random.Range(0,listOfSpawns.Count))];
     }
 
-
+//game over check if there are still units on the map
     public void CheckIfGameOver()
     {
         if (globalUnitBases.Count == 0 && gameOverEvent != null)

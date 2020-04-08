@@ -1051,6 +1051,7 @@ MonoBehaviour:
   tornadoCenter: {fileID: 1913152871}
   pullSpeed: 500
   refreshRate: 2
+  offset: {x: 0, y: 0, z: 0}
 --- !u!1001 &1173649988
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1733,6 +1734,7 @@ MonoBehaviour:
   tornadoCenter: {fileID: 1913152871}
   pullSpeed: 500
   refreshRate: 3
+  offset: {x: 0, y: 0, z: 0}
 --- !u!4 &2025491265 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1366868309494033013, guid: 2b2f6f0bac37c0f438aa4cccdd24aa0e,
@@ -2085,6 +2087,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5038828844791700524, guid: 9312c56302d9dd7429ac76f5626315ad,
+        type: 3}
+      propertyPath: offset.y
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9312c56302d9dd7429ac76f5626315ad, type: 3}

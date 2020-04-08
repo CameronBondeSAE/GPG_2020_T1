@@ -9,7 +9,7 @@ public class TornadoVortex : MonoBehaviour
     public Transform tornadoCenter;
     public float pullSpeed;
     public float refreshRate;
-    
+    public Vector3 offset;
 
     
 
@@ -28,7 +28,7 @@ public class TornadoVortex : MonoBehaviour
     {
         if (shouldPull)
         {
-            Vector3 ForceDir = tornadoCenter.position - other.transform.position;
+            Vector3 ForceDir = tornadoCenter.position += offset - other.transform.position;
             other.GetComponent<Rigidbody>().AddForce(ForceDir.normalized * pullSpeed * Time.deltaTime);
             yield return refreshRate;
             StartCoroutine(PullObject(other, shouldPull)); //keeps checking if the object is in the tornado

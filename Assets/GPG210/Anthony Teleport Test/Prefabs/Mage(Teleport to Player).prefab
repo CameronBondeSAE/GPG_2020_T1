@@ -250,9 +250,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneId: 3901264760
+  sceneId: 0
   serverOnly: 0
-  m_AssetId: 
+  m_AssetId: b2ddfa75df058774db6b0b3a4e67bbed
 --- !u!114 &2150010261681644474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,14 +268,15 @@ MonoBehaviour:
   abilityName: 
   abilityDescription: 
   abilityImg: {fileID: 0}
-  cooldown: 0
+  cooldown: 5
   currentCooldown: 0
   isTeleporting: 1
   teleportTarget: {fileID: 0}
   player: {fileID: 0}
   Range: -10
-  visuals: {fileID: 0}
-  teleportEffectPrefab: {fileID: 0}
+  visuals: {fileID: 3551373137489945564}
+  teleportEffectPrefab: {fileID: 8869045155054173864, guid: 1091d6bdf7e780f4c9f2d0579606f221,
+    type: 3}
   moveSpeed: 0
   currentTarget: {fileID: 0}
   damage: 0
