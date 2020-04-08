@@ -111,6 +111,7 @@ GameObject:
   - component: {fileID: -1344011683330915107}
   - component: {fileID: 27627448}
   - component: {fileID: 27627443}
+  - component: {fileID: 2595165337951394920}
   m_Layer: 0
   m_Name: Mage(Teleport to Player)
   m_TagString: Player
@@ -207,13 +208,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  owner: {fileID: 0}
   ownerNetID: 0
+  owner: {fileID: 0}
   unitStats: {fileID: 0}
   inventory: {fileID: 0}
   rb: {fileID: 0}
   health: {fileID: 0}
   abilityController: {fileID: 0}
+  myNetID: 0
+  myOwnerIdentity: {fileID: 0}
+  debug: 
   isTeleporting: 1
   teleportTarget: {fileID: 0}
   player: {fileID: 577926091930366374}
@@ -221,6 +225,7 @@ MonoBehaviour:
   moveSpeed: 20
   currentTarget: {fileID: 0}
   damage: 100
+  tweenDuration: 0
 --- !u!114 &3590460850139835099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,7 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneId: 3227074837
+  sceneId: 3901264760
   serverOnly: 0
   m_AssetId: 
 --- !u!114 &2150010261681644474
@@ -269,9 +274,14 @@ MonoBehaviour:
   teleportTarget: {fileID: 0}
   player: {fileID: 0}
   Range: -10
+  visuals: {fileID: 0}
+  teleportEffectPrefab: {fileID: 0}
   moveSpeed: 0
   currentTarget: {fileID: 0}
   damage: 0
+  teleportTimer: 0
+  timeLeft: 0
+  offset: {x: 0, y: 0.5, z: 0}
 --- !u!114 &-1344011683330915107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,6 +328,25 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2595165337951394920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577926091930366374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ec0d918dabd23e4fa0d5b78a92c859e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityName: 
+  abilityDescription: 
+  abilityImg: {fileID: 0}
+  cooldown: 0
+  currentCooldown: 0
+  moving: 0
+  targetPos: {x: 0, y: 0, z: 0}
 --- !u!1 &3551373137489945564
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,6 +23,7 @@ public class MageTeleport : AbilityBase
     public float timeLeft;
 
     private Rigidbody rb;
+    public Vector3 offset;
    
     private void Awake()
     {
@@ -35,8 +36,14 @@ public class MageTeleport : AbilityBase
     public override bool TargetExecute(Vector3 worldPos)
     {
         Debug.Log("Teleporting Activated");
-        teleportTimer = Vector3.Distance(transform.position,worldPos)/10f;
-        transform.position = worldPos;
+        teleportTimer = Vector3.Distance(transform.position,worldPos+= offset)/10f;
+        transform.position = worldPos += offset;
+        ///TODO
+        ///Collider Bounds
+        
+        
+        //Raycasting and Offsets to not teleport through the floor
+        
         //player.transform.position = new Vector3(Random.Range(-Range, Range), 1, Random.Range(-Range, Range));
         visuals.SetActive(false);
         StartCoroutine(DelayNumerator());
