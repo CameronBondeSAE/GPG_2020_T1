@@ -22,7 +22,7 @@ public class TheadyBoi : MonoBehaviour
     {
         
         transform.Rotate(0,Time.deltaTime*speed,0);
-
+        
         if (Input.GetKeyDown("s"))
         {
             thread = new Thread(DoWork);

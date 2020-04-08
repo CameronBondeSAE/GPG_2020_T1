@@ -4,7 +4,7 @@ using GPG220.Luca.Scripts.Unit;
 using UnityEngine;
 using Mirror;
 
-public class HelloMan : MovableUnit
+public class HelloMan : UnitBase
 {
 
     [SyncVar] private Vector3 position;
