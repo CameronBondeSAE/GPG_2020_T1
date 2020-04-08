@@ -8,10 +8,6 @@ namespace GPG220.Luca.Scripts.Abilities
 {
     public abstract class AbilityBase : MonoBehaviour,IDescribable
     {
-        public string abilityName;
-        [TextArea]
-        public string abilityDescription;
-        public Sprite abilityImg;
         public float cooldown;
         
         public float currentCooldown; // Info: Public so UI could get current cooldown for example
@@ -22,10 +18,26 @@ namespace GPG220.Luca.Scripts.Abilities
         public event Action<AbilityBase, GameObject> AbilityExecutionStartEvent;
         public event Action<AbilityBase, GameObject> AbilityExecutionEndEvent;
         
-        public string Name { get;}
-        public string Description { get;}
-        public Sprite Image { get; set; }
+        public string abilityName;
+        [TextArea]
+        public string abilityDescription;
+        public Sprite abilityImage;
+		
+        public string Name 
+        {
+            get { return abilityName;}
+        }
 
+        public string Description
+        {
+            get { return abilityDescription; }
+        }
+
+        public Sprite Image
+        {
+            get { return abilityImage; }
+            set { abilityImage = value; }
+        }
         /// <summary>
         /// Sets the cooldown and invokes the OnAbilityExecuted event.
         /// </summary>
