@@ -216,7 +216,7 @@ GameObject:
   m_Component:
   - component: {fileID: 184684404}
   m_Layer: 0
-  m_Name: glwaqf
+  m_Name: Main Copy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1455,7 +1455,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 2.3510604e-38, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 2.018e-42, z: 0, w: 7.3e-44}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0

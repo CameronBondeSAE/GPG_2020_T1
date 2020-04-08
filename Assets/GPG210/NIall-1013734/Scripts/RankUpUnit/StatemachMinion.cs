@@ -61,29 +61,29 @@ public class StatemachMinion : UnitBase
 
     public override void OnExecuteAction(Vector3 worldPosition, GameObject g)
     {
-        SetTargetPosition();
+       // SetTargetPosition();
     }
 
     void SetTargetPosition()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hitinfo;
+      //  Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+     //   RaycastHit hitinfo;
 
-        if (Physics.Raycast(ray, out hitinfo, 1000))
-        {
-            target = hitinfo.point;
-            this.transform.LookAt(target);
-            moving = true;
-        }
+      //  if (Physics.Raycast(ray, out hitinfo, 1000))
+    //  {
+          //     target = hitinfo.point;
+          //     this.transform.LookAt(target);
+          //     moving = true;
+          //  }
     }
 
-    void Move()
+      void Move()
     {
-        transform.position = Vector3.MoveTowards(transform.position, target + offset, UnitSpeed * Time.deltaTime);
-        if (transform.position == target)
-        {
-            moving = false;
-        }
+      //  transform.position = Vector3.MoveTowards(transform.position, target + offset, UnitSpeed * Time.deltaTime);
+      //  if (transform.position == target)
+     //   {
+      //      moving = false;
+     //   }
     }
 
     public override void OnDeSelected()
@@ -118,7 +118,7 @@ public class StatemachMinion : UnitBase
 
         if (moving == true)
         {
-            Move();
+           // Move();
             currentState = States.Moving;
         }
 
