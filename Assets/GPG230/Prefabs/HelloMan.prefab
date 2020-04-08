@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5296356786827435993}
   - component: {fileID: -7857002203160821429}
   - component: {fileID: 1811597336231729948}
+  - component: {fileID: 8485956281338912081}
   - component: {fileID: -2823183800547287458}
   - component: {fileID: 1772050724380307332}
   - component: {fileID: 749948222749914136}
@@ -72,6 +73,25 @@ MonoBehaviour:
   syncInterval: 0.1
   autoLoadAbilities: 1
   defaultAbilityIndex: 0
+--- !u!114 &8485956281338912081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6860691296144144512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ec0d918dabd23e4fa0d5b78a92c859e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityName: 
+  abilityDescription: 
+  abilityImg: {fileID: 0}
+  cooldown: 0
+  currentCooldown: 0
+  moving: 0
+  targetPos: {x: 0, y: 0, z: 0}
 --- !u!114 &-2823183800547287458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,13 +198,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  owner: {fileID: 0}
   ownerNetID: 0
+  owner: {fileID: 0}
   unitStats: {fileID: 1488443120117917140}
   inventory: {fileID: 1123175643365844534}
   rb: {fileID: 1772050724380307332}
   health: {fileID: 1493345940941106755}
   abilityController: {fileID: 1811597336231729948}
+  myNetID: 0
+  myOwnerIdentity: {fileID: 0}
+  debug: 
+  pathFinderController: {fileID: 0}
+  characterController: {fileID: 0}
+  repathCooldown: 3
+  move: 0
+  moveDirPollCooldown: 0.5
+  gravity: 9.81
+  grounded: 0
 --- !u!114 &1493345940941106755
 MonoBehaviour:
   m_ObjectHideFlags: 0
