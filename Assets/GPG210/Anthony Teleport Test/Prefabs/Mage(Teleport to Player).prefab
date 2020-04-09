@@ -15,11 +15,11 @@ GameObject:
   - component: {fileID: 577926091930366375}
   - component: {fileID: 3590460850139835099}
   - component: {fileID: -5940144306598050569}
-  - component: {fileID: 2150010261681644474}
   - component: {fileID: -1344011683330915107}
+  - component: {fileID: 2595165337951394920}
+  - component: {fileID: 2150010261681644474}
   - component: {fileID: 27627448}
   - component: {fileID: 27627443}
-  - component: {fileID: 2595165337951394920}
   m_Layer: 12
   m_Name: Mage(Teleport to Player)
   m_TagString: Player
@@ -154,9 +154,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneId: 3910056172
+  sceneId: 1569121591
   serverOnly: 0
   m_AssetId: 
+--- !u!114 &-1344011683330915107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577926091930366374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34aefdaaccff11643b2142106719ca64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  autoLoadAbilities: 1
+  defaultTargetAbility: {fileID: 0}
+  defaultWorldTargetAbility: {fileID: 0}
+--- !u!114 &2595165337951394920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577926091930366374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ec0d918dabd23e4fa0d5b78a92c859e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldown: 0
+  currentCooldown: 0
+  targetRequired: 0
+  abilityName: 
+  abilityDescription: 
+  abilityImage: {fileID: 0}
+  moving: 0
+  targetPos: {x: 0, y: 0, z: 0}
 --- !u!114 &2150010261681644474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,23 +225,6 @@ MonoBehaviour:
   teleportTimer: 0
   timeLeft: 0
   offset: {x: 0, y: 0.5, z: 0}
---- !u!114 &-1344011683330915107
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 577926091930366374}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34aefdaaccff11643b2142106719ca64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  autoLoadAbilities: 0
-  defaultTargetAbility: {fileID: 0}
-  defaultWorldTargetAbility: {fileID: 0}
 --- !u!54 &27627448
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -229,32 +249,12 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 577926091930366374}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2595165337951394920
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 577926091930366374}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ec0d918dabd23e4fa0d5b78a92c859e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cooldown: 0
-  currentCooldown: 0
-  targetRequired: 0
-  abilityName: 
-  abilityDescription: 
-  abilityImage: {fileID: 0}
-  moving: 0
-  targetPos: {x: 0, y: 0, z: 0}
 --- !u!1 &3551373137489945564
 GameObject:
   m_ObjectHideFlags: 0
