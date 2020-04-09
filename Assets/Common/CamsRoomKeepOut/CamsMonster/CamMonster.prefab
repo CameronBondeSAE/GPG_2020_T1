@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 8326427771440045471}
   - component: {fileID: 1574884746106495472}
   - component: {fileID: -3855243417948868038}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: CamMonster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,15 +96,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  owner: {fileID: 0}
   ownerNetID: 0
+  owner: {fileID: 0}
   unitStats: {fileID: 0}
   inventory: {fileID: 0}
   rb: {fileID: 0}
   health: {fileID: 0}
   abilityController: {fileID: 0}
   myNetID: 0
+  myOwnerIdentity: {fileID: 0}
   debug: 
+  unitName: 
+  unitDescription: 
+  unitImage: {fileID: 0}
 --- !u!114 &7557236680982209879
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,14 +137,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ec0d918dabd23e4fa0d5b78a92c859e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityName: 
-  abilityDescription: 
-  abilityImg: {fileID: 0}
   cooldown: 0
   currentCooldown: 0
+  abilityName: 
+  abilityDescription: 
+  abilityImage: {fileID: 0}
   moving: 0
-  usm: {fileID: 0}
-  collider: {fileID: 0}
   targetPos: {x: 0, y: 0, z: 0}
 --- !u!114 &8326427771440045471
 MonoBehaviour:
@@ -154,13 +156,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 970583978e2edc04397247e461be77ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityName: Big!
-  abilityDescription: 
-  abilityImg: {fileID: 0}
   cooldown: 0
   currentCooldown: 0
+  abilityName: Big!
+  abilityDescription: 
+  abilityImage: {fileID: 0}
   camMonster: {fileID: 3776347446129422645}
   scale: 2
+  curve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &1574884746106495472
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,11 +181,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bb29e423f30a51489df97d23582d9f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityName: Little!
-  abilityDescription: 
-  abilityImg: {fileID: 0}
   cooldown: 0
   currentCooldown: 0
+  abilityName: Little!
+  abilityDescription: 
+  abilityImage: {fileID: 0}
   camMonster: {fileID: 3776347446129422645}
   scale: 0.5
 --- !u!114 &-3855243417948868038
@@ -194,7 +202,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneId: 0
   serverOnly: 0
-  m_AssetId: 
+  m_AssetId: 034d145f47743a348bfc3c6557f64867
 --- !u!1 &7993177599744077309
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,7 +214,7 @@ GameObject:
   - component: {fileID: 2942758944966587235}
   - component: {fileID: 4898512406134270867}
   - component: {fileID: 7570358868819421729}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}

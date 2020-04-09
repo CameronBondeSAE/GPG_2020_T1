@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1008044996}
   - component: {fileID: 1008044995}
   - component: {fileID: 1008044994}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: 27627448}
   - component: {fileID: 27627443}
   - component: {fileID: 2595165337951394920}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Mage(Teleport to Player)
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -218,6 +218,9 @@ MonoBehaviour:
   myNetID: 0
   myOwnerIdentity: {fileID: 0}
   debug: 
+  unitName: 
+  unitDescription: 
+  unitImage: {fileID: 0}
   isTeleporting: 1
   teleportTarget: {fileID: 0}
   player: {fileID: 577926091930366374}
@@ -265,11 +268,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0dffa9db5397f1448a13b812268f010, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityName: 
-  abilityDescription: 
-  abilityImg: {fileID: 0}
   cooldown: 5
   currentCooldown: 0
+  abilityName: 
+  abilityDescription: 
+  abilityImage: {fileID: 0}
   isTeleporting: 1
   teleportTarget: {fileID: 0}
   player: {fileID: 0}
@@ -341,11 +344,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ec0d918dabd23e4fa0d5b78a92c859e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityName: 
-  abilityDescription: 
-  abilityImg: {fileID: 0}
   cooldown: 0
   currentCooldown: 0
+  abilityName: 
+  abilityDescription: 
+  abilityImage: {fileID: 0}
   moving: 0
   targetPos: {x: 0, y: 0, z: 0}
 --- !u!1 &3551373137489945564
@@ -360,7 +363,7 @@ GameObject:
   - component: {fileID: 6956965997367191929}
   - component: {fileID: 8391624648881487193}
   - component: {fileID: 5489825078460956431}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
