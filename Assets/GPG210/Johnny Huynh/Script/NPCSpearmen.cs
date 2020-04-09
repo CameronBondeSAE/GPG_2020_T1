@@ -33,11 +33,4 @@ public class NPCSpearmen : UnitBase
         base.OnSelected();
         Debug.Log("Spearmen selected");
     }
-
-    public override void OnExecuteAction(Vector3 worldPosition, GameObject g)
-    {
-        base.OnExecuteAction(worldPosition, g);
-        
-        Debug.Log("Spearmen:" +worldPosition);
-    }
 }

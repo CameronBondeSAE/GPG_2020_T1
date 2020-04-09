@@ -16,24 +16,24 @@ namespace GPG220.Luca.Scripts.Unit
 
         
 
-        protected override void Initialize()
-        {
-            base.Initialize();
+        // protected override void Initialize()
+        // {
+            // base.Initialize();
 
-            if (abilityController == null)
-                abilityController = GetComponent<AbilityController>();
-        }
+            // if (abilityController == null)
+                // abilityController = GetComponent<AbilityController>();
+        // }
 
         public bool HACKExecuteAbility = false;
         
         // Update is called once per frame
         void Update()
         {
-            if (HACKExecuteAbility)
-            {
-                OnExecuteAction(transform.position, null);
-                HACKExecuteAbility = false;
-            }
+            // if (HACKExecuteAbility)
+            // {
+            //     OnExecuteAction(transform.position, null);
+            //     HACKExecuteAbility = false;
+            // }
             
             HandleMovement();
         }
@@ -58,12 +58,12 @@ namespace GPG220.Luca.Scripts.Unit
             
         }
 
-        public override void OnExecuteAction(Vector3 worldPosition, GameObject g)
-        {
-            base.OnExecuteAction(worldPosition, g);
-            abilityController.ExecuteDefaultAbility();
+        // public override void OnExecuteAction(Vector3 worldPosition, GameObject g)
+        // {
+            // base.OnExecuteAction(worldPosition, g);
+            // abilityController.ExecuteDefaultAbility();
             
-        }
+        // }
         
     }
 }

@@ -23,12 +23,7 @@ public class TeleportUnit : UnitBase
         Debug.Log("Selected");
     }
 
-    public override void OnExecuteAction(Vector3 worldPosition, GameObject g)
-    {
-        base.OnExecuteAction(worldPosition, g);
-    }
-
-    public override void OnDeSelected()
+	public override void OnDeSelected()
     {
         base.OnDeSelected();
     }

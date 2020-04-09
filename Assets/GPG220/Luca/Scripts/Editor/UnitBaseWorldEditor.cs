@@ -691,7 +691,8 @@ namespace GPG220.Luca.Scripts.Editor
                         GUI.enabled = false;
                     if (GUILayout.Button("Execute", EditorStyles.miniButton))
                     {
-                        abilityController.ExecuteAbility(kvp.Value);
+                        // abilityController.ExecuteAbility(kvp.Value);
+                        abilityController.SelectedExecuteAbility(kvp.Value);
                     }
                     GUI.enabled = true;
                     EditorGUILayout.LabelField("ID: "+kvp.Key);

@@ -22,8 +22,6 @@ namespace GPG220.Luca.Scripts.Abilities
 		public SortedList<int, AbilityBase> abilities;
 
 		// The int identifier of the default ability
-		private int         defaultAbilityIndex = 0;
-		public  AbilityBase defaultAbility;
 		private int         defaultTargetAbilityIndex = 0;
 		public  AbilityBase defaultTargetAbility;
 		private int         defaultWorldTargetAbilityIndex = 0;
@@ -55,15 +53,6 @@ namespace GPG220.Luca.Scripts.Abilities
 			}
 
 			// Make sure default abilities are set.
-			if (defaultAbility != null)
-				defaultAbilityIndex = abilities.Values.IndexOf(defaultAbility);
-			else
-			{
-				Debug.Log("No default ability set in " + GetComponent<UnitBase>()?.name);
-				defaultAbilityIndex = 0;
-			}
-
-			
 			if (defaultTargetAbility != null)
 				defaultTargetAbilityIndex = abilities.Values.IndexOf(defaultTargetAbility);
 			else
@@ -72,7 +61,6 @@ namespace GPG220.Luca.Scripts.Abilities
 				defaultTargetAbilityIndex = 0;
 			}
 
-			
 			if (defaultWorldTargetAbility != null)
 				defaultWorldTargetAbilityIndex = abilities.Values.IndexOf(defaultWorldTargetAbility);
 			else
@@ -89,16 +77,8 @@ namespace GPG220.Luca.Scripts.Abilities
 			// }
 		}
 
-		/// <summary>
-		/// Executes the default ability.
-		/// </summary>
-		/// <param name="target">List of any kind of target (gameobjects).</param>
-		/// <returns>Returns true if the ability could be executed.</returns>
-		public bool SelectedExecuteDefaultAbility()
-		{
-			return SelectedExecuteAbility(defaultAbilityIndex);
-		}
-
+		
+		
 		/// <summary>
 		/// Executes the default ability.
 		/// </summary>
@@ -106,119 +86,86 @@ namespace GPG220.Luca.Scripts.Abilities
 		/// <returns>Returns true if the ability could be executed.</returns>
 		public void TargetExecuteDefaultAbility(GameObject target = null)
 		{
-			TargetExecuteAbility(defaultTargetAbilityIndex, target);
+			TargetExecuteAbility(abilities[defaultTargetAbilityIndex], target);
 		}
 
 		public void TargetExecuteDefaultAbility(Vector3 worldPos)
 		{
-			TargetExecuteAbility(defaultWorldTargetAbilityIndex, worldPos);
+			TargetExecuteAbility(abilities[defaultWorldTargetAbilityIndex], worldPos);
 		}
 
-		/// <summary>
-		/// Executes an ability of given AbilityBase type.
-		/// </summary>
-		/// <param name="target">List of any kind of target (gameobjects).</param>
-		/// <param name="executeAll">If set to true, it will execute all abilities of given type (If there are multiple abilities of the same type). If set to false, it will execute the first available occurence of the given ability type.</param>
-		/// <typeparam name="T">Type of AbilityBase to be executed.</typeparam>
-		/// <returns>Returns true if the ability could be executed.</returns>
-		public bool SelectedExecuteAbility<T>(bool executeAll = false) where T : AbilityBase
-		{
-			var ability = abilities.Values.FirstOrDefault(ab => ab.GetType() == typeof(T) && ab.CheckRequirements());
-			// TODO What if there are multiple abilities of the same type, execute all?
-			return ability != null && abilities.ContainsValue(ability) && ability.SelectedExecute();
-		}
-
+		
+		
+		
+		
 		/// <summary>
 		/// Execute given ability (Actual reference of the ability!)
 		/// </summary>
 		/// <param name="ability">Ability to execute.</param>
 		/// <param name="mustContainAbility">If set to true, the given <paramref name="ability"/> must be present in the <see cref="abilities"/> list. Setting it to false allows you to make the AbilityController to execute an ability which it doesn't manage.</param>
 		/// <param name="target">List of any kind of target (gameobjects).</param>
-		/// <returns>Returns true if the ability could be executed.</returns>
-		public bool SelectedExecuteAbility(AbilityBase ability, bool mustContainAbility = true)
+		/// <returns>HACK: NO*** Returns true if the ability could be executed.</returns>
+		public void SelectedExecuteAbility(AbilityBase ability, bool mustContainAbility = true)
 		{
-			CmdSelectedExecuteAbility(defaultAbilityIndex);
-			return ability != null && (mustContainAbility == false || abilities.ContainsValue(ability)) &&
-				   ability.SelectedExecute();
-		}
-
-		/// <summary>
-		/// Execute given ability (Actual reference of the ability!)
-		/// </summary>
-		/// <param name="ability">Ability to execute.</param>
-		/// <param name="mustContainAbility">If set to true, the given <paramref name="ability"/> must be present in the <see cref="abilities"/> list. Setting it to false allows you to make the AbilityController to execute an ability which it doesn't manage.</param>
-		/// <param name="target">List of any kind of target (gameobjects).</param>
-		/// <returns>Returns true if the ability could be executed.</returns>
-		public bool TargetExecuteAbility(AbilityBase ability, GameObject target = null, bool mustContainAbility = true)
-		{
-			return ability != null && (mustContainAbility == false || abilities.ContainsValue(ability)) &&
-				   ability.TargetExecute(target);
-		}
-
-		/// <summary>
-		/// Executes the ability with given ability-index (identifier).
-		/// </summary>
-		/// <param name="abilityIndex">The index (identifier) of the ability.</param>
-		/// <param name="target">List of any kind of target (gameobjects).</param>
-		/// <returns>Returns true if the ability could be executed.</returns>
-		public bool SelectedExecuteAbility(int abilityIndex)
-		{
-			CmdSelectedExecuteAbility(abilityIndex);
-
-			return true;
+			CmdSelectedExecuteAbility(abilities.IndexOfValue(ability));
+			// return ability != null && (mustContainAbility == false || abilities.ContainsValue(ability)) &&
+				   // ability.SelectedExecute();
 		}
 
 		[Command]
-		public void CmdSelectedExecuteAbility(int abilityIndex)
+		private void CmdSelectedExecuteAbility(int abilityIndex)
 		{
-			Debug.Log(abilityIndex);
+			Debug.Log("Command : Called "+abilities.IndexOfKey(abilityIndex));
 
 			RpcSelectedExecuteAbility(abilityIndex);
-
 			//  abilities.TryGetValue(abilityIndex, out var ability);
-
 			//  return ability?.SelectedExecute() ?? false;
 		}
 
 		[ClientRpc]
-		public void RpcSelectedExecuteAbility(int abilityIndex)
+		private void RpcSelectedExecuteAbility(int abilityIndex)
 		{
+			Debug.Log("RPC: Client->Server : Called "+abilities.IndexOfKey(abilityIndex));
 			abilities[abilityIndex].SelectedExecute();
 		}
 
 		/// <summary>
-		/// Executes the ability with given ability-index (identifier).
+		/// Execute given ability (Actual reference of the ability!)
 		/// </summary>
-		/// <param name="abilityIndex">The index (identifier) of the ability.</param>
+		/// <param name="ability">Ability to execute.</param>
+		/// <param name="mustContainAbility">If set to true, the given <paramref name="ability"/> must be present in the <see cref="abilities"/> list. Setting it to false allows you to make the AbilityController to execute an ability which it doesn't manage.</param>
 		/// <param name="target">List of any kind of target (gameobjects).</param>
 		/// <returns>Returns true if the ability could be executed.</returns>
-		public void TargetExecuteAbility(int abilityIndex, GameObject target = null)
+		public void TargetExecuteAbility(AbilityBase ability, GameObject target = null)
 		{
-			abilities.TryGetValue(abilityIndex, out var ability);
+			var index = abilities.IndexOfValue(ability);
+			abilities.TryGetValue(index, out AbilityBase outAbility);
 
-			CmdTargetExecuteAbility(abilityIndex, target.GetComponent<NetworkIdentity>());
+			if (outAbility != null) CmdTargetExecuteAbility(index, target.GetComponent<NetworkIdentity>());
 
 			//return ability?.TargetExecute(target) ?? false;
 		}
 
 		[Command]
-		public void CmdTargetExecuteAbility(int abilityIndex, NetworkIdentity target)
+		private void CmdTargetExecuteAbility(int abilityIndex, NetworkIdentity target)
 		{
+			Debug.Log("Command : Called "+abilities.IndexOfKey(abilityIndex));
 			RpcTargetExecuteAbility(abilityIndex, target);
 		}
 
 		[ClientRpc]
-		public void RpcTargetExecuteAbility(int abilityIndex, NetworkIdentity target)
+		private void RpcTargetExecuteAbility(int abilityIndex, NetworkIdentity target)
 		{
+			Debug.Log("RPC: Client->Server : Called "+abilities.IndexOfKey(abilityIndex));
 			abilities.TryGetValue(abilityIndex, out var ability);
 
 			ability?.TargetExecute(target.gameObject);
 		}
 
 
-		public void TargetExecuteAbility(int abilityIndex, Vector3 worldPos)
+		public void TargetExecuteAbility(AbilityBase ability, Vector3 worldPos)
 		{
-			CmdTargetExecuteAbilityWorldPos(abilityIndex, worldPos);
+			CmdTargetExecuteAbilityWorldPos(abilities.IndexOfValue(ability), worldPos);
 
 			//return ability?.TargetExecute(worldPos) ?? false;
 		}
@@ -236,6 +183,73 @@ namespace GPG220.Luca.Scripts.Abilities
 
 			ability?.TargetExecute(worldPos);
 		}
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		/// <summary>
+		/// Executes an ability of given AbilityBase type.
+		/// </summary>
+		/// <param name="target">List of any kind of target (gameobjects).</param>
+		/// <param name="executeAll">If set to true, it will execute all abilities of given type (If there are multiple abilities of the same type). If set to false, it will execute the first available occurence of the given ability type.</param>
+		/// <typeparam name="T">Type of AbilityBase to be executed.</typeparam>
+		/// <returns>Returns true if the ability could be executed.</returns>
+		// public bool SelectedExecuteAbility<T>(bool executeAll = false) where T : AbilityBase
+		// {
+		// var ability = abilities.Values.FirstOrDefault(ab => ab.GetType() == typeof(T) && ab.CheckRequirements());
+		// TODO What if there are multiple abilities of the same type, execute all?
+		// return ability != null && abilities.ContainsValue(ability) && ability.SelectedExecute();
+		// }
+
+		
+		
+		/// <summary>
+		/// Executes the default ability.
+		/// </summary>
+		/// <param name="target">List of any kind of target (gameobjects).</param>
+		/// <returns>Returns true if the ability could be executed.</returns>
+		// public bool SelectedExecuteDefaultAbility()
+		// {
+		// return SelectedExecuteAbility(defaultAbilityIndex);
+		// }
+
+
+		
+		/// <summary>
+		/// Execute given ability (Actual reference of the ability!)
+		/// </summary>
+		/// <param name="ability">Ability to execute.</param>
+		/// <param name="mustContainAbility">If set to true, the given <paramref name="ability"/> must be present in the <see cref="abilities"/> list. Setting it to false allows you to make the AbilityController to execute an ability which it doesn't manage.</param>
+		/// <param name="target">List of any kind of target (gameobjects).</param>
+		/// <returns>Returns true if the ability could be executed.</returns>
+		// public bool TargetExecuteAbility(AbilityBase ability, GameObject target = null, bool mustContainAbility = true)
+		// {
+		// 	return ability != null && (mustContainAbility == false || abilities.ContainsValue(ability)) &&
+		// 		   ability.TargetExecute(target);
+		// }
+
+		/// <summary>
+		/// Executes the ability with given ability-index (identifier).
+		/// </summary>
+		/// <param name="abilityIndex">The index (identifier) of the ability.</param>
+		/// <param name="target">List of any kind of target (gameobjects).</param>
+		/// <returns>Returns true if the ability could be executed.</returns>
+		// public bool SelectedExecuteAbility(int abilityIndex)
+		// {
+		// CmdSelectedExecuteAbility(abilityIndex);
+
+		// return true;
+		// }
 
 
 		/// <summary>
@@ -275,11 +289,11 @@ namespace GPG220.Luca.Scripts.Abilities
 		/// <param name="target">List of any kind of target (gameobjects).</param>
 		/// <returns>Returns true if the ability could be executed.</returns>
 		/// TODO DEPRECATED; DELETE
-		[Obsolete("Use SelectedExecuteDefaultAbility or TargetExecuteDefaultAbility instead.")]
-		public bool ExecuteDefaultAbility(GameObject target = null)
-		{
-			return ExecuteAbility(defaultAbilityIndex);
-		}
+		// [Obsolete("Use SelectedExecuteDefaultAbility or TargetExecuteDefaultAbility instead.")]
+		// public bool ExecuteDefaultAbility(GameObject target = null)
+		// {
+			// return ExecuteAbility(defaultAbilityIndex);
+		// }
 
 		/// <summary>
 		/// Executes an ability of given AbilityBase type.
