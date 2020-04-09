@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using GPG220.Blaide_Fedorowytsch.Scripts.Interfaces;
 using GPG220.Luca.Scripts.Abilities;
 using GPG220.Luca.Scripts.Unit;
+using NSubstitute.Extensions;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace GPG220.Blaide_Fedorowytsch.Scripts.Abilities
 {
@@ -15,6 +17,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Abilities
         private float heightOffset = 0.5f;
         private UnitBase ub;
         public Vector3 targetPos;
+        public Vector3 offsetPosition;
         
         public override bool SelectedExecute()
         {
@@ -35,7 +38,11 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Abilities
             heightOffset = GetComponent<Collider>().bounds.extents.y;
             target = worldPos;
             moving = true;
+            float x = Random.Range(0f, 1f);
+            float z = Random.Range(0f, 1f);
+            offsetPosition = new Vector3(x, 0, z);
             return true;
+       
         }
 
         private void FixedUpdate()
@@ -43,9 +50,9 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Abilities
             if (moving)
             {
                 if (Vector3.Distance(this.gameObject.transform.position,
-                        target + (Vector3.up * heightOffset) + OffsetPosition(ub.currentSelectionGroup)) > 0.1f)
+                        target + (Vector3.up * heightOffset) + offsetPosition) > 0.3f)
                 {
-                    Move(target + (Vector3.up * heightOffset) + OffsetPosition(ub.currentSelectionGroup));
+                    Move(target + (Vector3.up * heightOffset) + offsetPosition);
                 }
                 else
                 {
@@ -53,15 +60,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Abilities
                 }
             }
         }
-        Vector3 OffsetPosition(List<ISelectable> selectionGroup)
-        {
-            Vector3 total = new Vector3();
-            foreach (ISelectable s in selectionGroup)
-            {
-                total += ((MonoBehaviour) s).gameObject.transform.position;
-            }
-            return transform.position - total / selectionGroup.Count;
-        }
+       
 
         void Move(Vector3 v)
         {
