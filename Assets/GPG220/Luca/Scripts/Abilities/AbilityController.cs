@@ -58,7 +58,7 @@ namespace GPG220.Luca.Scripts.Abilities
 			else
 			{
 				Debug.Log("No default target ability set in " + GetComponent<UnitBase>()?.name);
-				defaultTargetAbilityIndex = 0;
+				defaultTargetAbilityIndex = -1;
 			}
 
 			if (defaultWorldTargetAbility != null)
@@ -66,7 +66,7 @@ namespace GPG220.Luca.Scripts.Abilities
 			else
 			{
 				Debug.Log("No default target ability set in " + GetComponent<UnitBase>()?.name);
-				defaultWorldTargetAbilityIndex = 0;
+				defaultWorldTargetAbilityIndex = -1;
 			}
 			
 			// abilities[defaultAbilityIndex].TryGetValue(defaultAbilityIndex, out var ability);
@@ -86,12 +86,18 @@ namespace GPG220.Luca.Scripts.Abilities
 		/// <returns>Returns true if the ability could be executed.</returns>
 		public void TargetExecuteDefaultAbility(GameObject target = null)
 		{
-			TargetExecuteAbility(abilities[defaultTargetAbilityIndex], target);
+			if (defaultTargetAbility != null)
+			{
+				TargetExecuteAbility(defaultTargetAbility, target);
+			}
 		}
 
 		public void TargetExecuteDefaultAbility(Vector3 worldPos)
 		{
-			TargetExecuteAbility(abilities[defaultWorldTargetAbilityIndex], worldPos);
+			if (defaultWorldTargetAbility != null)
+			{
+				TargetExecuteAbility(defaultWorldTargetAbility, worldPos);
+			}
 		}
 
 		
