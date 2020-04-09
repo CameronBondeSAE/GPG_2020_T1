@@ -5,14 +5,7 @@ using UnityEngine;
 
 public class Teleporter : UnitBase
 {
-    public bool isTeleporting = true;
-    public Transform teleportTarget;
-    public GameObject player;
-    public float Range = -10.0f;
-
-    //moving variables
-    public float moveSpeed;
-    public Transform currentTarget;
+    
     public int damage;
 
     public float tweenDuration;

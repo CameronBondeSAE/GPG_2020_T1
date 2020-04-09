@@ -40,12 +40,6 @@ public class MageTeleport : AbilityBase
         Debug.Log("Teleporting Activated");
         teleportTimer = Vector3.Distance(transform.position,worldPos+= offset)/10f;
         transform.position = worldPos += offset;
-        ///TODO
-        ///Collider Bounds
-        
-        
-        //Raycasting and Offsets to not teleport through the floor
-        
         //player.transform.position = new Vector3(Random.Range(-Range, Range), 1, Random.Range(-Range, Range));
         visuals.SetActive(false);
         StartCoroutine(DelayNumerator());

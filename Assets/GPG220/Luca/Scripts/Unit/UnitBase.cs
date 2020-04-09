@@ -19,7 +19,7 @@ namespace GPG220.Luca.Scripts.Unit
     {
         public static event Action<UnitBase> SpawnStaticEvent;
         public static event Action<UnitBase> DespawnStaticEvent;
-                
+          
 		[SyncVar]
 		public uint ownerNetID;
 		[SyncVar]

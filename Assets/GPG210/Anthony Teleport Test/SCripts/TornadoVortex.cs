@@ -10,32 +10,19 @@ public class TornadoVortex : MonoBehaviour
     public float pullSpeed;
     public float refreshRate;
     public Vector3 offset;
+    private bool shouldPull;
 
     
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        StartCoroutine(PullObject(other, true)); //pull it in if pullable
-        
+        Vector3 ForceDir = tornadoCenter.position + offset - other.transform.position;
+        other.GetComponent<Rigidbody>().AddForce(ForceDir.normalized * pullSpeed * Time.deltaTime);
+        Vector3.Cross(Vector3.up, ForceDir.normalized);
     }
+    
 
-    private void OnTriggerExit(Collider other)
-    {
-        StartCoroutine(PullObject(other, false)); //dont pull it in if not pullable
-    }
-
-    IEnumerator PullObject(Collider other, bool shouldPull)
-    {
-        if (shouldPull)
-        {
-            Vector3 ForceDir = tornadoCenter.position += offset - other.transform.position;
-            other.GetComponent<Rigidbody>().AddForce(ForceDir.normalized * pullSpeed * Time.deltaTime);
-            yield return refreshRate;
-            StartCoroutine(PullObject(other, shouldPull)); //keeps checking if the object is in the tornado
-        }
-
-        
-    }
+}
 
     #region First TornadoPhysics Code
     /*
@@ -65,4 +52,3 @@ public class TornadoVortex : MonoBehaviour
     #endregion
   
 
-}

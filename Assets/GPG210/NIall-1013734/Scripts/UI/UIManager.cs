@@ -40,6 +40,8 @@ public class UIManager : MonoBehaviour
     public AbilityBase selectedWorldTargetAbility;
     public AbilityController abilityController;
 
+    public List<AbilityController> groupAbilityControllers;
+
 
 
     private void Awake()
@@ -56,17 +58,35 @@ public class UIManager : MonoBehaviour
     {
         Vector3 worldPosition = unitSelectionManager.targetPoint; // get the worldpoint from the unitselection manager because its already raycasting to find world points.
        GameObject targetObject = unitSelectionManager.targetObject;
-       
-       if (targetObject == null)
+       if (groupAbilityControllers.Count > 0)
        {
-           abilityController.TargetExecuteAbility(selectedWorldTargetAbility,worldPosition);
-           selectedWorldTargetAbility = abilityController.defaultWorldTargetAbility;
+           foreach (AbilityController abilityController in groupAbilityControllers)
+           {
+               if (targetObject == null)
+               {
+                   abilityController.TargetExecuteAbility(abilityController.defaultWorldTargetAbility,worldPosition);
+               }
+               else
+               {
+                   abilityController.TargetExecuteAbility(abilityController.defaultTargetAbility,targetObject);
+               }
+           }
        }
        else
        {
-           abilityController.TargetExecuteAbility(selectedTargetAbility,targetObject);
-           selectedTargetAbility = abilityController.defaultTargetAbility;
+
+           if (targetObject == null)
+           {
+               abilityController.TargetExecuteAbility(selectedWorldTargetAbility, worldPosition);
+               selectedWorldTargetAbility = abilityController.defaultWorldTargetAbility;
+           }
+           else
+           {
+               abilityController.TargetExecuteAbility(selectedTargetAbility, targetObject);
+               selectedTargetAbility = abilityController.defaultTargetAbility;
+           }
        }
+
        // same as above,  unit selection manager is already raycasting on cursor move to find these.
     }
     public void CursorMove(InputAction.CallbackContext ctx) // called when cursor is moved. 
@@ -126,10 +146,19 @@ public class UIManager : MonoBehaviour
                 counter++;
             }
         }
+        else
+        {
+            groupAbilityControllers.Clear();
+            foreach (ISelectable selectable in selectables)
+            {
+                groupAbilityControllers.Add(((UnitBase) selectable).abilityController);
+            }
+        }
     }
 
     private void OnDeselection(List<ISelectable> selectables)
     {
+        groupAbilityControllers.Clear();
         // Removes UI when no Unit is Selected.
         if (selectables.Count <= 0)
         {

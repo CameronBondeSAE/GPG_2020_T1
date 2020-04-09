@@ -162,7 +162,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   autoLoadAbilities: 1
-  defaultAbilityIndex: 0
+  defaultTargetAbility: {fileID: 0}
+  defaultWorldTargetAbility: {fileID: 0}
 --- !u!114 &3236445198630985762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,6 +178,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cooldown: 0
   currentCooldown: 0
+  targetRequired: 0
   abilityName: 
   abilityDescription: 
   abilityImage: {fileID: 0}
@@ -198,6 +200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cooldown: 0
   currentCooldown: 0
+  targetRequired: 0
   abilityName: 
   abilityDescription: 
   abilityImage: {fileID: 0}
@@ -236,7 +239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3266ec32201a0694a8a80c5131a2d2ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 999999999
+  startingHealth: 500
 --- !u!114 &2776125763402330662
 MonoBehaviour:
   m_ObjectHideFlags: 0
