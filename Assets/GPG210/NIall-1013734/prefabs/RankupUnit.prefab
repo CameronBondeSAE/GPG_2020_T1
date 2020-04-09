@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 6036541651010233347}
   - component: {fileID: 5545409066728190419}
   - component: {fileID: 8316809734386749385}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: RankupUnit
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -159,6 +159,9 @@ MonoBehaviour:
   myNetID: 0
   myOwnerIdentity: {fileID: 0}
   debug: 
+  unitName: 
+  unitDescription: 
+  unitImage: {fileID: 0}
   UnitSpeed: 4
   target: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0.5, z: 0}
@@ -192,11 +195,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4b3c9c3d60df0943889dbbf7b6e38ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityName: Promotion!
-  abilityDescription: slighty increase units statistics.
-  abilityImg: {fileID: 0}
   cooldown: 0
   currentCooldown: 0
+  abilityName: Promotion!
+  abilityDescription: slighty increase units statistics.
+  abilityImage: {fileID: 0}
   Kills: 1
   material:
   - {fileID: 2100000, guid: 9cbb5f267f07afd42a34a20a447fa4db, type: 2}
@@ -261,11 +264,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ec0d918dabd23e4fa0d5b78a92c859e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityName: Move
-  abilityDescription: move to target location
-  abilityImg: {fileID: 0}
   cooldown: 0
   currentCooldown: 0
+  abilityName: Move
+  abilityDescription: move to target location
+  abilityImage: {fileID: 0}
   moving: 0
   targetPos: {x: 0, y: 0, z: 0}
 --- !u!114 &6036541651010233347
@@ -5012,7 +5015,7 @@ GameObject:
   - component: {fileID: 4480688074089712}
   - component: {fileID: 33190726894046182}
   - component: {fileID: 23619450113819686}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Forward Pointer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5088,7 +5091,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8539061086872330998}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Outer Prong
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5120,7 +5123,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7334715368977937836}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Centre Prong
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5153,7 +5156,7 @@ GameObject:
   - component: {fileID: 976598461333768156}
   - component: {fileID: 6002086430496971042}
   - component: {fileID: 109003998587286916}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Left Prong
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5231,7 +5234,7 @@ GameObject:
   - component: {fileID: 3240461104556825615}
   - component: {fileID: 9219022314413960924}
   - component: {fileID: 4390274369080669425}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Right Prong
   m_TagString: Untagged
   m_Icon: {fileID: 0}

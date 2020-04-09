@@ -45,7 +45,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
             CreatGrid();
         }
 
-        void UpdateGrid()
+       public void UpdateGrid()
         {
             foreach (Node node in grid)
             {

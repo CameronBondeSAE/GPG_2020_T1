@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
 {
-    public class Pathfinding : MonoBehaviour
+    public class SimplePathfinder : MonoBehaviour
     {
         private NodeGrid grid;
         public Transform seeker, target;
@@ -19,10 +19,10 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
 
         private void Update()
         {
-            FindPath(seeker.position,target.position);
+           // FindPath(seeker.position,target.position);
         }
 
-        private void FindPath(Vector3 startPos, Vector3 targetPos)
+        public List<Node> FindPath(Vector3 startPos, Vector3 targetPos)
         {
             Node startNode = grid.NodeFromWorldPoint(startPos);
             Node targetNode = grid.NodeFromWorldPoint(targetPos);
@@ -48,8 +48,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
 
                 if (currentNode == targetNode)
                 {
-                    RetracePath(startNode,targetNode);
-                    return;
+                    return RetracePath(startNode,targetNode);
                 }
 
                 foreach (Node neighbour in grid.GetNeighbours(currentNode))
@@ -73,9 +72,10 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
 
                 }
             }
+            return new List<Node>();
         }
 
-        void RetracePath(Node startNode,Node endNode)
+        List<Node> RetracePath(Node startNode,Node endNode)
         {
             List<Node> path = new List<Node>();
             Node currentNode;
@@ -86,8 +86,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
                 currentNode = currentNode.parent;
             }
             path.Reverse();
-
-            grid.path = path;
+            // grid.path = path;
+           return path;
 
         }
 
