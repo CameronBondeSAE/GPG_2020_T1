@@ -11,7 +11,7 @@ public class BigState : StateBase
     {
         base.Enter();
 
-        camMonster.abilityController.ExecuteAbility<GetBigAbility>();
+        camMonster.abilityController.SelectedExecuteAbility(camMonster.GetComponent<GetBigAbility>());
     }
 
     public override void Execute()

@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 2450234995839662397}
   - component: {fileID: 8326427771440045471}
   - component: {fileID: 1574884746106495472}
+  - component: {fileID: 6102804168016830277}
   - component: {fileID: -3855243417948868038}
   m_Layer: 12
   m_Name: CamMonster
@@ -106,9 +107,9 @@ MonoBehaviour:
   myNetID: 0
   myOwnerIdentity: {fileID: 0}
   debug: 
-  unitName: 
-  unitDescription: 
-  unitImage: {fileID: 0}
+  unitName: Cam Monster
+  unitDescription: Comin at ya
+  unitImage: {fileID: 21300008, guid: c862ec58257e74625b59a5f2bb18ace7, type: 3}
 --- !u!114 &7557236680982209879
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,7 +125,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   autoLoadAbilities: 1
-  defaultAbilityIndex: 0
+  defaultTargetAbility: {fileID: 6102804168016830277}
+  defaultWorldTargetAbility: {fileID: 2450234995839662397}
 --- !u!114 &2450234995839662397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,6 +141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cooldown: 0
   currentCooldown: 0
+  targetRequired: 1
   abilityName: 
   abilityDescription: 
   abilityImage: {fileID: 0}
@@ -158,6 +161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cooldown: 0
   currentCooldown: 0
+  targetRequired: 0
   abilityName: Big!
   abilityDescription: 
   abilityImage: {fileID: 0}
@@ -183,11 +187,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cooldown: 0
   currentCooldown: 0
+  targetRequired: 0
   abilityName: Little!
   abilityDescription: 
   abilityImage: {fileID: 0}
   camMonster: {fileID: 3776347446129422645}
   scale: 0.5
+--- !u!114 &6102804168016830277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1127377614303666354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74c2113444eba5745bff6dafba94c517, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldown: 0
+  currentCooldown: 0
+  targetRequired: 1
+  abilityName: Tap On Head
+  abilityDescription: 
+  abilityImage: {fileID: 0}
+  getReadyScale: {x: 2, y: 2, z: 2}
+  damage: 1000000
+  duration: 1
 --- !u!114 &-3855243417948868038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,7 +228,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneId: 0
   serverOnly: 0
-  m_AssetId: 034d145f47743a348bfc3c6557f64867
+  m_AssetId: 
 --- !u!1 &7993177599744077309
 GameObject:
   m_ObjectHideFlags: 0

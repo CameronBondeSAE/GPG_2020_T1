@@ -121,7 +121,7 @@ namespace GPG220.Luca.Scripts.Abilities
 		[Command]
 		private void CmdSelectedExecuteAbility(int abilityIndex)
 		{
-			Debug.Log("Command : Called "+abilities.IndexOfKey(abilityIndex));
+			Debug.Log("Command : "+abilities[abilityIndex].Name);
 
 			RpcSelectedExecuteAbility(abilityIndex);
 			//  abilities.TryGetValue(abilityIndex, out var ability);
@@ -131,7 +131,7 @@ namespace GPG220.Luca.Scripts.Abilities
 		[ClientRpc]
 		private void RpcSelectedExecuteAbility(int abilityIndex)
 		{
-			Debug.Log("RPC: Client->Server : Called "+abilities.IndexOfKey(abilityIndex));
+			Debug.Log("RPC: Client->Server : "+abilities[abilityIndex].Name);
 			abilities[abilityIndex].SelectedExecute();
 		}
 
@@ -147,7 +147,17 @@ namespace GPG220.Luca.Scripts.Abilities
 			var index = abilities.IndexOfValue(ability);
 			abilities.TryGetValue(index, out AbilityBase outAbility);
 
-			if (outAbility != null) CmdTargetExecuteAbility(index, target.GetComponent<NetworkIdentity>());
+			if (outAbility != null)
+			{
+				if (target != null)
+				{
+					CmdTargetExecuteAbility(index, target.GetComponent<NetworkIdentity>());
+				}
+				else
+				{
+					Debug.Log("Target null in TargetExecuteAbility");
+				}
+			}
 
 			//return ability?.TargetExecute(target) ?? false;
 		}
@@ -156,7 +166,14 @@ namespace GPG220.Luca.Scripts.Abilities
 		private void CmdTargetExecuteAbility(int abilityIndex, NetworkIdentity target)
 		{
 			Debug.Log("Command : Called "+abilities.IndexOfKey(abilityIndex));
-			RpcTargetExecuteAbility(abilityIndex, target);
+			if (target != null)
+			{
+				RpcTargetExecuteAbility(abilityIndex, target);
+			}
+			else
+			{
+				Debug.Log("No target. Trying to TargetExecuteAbility");
+			}
 		}
 
 		[ClientRpc]
@@ -165,7 +182,15 @@ namespace GPG220.Luca.Scripts.Abilities
 			Debug.Log("RPC: Client->Server : Called "+abilities.IndexOfKey(abilityIndex));
 			abilities.TryGetValue(abilityIndex, out var ability);
 
-			ability?.TargetExecute(target.gameObject);
+			try
+			{
+				ability?.TargetExecute(target.gameObject);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
 		}
 
 

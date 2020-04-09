@@ -4936,6 +4936,10 @@ GameObject:
   - component: {fileID: 2064829861522422077}
   - component: {fileID: 1794493600}
   - component: {fileID: 1794493599}
+  - component: {fileID: 1794493597}
+  - component: {fileID: 6494733789312721730}
+  - component: {fileID: 9060098476170564328}
+  - component: {fileID: 1382369771402863855}
   m_Layer: 0
   m_Name: CammyWhammy
   m_TagString: Untagged
@@ -5004,4 +5008,79 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c63733e90ab2c8249bdf480857fcec27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  ownerNetID: 0
+  owner: {fileID: 0}
+  unitStats: {fileID: 0}
+  inventory: {fileID: 0}
+  rb: {fileID: 0}
+  health: {fileID: 0}
+  abilityController: {fileID: 0}
+  myNetID: 0
+  myOwnerIdentity: {fileID: 0}
+  debug: 
   animator: {fileID: 2064829861522422077}
+  health: {fileID: 0}
+--- !u!114 &1794493597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8633466039873918686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3266ec32201a0694a8a80c5131a2d2ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 0
+--- !u!114 &6494733789312721730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8633466039873918686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b639ca1a31edf774cbd2af6897976bd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityName: Embiggen
+  abilityDescription: 
+  abilityImg: {fileID: 0}
+  cooldown: 0
+  currentCooldown: 0
+  bigScale: 5
+--- !u!114 &9060098476170564328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8633466039873918686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  m_AssetId: 
+--- !u!114 &1382369771402863855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8633466039873918686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34aefdaaccff11643b2142106719ca64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  autoLoadAbilities: 1
+  defaultAbilityIndex: 0
