@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 7073489732168224578}
   - component: {fileID: 1883244595616115451}
   - component: {fileID: 2243400101138218055}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: LRUnit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -172,6 +172,9 @@ MonoBehaviour:
   myNetID: 0
   myOwnerIdentity: {fileID: 0}
   debug: 
+  unitName: 
+  unitDescription: 
+  unitImage: {fileID: 0}
   tweenDuration: 0
   currentState: 0
 --- !u!65 &1883244595616115451
@@ -213,7 +216,7 @@ GameObject:
   - component: {fileID: 1419949657626320712}
   - component: {fileID: 260262678514446049}
   - component: {fileID: 4882691279899374006}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -293,7 +296,7 @@ GameObject:
   - component: {fileID: 6433368131847563878}
   - component: {fileID: 5369529608329117924}
   - component: {fileID: 3861412825321678543}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Forward Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}

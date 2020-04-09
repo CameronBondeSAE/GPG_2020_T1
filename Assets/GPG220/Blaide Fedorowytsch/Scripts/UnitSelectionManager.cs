@@ -116,7 +116,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             actionKey = actionMap.FindAction("ActionKeyPress");
             cursorMove = actionMap.FindAction("CursorMove");
             selectKeyPress.performed += SelectKeyPress;
-            selectKeyRelease.performed += SelectKeyRelease;
+            selectKeyRelease.performed += SelectActionRelease;
             actionKey.performed += DoAction;
             cursorMove.performed += CursorMove;
         }
@@ -258,7 +258,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         }
         
 
-        void SelectKeyRelease(InputAction.CallbackContext ctx)
+        void SelectActionRelease(InputAction.CallbackContext ctx)
         {
             if (selectKeyDown)
             {
@@ -284,6 +284,30 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                                 selectedIselectables.Add(s);
                             }
 
+                        }
+                    }
+                    else
+                    {
+                        RaycastHit h;
+                        Ray  ray = new Ray(mainCam.ScreenToWorldPoint(cursorPoint),targetPoint);
+                        
+                        if (Physics.SphereCast(ray, 2,out h, 1000, unitLayerMask,
+                            QueryTriggerInteraction.Collide))
+                        {
+                            targetObject = h.collider.gameObject;
+                            if (targetObject.GetComponent<UnityEditor.Experimental.GraphView.ISelectable>() != null)
+                            {
+                                ISelectable s = targetObject.GetComponent<ISelectable>();
+
+                                //if (((UnitBase) s).owner == FindLocalPlayer() )
+                                if (((UnitBase) s).ownerNetID == GetOwnerID() || alwaysSelectDebug)
+                                {
+                                    s.OnSelected();
+                                
+                                    ApplyOutlineToObject(((MonoBehaviour)s).gameObject);
+                                    selectedIselectables.Add(s);
+                                }
+                            }
                         }
                     }
                 }

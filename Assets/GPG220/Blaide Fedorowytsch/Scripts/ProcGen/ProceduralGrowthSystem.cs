@@ -31,9 +31,9 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
 
 
         public bool growObstacles;
-        
+        [Range(0.0f,100f)]
         public float baseGrowRate;
-        public AnimationCurve growcurve;
+        //public AnimationCurve growcurve;
         public float roundTime;
         public float timer;
         
@@ -48,6 +48,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
         public List<Vector2Int> openEdges;
         
         private bool gameStarted = false;
+
+        public Action onUpdateProceduralGrowth;
 
         // Start is called before the first frame update
         void Start()
@@ -140,7 +142,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
             List<Vector2Int> temp = new List<Vector2Int>();
             foreach (Vector2Int gridPosition in openEdges)
             {
-                if (Random.Range(1,100) < 20 && BoolGrid[gridPosition.x, gridPosition.y] == false)
+                if (Random.Range(1,100) < baseGrowRate && BoolGrid[gridPosition.x, gridPosition.y] == false)
                 {
                     temp.Add(gridPosition);
                     BoolGrid[gridPosition.x, gridPosition.y] = true;
@@ -302,9 +304,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
                 {
                     ObjectGrid[gridPosition.x,gridPosition.y].SetActive(false);
                 }
-
-                
             }
+            onUpdateProceduralGrowth.Invoke();
         }
 
         public bool PerlinThresholdCheck(float threshold, Vector2 density, Vector2Int gridPosition)

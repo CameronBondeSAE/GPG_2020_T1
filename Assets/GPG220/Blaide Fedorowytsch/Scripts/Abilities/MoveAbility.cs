@@ -30,7 +30,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Abilities
         {
             rb = GetComponent<Rigidbody>();
             ub = GetComponent<UnitBase>();
-            //heightOffset = GetComponent<Collider>().bounds.extents.y;
+            heightOffset = GetComponent<Collider>().bounds.extents.y;
             target = worldPos;
             moving = true;
             return true;
@@ -54,12 +54,10 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Abilities
         Vector3 OffsetPosition(List<ISelectable> selectionGroup)
         {
             Vector3 total = new Vector3();
-
             foreach (ISelectable s in selectionGroup)
             {
                 total += ((MonoBehaviour) s).gameObject.transform.position;
             }
-
             return transform.position - total / selectionGroup.Count;
         }
 

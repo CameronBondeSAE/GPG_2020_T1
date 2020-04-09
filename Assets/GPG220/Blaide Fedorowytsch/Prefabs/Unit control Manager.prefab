@@ -135,7 +135,7 @@ MonoBehaviour:
   cursorPoint: {x: 0, y: 0}
   targetPoint: {x: 0, y: 0, z: 0}
   targetObject: {fileID: 0}
-  minimumSelectionSize: 0.1
+  minimumSelectionSize: 0.3
   boxCollider: {fileID: 0}
   heightOffset: 0
   worldLayerMask:
