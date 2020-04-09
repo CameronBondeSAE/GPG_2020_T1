@@ -43,6 +43,19 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             }
         }
 
+		public void SpawnOneOfEach(NetworkIdentity owner)
+		{
+			Vector3 position;
+			for (int clones = 0; clones < spawnNumber; clones++)
+			{
+				for (int i = 0; i < unitBases.Count; i++)
+				{
+					position = RandomGroundPointInBounds(unitExtents(unitBases[i]));
+					SpawnUnit(owner, unitBases[i], position, Quaternion.identity);
+				}
+			}
+		}
+
         public Vector3 unitExtents(UnitBase unit)
         {
             //TODO Figure out a nicer collision check.

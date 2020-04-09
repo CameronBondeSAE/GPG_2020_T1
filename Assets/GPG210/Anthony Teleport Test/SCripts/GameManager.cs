@@ -81,8 +81,9 @@ public class GameManager : MonoBehaviour
     {
         if (unitSpawner != null)
         {
-            unitSpawner.RandomSpawns(owner);
-        }
+            // unitSpawner.RandomSpawns(owner);
+			unitSpawner.SpawnOneOfEach(owner);
+		}
     }
 
 
