@@ -77,19 +77,19 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         /// Called every time a selection is made.
         /// </summary>
         [HideInInspector]
-        public Action<List<ISelectable>> onSelectionEvent;
+        public event Action<List<ISelectable>> OnSelectionEvent;
         
         /// <summary>
         /// called every time any units are deselected, including when units die and leave the selection.
         /// </summary>
         [HideInInspector] 
-        public Action<List<ISelectable>> onDeselectionEvent;
+        public event Action<List<ISelectable>> OnDeselectionEvent;
         
         /// <summary>
-        /// called when the mouse is over an Iselectable;
+        /// called when the mouse moves while over an Iselectable;
         /// </summary>
         [HideInInspector]
-        public Action<ISelectable> mouseOverIselectable;
+        public event Action<ISelectable> MouseOverIselectable;
         
         [SerializeField]
         private List<ISelectable> iSelectablesInSelection;
@@ -117,7 +117,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             cursorMove = actionMap.FindAction("CursorMove");
             selectKeyPress.performed += SelectKeyPress;
             selectKeyRelease.performed += SelectActionRelease;
-            actionKey.performed += DoAction;
+            //actionKey.performed += DoAction;
             cursorMove.performed += CursorMove;
         }
 
@@ -193,7 +193,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             iSelectablesInSelection.Remove(i);
             List<ISelectable> iList = new List<ISelectable>();
             iList.Add(i);
-            onDeselectionEvent.Invoke(iList);
+            OnDeselectionEvent.Invoke(iList);
             
 ;        }
 
@@ -278,37 +278,13 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                             if (((UnitBase) s).ownerNetID == GetOwnerID() || alwaysSelectDebug)
                             {
                                 s.OnSelected();
-                                
                                 ApplyOutlineToObject(((MonoBehaviour)s).gameObject);
                                 selectedIselectables.Add(s);
                             }
 
                         }
                     }
-                    else
-                    {
-                        RaycastHit h;
-                        Ray  ray = new Ray(mainCam.ScreenToWorldPoint(cursorPoint),targetPoint);
-                        
-                        if (Physics.SphereCast(ray, 2,out h, 1000, unitLayerMask,
-                            QueryTriggerInteraction.Collide))
-                        {
-                            targetObject = h.collider.gameObject;
-                            if (targetObject.GetComponent<UnityEditor.Experimental.GraphView.ISelectable>() != null)
-                            {
-                                ISelectable s = targetObject.GetComponent<ISelectable>();
-
-                                //if (((UnitBase) s).owner == FindLocalPlayer() )
-                                if (((UnitBase) s).ownerNetID == GetOwnerID() || alwaysSelectDebug)
-                                {
-                                    s.OnSelected();
-                                
-                                    ApplyOutlineToObject(((MonoBehaviour)s).gameObject);
-                                    selectedIselectables.Add(s);
-                                }
-                            }
-                        }
-                    }
+                  
                 }
                 else
                 {
@@ -342,7 +318,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 
                 if (selectedIselectables.Count > 0)
                 {
-                    onSelectionEvent?.Invoke(selectedIselectables);
+                    OnSelectionEvent?.Invoke(selectedIselectables);
                 }
             }
             
@@ -419,7 +395,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 
                 List<ISelectable> removedIselectables = selectedIselectables;
                 selectedIselectables.Clear();
-                onDeselectionEvent?.Invoke(removedIselectables);
+                OnDeselectionEvent?.Invoke(removedIselectables);
             }
         }
 
@@ -455,13 +431,13 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             }
         }
 
-        void DoAction(InputAction.CallbackContext ctx)
+/*        void DoAction(InputAction.CallbackContext ctx)
         {
             foreach (ISelectable S in selectedIselectables)
             {
                 S.OnExecuteAction(targetPoint,targetObject);
             }
-        }
+        }*/
 
         void CursorMove(InputAction.CallbackContext ctx)
         {
@@ -477,11 +453,11 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                 targetPoint = hit.point;
             }
 
-            if (Physics.Raycast(ray, out hit, 1000, unitLayerMask, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(ray, out hit, 1000, unitLayerMask, QueryTriggerInteraction.Collide))
             {
                 targetObject = hit.collider.gameObject;
                 ISelectable targetIselectable = targetObject.GetComponent<ISelectable>();
-                if (targetIselectable != null) mouseOverIselectable?.Invoke(targetIselectable);
+                if (targetIselectable != null) MouseOverIselectable?.Invoke(targetIselectable);
             }
             else
             {

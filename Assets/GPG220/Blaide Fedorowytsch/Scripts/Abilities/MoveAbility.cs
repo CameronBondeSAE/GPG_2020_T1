@@ -15,6 +15,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Abilities
         private float heightOffset = 0.5f;
         private UnitBase ub;
         public Vector3 targetPos;
+        
         public override bool SelectedExecute()
         {
             return true;
@@ -24,6 +25,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Abilities
         {
             abilityName = "Move";
             abilityDescription = "Should move the character.";
+            targetRequired = true;
         }
 
         public override bool TargetExecute(Vector3 worldPos)

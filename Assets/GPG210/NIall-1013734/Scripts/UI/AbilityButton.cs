@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class AbilityButton : MonoBehaviour
 {
-
+    public UIManager uiManager;
     public AbilityBase abilityBase;
     public int index;
 
@@ -16,7 +16,15 @@ public class AbilityButton : MonoBehaviour
         {
          //   abilityBase.SelectedExecute();
          abilityBase.GetComponent<AbilityController>().SelectedExecuteAbility(abilityBase);
+
+         if (abilityBase.targetRequired == true)
+         {
+             uiManager.selectedTargetAbility = abilityBase;
+             uiManager.selectedWorldTargetAbility = abilityBase;
+         }
+         
         }
+        
     }
 
 

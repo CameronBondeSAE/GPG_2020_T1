@@ -162,7 +162,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   autoLoadAbilities: 1
-  defaultAbilityIndex: 0
+  defaultTargetAbility: {fileID: 0}
+  defaultWorldTargetAbility: {fileID: 3716184969492281802}
 --- !u!114 &3716184969492281802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,6 +178,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cooldown: 0
   currentCooldown: 0
+  targetExuteRequired: 0
   abilityName: 
   abilityDescription: 
   abilityImage: {fileID: 0}
@@ -196,6 +198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cooldown: 0
   currentCooldown: 0
+  targetExuteRequired: 0
   abilityName: 
   abilityDescription: 
   abilityImage: {fileID: 0}

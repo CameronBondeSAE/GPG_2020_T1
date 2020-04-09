@@ -29,7 +29,8 @@ public class MageTeleport : AbilityBase
     {
         abilityName = "Teleport";
         abilityDescription = "Teleport to another player on the map killing them instantly.";
-        
+        targetRequired = true;
+
     }
 
     

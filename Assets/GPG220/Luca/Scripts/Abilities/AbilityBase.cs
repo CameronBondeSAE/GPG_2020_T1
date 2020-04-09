@@ -17,7 +17,7 @@ namespace GPG220.Luca.Scripts.Abilities
 
         public event Action<AbilityBase, GameObject> AbilityExecutionStartEvent;
         public event Action<AbilityBase, GameObject> AbilityExecutionEndEvent;
-        
+        public bool targetRequired;
         public string abilityName;
         [TextArea]
         public string abilityDescription;
