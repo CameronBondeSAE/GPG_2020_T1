@@ -49,7 +49,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
         
         private bool gameStarted = false;
 
-        public Action onUpdateProceduralGrowth;
+        public event Action onUpdateProceduralGrowth;
 
         // Start is called before the first frame update
         void Start()
@@ -305,7 +305,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
                     ObjectGrid[gridPosition.x,gridPosition.y].SetActive(false);
                 }
             }
-            onUpdateProceduralGrowth.Invoke();
+            onUpdateProceduralGrowth?.Invoke();
         }
 
         public bool PerlinThresholdCheck(float threshold, Vector2 density, Vector2Int gridPosition)

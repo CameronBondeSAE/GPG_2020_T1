@@ -266,7 +266,6 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                     new Vector3(targetPoint.x, targetPoint.y + heightOffset, targetPoint.z + heightOffset);
                 selectKeyDown = false;
 
-
                 if (Vector3.Distance(selectionRect[0], selectionRect[2]) <= minimumSelectionSize)
                 {
                     if (targetObject != null)
