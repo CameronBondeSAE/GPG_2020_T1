@@ -60,6 +60,20 @@ namespace GPG220.Luca.Scripts.Abilities
             return true;
         }
 
+        public override bool TargetExecute(GameObject targets = null)
+        {
+            if (!CheckRequirements())
+                return false;
+
+            NotifyAbilityStartExecution(gameObject);
+            
+            isExecuting = true;
+            StartCoroutine(SpawnAndExpandHealSphere(gameObject));
+            
+            NotifyAbilityExecuted(gameObject);
+            return true;
+        }
+
         private IEnumerator SpawnAndExpandHealSphere(GameObject executorGameObject)
         {
             var healSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
