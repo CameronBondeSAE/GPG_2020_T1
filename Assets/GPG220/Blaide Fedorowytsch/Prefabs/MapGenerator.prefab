@@ -157,7 +157,7 @@ MonoBehaviour:
   baseGrowRate: 0
   roundTime: 0
   timer: 0
-  obstaclePrefab: {fileID: 8388037506306690960, guid: ea7843eac8b74ce4fbb449622fff38d8,
+  obstaclePrefab: {fileID: 3695246183648753576, guid: 812709ba988adf14e91a5ac074d1becf,
     type: 3}
   ObstacleHolder: {fileID: 844936439617160392}
   gameManager: {fileID: 0}

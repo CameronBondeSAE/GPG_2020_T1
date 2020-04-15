@@ -1149,6 +1149,12 @@ PrefabInstance:
       propertyPath: obstacleThresholdLast
       value: 12.82
       objectReference: {fileID: 0}
+    - target: {fileID: 844936440088286563, guid: 69c72cf18b94ae04a80ce166e1e5b1e9,
+        type: 3}
+      propertyPath: obstaclePrefab
+      value: 
+      objectReference: {fileID: 3695246183648753576, guid: 812709ba988adf14e91a5ac074d1becf,
+        type: 3}
     - target: {fileID: 844936440088286622, guid: 69c72cf18b94ae04a80ce166e1e5b1e9,
         type: 3}
       propertyPath: m_Name
@@ -1455,7 +1461,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 2.018e-42, z: 0, w: 7.3e-44}
+  m_BoundingSphereOverride: {x: 0, y: 1, z: 1.3e-44, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
