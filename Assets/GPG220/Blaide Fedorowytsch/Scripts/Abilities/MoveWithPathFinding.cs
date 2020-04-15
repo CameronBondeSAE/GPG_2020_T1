@@ -17,13 +17,15 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Abilities
         public bool moving = false;
         private float heightOffset = 0.5f;
         private UnitBase ub;
+        [HideInInspector]
         public PathFinding.SimplePathfinder simplePathfinder;
+        [HideInInspector]
         public ProceduralMeshGenerator procMesh;
         public LayerMask ground;
         public List<Node> currentPath;
         public int currentPathNodeIndex;
-        public float nodeDistanceMin = 3.5f;
-        public float moveForce;
+        public float nodeDistanceMin = 1.5f;
+        public float moveForce = 1000;
         public override bool SelectedExecute()
         {
             return true;
@@ -49,7 +51,6 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Abilities
             currentPathNodeIndex = 0;
             return true;
         }
-
         private void FixedUpdate()
         {
             if (moving)
@@ -86,8 +87,6 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Abilities
             {
                 rb.AddForce(Vector3.ProjectOnPlane((v -transform.position),hit.normal) * moveForce);
             }
-
-            
         }
 
         private void OnDrawGizmosSelected()

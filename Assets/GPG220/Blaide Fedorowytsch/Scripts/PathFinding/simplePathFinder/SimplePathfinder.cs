@@ -31,9 +31,10 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
 
         public List<Node> FindPath(Vector3 startPos, Vector3 targetPos)
         {
+/*
 
             startPos = transform.InverseTransformPoint(startPos);
-            targetPos = transform.InverseTransformPoint(targetPos);
+            targetPos = transform.InverseTransformPoint(targetPos);*/
             Node startNode = grid.NodeFromWorldPoint(startPos);
             Node targetNode = grid.NodeFromWorldPoint(targetPos);
             

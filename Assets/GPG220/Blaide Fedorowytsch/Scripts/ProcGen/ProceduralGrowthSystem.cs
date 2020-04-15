@@ -15,7 +15,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
         [HideInInspector]
         public GameObject[,] ObjectGrid;
 
-        
+        public bool gizmos;
         
         public Vector2Int gridSize = new Vector2Int(1,1);
         public Vector2 worldSize;
@@ -305,7 +305,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
                     ObjectGrid[gridPosition.x,gridPosition.y].SetActive(false);
                 }
             }
-            onUpdateProceduralGrowth?.Invoke();
+           // onUpdateProceduralGrowth?.Invoke();
         }
 
         public bool PerlinThresholdCheck(float threshold, Vector2 density, Vector2Int gridPosition)
@@ -322,15 +322,23 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
 
         private void OnDrawGizmosSelected()
         {
-            foreach (Vector2Int v in openEdges)
+            if (gizmos)
             {
-                Gizmos.color = Color.green;
-                Gizmos.DrawSphere(transform.position + new Vector3(v.x*(worldSize.x*0.01f),8,v.y*(worldSize.y*0.01f)), 2f);
-            }
-            foreach (Vector2Int v in closedEdges)
-            {
-                Gizmos.color = Color.red;
-                Gizmos.DrawSphere(transform.position + new Vector3(v.x*(worldSize.x*0.01f),8,v.y*(worldSize.y*0.01f)), 2f);
+                foreach (Vector2Int v in openEdges)
+                {
+                    Gizmos.color = Color.green;
+                    Gizmos.DrawSphere(
+                        transform.position + new Vector3(v.x * (worldSize.x * 0.01f), 8, v.y * (worldSize.y * 0.01f)),
+                        2f);
+                }
+
+                foreach (Vector2Int v in closedEdges)
+                {
+                    Gizmos.color = Color.red;
+                    Gizmos.DrawSphere(
+                        transform.position + new Vector3(v.x * (worldSize.x * 0.01f), 8, v.y * (worldSize.y * 0.01f)),
+                        2f);
+                }
             }
         }
     }

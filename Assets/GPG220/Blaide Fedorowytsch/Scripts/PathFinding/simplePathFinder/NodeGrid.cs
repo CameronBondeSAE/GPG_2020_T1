@@ -24,7 +24,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
             {
                 foreach (Node n in grid)
                 {
-                    
+                    Gizmos.color = Color.white;
+                    Gizmos.DrawCube(n.worldPosition,Vector3.one * (nodeDiamater-0.1f));
                     if (!n.walkable)
                     {
                         Gizmos.color =Color.red;
@@ -51,7 +52,12 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
             CreatGrid();
         }
 
-       public void UpdateGrid()
+        private void Awake()
+        {
+            GlobalEvents.PathFindingObstacleChange += CheckAroundPosition;
+        }
+
+        public void SweepCheckWholeGrid()
         {
             foreach (Node node in grid)
             {
@@ -59,9 +65,29 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
             }
         }
 
-        private void FixedUpdate()
+       public void CheckAroundPosition(WorldPosAndBounds worldPosAndBounds)
+       {
+           Node n = NodeFromWorldPoint(worldPosAndBounds.worldPos);
+           Node minNode = NodeFromWorldPoint(worldPosAndBounds.bounds.min + new Vector3(0.1f,0.1f,0.1f));
+           Node maxNode = NodeFromWorldPoint(worldPosAndBounds.bounds.max  - new Vector3(0.1f,0.1f,0.1f));
+
+           int leftmost = minNode.gridPosition.x;
+           int rightmost = maxNode.gridPosition.x;
+           int forwardMost = minNode.gridPosition.y;
+           int backwardMost = maxNode.gridPosition.y;
+
+           for (int x = leftmost; x <= rightmost; x++)
+           {
+               for (int y = forwardMost; y <= backwardMost; y++)
+               {
+                   grid[x,y].walkable = !Physics.CheckSphere( grid[x,y].worldPosition, nodeRadius,layerMask);
+               }
+           }
+       }
+
+       private void FixedUpdate()
         {
-            UpdateGrid();
+          //  UpdateGrid();
         }
 
         void CreatGrid()
@@ -110,6 +136,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
 
         public Node NodeFromWorldPoint(Vector3 worldPoint)
         {
+            worldPoint = transform.InverseTransformPoint(worldPoint);
             float percentX = (worldPoint.x + gridWorldSize.x / 2) / gridWorldSize.x;
             float percentY = (worldPoint.z + gridWorldSize.y / 2) / gridWorldSize.y;
 

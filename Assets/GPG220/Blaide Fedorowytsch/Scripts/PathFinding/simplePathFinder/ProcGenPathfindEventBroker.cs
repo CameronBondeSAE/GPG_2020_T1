@@ -12,6 +12,6 @@ public class ProcGenPathfindEventBroker : MonoBehaviour
 
     private void Start()
     {
-        proceduralGrowthSystem.onUpdateProceduralGrowth += nodeGrid.UpdateGrid;
+        proceduralGrowthSystem.onUpdateProceduralGrowth += nodeGrid.SweepCheckWholeGrid;
     }
 }
