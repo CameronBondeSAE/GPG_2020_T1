@@ -72,7 +72,7 @@ public class UIManager : MonoBehaviour
                }
            }
        }
-       else
+       else if(abilityController!= null)
        {
 
            if (targetObject == null)
@@ -158,7 +158,10 @@ public class UIManager : MonoBehaviour
 
     private void OnDeselection(List<ISelectable> selectables)
     {
-        groupAbilityControllers.Clear();
+        groupAbilityControllers.Clear(); 
+        abilityController = null;
+        selectedTargetAbility = null;
+        selectedWorldTargetAbility = null;
         // Removes UI when no Unit is Selected.
         if (selectables.Count <= 0)
         {

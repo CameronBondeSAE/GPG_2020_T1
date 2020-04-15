@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
@@ -22,8 +23,17 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
            // FindPath(seeker.position,target.position);
         }
 
+        [Button(ButtonStyle.FoldoutButton)]
+        public void TestPathFind()
+        {
+            FindPath(seeker.position,target.position);
+        }
+
         public List<Node> FindPath(Vector3 startPos, Vector3 targetPos)
         {
+
+            startPos = transform.InverseTransformPoint(startPos);
+            targetPos = transform.InverseTransformPoint(targetPos);
             Node startNode = grid.NodeFromWorldPoint(startPos);
             Node targetNode = grid.NodeFromWorldPoint(targetPos);
             
@@ -69,7 +79,6 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
                             openSet.Add(neighbour);
                         }
                     }
-
                 }
             }
             return new List<Node>();
@@ -85,14 +94,10 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
                 path.Add(currentNode);
                 currentNode = currentNode.parent;
             }
-            path.Reverse();
-            // grid.path = path;
+            path.Reverse(); 
+            grid.path = path;
            return path;
-
         }
-
-
-
         int GetDistantce(Node nodeA, Node nodeB)
         {
             int distx = Mathf.Abs(nodeA.gridPosition.x - nodeB.gridPosition.x);

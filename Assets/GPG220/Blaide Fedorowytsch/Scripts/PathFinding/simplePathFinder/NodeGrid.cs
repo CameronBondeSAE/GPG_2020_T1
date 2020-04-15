@@ -17,20 +17,26 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
         private Vector2Int gridSize;
         
         public List<Node> path;
-        private void OnDrawGizmos()
+        private void OnDrawGizmosSelected()
         {
             Gizmos.DrawWireCube(transform.position,new Vector3(gridWorldSize.x,1,gridWorldSize.y));
             if (grid != null)
             {
                 foreach (Node n in grid)
                 {
-                    Gizmos.DrawCube(n.worldPosition,Vector3.one * (nodeDiamater-0.1f));
-                    Gizmos.color = (n.walkable) ? Color.white : Color.red;
+                    
+                    if (!n.walkable)
+                    {
+                        Gizmos.color =Color.red;
+                        Gizmos.DrawCube(n.worldPosition,Vector3.one * (nodeDiamater-0.1f));
+                    }
+                    
                     if (path != null)
                     {
                         if (path.Contains(n))
                         {
                             Gizmos.color = Color.green;
+                            Gizmos.DrawCube(n.worldPosition,Vector3.one * (nodeDiamater-0.1f));
                         }
                     }
                 }

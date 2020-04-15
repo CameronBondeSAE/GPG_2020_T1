@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using GPG220.Blaide_Fedorowytsch.Scripts.Interfaces;
 using GPG220.Blaide_Fedorowytsch.Scripts.PathFinding;
@@ -18,8 +19,11 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Abilities
         private UnitBase ub;
         public PathFinding.SimplePathfinder simplePathfinder;
         public ProceduralMeshGenerator procMesh;
+        public LayerMask ground;
         public List<Node> currentPath;
         public int currentPathNodeIndex;
+        public float nodeDistanceMin = 3.5f;
+        public float moveForce;
         public override bool SelectedExecute()
         {
             return true;
@@ -33,6 +37,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Abilities
             ub = GetComponent<UnitBase>();
             simplePathfinder = FindObjectOfType<SimplePathfinder>();
             procMesh = FindObjectOfType<ProceduralMeshGenerator>();
+            targetRequired = true;
         }
 
         public override bool TargetExecute(Vector3 worldPos)
@@ -49,23 +54,20 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Abilities
         {
             if (moving)
             {
-                if (Vector3.Distance(this.gameObject.transform.position,target) < 0.1f)
+                if (Vector3.Distance(this.gameObject.transform.position,target) > nodeDistanceMin)
                 {
                     Vector3 nextPos = currentPath[currentPathNodeIndex].worldPosition;
-                    nextPos = new Vector3(nextPos.x, procMesh.GetHeightAtPosition(new Vector2(nextPos.x, nextPos.z)), nextPos.z);
-                    
+                  //  nextPos = new Vector3(nextPos.x, procMesh.GetHeightAtPosition(new Vector2(nextPos.x, nextPos.z)) + 1, nextPos.z);
+                    nextPos = new Vector3(nextPos.x,transform.position.y, nextPos.z);
                     if (Vector3.Distance(this.gameObject.transform.position,
-                            nextPos +
-                            OffsetPosition(ub.currentSelectionGroup)) > 0.1f)
+                            nextPos) > nodeDistanceMin)
                     {
-                        Move(nextPos +
-                             OffsetPosition(ub.currentSelectionGroup));
+                        Move(nextPos);
                     }
                     else
                     {
-                        if(currentPathNodeIndex < currentPath.Count)
+                        if(currentPathNodeIndex < currentPath.Count -1)
                         currentPathNodeIndex += 1;
-
                     }
                 }
                 else
@@ -74,20 +76,30 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Abilities
                 }
             }
         }
-        Vector3 OffsetPosition(List<ISelectable> selectionGroup)
-        {
-            Vector3 total = new Vector3();
-            foreach (ISelectable s in selectionGroup)
-            {
-                total += ((MonoBehaviour) s).gameObject.transform.position;
-            }
-            return transform.position - total / selectionGroup.Count;
-        }
 
         void Move(Vector3 v)
         {
-            this.gameObject.transform.position = Vector3.MoveTowards(this.gameObject.transform.position, v, 0.5f);
+            //this.gameObject.transform.position = Vector3.MoveTowards(this.gameObject.transform.position, v, 0.5f);
+            Ray ray = new Ray(transform.position,-transform.up);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, 3f, ground, QueryTriggerInteraction.Ignore))
+            {
+                rb.AddForce(Vector3.ProjectOnPlane((v -transform.position),hit.normal) * moveForce);
+            }
+
+            
         }
 
+        private void OnDrawGizmosSelected()
+        {
+            if (currentPath != null)
+            {
+                if (currentPath.Count != 0)
+                {
+                 Gizmos.DrawSphere(currentPath[currentPathNodeIndex].worldPosition,1);   
+                }
+            }
+        }
     }
+    
 }
