@@ -11,20 +11,26 @@ public class TornadoVortex : MonoBehaviour
     public float refreshRate;
     public Vector3 offset;
     private bool shouldPull;
-
+    public float rotationspeed;
     
-
     private void OnTriggerStay(Collider other)
     {
+        //get direction from tornado to object
         Vector3 ForceDir = tornadoCenter.position + offset - other.transform.position;
+        
         other.GetComponent<Rigidbody>().AddForce(ForceDir.normalized * pullSpeed * Time.deltaTime);
-        Vector3.Cross(Vector3.up, ForceDir.normalized);
+        Vector3.Cross(Vector3.up,ForceDir.normalized);
+
     }
-    
+
 
 }
 
-    #region First TornadoPhysics Code
+
+    
+
+
+#region First TornadoPhysics Code
     /*
       private GameObject pullObj;
       public float pullSpeed;

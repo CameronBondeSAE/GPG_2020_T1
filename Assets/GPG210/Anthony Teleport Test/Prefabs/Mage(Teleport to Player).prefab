@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 2150010261681644474}
   - component: {fileID: 27627448}
   - component: {fileID: 27627443}
+  - component: {fileID: -3689167046662443939}
   m_Layer: 12
   m_Name: Mage(Teleport to Player)
   m_TagString: Player
@@ -129,7 +130,7 @@ MonoBehaviour:
   unitDescription: 
   unitImage: {fileID: 0}
   damage: 100
-  tweenDuration: 0
+  tweenDuration: 2
 --- !u!114 &3590460850139835099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,7 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneId: 1569121591
+  sceneId: 912487423
   serverOnly: 0
   m_AssetId: 
 --- !u!114 &-1344011683330915107
@@ -194,6 +195,7 @@ MonoBehaviour:
   abilityImage: {fileID: 0}
   moving: 0
   targetPos: {x: 0, y: 0, z: 0}
+  offsetPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &2150010261681644474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,7 +241,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &27627443
 CapsuleCollider:
@@ -255,6 +257,33 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-3689167046662443939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577926091930366374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fafdd722f95ad24a8a232c2b7055953, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldown: 0
+  currentCooldown: 0
+  targetRequired: 0
+  abilityName: 
+  abilityDescription: 
+  abilityImage: {fileID: 0}
+  moving: 0
+  simplePathfinder: {fileID: 0}
+  procMesh: {fileID: 0}
+  ground:
+    serializedVersion: 2
+    m_Bits: 0
+  currentPathNodeIndex: 0
+  nodeDistanceMin: 3.5
+  moveForce: 0
 --- !u!1 &3551373137489945564
 GameObject:
   m_ObjectHideFlags: 0
