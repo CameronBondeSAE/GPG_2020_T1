@@ -166,6 +166,7 @@ GameObject:
   - component: {fileID: 72274850}
   - component: {fileID: 72274851}
   - component: {fileID: 72274852}
+  - component: {fileID: -4362535212562375481}
   m_Layer: 12
   m_Name: Rocket Launcher Guy
   m_TagString: Untagged
@@ -262,7 +263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneId: 2897228844
+  sceneId: 1179394087
   serverOnly: 0
   m_AssetId: 
 --- !u!114 &8736307313088339211
@@ -381,3 +382,30 @@ MonoBehaviour:
   isShooting: 0
   spawnTransform: {fileID: 240019059}
   explosionForce: 2
+--- !u!114 &-4362535212562375481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8736307313088339215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fafdd722f95ad24a8a232c2b7055953, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldown: 0
+  currentCooldown: 0
+  targetRequired: 0
+  abilityName: 
+  abilityDescription: 
+  abilityImage: {fileID: 0}
+  moving: 0
+  simplePathfinder: {fileID: 0}
+  procMesh: {fileID: 0}
+  ground:
+    serializedVersion: 2
+    m_Bits: 0
+  currentPathNodeIndex: 0
+  nodeDistanceMin: 3.5
+  moveForce: 0
