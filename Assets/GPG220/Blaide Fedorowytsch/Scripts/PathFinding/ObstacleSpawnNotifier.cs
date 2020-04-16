@@ -6,20 +6,23 @@ using UnityEngine;
 public class ObstacleSpawnNotifier : MonoBehaviour
 {
     // Start is called before the first frame update
+
+    private Bounds bounds;
+    private Vector3 pos;
     private void OnEnable()
     {
         if (gameObject.GetComponent<Collider>() != null)
         {
-            GlobalEvents.OnPathFindingObstacleChange(new WorldPosAndBounds(transform.position,gameObject.GetComponent<Collider>().bounds));
+            bounds = gameObject.GetComponent<Collider>().bounds;
+            pos = transform.position;
+            GlobalEvents.OnPathFindingObstacleChange(new WorldPosAndBounds(pos,bounds));
         }
 
     }
 
     private void OnDisable()
     {
-        if (gameObject.GetComponent<Collider>() != null)
-        {
-            GlobalEvents.OnPathFindingObstacleChange(new WorldPosAndBounds(transform.position,gameObject.GetComponent<Collider>().bounds));
-        }
+
+            GlobalEvents.OnPathFindingObstacleChange(new WorldPosAndBounds(pos,bounds));
     }
 }

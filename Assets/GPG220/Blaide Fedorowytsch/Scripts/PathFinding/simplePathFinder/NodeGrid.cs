@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,6 +18,11 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
         private Vector2Int gridSize;
         
         public List<Node> path;
+
+        public List<Node> NodesToCheck;
+        public Vector3 checkNodeBoundThreshold;
+        public float checkNodesDelay;
+
         private void OnDrawGizmosSelected()
         {
             Gizmos.DrawWireCube(transform.position,new Vector3(gridWorldSize.x,1,gridWorldSize.y));
@@ -24,8 +30,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
             {
                 foreach (Node n in grid)
                 {
-                    Gizmos.color = Color.white;
-                    Gizmos.DrawCube(n.worldPosition,Vector3.one * (nodeDiamater-0.1f));
+                    //Gizmos.color = Color.white;
+                    //Gizmos.DrawCube(n.worldPosition,Vector3.one * (nodeDiamater-0.1f));
                     if (!n.walkable)
                     {
                         Gizmos.color =Color.red;
@@ -67,9 +73,16 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
 
        public void CheckAroundPosition(WorldPosAndBounds worldPosAndBounds)
        {
+           StartCoroutine(CheckCoroutine(worldPosAndBounds));
+       }
+
+       IEnumerator CheckCoroutine(WorldPosAndBounds worldPosAndBounds)
+       {
+           yield return new WaitForSeconds(checkNodesDelay);
+
            Node n = NodeFromWorldPoint(worldPosAndBounds.worldPos);
-           Node minNode = NodeFromWorldPoint(worldPosAndBounds.bounds.min + new Vector3(0.1f,0.1f,0.1f));
-           Node maxNode = NodeFromWorldPoint(worldPosAndBounds.bounds.max  - new Vector3(0.1f,0.1f,0.1f));
+           Node minNode = NodeFromWorldPoint(worldPosAndBounds.bounds.min - checkNodeBoundThreshold);
+           Node maxNode = NodeFromWorldPoint(worldPosAndBounds.bounds.max + checkNodeBoundThreshold);
 
            int leftmost = minNode.gridPosition.x;
            int rightmost = maxNode.gridPosition.x;
@@ -80,10 +93,11 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
            {
                for (int y = forwardMost; y <= backwardMost; y++)
                {
-                   grid[x,y].walkable = !Physics.CheckSphere( grid[x,y].worldPosition, nodeRadius,layerMask);
+                   grid[x, y].walkable = !Physics.CheckSphere(grid[x, y].worldPosition, nodeRadius, layerMask);
                }
            }
        }
+
 
        private void FixedUpdate()
         {

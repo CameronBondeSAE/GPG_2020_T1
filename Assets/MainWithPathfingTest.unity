@@ -395,6 +395,11 @@ PrefabInstance:
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 1285704454}
+    - target: {fileID: 844936440088286561, guid: 69c72cf18b94ae04a80ce166e1e5b1e9,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5e08b5117cb7f694d828522f4c09f815, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69c72cf18b94ae04a80ce166e1e5b1e9, type: 3}
 --- !u!1001 &261442954
@@ -1578,6 +1583,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fa795535ee896a498fd7570f42e6c6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1124919429 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 844936440088286622, guid: 69c72cf18b94ae04a80ce166e1e5b1e9,
+    type: 3}
+  m_PrefabInstance: {fileID: 178437039}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1124919435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1124919429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  localPositionSensitivity: 0.01
+  localRotationSensitivity: 0.01
+  localScaleSensitivity: 0.01
+--- !u!114 &1124919436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1124919429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 3201519639
+  serverOnly: 0
+  m_AssetId: 69c72cf18b94ae04a80ce166e1e5b1e9
 --- !u!114 &1187672966 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6209549013327493934, guid: cab458c032766474f80d112a9b70da6d,
@@ -1857,7 +1901,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 178437039}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1124919429}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b1ebd3d0cf1b1e6409e40ddb1b9d17ed, type: 3}
@@ -2152,6 +2196,26 @@ PrefabInstance:
       propertyPath: proceduralGrowthSystem
       value: 
       objectReference: {fileID: 1588283107}
+    - target: {fileID: 404562308893881423, guid: dc62655f8cd54d240b28685ba3421499,
+        type: 3}
+      propertyPath: checkNodesDelay
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 404562308893881423, guid: dc62655f8cd54d240b28685ba3421499,
+        type: 3}
+      propertyPath: checkNodeBoundThreshold.x
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 404562308893881423, guid: dc62655f8cd54d240b28685ba3421499,
+        type: 3}
+      propertyPath: checkNodeBoundThreshold.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 404562308893881423, guid: dc62655f8cd54d240b28685ba3421499,
+        type: 3}
+      propertyPath: checkNodeBoundThreshold.z
+      value: 0.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc62655f8cd54d240b28685ba3421499, type: 3}
 --- !u!1001 &2163480735567400563
