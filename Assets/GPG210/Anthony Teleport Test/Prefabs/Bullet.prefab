@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8536529997640866288}
   - component: {fileID: -7932284474394940707}
   - component: {fileID: 69608616035483598}
-  - component: {fileID: -4436437073915557360}
+  - component: {fileID: 2778876127244214162}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 743213674323251579}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 16.91521, y: 7.523037, z: -4.7340174}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.7383, y: 1.7383, z: 1.7383}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -42,7 +42,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 743213674323251579}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300004, guid: 4e5ce0b6f97fdbc40b7bc818b06b80ba, type: 3}
 --- !u!23 &8536529997640866288
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -96,6 +96,7 @@ MonoBehaviour:
   blastRadius: 10
   explosionForce: 200
   player: {fileID: 0}
+  bulletClone: {fileID: 0}
 --- !u!54 &69608616035483598
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -112,8 +113,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &-4436437073915557360
-BoxCollider:
+--- !u!136 &2778876127244214162
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -122,6 +123,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.44941342
+  m_Height: 0.10280887
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: -0.29034472}
