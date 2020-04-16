@@ -37,6 +37,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: b50416397a2c76a4380b9cc44cc7f9b6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - Texture2D_EE6EBBC2:
+        m_Texture: {fileID: 2800000, guid: 122bf7840053f014889206c6b6758f5a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -113,6 +117,7 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
+    - _TransparentValue: 0.5
     - _UVSec: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
@@ -121,5 +126,5 @@ Material:
     - _Color: {r: 0.33962262, g: 0.25311497, b: 0.25311497, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
-    - _TeamColour: {r: 0.8113208, g: 0.0995016, b: 0.0995016, a: 0}
+    - _TeamColour: {r: 0, g: 0.9896209, b: 1, a: 0}
     - _color: {r: 0.6415094, g: 0.41153434, b: 0.41153434, a: 1}

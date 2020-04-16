@@ -10,10 +10,12 @@ public class HelloMan : UnitBase
     [SyncVar] private Vector3 position;
     
     // Start is called before the first frame update
-    
-           
-       
-    
+
+    protected override void Initialize()
+    {
+        base.Initialize();
+    }
+
 
     // Update is called once per frame
     void Update()

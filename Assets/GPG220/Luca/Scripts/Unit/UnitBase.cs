@@ -25,6 +25,9 @@ namespace GPG220.Luca.Scripts.Unit
 		[SyncVar]
 		public NetworkIdentity owner;
 
+		[SyncVar] public Color myColour;
+		private MeshRenderer meshRenderer;
+		
         public UnitStats unitStats;
         public Inventory inventory;
         public Rigidbody rb;
@@ -75,11 +78,20 @@ namespace GPG220.Luca.Scripts.Unit
             rb = GetComponent<Rigidbody>();
             health = GetComponent<Health>();
             abilityController = GetComponent<AbilityController>();
+
+
             
             SpawnStaticEvent?.Invoke(this);
         }
 
-        protected virtual void Unload()
+		public void Start()
+		{
+			myColour = owner.gameObject.GetComponent<PlayerBase>().playerColour;
+			meshRenderer = GetComponent<MeshRenderer>();
+			meshRenderer.material.SetColor("_TeamColour", myColour);
+		}
+
+		protected virtual void Unload()
         {
             DespawnStaticEvent?.Invoke(this);
         }

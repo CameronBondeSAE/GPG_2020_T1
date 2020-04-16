@@ -9,6 +9,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
     public class PlayerBase : NetworkBehaviour
     {
         public List<UnitBase> units;
+        [SyncVar]
         public Color playerColour;
 		[SyncVar]
         public string playerName;

@@ -6,6 +6,8 @@ public class GotHitEffectTest : MonoBehaviour
 {
     private MeshRenderer meshRenderer;
     public float Amount;
+
+    public Color mycolor;
     
     // Start is called before the first frame update
     void Start()
@@ -22,6 +24,7 @@ public class GotHitEffectTest : MonoBehaviour
         
         meshRenderer.material.SetFloat("_Amount", Amount);
         
+        meshRenderer.material.SetColor("_TeamColour", new Color(Random.Range(0F,1F), Random.Range(0, 1F), Random.Range(0, 1F)));
         
     }
 }

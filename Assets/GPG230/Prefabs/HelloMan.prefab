@@ -14,13 +14,14 @@ GameObject:
   - component: {fileID: 8485956281338912081}
   - component: {fileID: -2823183800547287458}
   - component: {fileID: 1772050724380307332}
-  - component: {fileID: 749948222749914136}
   - component: {fileID: 2917073091583127600}
   - component: {fileID: 3918869302458165141}
   - component: {fileID: 4218702445721345300}
   - component: {fileID: 1493345940941106755}
   - component: {fileID: 1123175643365844534}
   - component: {fileID: 1488443120117917140}
+  - component: {fileID: 5655449145497554515}
+  - component: {fileID: 6901528690705107981}
   m_Layer: 0
   m_Name: HelloMan
   m_TagString: Untagged
@@ -72,7 +73,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   autoLoadAbilities: 1
-  defaultAbilityIndex: 0
+  defaultTargetAbility: {fileID: 0}
+  defaultWorldTargetAbility: {fileID: 0}
 --- !u!114 &8485956281338912081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,13 +87,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ec0d918dabd23e4fa0d5b78a92c859e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityName: 
-  abilityDescription: 
-  abilityImg: {fileID: 0}
   cooldown: 0
   currentCooldown: 0
+  targetRequired: 0
+  abilityName: 
+  abilityDescription: 
+  abilityImage: {fileID: 0}
   moving: 0
   targetPos: {x: 0, y: 0, z: 0}
+  offsetPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &-2823183800547287458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104,11 +108,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0109064fca095634fa141f5d0d876b74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityName: SayHello
-  abilityDescription: HE says hello
-  abilityImg: {fileID: 0}
   cooldown: 0
   currentCooldown: 0
+  targetRequired: 0
+  abilityName: SayHello
+  abilityDescription: HE says hello
+  abilityImage: {fileID: 0}
 --- !u!54 &1772050724380307332
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -117,27 +122,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6860691296144144512}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 70
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
---- !u!65 &749948222749914136
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6860691296144144512}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &2917073091583127600
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -163,7 +155,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 5e08b5117cb7f694d828522f4c09f815, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -200,6 +192,7 @@ MonoBehaviour:
   syncInterval: 0.1
   ownerNetID: 0
   owner: {fileID: 0}
+  myColour: {r: 0, g: 0, b: 0, a: 0}
   unitStats: {fileID: 1488443120117917140}
   inventory: {fileID: 1123175643365844534}
   rb: {fileID: 1772050724380307332}
@@ -208,13 +201,9 @@ MonoBehaviour:
   myNetID: 0
   myOwnerIdentity: {fileID: 0}
   debug: 
-  pathFinderController: {fileID: 0}
-  characterController: {fileID: 0}
-  repathCooldown: 3
-  move: 0
-  moveDirPollCooldown: 0.5
-  gravity: 9.81
-  grounded: 0
+  unitName: 
+  unitDescription: 
+  unitImage: {fileID: 0}
 --- !u!114 &1493345940941106755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -294,3 +283,35 @@ MonoBehaviour:
   strength: 0
   validMovement: {x: 1, y: 1, z: 1}
   validRotation: {x: 1, y: 1, z: 1}
+--- !u!136 &5655449145497554515
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6860691296144144512}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6901528690705107981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6860691296144144512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  localPositionSensitivity: 0.01
+  localRotationSensitivity: 0.01
+  localScaleSensitivity: 0.01
