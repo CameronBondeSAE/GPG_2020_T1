@@ -17,9 +17,6 @@ public class UnitLevelUp : AbilityBase
     public void Start()
     {
         Kills = 0;
-        rend = GetComponent<Renderer>();
-        rend.enabled = true;
-        rend.sharedMaterial = material[0];
         currentKillState = KillState.LevelOne;
     }
 
@@ -40,7 +37,6 @@ public class UnitLevelUp : AbilityBase
         {
             case KillState.LevelOne:
 
-                rend.sharedMaterial = material[0];
 
                 outerProng.SetActive(false);
                 centreProng.SetActive(true);
@@ -55,8 +51,6 @@ public class UnitLevelUp : AbilityBase
 
             case KillState.LevelTwo:
 
-                rend.sharedMaterial = material[1];
-
 
                 outerProng.SetActive(true);
                 centreProng.SetActive(false);
@@ -70,7 +64,6 @@ public class UnitLevelUp : AbilityBase
 
             case KillState.LevelThree:
 
-                rend.sharedMaterial = material[2];
 
                 outerProng.SetActive(true);
                 centreProng.SetActive(true);

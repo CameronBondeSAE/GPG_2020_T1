@@ -21,7 +21,6 @@ public class StatemachMinion : UnitBase
     public Vector3 offset = new Vector3(0f, 0.5f, 0f);
     public float tweenDuration;
 
-    // public PathFinderController pathFinderController;
 
     public enum States
     {
@@ -30,19 +29,13 @@ public class StatemachMinion : UnitBase
         Dead
     }
 
-  //  public enum States 
-  //  {
-        
-  //      Attacking,
-  //      NotAttacking
-  //  }
 
     public States currentState;
 
     void Awake()
     {
         unitlvlup = GetComponent<UnitLevelUp>();
-       // pathFinderController = FindObjectOfType<PathFinderPath>();
+        // pathFinderController = FindObjectOfType<PathFinderPath>();
     }
 
     void Start()
@@ -56,35 +49,8 @@ public class StatemachMinion : UnitBase
         base.OnSelected();
         currentState = States.Moving;
         transform.DOShakeScale(tweenDuration, new Vector3(1f, 0f, 1f), 1, 0.2f, false);
-
     }
 
-    public override void OnExecuteAction(Vector3 worldPosition, GameObject g)
-    {
-       // SetTargetPosition();
-    }
-
-    void SetTargetPosition()
-    {
-      //  Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-     //   RaycastHit hitinfo;
-
-      //  if (Physics.Raycast(ray, out hitinfo, 1000))
-    //  {
-          //     target = hitinfo.point;
-          //     this.transform.LookAt(target);
-          //     moving = true;
-          //  }
-    }
-
-      void Move()
-    {
-      //  transform.position = Vector3.MoveTowards(transform.position, target + offset, UnitSpeed * Time.deltaTime);
-      //  if (transform.position == target)
-     //   {
-      //      moving = false;
-     //   }
-    }
 
     public override void OnDeSelected()
     {
@@ -113,18 +79,17 @@ public class StatemachMinion : UnitBase
 
                 Destroy(gameObject);
                 break;
-            
         }
 
         if (moving == true)
         {
-           // Move();
+            // Move();
             currentState = States.Moving;
         }
 
         else currentState = States.Idle;
-        
-        
+
+
         if (unitlvlup.Kills == 2)
         {
             UnitSpeed = 5f;

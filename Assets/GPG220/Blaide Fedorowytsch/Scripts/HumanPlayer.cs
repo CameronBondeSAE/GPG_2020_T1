@@ -1,4 +1,6 @@
 ﻿using System;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace GPG220.Blaide_Fedorowytsch.Scripts
 {
@@ -13,6 +15,11 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
         {
             isLocalPlayerMine = isLocalPlayer;
             netIdMine = netId;
+        }
+
+        public void Awake()
+        {
+            playerColour = new Color(Random.Range(0F,1F), Random.Range(0, 1F), Random.Range(0, 1F));
         }
     }
 }
