@@ -80,7 +80,15 @@ namespace GPG220.Luca.Scripts.Unit
             abilityController = GetComponent<AbilityController>();
 
             myColour = owner.gameObject.GetComponent<PlayerBase>().playerColour;
-            meshRenderer = GetComponent<MeshRenderer>();
+
+            if (GetComponent<MeshRenderer>() != null)
+            {
+	            meshRenderer = GetComponent<MeshRenderer>();
+            }
+            else
+            {
+	            meshRenderer = GetComponentInChildren<MeshRenderer>();
+            }
             meshRenderer.material.SetColor("_TeamColour", myColour);
             
             SpawnStaticEvent?.Invoke(this);
