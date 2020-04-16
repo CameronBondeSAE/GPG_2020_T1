@@ -10,11 +10,11 @@ public class BulletScript : MonoBehaviour
     public float explosionForce;
 
     private Collider[] hitColliders;
-    public RocketShot player;
+    public DasherUnitBase player;
+    public RocketShot bulletClone;
     private void OnCollisionEnter(Collision other)
     {
         DoExplosion(other.contacts[0].point);
-        Physics.IgnoreCollision(player.GetComponent<Collider>(),player.bullet.GetComponent<Collider>(),true);
         Destroy(gameObject);
     }
 

@@ -35,8 +35,6 @@ public class AttackAntenna : MonoBehaviour
 
                     transform.GetComponent<ParticleSystem>().Play();
 
-                    GetComponent<KillAmountScript>().IncreaseKills();
-
                     fire = false;
                 }
             }

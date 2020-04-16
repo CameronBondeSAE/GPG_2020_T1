@@ -8,7 +8,7 @@ public class RocketShot : AbilityBase
 {
     public GameObject bullet;
     private float bulletSpeed = 10;
-    private Vector3 target;
+    public Vector3 target;
     public bool isShooting;
     public Transform spawnTransform;
     public float explosionForce;
@@ -33,7 +33,12 @@ public class RocketShot : AbilityBase
         GameObject bulletClone = (GameObject) Instantiate(bullet, spawnTransform.position, spawnTransform.rotation);
         bulletClone.GetComponent<Rigidbody>().velocity = spawnTransform.forward * bulletSpeed; //bullet goes at a certain speed
         bulletClone.GetComponent<Rigidbody>().AddForce(spawnTransform.forward * explosionForce,ForceMode.Impulse); //add a force and make it explode
+        Physics.IgnoreCollision(bulletClone.GetComponent<Collider>(),GetComponent<Collider>());
         target = worldPos;
+        spawnTransform.LookAt(target);
+        spawnTransform.transform.rotation *= Quaternion.FromToRotation(Vector3.left, Vector3.forward);
+        
+        
         isShooting = true;
         Destroy(bulletClone,3f);
        
