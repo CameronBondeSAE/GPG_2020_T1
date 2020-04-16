@@ -25,7 +25,7 @@ public class BulletScript : MonoBehaviour
 
         foreach (Collider hitcol in hitColliders)
         {
-            if (hitcol.GetComponent<Rigidbody>() != null)
+            if (hitcol.GetComponent<Rigidbody>())
             {
                 hitcol.GetComponent<Rigidbody>().isKinematic = false;
                 hitcol.GetComponent<Rigidbody>().AddExplosionForce(explosionForce,explosionPoint,blastRadius,1,ForceMode.Impulse);

@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 public class RocketShot : AbilityBase
 {
     public GameObject bullet;
-    private float bulletSpeed;
+    private float bulletSpeed = 10;
     private Vector3 target;
     public bool isShooting;
     public Transform spawnTransform;
@@ -31,10 +31,13 @@ public class RocketShot : AbilityBase
     public override bool TargetExecute(Vector3 worldPos)
     {
         GameObject bulletClone = (GameObject) Instantiate(bullet, spawnTransform.position, spawnTransform.rotation);
-        bulletClone.GetComponent<Rigidbody>().AddForce(-spawnTransform.up * explosionForce,ForceMode.Impulse);
-        Destroy(bulletClone,3f);
-        isShooting = true;
+        bulletClone.GetComponent<Rigidbody>().velocity = spawnTransform.forward * bulletSpeed; //bullet goes at a certain speed
+        bulletClone.GetComponent<Rigidbody>().AddForce(spawnTransform.forward * explosionForce,ForceMode.Impulse); //add a force and make it explode
         target = worldPos;
+        isShooting = true;
+        Destroy(bulletClone,3f);
+       
+        
         
         
         
