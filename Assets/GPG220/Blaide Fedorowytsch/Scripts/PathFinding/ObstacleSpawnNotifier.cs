@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using GPG220.Blaide_Fedorowytsch.Scripts.ProcGen;
 using UnityEngine;
 
 public class ObstacleSpawnNotifier : MonoBehaviour
@@ -9,20 +10,35 @@ public class ObstacleSpawnNotifier : MonoBehaviour
 
     private Bounds bounds;
     private Vector3 pos;
+    public Tweening obstacleTweening;
+    private ProceduralGrowthSystem proceduralGrowthSystem;
+
     private void OnEnable()
     {
+        bounds = gameObject.GetComponent<Collider>().bounds;
+        pos = transform.position;
+        GlobalEvents.OnPathFindingObstacleChange(new WorldPosAndBounds(pos,bounds));
+    }
+
+    private void OnDisable()
+    {
+        GlobalEvents.OnPathFindingObstacleChange(new WorldPosAndBounds(pos,bounds));
+    }
+
+    public void OnAppear()
+    {
+        obstacleTweening.Appear();
         if (gameObject.GetComponent<Collider>() != null)
         {
             bounds = gameObject.GetComponent<Collider>().bounds;
             pos = transform.position;
             GlobalEvents.OnPathFindingObstacleChange(new WorldPosAndBounds(pos,bounds));
         }
-
     }
 
-    private void OnDisable()
+    public void OnDisappear()
     {
-
-            GlobalEvents.OnPathFindingObstacleChange(new WorldPosAndBounds(pos,bounds));
+        obstacleTweening.Disappear();
+        GlobalEvents.OnPathFindingObstacleChange(new WorldPosAndBounds(pos,bounds));
     }
 }

@@ -58,6 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 402fd88082c433a4a8bee0b959d4b102, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstacleTweening: {fileID: 7429496791793229549}
 --- !u!1 &5114701339533134064
 GameObject:
   m_ObjectHideFlags: 0

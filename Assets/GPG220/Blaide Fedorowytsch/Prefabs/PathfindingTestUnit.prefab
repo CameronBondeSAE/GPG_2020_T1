@@ -20,7 +20,6 @@ GameObject:
   - component: {fileID: 5576315423776063811}
   - component: {fileID: 813403081697495863}
   - component: {fileID: 2776125763402330662}
-  - component: {fileID: 6831129446871302829}
   - component: {fileID: 2005025431413877567}
   m_Layer: 12
   m_Name: PathfindingTestUnit
@@ -68,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 5e08b5117cb7f694d828522f4c09f815, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -135,6 +134,7 @@ MonoBehaviour:
   syncInterval: 0.1
   ownerNetID: 0
   owner: {fileID: 0}
+  myColour: {r: 0, g: 0, b: 0, a: 0}
   unitStats: {fileID: 0}
   inventory: {fileID: 0}
   rb: {fileID: 0}
@@ -176,6 +176,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fafdd722f95ad24a8a232c2b7055953, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   cooldown: 0
   currentCooldown: 0
   targetRequired: 1
@@ -190,7 +192,7 @@ MonoBehaviour:
     m_Bits: 256
   currentPathNodeIndex: 0
   nodeDistanceMin: 1.5
-  moveForce: 1000
+  moveForce: 20000
 --- !u!114 &4270270078550710024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,6 +205,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5917e1035fc94e12baaf7fc840123c02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   cooldown: 0
   currentCooldown: 0
   targetRequired: 0
@@ -258,59 +262,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
+    SerializedFormat: 0
+    SerializedBytes: 01000a0000005f7265736f75726365732f00000000008900000053797374656d2e436f6c6c656374696f6e732e47656e657269632e44696374696f6e61727960325b5b4750473232302e4c7563612e536372697074732e5265736f75726365732e5265736f75726365547970652c20417373656d626c792d4353686172705d2c5b53797374656d2e496e7433322c206d73636f726c69625d5d2c206d73636f726c696200000000010008000000636f6d70617265722f01000000007c00000053797374656d2e436f6c6c656374696f6e732e47656e657269632e4f626a656374457175616c697479436f6d706172657260315b5b4750473232302e4c7563612e536372697074732e5265736f75726365732e5265736f75726365547970652c20417373656d626c792d4353686172705d5d2c206d73636f726c6962010000000506000000000000000007052d000c0000007265736f75726365734d6178
     ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: _resources
-      Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[GPG220.Luca.Scripts.Resources.ResourceType,
-        Assembly-CSharp],[System.Int32, mscorlib]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 1|System.Collections.Generic.ObjectEqualityComparer`1[[GPG220.Luca.Scripts.Resources.ResourceType,
-        Assembly-CSharp]], mscorlib
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: resourcesMax
-      Entry: 6
-      Data: 
+    SerializationNodes: []
   dropInventoryOnDeath: 1
   dropOutAcceleration: 4
   dropOutAngle: 30
   dropOutMaxStack: 5
   timeBetweenDropOuts: 1
---- !u!114 &6831129446871302829
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8637010378010074440}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e6a8bf08f02e254aa9a52ef0aaa1553, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  color:
-    serializedVersion: 2
-    rgba: 4278190080
 --- !u!114 &2005025431413877567
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -29,7 +29,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
 
 
         public bool growObstacles;
-        [Range(0.0f, 100f)] public float baseGrowRate;
+        [Range(0.0f, 1f)] public float baseGrowRate;
         [Range(0.0f, 1f)] public float perlinWeight;
         [Range(0.0f, 1f)] public float perlinGrowthRate;
 
@@ -141,15 +141,18 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
         public void GrowObstacleBoolGrid()
         {
             List<Vector2Int> temp = new List<Vector2Int>();
+            
+            
+            baseGrowRate -= perlinGrowthRate;
+            
+            
             foreach (Vector2Int gridPosition in openEdges)
             {
                 float perlinChance = ((Mathf.PerlinNoise((gridPosition.x + seed.x) * obstacleGenerationDensity.x,
                                            (gridPosition.y + seed.y) * obstacleGenerationDensity.y) - 0.1f) *
                                       perlinWeight);
-                float growChance = +(Random.Range(1, 100));
-
-
-                perlinGrowth += perlinGrowthRate;
+                float growChance = +(Random.Range(0f, 1f));
+                
                 if (growChance * Mathf.Clamp(perlinChance, 0.1f, 1f) > baseGrowRate &&
                     BoolGrid[gridPosition.x, gridPosition.y] == false)
                 {
@@ -238,14 +241,21 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
 
                     if (ObstacleHolder)
                     {
-                        ObjectGrid[x, y].transform.parent = ObstacleHolder.transform;
+                        ObjectGrid[x,y].transform.parent = ObstacleHolder.transform;
                     }
                     else
                     {
-                        ObjectGrid[x, y].transform.parent = transform;
+                        ObjectGrid[x,y].transform.parent = transform;
                     }
 
-                    ObjectGrid[x, y].SetActive(BoolGrid[x, y]);
+                    if (BoolGrid[x,y])
+                    {
+                        ObjectGrid[x,y].GetComponent<ObstacleSpawnNotifier>().OnAppear();
+                    }
+                    else
+                    {
+                        ObjectGrid[x,y].GetComponent<ObstacleSpawnNotifier>().OnDisappear();
+                    }
                 }
             }
         }
@@ -294,7 +304,15 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
 
             foreach (Vector2Int gridPosition in gridPositions)
             {
-                ObjectGrid[gridPosition.x, gridPosition.y].SetActive(BoolGrid[gridPosition.x, gridPosition.y]);
+                //ObjectGrid[gridPosition.x, gridPosition.y].SetActive(BoolGrid[gridPosition.x, gridPosition.y]);//
+                if (BoolGrid[gridPosition.x, gridPosition.y])
+                {
+                    ObjectGrid[gridPosition.x, gridPosition.y].GetComponent<ObstacleSpawnNotifier>().OnAppear();
+                }
+                else
+                {
+                    ObjectGrid[gridPosition.x, gridPosition.y].GetComponent<ObstacleSpawnNotifier>().OnDisappear();
+                }
             }
         }
 
