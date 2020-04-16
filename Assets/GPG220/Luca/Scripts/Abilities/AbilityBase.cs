@@ -3,10 +3,11 @@ using Anthony;
 using TMPro;
 using UnityEngine;
 using AnthonyY;
+using Mirror;
 
 namespace GPG220.Luca.Scripts.Abilities
 {
-    public abstract class AbilityBase : MonoBehaviour,IDescribable
+    public abstract class AbilityBase : NetworkBehaviour,IDescribable
     {
         public float cooldown;
         
