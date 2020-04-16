@@ -13,15 +13,18 @@ public class Health : MonoBehaviour
 
      public event Action<Health> deathEvent;
      public static event Action<Health> deathStaticEvent;
+     public event Action HealthChangedEvent;
 
     private void Awake()
     {
         CurrentHealth = startingHealth;
+        
     }
 
     public void ChangeHealth(int amount)
     {
         CurrentHealth += amount;
+        HealthChangedEvent.Invoke();
         CheckForDeath();
     }
 
