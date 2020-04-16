@@ -24,7 +24,7 @@ public class GotHitEffectTest : MonoBehaviour
         
         meshRenderer.material.SetFloat("_Amount", Amount);
         
-        meshRenderer.material.SetColor("_TeamColour", new Color(Random.Range(0F,1F), Random.Range(0, 1F), Random.Range(0, 1F)));
+        
         
     }
 }
