@@ -16,6 +16,12 @@ public class HelloMan : UnitBase
         base.Initialize();
     }
 
+    public void Start()
+    {
+        Initialize();
+        
+    }
+    
 
     // Update is called once per frame
     void Update()

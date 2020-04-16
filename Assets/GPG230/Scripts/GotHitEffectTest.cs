@@ -24,7 +24,5 @@ public class GotHitEffectTest : MonoBehaviour
         
         meshRenderer.material.SetFloat("_Amount", Amount);
         
-        
-        
     }
 }
