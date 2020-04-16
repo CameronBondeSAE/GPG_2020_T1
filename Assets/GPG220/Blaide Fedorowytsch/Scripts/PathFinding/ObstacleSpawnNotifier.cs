@@ -12,21 +12,24 @@ public class ObstacleSpawnNotifier : MonoBehaviour
     private Vector3 pos;
     public Tweening obstacleTweening;
     private ProceduralGrowthSystem proceduralGrowthSystem;
+	Collider mainCollider;
 
     private void OnEnable()
     {
-        bounds = gameObject.GetComponent<Collider>().bounds;
-        pos = transform.position;
-        GlobalEvents.OnPathFindingObstacleChange(new WorldPosAndBounds(pos,bounds));
+		mainCollider = gameObject.GetComponent<Collider>();
+		// bounds = mainCollider.bounds;
+  //       pos = transform.position;
+  //       GlobalEvents.OnPathFindingObstacleChange(new WorldPosAndBounds(pos,bounds));
     }
 
-    private void OnDisable()
-    {
-        GlobalEvents.OnPathFindingObstacleChange(new WorldPosAndBounds(pos,bounds));
-    }
+    // private void OnDisable()
+    // {
+        // GlobalEvents.OnPathFindingObstacleChange(new WorldPosAndBounds(pos,bounds));
+    // }
 
     public void OnAppear()
-    {
+	{
+		mainCollider.enabled = true;
         obstacleTweening.Appear();
         if (gameObject.GetComponent<Collider>() != null)
         {
@@ -37,7 +40,8 @@ public class ObstacleSpawnNotifier : MonoBehaviour
     }
 
     public void OnDisappear()
-    {
+	{
+		mainCollider.enabled = false;
         obstacleTweening.Disappear();
         GlobalEvents.OnPathFindingObstacleChange(new WorldPosAndBounds(pos,bounds));
     }

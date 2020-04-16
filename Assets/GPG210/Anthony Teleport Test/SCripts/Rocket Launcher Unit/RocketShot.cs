@@ -12,7 +12,7 @@ public class RocketShot : AbilityBase
     public bool isShooting;
     public Transform spawnTransform;
     public float explosionForce;
-
+    public GameObject player;
 
     // Start is called before the first frame update
     void Start()
@@ -21,31 +21,22 @@ public class RocketShot : AbilityBase
         abilityDescription = "Dash towards another player doing damage";
         targetRequired = true;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 
     public override bool TargetExecute(Vector3 worldPos)
     {
-        GameObject bulletClone = (GameObject) Instantiate(bullet, spawnTransform.position, spawnTransform.rotation);
+        GameObject bulletClone = (GameObject) Instantiate(bullet, spawnTransform.position,Quaternion.identity);
         bulletClone.GetComponent<Rigidbody>().velocity = spawnTransform.forward * bulletSpeed; //bullet goes at a certain speed
         bulletClone.GetComponent<Rigidbody>().AddForce(spawnTransform.forward * explosionForce,ForceMode.Impulse); //add a force and make it explode
         Physics.IgnoreCollision(bulletClone.GetComponent<Collider>(),GetComponent<Collider>());
         target = worldPos;
+       
+        player.transform.LookAt(target);
         spawnTransform.LookAt(target);
-        spawnTransform.transform.rotation *= Quaternion.FromToRotation(Vector3.left, Vector3.forward);
-        
         
         isShooting = true;
         Destroy(bulletClone,3f);
        
-        
-        
-        
-        
         return base.TargetExecute(worldPos);
     }
 }

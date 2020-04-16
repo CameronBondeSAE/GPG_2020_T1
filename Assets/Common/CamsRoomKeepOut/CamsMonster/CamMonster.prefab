@@ -88,6 +88,7 @@ MonoBehaviour:
   syncInterval: 0.1
   ownerNetID: 0
   owner: {fileID: 0}
+  myColour: {r: 0, g: 0, b: 0, a: 0}
   unitStats: {fileID: 0}
   inventory: {fileID: 0}
   rb: {fileID: 0}
@@ -209,7 +210,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  cooldown: 0
+  cooldown: 5
   currentCooldown: 0
   targetRequired: 1
   abilityName: Tap On Head

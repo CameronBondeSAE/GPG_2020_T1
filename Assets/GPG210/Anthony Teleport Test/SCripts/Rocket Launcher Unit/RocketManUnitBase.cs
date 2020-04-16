@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using GPG220.Luca.Scripts.Unit;
 using UnityEngine;
 using DG.Tweening;
-public class DasherUnitBase : UnitBase
+public class RocketManUnitBase : UnitBase
 {
     public int damage;
 
