@@ -47,7 +47,7 @@ public class GotHitEffectTest : MonoBehaviour
         float percent = amount / (float)health.CurrentHealth * 100;
         
         
-        meshRenderer.material.SetFloat("_Amount",amount/100);
+        meshRenderer.material.SetFloat("_Amount",maxAmount);
         
     }
 
