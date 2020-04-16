@@ -54,6 +54,7 @@ MonoBehaviour:
   - {fileID: 4218702445721345300, guid: 9330195a9c0f596449e04b872f2bd245, type: 3}
   - {fileID: 577926091930366375, guid: b2ddfa75df058774db6b0b3a4e67bbed, type: 3}
   - {fileID: 3776347446129422645, guid: 034d145f47743a348bfc3c6557f64867, type: 3}
+  - {fileID: 8736307313088339209, guid: dfd57f06fcd310648957731cbc248d76, type: 3}
   spawnNumber: 1
   SpawnableSurfaces:
     serializedVersion: 2
@@ -70,6 +71,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneId: 0
+  sceneId: 2348287781
   serverOnly: 1
   m_AssetId: 
