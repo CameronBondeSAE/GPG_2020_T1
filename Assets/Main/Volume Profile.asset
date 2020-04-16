@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9008a067f4d626c4d8bc4bc48f04bb89, type: 3}
   m_Name: AmbientOcclusion
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   m_AdvancedMode: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 2.12
+    m_Value: 3.93
     min: 0
     max: 4
   stepCount:
-    m_OverrideState: 0
-    m_Value: 6
+    m_OverrideState: 1
+    m_Value: 16
     min: 2
     max: 32
   radius:
@@ -78,10 +78,33 @@ MonoBehaviour:
   active: 1
   m_AdvancedMode: 0
   screenFadeDistance:
-    m_OverrideState: 0
-    m_Value: 0.1
+    m_OverrideState: 1
+    m_Value: 0.258
     min: 0.001
     max: 1
+--- !u!114 &-4437030636743501937
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d7593b3a9277ac4696b20006c21dde2, type: 3}
+  m_Name: VisualEnvironment
+  m_EditorClassIdentifier: 
+  active: 1
+  m_AdvancedMode: 0
+  skyType:
+    m_OverrideState: 1
+    m_Value: 2
+  skyAmbientMode:
+    m_OverrideState: 0
+    m_Value: 1
+  fogType:
+    m_OverrideState: 0
+    m_Value: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,6 +122,8 @@ MonoBehaviour:
   - {fileID: 227378823845009635}
   - {fileID: -8124913355410894707}
   - {fileID: 6142725833248934871}
+  - {fileID: -6915986414897920174}
+  - {fileID: -4437030636743501937}
 --- !u!114 &227378823845009635
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -151,15 +176,15 @@ MonoBehaviour:
     showAlpha: 1
     showEyeDropper: 1
   meanFreePath:
-    m_OverrideState: 0
-    m_Value: 1000000
+    m_OverrideState: 1
+    m_Value: 100
     min: 1
   baseHeight:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 6.41
   meanHeight:
     m_OverrideState: 0
-    m_Value: 10
+    m_Value: 30.18
   anisotropy:
     m_OverrideState: 0
     m_Value: 0
@@ -189,7 +214,7 @@ MonoBehaviour:
   m_AdvancedMode: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.472
+    m_Value: 0.227
     min: 0
     max: 1
   scatter:
@@ -199,7 +224,7 @@ MonoBehaviour:
     max: 1
   tint:
     m_OverrideState: 0
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_Value: {r: 0, g: 0, b: 0, a: 1}
     hdr: 0
     showAlpha: 0
     showEyeDropper: 1
@@ -217,7 +242,7 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 4
   prefilter:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 0
   anamorphic:
     m_OverrideState: 0
@@ -237,23 +262,23 @@ MonoBehaviour:
   active: 1
   m_AdvancedMode: 0
   depthBufferThickness:
-    m_OverrideState: 0
-    m_Value: 0.01
+    m_OverrideState: 1
+    m_Value: 0.308
     min: 0
     max: 1
   screenFadeDistance:
     m_OverrideState: 0
-    m_Value: 0.1
+    m_Value: 0.864
     min: 0
     max: 1
   minSmoothness:
-    m_OverrideState: 0
-    m_Value: 0.9
+    m_OverrideState: 1
+    m_Value: 0.317
     min: 0
     max: 1
   smoothnessFadeStart:
-    m_OverrideState: 0
-    m_Value: 0.9
+    m_OverrideState: 1
+    m_Value: 0.322
     min: 0
     max: 1
   reflectSky:

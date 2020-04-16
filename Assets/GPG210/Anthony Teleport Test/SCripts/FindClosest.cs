@@ -1,14 +1,20 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class FindClosest : MonoBehaviour
 {
-    
-    void Update()
+	private void Start()
+	{
+		// HACK: By decree of CAM I DECLARE THIS FUNCTION TOO SLOW TO RUN EVERY FRAME
+		InvokeRepeating("FindClosestEnemy", 1f, 1f);
+	}
+
+	void Update()
     {
-        FindClosestEnemy();
+        // FindClosestEnemy();
     }
 
     void FindClosestEnemy()
