@@ -34,7 +34,7 @@ public class SayHello : AbilityBase
     {
         Debug.Log("Hello");
 
-        rb.AddForce((Vector3.up)* 1000);
+        rb.AddForce((Vector3.up)* 10000);
 
         NotifyAbilityStartExecution(gameObject);
        
