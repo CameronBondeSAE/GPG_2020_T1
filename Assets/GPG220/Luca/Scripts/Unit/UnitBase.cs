@@ -79,17 +79,13 @@ namespace GPG220.Luca.Scripts.Unit
             health = GetComponent<Health>();
             abilityController = GetComponent<AbilityController>();
 
-
+            myColour = owner.gameObject.GetComponent<PlayerBase>().playerColour;
+            meshRenderer = GetComponent<MeshRenderer>();
+            meshRenderer.material.SetColor("_TeamColour", myColour);
             
             SpawnStaticEvent?.Invoke(this);
         }
 
-		public void Start()
-		{
-			myColour = owner.gameObject.GetComponent<PlayerBase>().playerColour;
-			meshRenderer = GetComponent<MeshRenderer>();
-			meshRenderer.material.SetColor("_TeamColour", myColour);
-		}
 
 		protected virtual void Unload()
         {
