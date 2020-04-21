@@ -8,22 +8,40 @@ public class TornadoVortex : MonoBehaviour
 {
     public Transform tornadoCenter;
     public float pullSpeed;
-    public float refreshRate;
+    public float refreshRate = 2;
     public Vector3 offset;
     private bool shouldPull;
-    public float rotationspeed;
-    
-    private void OnTriggerStay(Collider other)
-    {
-        //get direction from tornado to object
-        Vector3 ForceDir = tornadoCenter.position + offset - other.transform.position;
-        
-        other.GetComponent<Rigidbody>().AddForce(ForceDir.normalized * pullSpeed * Time.deltaTime);
-        Vector3.Cross(Vector3.up,ForceDir.normalized);
+    public AnimationCurve pullspeedCurve;
+    public AnimationCurve PullCenterCurve;
 
+    private void OnTriggerEnter(Collider other)
+    {
+        StartCoroutine(PullObject(true, other));
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        
+        StartCoroutine(PullObject(false,other)); //pull it in if pullable
+    }
 
+    IEnumerator PullObject(bool shouldPull, Collider other)
+    {
+        if (shouldPull)
+        {
+            pullSpeed = pullspeedCurve.Evaluate(((Time.time * 0.1f) % pullspeedCurve.length));
+            
+            Vector3 forceDirection = tornadoCenter.position + offset - other.transform.position;
+            other.GetComponent<Rigidbody>().AddForce(forceDirection.normalized * pullSpeed * Time.deltaTime);
+            Vector3.Cross(Vector3.up,forceDirection.normalized);
+            tornadoCenter.position = new Vector3(tornadoCenter.position.x,PullCenterCurve.Evaluate(((Time.time * 0.1f)% PullCenterCurve.length)),pullSpeed);
+            yield return refreshRate;
+            //StartCoroutine(PullObject(shouldPull, other));
+        }
+    }
+    
+    
+    
 }
 
 
