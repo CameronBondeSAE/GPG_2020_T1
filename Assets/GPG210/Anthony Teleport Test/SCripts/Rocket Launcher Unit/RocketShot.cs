@@ -17,6 +17,7 @@ public class RocketShot : AbilityBase
     // Start is called before the first frame update
     void Start()
     {
+        
         abilityName = "Rocket";
         abilityDescription = "Dash towards another player doing damage";
         targetRequired = true;

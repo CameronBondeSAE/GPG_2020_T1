@@ -14621,6 +14621,19 @@ MonoBehaviour:
   tornadoCenter: {fileID: 5038828844270350911}
   pullSpeed: 600
   refreshRate: 3
+  offset: {x: 0, y: 0, z: 0}
+  pullspeedCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  PullCenterCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &5038828844791700527
 MonoBehaviour:
   m_ObjectHideFlags: 0
