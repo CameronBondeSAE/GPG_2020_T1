@@ -97,6 +97,9 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
                     timer = 0f;
                     GrowObstacleBoolGrid();
                     UpdateObstacleGrid();
+                    updateBoolGrid();
+                    
+
                 }
             }
         }
@@ -275,6 +278,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
                 }
             }
 
+            
+
             return list;
         }
 
@@ -295,6 +300,18 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
                     }
                 }
             }
+        }
+
+        public void updateBoolGrid()
+        {
+            for (int x = 0; x < gridSize.x; x++)
+            {
+                for (int y = 0; y < gridSize.y; y++)
+                {
+                    lastBoolGrid[x, y] = BoolGrid[x, y];
+                }
+            }
+
         }
 
 

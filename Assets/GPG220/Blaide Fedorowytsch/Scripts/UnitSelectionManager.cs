@@ -7,6 +7,7 @@ using QuickOutline;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.HDPipeline;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
@@ -329,18 +330,6 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             selectionRect[1]= new Vector3(selectionRect[0].x,targetPoint.y + heightOffset,targetPoint.z);
             selectionRect[2]= new Vector3(targetPoint.x,targetPoint.y +heightOffset,targetPoint.z);
             selectionRect[3] = new Vector3(targetPoint.x,targetPoint.y + heightOffset,selectionRect[0].z);
-
-            /*int resBetweenCorners = 2;
-            resBetweenCorners = resBetweenCorners * 4 + 4;
-            Vector3[] lineRenderPoints = new Vector3[resBetweenCorners];
-            for (int i = 1; i <= 4; i++)
-            {
-                for (int j = 0; i <= resBetweenCorners+1; i++)
-                {
-                    lineRenderPoints[i*(j+1)] = Vector3.Lerp(selectionRect[0], selectionRect[1], j / resBetweenCorners + 1);
-                }
-            }*/
-
             lineRenderer.SetPositions(selectionRect);
         }
 
