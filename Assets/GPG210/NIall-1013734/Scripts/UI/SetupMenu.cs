@@ -16,19 +16,20 @@ public class SetupMenu : MonoBehaviour
     }
 
 
-    public void SinglePlayer()
-    {
-        SetUpMenuUI.SetActive(false);
-    }
+  //  public void SinglePlayer()
+  //  {
+  //      SetUpMenuUI.SetActive(false);
+  //  }
+
 
     public void MultiPlayer()
     {
         SetUpMenuUI.SetActive(false);
     }
 
-    public void ControlsGuide()
+    public void Options()
     {
-        
+        SetUpMenuUI.SetActive(false);
     }
 
     public void Back()

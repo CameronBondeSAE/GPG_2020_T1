@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
+using UnityEngine.InputSystem.Editor;
 
 public class PlayMenu : MonoBehaviour
 {
@@ -12,8 +13,9 @@ public class PlayMenu : MonoBehaviour
     public event Action playEvent;
     public GameObject PlayMenuUI;
     public SetupMenu SetupMenuUI;
-    
-    
+    public OptionsMenu optionsMenu;
+
+
     public void Awake()
     {
         PlayMenuUI.SetActive(true);
@@ -30,7 +32,8 @@ public class PlayMenu : MonoBehaviour
 
     public void Options()
     {
-        
+        PlayMenuUI.SetActive(false);
+        optionsMenu.optionsMenu.SetActive(true);
     }
 
     public void Setup()
