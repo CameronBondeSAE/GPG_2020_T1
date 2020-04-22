@@ -670,7 +670,7 @@ PrefabInstance:
     - target: {fileID: 844936440088286563, guid: 69c72cf18b94ae04a80ce166e1e5b1e9,
         type: 3}
       propertyPath: obstacleThreshold
-      value: 0.851
+      value: 0.978
       objectReference: {fileID: 0}
     - target: {fileID: 844936440088286563, guid: 69c72cf18b94ae04a80ce166e1e5b1e9,
         type: 3}
@@ -696,6 +696,11 @@ PrefabInstance:
         type: 3}
       propertyPath: perlinWeight
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 844936440088286563, guid: 69c72cf18b94ae04a80ce166e1e5b1e9,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 844936440088286622, guid: 69c72cf18b94ae04a80ce166e1e5b1e9,
         type: 3}
@@ -756,7 +761,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 178437039}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1588283106}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b1ebd3d0cf1b1e6409e40ddb1b9d17ed, type: 3}
   m_Name: 
@@ -1853,7 +1858,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 4.5905e-41, y: 0, z: 0, w: 4e-45}
+  m_BoundingSphereOverride: {x: 1.614e-42, y: 4.664e-42, z: 3.8519774e-34, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -2201,12 +2206,12 @@ PrefabInstance:
     - target: {fileID: 3398339021096822533, guid: ff09ae3cace58124d96b62ccd444925e,
         type: 3}
       propertyPath: unitBases.Array.size
-      value: 7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3398339021096822533, guid: ff09ae3cace58124d96b62ccd444925e,
         type: 3}
       propertyPath: spawnNumber
-      value: 2
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 3398339021096822533, guid: ff09ae3cace58124d96b62ccd444925e,
         type: 3}
@@ -2230,7 +2235,7 @@ PrefabInstance:
         type: 3}
       propertyPath: unitBases.Array.data[0]
       value: 
-      objectReference: {fileID: 8932981262465183121, guid: ce1f1eec4dc935a41b8dafd39af1b41e,
+      objectReference: {fileID: 3776347446129422645, guid: 034d145f47743a348bfc3c6557f64867,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff09ae3cace58124d96b62ccd444925e, type: 3}
