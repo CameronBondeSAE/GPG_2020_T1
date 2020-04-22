@@ -37,7 +37,12 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
             targetPos = transform.InverseTransformPoint(targetPos);*/
             Node startNode = grid.NodeFromWorldPoint(startPos);
             Node targetNode = grid.NodeFromWorldPoint(targetPos);
-            
+
+            if (targetNode.walkable == false)
+            {
+                return new List<Node>();
+            }
+
             List<Node> openSet = new List<Node>();
             HashSet<Node> closedSet = new HashSet<Node>();
             
