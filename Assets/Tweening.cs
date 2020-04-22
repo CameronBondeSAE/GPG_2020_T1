@@ -6,26 +6,35 @@ using DG.Tweening;
 
 public class Tweening : MonoBehaviour
 {
-
-    public Collider collider;
-    
-    private void Start()
-    {
-        transform.localScale = new Vector3(1f, 0f, 1f);
-    }
+	public Collider col;
+	Renderer rend;
+	public Transform target;
+	public Vector3 targetScale;
+	
+    private void Awake()
+	{
+		// col = GetComponent<Collider>();
+		rend = GetComponentInChildren<Renderer>();
+		rend.enabled = false;
+		
+		target.localScale = new Vector3(targetScale.x, 0, targetScale.z);
+	}
 
     public void Appear()
     {
-        collider.enabled = true;
-        transform.localScale = new Vector3(1f, 0f, 1f);
-        //  transform.DOScale(new Vector3(2f, 11.34f, 2f), 5f).SetEase(Ease.Linear);
-        transform.DOScale(new Vector3(1f, 1f, 1f), 5f).SetEase(Ease.Linear);
-    }
+		col.enabled = true;
+		rend.enabled = true;
+        // target.localScale = new Vector3(2f, 0f, 2f);
+        //  target.DOScale(new Vector3(2f, 11.34f, 2f), 5f).SetEase(Ease.Linear);
+        target.DOScale(targetScale, 5f).SetEase(Ease.Linear);
+		// target.localScale = targetScale;
+	}
 
     public void Disappear()
     {
-        transform.localScale = new Vector3(1f, 1f, 1f);
-        transform.DOScale(new Vector3(1f, 0f, 1f), 5f).SetEase(Ease.Linear);
-        collider.enabled = false;
-    }
+		col.enabled = false;
+		rend.enabled = false; // TODO do this when tween finishes
+		// target.localScale = new Vector3(1f, 1f, 1f);
+        // target.DOScale(new Vector3(1f, 0f, 1f), 5f).SetEase(Ease.Linear);
+	}
 }

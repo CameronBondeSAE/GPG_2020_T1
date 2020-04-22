@@ -143,7 +143,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
 
         public void GrowObstacleBoolGrid()
         {
-            List<Vector2Int> temp = new List<Vector2Int>();
+            List<Vector2Int> temp = new List<Vector2Int>(gridSize.x * gridSize.y);
             
             
             baseGrowRate -= perlinGrowthRate;
@@ -239,8 +239,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
                         transform.position + new Vector3((x) * 0.01f * (worldSize.x / (gridSize.x * 0.01f)),
                             obstacleHeight / 2, (y) * 0.01f * (worldSize.y / (gridSize.y * 0.01f))),
                         transform.rotation);
-                    ObjectGrid[x, y].transform.localScale = new Vector3(worldSize.x * (gridSize.x / 100) * 0.01f,
-                        obstacleHeight, worldSize.y * (gridSize.y / 100) * 0.01f);
+                    // ObjectGrid[x, y].transform.localScale = new Vector3(worldSize.x * (gridSize.x / 100) * 0.01f,
+                        // obstacleHeight, worldSize.y * (gridSize.y / 100) * 0.01f);
 
                     if (ObstacleHolder)
                     {

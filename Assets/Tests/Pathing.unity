@@ -120,6 +120,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &51536288 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 844936439617160392, guid: 69c72cf18b94ae04a80ce166e1e5b1e9,
+    type: 3}
+  m_PrefabInstance: {fileID: 178437039}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &60370631
 GameObject:
   m_ObjectHideFlags: 0
@@ -670,7 +676,7 @@ PrefabInstance:
     - target: {fileID: 844936440088286563, guid: 69c72cf18b94ae04a80ce166e1e5b1e9,
         type: 3}
       propertyPath: obstacleThreshold
-      value: 0.978
+      value: 0.675
       objectReference: {fileID: 0}
     - target: {fileID: 844936440088286563, guid: 69c72cf18b94ae04a80ce166e1e5b1e9,
         type: 3}
@@ -700,8 +706,13 @@ PrefabInstance:
     - target: {fileID: 844936440088286563, guid: 69c72cf18b94ae04a80ce166e1e5b1e9,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 844936440088286563, guid: 69c72cf18b94ae04a80ce166e1e5b1e9,
+        type: 3}
+      propertyPath: ObstacleHolder
+      value: 
+      objectReference: {fileID: 51536288}
     - target: {fileID: 844936440088286622, guid: 69c72cf18b94ae04a80ce166e1e5b1e9,
         type: 3}
       propertyPath: m_Name
@@ -761,7 +772,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 178437039}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1588283106}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b1ebd3d0cf1b1e6409e40ddb1b9d17ed, type: 3}
   m_Name: 
@@ -1858,7 +1869,8 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1.614e-42, y: 4.664e-42, z: 3.8519774e-34, w: 0}
+  m_BoundingSphereOverride: {x: 6.976833e+22, y: 6.947189e+22, z: 1.10172055e+24,
+    w: 2.7376664e+20}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0

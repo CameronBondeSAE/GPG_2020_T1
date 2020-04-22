@@ -17,7 +17,7 @@ MonoBehaviour:
   m_RenderPipelineRayTracingResources: {fileID: 0}
   m_RenderingPathDefaultCameraFrameSettings:
     bitDatas:
-      data1: 69456063627037
+      data1: 69271112813341
       data2: 4539628424389459968
     lodBias: 1
     lodBiasMode: 0
@@ -33,22 +33,22 @@ MonoBehaviour:
     maximumLODLevelMode: 0
   m_RenderingPathDefaultRealtimeReflectionFrameSettings:
     bitDatas:
-      data1: 69417242205981
+      data1: 69417242201885
       data2: 4539628424389459968
     lodBias: 1
     lodBiasMode: 0
     maximumLODLevel: 0
     maximumLODLevelMode: 0
   m_RenderPipelineSettings:
-    supportShadowMask: 1
-    supportSSR: 1
-    supportSSAO: 1
-    supportSubsurfaceScattering: 1
+    supportShadowMask: 0
+    supportSSR: 0
+    supportSSAO: 0
+    supportSubsurfaceScattering: 0
     increaseSssSampleCount: 0
-    supportVolumetrics: 1
+    supportVolumetrics: 0
     increaseResolutionOfVolumetrics: 0
     supportLightLayers: 0
-    supportDistortion: 1
+    supportDistortion: 0
     supportTransparentBackface: 1
     supportTransparentDepthPrepass: 1
     supportTransparentDepthPostpass: 1
