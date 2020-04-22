@@ -36,7 +36,7 @@ public class TornadoVortex : MonoBehaviour
             Vector3.Cross(Vector3.up,forceDirection.normalized);
             tornadoCenter.position = new Vector3(tornadoCenter.position.x,PullCenterCurve.Evaluate(((Time.time * 0.1f)% PullCenterCurve.length)),pullSpeed);
             yield return refreshRate;
-            //StartCoroutine(PullObject(shouldPull, other));
+            yield return StartCoroutine(PullObject(shouldPull, other));
         }
     }
     
