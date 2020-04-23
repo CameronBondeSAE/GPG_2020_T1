@@ -14,6 +14,7 @@ public class PlayMenu : MonoBehaviour
     public OptionsMenu optionsMenu;
 
 	public GameManager gameManager;
+	public RTSNetworkManager rtsNetworkManager;
 
     public void Awake()
     {
@@ -25,6 +26,7 @@ public class PlayMenu : MonoBehaviour
     public void Play()
     {
        PlayMenuUI.SetActive(false);
+	   rtsNetworkManager.StartHost();
 	   gameManager.OnStartGameEvent();
 	}
 
