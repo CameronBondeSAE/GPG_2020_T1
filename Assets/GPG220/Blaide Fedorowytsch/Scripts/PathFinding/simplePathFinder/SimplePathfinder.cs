@@ -33,19 +33,24 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
             
         }
 
-        public async void RequestPathFind(Vector3 startPos, Vector3 targetPos, pathFindingCallBack callBack)
-        {
-            
+        public async void RequestPathFind(Vector3 startPos, Vector3 targetPos, pathFindingCallBack callBack) {
+            Debug.Log("Main thread: StartPos = "+startPos+" : TargetPos = "+targetPos);
             Node startNode = grid.NodeFromWorldPoint(startPos);
             Node targetNode = grid.NodeFromWorldPoint(targetPos);
             
-            List<Node> path = await Task.Run(() => FindPath(startNode, targetNode));
-            callBack(path);
-        }
+            // List<Node> path = await Task.Run(() => FindPath(startNode, targetNode));
+            List<Node> path = FindPath(startNode, targetNode);
+
+			Debug.Log("DONE! Nodes = "+path.Count);
+			Debug.Log("		ID = "+Thread.CurrentThread.ManagedThreadId);
+			callBack(path);
+		}
   
         
         public List<Node> FindPath(Node startNode, Node targetNode)
         {
+			Debug.Log("Start pathing");
+			Debug.Log("		ID = "+Thread.CurrentThread.ManagedThreadId);
 /*           
 
             startPos = transform.InverseTransformPoint(startPos);
@@ -53,8 +58,11 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
 
 
             if (targetNode.walkable == false)
-            {
-                return new List<Node>();
+			{
+				Debug.Log("Not walkable");
+				Debug.Log("		ID = "+Thread.CurrentThread.ManagedThreadId);
+
+				return null;// new List<Node>();
             }
 
             List<Node> openSet = new List<Node>();
@@ -62,6 +70,9 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
             
             openSet.Add(startNode);
 
+			
+			Debug.Log("While starting");
+			Debug.Log("		ID = "+Thread.CurrentThread.ManagedThreadId);
             while (openSet.Count > 0)
             {
                 Node currentNode = openSet[0];
@@ -78,6 +89,9 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
 
                 if (currentNode == targetNode)
                 {
+					Debug.Log("RetracePath");
+					Debug.Log("		ID = "+Thread.CurrentThread.ManagedThreadId);
+
                     return RetracePath(startNode,targetNode);
                 }
 
@@ -101,7 +115,12 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
                     }
                 }
             }
-            return new List<Node>();
+			
+			Debug.Log("Pathing ended : No Nodes");
+			Debug.Log("		ID = "+Thread.CurrentThread.ManagedThreadId);
+
+            // return new List<Node>();
+            return null;
         }
 
         List<Node> RetracePath(Node startNode,Node endNode)
@@ -109,10 +128,20 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
             List<Node> path = new List<Node>();
             Node currentNode;
             currentNode = endNode;
+			// CAM: HACK: Thread is nulling when two are running here EVEN THOUGH ENDNODE ISN'T NULL
+			
             while (currentNode != startNode)
             {
                 path.Add(currentNode);
-                currentNode = currentNode.parent;
+				try
+				{
+					currentNode = currentNode.parent;
+				}
+				catch (Exception e)
+				{
+					Console.WriteLine(e);
+					throw;
+				}
             }
             path.Reverse(); 
             grid.path = path;
