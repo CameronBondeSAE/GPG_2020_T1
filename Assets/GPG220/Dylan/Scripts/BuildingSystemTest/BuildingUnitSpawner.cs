@@ -56,7 +56,7 @@ namespace GPG220.Dylan.Scripts.BuildingSystemTest
 
         private void OnGUI()
         {
-            if (isSelected && player.isLocalPlayerMine)
+            if (player != null && (isSelected && player.isLocalPlayerMine))
             {
                 for (int i = 0; i < unitSpawner.unitBases.Count; i++)
                 {
