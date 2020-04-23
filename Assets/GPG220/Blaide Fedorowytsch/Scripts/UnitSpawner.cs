@@ -42,7 +42,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             {
                 int randIndex = Random.Range(0,unitBases.Count);
 
-                position = RandomGroundPointInBounds(unitExtents(unitBases[randIndex]));
+                position = RandomGroundPointInBounds(new Bounds(transform.position,boundrySize),unitExtents(unitBases[randIndex]));
                 SpawnUnit( owner, unitBases[randIndex], position, Quaternion.Euler(Vector3.forward));
             }
         }
@@ -54,7 +54,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 			{
 				for (int i = 0; i < unitBases.Count; i++)
 				{
-					position = RandomGroundPointInBounds(unitExtents(unitBases[i]));
+					position = RandomGroundPointInBounds(new Bounds(transform.position,boundrySize),unitExtents(unitBases[i]));
 					SpawnUnit(owner, unitBases[i], position, Quaternion.identity);
 				}
 			}
@@ -68,13 +68,13 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
            
         }
 
-        public Vector3 RandomGroundPointInBounds(Vector3 Extents)
+        public Vector3 RandomGroundPointInBounds(Bounds spawnBounds,Vector3 unitExtents)
         {
             bool clear = false;
             int attempts = 0; 
             Vector3 p = transform.position;
             
-            Bounds spawnBounds = new Bounds(transform.position,boundrySize);
+            
             while (!clear && attempts <= 30 )
             {
                 attempts++;
@@ -85,8 +85,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit,boundrySize.y*3,SpawnableSurfaces,QueryTriggerInteraction.Ignore))
                 {
-                    Vector3 offsetPosition = hit.point + new Vector3(0,+Extents.y,0);
-                    Bounds prespawnCheckBounds = new Bounds( offsetPosition,Extents);
+                    Vector3 offsetPosition = hit.point + new Vector3(0,+unitExtents.y,0);
+                    Bounds prespawnCheckBounds = new Bounds( offsetPosition,unitExtents);
 
 
                     while (prespawnCheckBounds.Contains(hit.point))
