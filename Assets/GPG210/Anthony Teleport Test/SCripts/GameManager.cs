@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
 	public event Action startGameEvent;
 
 	// Hack: No references to View UI stuff generally from 'Model' managers etc
-	public SetupMenu   multiPlayerMenu;
+	public MultiplayerMenu   multiPlayerMenu;
 	public UnitSpawner unitSpawner;
 
 //subscribing to all the events

@@ -10,7 +10,7 @@ using UnityEngine.InputSystem.Editor;
 public class PlayMenu : MonoBehaviour
 {
 	public GameObject PlayMenuUI;
-    public SetupMenu SetupMenuUI;
+    public MultiplayerMenu multiplayerMenu;
     public OptionsMenu optionsMenu;
 
 	public GameManager gameManager;
@@ -18,7 +18,7 @@ public class PlayMenu : MonoBehaviour
     public void Awake()
     {
         PlayMenuUI.SetActive(true);
-        SetupMenuUI = GetComponent<SetupMenu>();
+        multiplayerMenu = GetComponent<MultiplayerMenu>();
     }
 
 
@@ -36,7 +36,7 @@ public class PlayMenu : MonoBehaviour
 
     public void Setup()
     {
-        SetupMenuUI.SetUpMenuUI.SetActive(true);
+        multiplayerMenu.multiplayerMenu.SetActive(true);
         PlayMenuUI.SetActive(false);
     }
     

@@ -850,8 +850,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: SetHostname
+      - m_Target: {fileID: 7995541892702618879}
+        m_MethodName: 
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1961,7 +1961,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1375059196}
-        m_MethodName: Start
+        m_MethodName: HostGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5557,7 +5557,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1375059196}
-        m_MethodName: MultiPlayer
+        m_MethodName: JoinGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8144,6 +8144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SetUpMenuUI: {fileID: 7993774512274916398}
   PlayMenuUI: {fileID: 1375059197}
+  gameManager: {fileID: 0}
 --- !u!114 &1375059197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8157,7 +8158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayMenuUI: {fileID: 7995541893682817016}
-  SetupMenuUI: {fileID: 1375059196}
+  multiplayerMenuUi: {fileID: 0}
   optionsMenu: {fileID: 4791638078978474311}
 --- !u!114 &1375059198
 MonoBehaviour:

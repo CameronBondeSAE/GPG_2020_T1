@@ -777,6 +777,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: RTSNetworkManager
       objectReference: {fileID: 0}
+    - target: {fileID: 4462655993905018356, guid: 18825b8ec10c5c944bedba252d160eb8,
+        type: 3}
+      propertyPath: sceneId
+      value: 3065626663
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18825b8ec10c5c944bedba252d160eb8, type: 3}
 --- !u!224 &762632913 stripped
@@ -1037,11 +1042,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff733bf49effb4f419f902f038c19168, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitBuildDistanceThreshold: 10
   globalUnitBases: []
   listOfSpawns: []
   listofPlayerBases: []
   defaultUnitBases: []
   networkManager: {fileID: 1466362677}
+  localPlayer: {fileID: 0}
   playMenu: {fileID: 1329116019}
   unitSpawner: {fileID: 1331086590}
 --- !u!4 &846187098
@@ -1308,7 +1315,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: -1.114e-42, y: 6e-45, z: 2.4e-44, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 3.12e-43}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
