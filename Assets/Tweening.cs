@@ -25,8 +25,8 @@ public class Tweening : MonoBehaviour
 		col.enabled = true;
 		rend.enabled = true;
         // target.localScale = new Vector3(2f, 0f, 2f);
-        //  target.DOScale(new Vector3(2f, 11.34f, 2f), 5f).SetEase(Ease.Linear);
         target.DOScale(targetScale, 5f).SetEase(Ease.Linear);
+		
 		// target.localScale = targetScale;
 	}
 
