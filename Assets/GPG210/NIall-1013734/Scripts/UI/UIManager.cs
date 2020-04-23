@@ -5,6 +5,7 @@ using GPG220.Blaide_Fedorowytsch.Scripts;
 using GPG220.Blaide_Fedorowytsch.Scripts.Interfaces;
 using GPG220.Luca.Scripts.Abilities;
 using GPG220.Luca.Scripts.Unit;
+using JetBrains.Annotations;
 using Sirenix.Utilities;
 using TMPro;
 using UnityEngine;
@@ -17,19 +18,12 @@ public class UIManager : MonoBehaviour
 {
     // added by blaide, Control stuff for input events using the new unity input system.
     public InputActionAsset controls;
-    [HideInInspector]
-    public InputActionMap actionMap;
-    [HideInInspector]
-    public InputAction actionKey;
-    [HideInInspector]
-    public InputAction cursorMove;
+    [HideInInspector] public InputActionMap actionMap;
+    [HideInInspector] public InputAction actionKey;
+    [HideInInspector] public InputAction cursorMove;
     private Camera mainCam;
-    
-    
-    
-    
-    
-    
+
+
     private UnitSelectionManager unitSelectionManager;
     public List<UnitBase> units;
 
@@ -41,7 +35,6 @@ public class UIManager : MonoBehaviour
     public AbilityController abilityController;
 
     public List<AbilityController> groupAbilityControllers;
-
 
 
     private void Awake()
@@ -56,44 +49,50 @@ public class UIManager : MonoBehaviour
 
     public void TargetAction(InputAction.CallbackContext ctx) // called on mouse right click
     {
-        Vector3 worldPosition = unitSelectionManager.targetPoint; // get the worldpoint from the unitselection manager because its already raycasting to find world points.
-       GameObject targetObject = unitSelectionManager.targetObject;
-       if (groupAbilityControllers.Count > 0)
-       {
-           foreach (AbilityController abilityController in groupAbilityControllers)
-           {
-               if (targetObject == null)
-               {
-                   abilityController.TargetExecuteAbility(abilityController.defaultWorldTargetAbility,worldPosition);
-               }
-               else
-               {
-                   abilityController.TargetExecuteAbility(abilityController.defaultTargetAbility,targetObject);
-               }
-           }
-       }
-       else if(abilityController!= null)
-       {
+        Vector3
+            worldPosition =
+                unitSelectionManager
+                    .targetPoint; // get the worldpoint from the unitselection manager because its already raycasting to find world points.
+        GameObject targetObject = unitSelectionManager.targetObject;
+        if (groupAbilityControllers.Count > 0)
+        {
+            foreach (AbilityController abilityController in groupAbilityControllers)
+            {
+                if (targetObject == null)
+                {
+                    abilityController.TargetExecuteAbility(abilityController.defaultWorldTargetAbility, worldPosition);
+                }
+                else
+                {
+                    abilityController.TargetExecuteAbility(abilityController.defaultTargetAbility, targetObject);
+                }
+            }
+        }
+        else if (abilityController != null)
+        {
+            if (targetObject == null)
+            {
+                abilityController.TargetExecuteAbility(selectedWorldTargetAbility, worldPosition);
+                selectedWorldTargetAbility = abilityController.defaultWorldTargetAbility;
+            }
+            else
+            {
+                abilityController.TargetExecuteAbility(selectedTargetAbility, targetObject);
+                selectedTargetAbility = abilityController.defaultTargetAbility;
+            }
+        }
 
-           if (targetObject == null)
-           {
-               abilityController.TargetExecuteAbility(selectedWorldTargetAbility, worldPosition);
-               selectedWorldTargetAbility = abilityController.defaultWorldTargetAbility;
-           }
-           else
-           {
-               abilityController.TargetExecuteAbility(selectedTargetAbility, targetObject);
-               selectedTargetAbility = abilityController.defaultTargetAbility;
-           }
-       }
-
-       // same as above,  unit selection manager is already raycasting on cursor move to find these.
+        // same as above,  unit selection manager is already raycasting on cursor move to find these.
     }
+
     public void CursorMove(InputAction.CallbackContext ctx) // called when cursor is moved. 
     {
         Vector2 cursorPoint = ctx.ReadValue<Vector2>(); // just the screen space cursor position
 
-        cursorPoint = cursorPoint.Clamp(Vector2.zero, new Vector2(mainCam.scaledPixelWidth, mainCam.scaledPixelHeight)); // constrained to not include when the mouse goes off screen
+        cursorPoint =
+            cursorPoint.Clamp(Vector2.zero,
+                new Vector2(mainCam.scaledPixelWidth,
+                    mainCam.scaledPixelHeight)); // constrained to not include when the mouse goes off screen
     }
 
     public void Start()
@@ -106,35 +105,28 @@ public class UIManager : MonoBehaviour
     }
 
 
-    private void OnSelection(List<ISelectable> selectables)
+    private void OnSelection([CanBeNull] List<ISelectable> selectables)
     {
         Debug.Log(selectables.ToString());
         Debug.Log(selectables.Count.ToString());
 
-        /*foreach (var item in selectables)
-        {
-            string s = ((UnitBase)item).abilityController.abilities.ToString();
-            Debug.Log(s);
-        }*/
-        
 
         if (selectables.Count == 1)
         {
             abilitySelectionUI.SetActive(true);
 
-            
+
             foreach (Button button in buttons)
             {
                 button.GetComponent<AbilityButton>().uiManager = this;
                 button.gameObject.SetActive(false);
-                
             }
 
             abilityController = ((UnitBase) selectables[0]).abilityController;
             var abilityControllerAbilities = abilityController.abilities;
             selectedTargetAbility = abilityController.defaultTargetAbility;
             selectedWorldTargetAbility = abilityController.defaultWorldTargetAbility;
-            
+
             int counter = 0;
             foreach (var item in abilityControllerAbilities)
             {
@@ -158,7 +150,7 @@ public class UIManager : MonoBehaviour
 
     private void OnDeselection(List<ISelectable> selectables)
     {
-        groupAbilityControllers.Clear(); 
+        groupAbilityControllers.Clear();
         abilityController = null;
         selectedTargetAbility = null;
         selectedWorldTargetAbility = null;
