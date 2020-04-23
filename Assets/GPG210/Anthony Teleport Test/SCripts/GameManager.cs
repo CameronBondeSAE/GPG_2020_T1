@@ -16,12 +16,16 @@ using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
+	public float unitBuildDistanceThreshold = 10f;
+	
     public List<UnitBase> globalUnitBases = new List<UnitBase>();
     public List<SpawnPoint> listOfSpawns = new List<SpawnPoint>();
     public List<PlayerBase> listofPlayerBases = new List<PlayerBase>();
     public List<UnitBase> defaultUnitBases = new List<UnitBase>();
 
     public RTSNetworkManager networkManager;
+
+	public PlayerBase localPlayer;
 
     public event Action gameOverEvent;
     public event Action startGameEvent;
@@ -51,18 +55,33 @@ public class GameManager : MonoBehaviour
     private void NetworkManagerOnOnClientDisconnectedEvent(NetworkConnection conn)
     {
         if (networkManager != null)
-        {
-            listofPlayerBases.Remove(conn.identity.GetComponent<PlayerBase>());
-            //conn.identity.GetComponent<PlayerBase>().BuildUnits();
+		{
+			PlayerBase playerBase = conn.identity.GetComponent<PlayerBase>();
+			listofPlayerBases.Remove(playerBase);
+
+			if (playerBase.isLocalPlayer)
+			{
+				localPlayer = null;
+			}
+			
+			//conn.identity.GetComponent<PlayerBase>().BuildUnits();
             //conn.identity.GetComponent<UnitBase>().owner.units
-        }
+		}
     }
 //player has connected to the game, add to the list
     private void NetworkManagerOnOnClientPlayerSpawnEvent(NetworkConnection conn)
     {
         if (networkManager != null)
         {
-            listofPlayerBases.Add(conn.identity.GetComponent<PlayerBase>());
+			PlayerBase playerBase = conn.identity.GetComponent<PlayerBase>();
+			
+			listofPlayerBases.Add(playerBase);
+
+			if (playerBase.isLocalPlayer)
+			{
+				localPlayer = playerBase;
+			}
+			
             Debug.Log("Build units for new player");
 			BuildUnits(conn.identity);
         }
