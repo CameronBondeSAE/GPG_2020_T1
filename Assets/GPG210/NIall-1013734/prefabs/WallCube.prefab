@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3695246183648753582}
   - component: {fileID: 5254248044222010408}
   - component: {fileID: 5905284861274608303}
+  - component: {fileID: 7271928245341018054}
   m_Layer: 13
   m_Name: WallCube
   m_TagString: Untagged
@@ -59,7 +60,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 402fd88082c433a4a8bee0b959d4b102, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obstacleTweening: {fileID: 5905284861274608303}
+  obstacleWall: {fileID: 0}
 --- !u!114 &5905284861274608303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72,9 +73,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5410aa2d6a4dfa34dbed8e0daeea2e9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   col: {fileID: 3695246183648753582}
   target: {fileID: 3695246183648753581}
   targetScale: {x: 1, y: 1, z: 1}
+--- !u!114 &7271928245341018054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3695246183648753576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  m_AssetId: 
 --- !u!1 &5114701339533134064
 GameObject:
   m_ObjectHideFlags: 0
