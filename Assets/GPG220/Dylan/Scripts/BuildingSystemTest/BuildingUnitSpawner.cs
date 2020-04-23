@@ -30,6 +30,7 @@ namespace GPG220.Dylan.Scripts.BuildingSystemTest
         {
             StartCoroutine("Delay");
             isSelected = true;
+            CreateButtons();
         }
 
         public IEnumerator Delay()
@@ -55,13 +56,26 @@ namespace GPG220.Dylan.Scripts.BuildingSystemTest
             }
         }
 
+        public void CreateButtons()
+        {
+            //Button Prefabs
+            // Spawn a button for each of the unitspawner.unitbases.count
+            // Add in a lister to the button on click event 
+            // Use horizontal layout group
+            // Use this function for the listener
+            //
+            // SpawnUnit(player, unitSpawner.unitBases[i], GetRandomSpawnPoint(unitSpawner.unitBases[i]));
+            //
+        }
         private void OnGUI()
+        //comment out when your buttons spawn in
         {
             if (player != null && (isSelected && player.isLocalPlayerMine))
             {
                 for (int i = 0; i < unitSpawner.unitBases.Count; i++)
                 {
                     //GUI Buttons
+                    //comment this out when done
                     if (GUI.Button(new Rect(Screen.width / 20, Screen.height / 15 + Screen.height / 10 * i, 100, 30),
                         unitSpawner.unitBases[i].name))
                     {
@@ -70,6 +84,8 @@ namespace GPG220.Dylan.Scripts.BuildingSystemTest
                 }
             }
         }
+
+        
 
         Vector3 GetRandomSpawnPoint(UnitBase Ub)
         {
