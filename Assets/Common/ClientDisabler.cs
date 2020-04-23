@@ -13,7 +13,7 @@ public class ClientDisabler : NetworkBehaviour
 		{
 			foreach (var monoBehaviour in disableOnClient)
 			{
-				monoBehaviour.enabled = false;
+				if (monoBehaviour != null) monoBehaviour.enabled = false;
 			}
 		}
     }

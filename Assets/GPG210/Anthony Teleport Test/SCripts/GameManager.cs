@@ -16,6 +16,8 @@ using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
+	public float unitBuildDistanceThreshold = 10f;
+	
     public List<UnitBase> globalUnitBases = new List<UnitBase>();
     public List<SpawnPoint> listOfSpawns = new List<SpawnPoint>();
     public List<PlayerBase> listofPlayerBases = new List<PlayerBase>();
