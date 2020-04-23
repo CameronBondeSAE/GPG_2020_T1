@@ -13,6 +13,7 @@ public class RocketShot : AbilityBase
     public Transform spawnTransform;
     public float explosionForce;
     public GameObject player;
+    public AudioSource explosionSound;
 
     // Start is called before the first frame update
     void Start()
@@ -27,9 +28,9 @@ public class RocketShot : AbilityBase
     public override bool TargetExecute(Vector3 worldPos)
     {
         GameObject bulletClone = (GameObject) Instantiate(bullet, spawnTransform.position,Quaternion.identity);
+        explosionSound.Play();
         bulletClone.GetComponent<Rigidbody>().velocity = spawnTransform.forward * bulletSpeed; //bullet goes at a certain speed
         bulletClone.GetComponent<Rigidbody>().AddForce(spawnTransform.forward * explosionForce,ForceMode.Impulse); //add a force and make it explode
-        Physics.IgnoreCollision(bulletClone.GetComponent<Collider>(),GetComponent<Collider>());
         target = worldPos;
        
         player.transform.LookAt(target);

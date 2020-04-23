@@ -12,15 +12,19 @@ public class BulletScript : MonoBehaviour
     private Collider[] hitColliders;
     public RocketManUnitBase player;
     public RocketShot bulletClone;
-    public int damage = 75;
+    public int damage = 50;
     private void OnCollisionEnter(Collision other)
     {
         DoExplosion(other.contacts[0].point);
         Destroy(gameObject);
         // Does the other object even have a Health component?
-            if (other.gameObject.GetComponent<Health>() != null)
-                // Do damage
-                other.gameObject.GetComponent<Health>().ChangeHealth(-damage);
+        if (other.gameObject.GetComponent<Health>() != null)
+        {
+            // Do damage
+            other.gameObject.GetComponent<Health>().ChangeHealth(-damage);
+        }
+
+        
         
     }
 
