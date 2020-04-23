@@ -14,7 +14,7 @@ public class Wall : NetworkBehaviour
 	
     private void Awake()
 	{
-		// col = GetComponent<Collider>();
+		 col = GetComponent<Collider>();
 		rend = GetComponentInChildren<Renderer>();
 		rend.enabled = false;
 		

@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 402fd88082c433a4a8bee0b959d4b102, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obstacleWall: {fileID: 0}
+  obstacleWall: {fileID: 5905284861274608303}
 --- !u!114 &5905284861274608303
 MonoBehaviour:
   m_ObjectHideFlags: 0

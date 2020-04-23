@@ -64,11 +64,22 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
             GenerateAll();
         }
 
+        private void Awake()
+        {
+            gameManager.startGameEvent += StartGrowth;
+            //growObstacles = false;
+        }
+
         void GenerateAll()
         {
             GenerateBoolGrid();
             GenerateObjectGrid();
             gameStarted = true;
+        }
+
+        public void StartGrowth()
+        {
+            growObstacles = true;
         }
 
         // Update is called once per frame
