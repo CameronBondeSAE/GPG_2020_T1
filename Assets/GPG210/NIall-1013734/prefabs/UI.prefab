@@ -8220,9 +8220,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fde82710d9018af4cbce0213c28af594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MasterMixer: {fileID: 0}
-  MusicMixer: {fileID: 0}
-  SFXMixer: {fileID: 0}
+  MasterMixer: {fileID: 24300002, guid: 3f3a6ec868d36b44183751365034d59d, type: 2}
+  MusicMixer: {fileID: 7386858576573235570, guid: 3f3a6ec868d36b44183751365034d59d,
+    type: 2}
+  SFXMixer: {fileID: 4446298870892095959, guid: 3f3a6ec868d36b44183751365034d59d,
+    type: 2}
   pauseMenu: {fileID: 1375059198}
   pauseOptionsMenu: {fileID: 1434075107949323789}
 --- !u!1 &7995541892877248587
