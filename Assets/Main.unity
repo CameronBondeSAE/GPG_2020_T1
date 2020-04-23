@@ -231,6 +231,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &55446166 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1375059196, guid: 298228f203107444691db63a0ad56f1a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1216307653}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d89e6d21bc27d54b87d1054bd2537ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &60370631
 GameObject:
   m_ObjectHideFlags: 0
@@ -2318,6 +2330,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fa795535ee896a498fd7570f42e6c6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1137517211 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7993774512274916398, guid: 298228f203107444691db63a0ad56f1a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1216307653}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1175226225
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2425,10 +2443,30 @@ PrefabInstance:
       propertyPath: m_text
       value: localhost
       objectReference: {fileID: 0}
+    - target: {fileID: 1375059196, guid: 298228f203107444691db63a0ad56f1a, type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 1285704454}
+    - target: {fileID: 1375059196, guid: 298228f203107444691db63a0ad56f1a, type: 3}
+      propertyPath: rtsNetworkManager
+      value: 
+      objectReference: {fileID: 2014623609}
+    - target: {fileID: 1375059196, guid: 298228f203107444691db63a0ad56f1a, type: 3}
+      propertyPath: multiplayerMenu
+      value: 
+      objectReference: {fileID: 1137517211}
     - target: {fileID: 1375059197, guid: 298228f203107444691db63a0ad56f1a, type: 3}
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 1285704454}
+    - target: {fileID: 1375059197, guid: 298228f203107444691db63a0ad56f1a, type: 3}
+      propertyPath: rtsNetworkManager
+      value: 
+      objectReference: {fileID: 2014623609}
+    - target: {fileID: 1375059197, guid: 298228f203107444691db63a0ad56f1a, type: 3}
+      propertyPath: multiplayerMenu
+      value: 
+      objectReference: {fileID: 55446166}
     - target: {fileID: 1793977684, guid: 298228f203107444691db63a0ad56f1a, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -3621,7 +3659,7 @@ PrefabInstance:
     - target: {fileID: 8795225781501615314, guid: 18825b8ec10c5c944bedba252d160eb8,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18825b8ec10c5c944bedba252d160eb8, type: 3}
