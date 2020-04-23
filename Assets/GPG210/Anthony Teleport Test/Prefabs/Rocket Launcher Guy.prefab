@@ -244,7 +244,6 @@ GameObject:
   - component: {fileID: 8736307313088339210}
   - component: {fileID: 8736307313088339211}
   - component: {fileID: 8736307313088339209}
-  - component: {fileID: 8736307313088339208}
   - component: {fileID: 72274850}
   - component: {fileID: -4362535212562375481}
   - component: {fileID: 72274851}
@@ -348,9 +347,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneId: 0
+  sceneId: 2839694257
   serverOnly: 0
-  m_AssetId: dfd57f06fcd310648957731cbc248d76
+  m_AssetId: 
 --- !u!114 &8736307313088339211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,29 +393,6 @@ MonoBehaviour:
   unitImage: {fileID: 0}
   damage: 100
   tweenduration: 2
---- !u!114 &8736307313088339208
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8736307313088339215}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ec0d918dabd23e4fa0d5b78a92c859e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  cooldown: 0
-  currentCooldown: 0
-  targetRequired: 0
-  abilityName: 
-  abilityDescription: 
-  abilityImage: {fileID: 0}
-  moving: 0
-  targetPos: {x: 0, y: 0, z: 0}
-  offsetPosition: {x: 0, y: 0, z: 0}
 --- !u!136 &72274850
 CapsuleCollider:
   m_ObjectHideFlags: 0

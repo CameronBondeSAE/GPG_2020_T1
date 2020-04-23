@@ -24,6 +24,8 @@ public class MageTeleport : AbilityBase
 
     private Rigidbody rb;
     public Vector3 offset;
+
+    public AudioSource teleportSound;
    
     private void Awake()
     {
@@ -42,6 +44,7 @@ public class MageTeleport : AbilityBase
         transform.position = worldPos += offset;
         //player.transform.position = new Vector3(Random.Range(-Range, Range), 1, Random.Range(-Range, Range));
         visuals.SetActive(false);
+        teleportSound.Play();
         StartCoroutine(DelayNumerator());
         return true;
         
