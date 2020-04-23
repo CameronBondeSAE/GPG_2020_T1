@@ -2425,6 +2425,10 @@ PrefabInstance:
       propertyPath: m_text
       value: localhost
       objectReference: {fileID: 0}
+    - target: {fileID: 1375059197, guid: 298228f203107444691db63a0ad56f1a, type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 1285704454}
     - target: {fileID: 1793977684, guid: 298228f203107444691db63a0ad56f1a, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -2559,7 +2563,7 @@ PrefabInstance:
     - target: {fileID: 7995541892099613237, guid: 298228f203107444691db63a0ad56f1a,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7995541892099613237, guid: 298228f203107444691db63a0ad56f1a,
         type: 3}
@@ -2683,7 +2687,7 @@ MonoBehaviour:
   defaultUnitBases: []
   networkManager: {fileID: 2014623609}
   localPlayer: {fileID: 0}
-  playMenu: {fileID: 1077335987}
+  multiPlayerMenu: {fileID: 0}
   unitSpawner: {fileID: 666229043}
 --- !u!4 &1285704455
 Transform:
@@ -3614,6 +3618,11 @@ PrefabInstance:
       propertyPath: disableOnClient.Array.data[2]
       value: 
       objectReference: {fileID: 666229043}
+    - target: {fileID: 8795225781501615314, guid: 18825b8ec10c5c944bedba252d160eb8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18825b8ec10c5c944bedba252d160eb8, type: 3}
 --- !u!1001 &8760756873888002575
