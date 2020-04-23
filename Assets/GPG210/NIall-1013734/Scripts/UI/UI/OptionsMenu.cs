@@ -7,24 +7,33 @@ using UnityEngine.UI;
 
 public class OptionsMenu : MonoBehaviour
 {
-
-    public AudioMixer audioMixer;
+    public AudioMixerGroup MasterMixer;
+    public AudioMixerGroup MusicMixer;
+    public AudioMixerGroup SFXMixer;
     public PlayMenu playmenu;
     public CreditsMenu creditsMenu;
     public GameObject optionsMenu;
-    
 
 
-    public void SetVolume(float volume)
+    public void SetMasterVolume(float volume)
     {
-        audioMixer.SetFloat("Volume", volume);
+        MasterMixer.audioMixer.SetFloat("Volume", volume);
+    }
+
+    public void SetMusicVolume(float musicvolume)
+    {
+        MusicMixer.audioMixer.SetFloat("MusicVolume", musicvolume);
+    }
+
+    public void SetSFXVolume(float sfxvolume)
+    {
+        SFXMixer.audioMixer.SetFloat("SFXVolume", sfxvolume);
     }
 
     public void Credits()
     {
         creditsMenu.creditsMenu.SetActive(true);
         optionsMenu.SetActive(false);
-       
     }
 
     public void Back()

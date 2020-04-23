@@ -55,8 +55,8 @@ public class PauseMenu : MonoBehaviour
         PauseMenuUI.SetActive(false);
         Application.LoadLevel(Application.loadedLevel);
         IsPaused = false;
-        
-        
+
+
         //TODO: Client disconnects only disconnects client from server / host disconnects so server disconnects along side host client.
 
         if (NetworkClient.isLocalClient == true)

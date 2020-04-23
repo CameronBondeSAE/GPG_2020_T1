@@ -8,9 +8,8 @@ public class PauseOptionsMenu : MonoBehaviour
     public AudioMixer audioMixer;
     public PauseMenu pauseMenu;
     public GameObject pauseOptionsMenu;
-    
-    
-    
+
+
     public void SetVolume(float volume)
     {
         audioMixer.SetFloat("Volume", volume);
