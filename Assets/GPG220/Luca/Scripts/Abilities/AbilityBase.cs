@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using AnthonyY;
 using Mirror;
+using NaughtyAttributes;
 
 namespace GPG220.Luca.Scripts.Abilities
 {
@@ -22,6 +23,7 @@ namespace GPG220.Luca.Scripts.Abilities
         public string abilityName;
         [TextArea]
         public string abilityDescription;
+		[ShowAssetPreview]
         public Sprite abilityImage;
 		
         public string Name 

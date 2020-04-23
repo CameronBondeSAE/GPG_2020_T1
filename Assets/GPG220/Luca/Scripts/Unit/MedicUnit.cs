@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GPG220.Luca.Scripts.Unit
 {
-    [RequireComponent(typeof(CharacterController))]
+    // [RequireComponent(typeof(CharacterController))]
     public class MedicUnit : MovableUnit
     {
         
@@ -35,7 +35,7 @@ namespace GPG220.Luca.Scripts.Unit
             //     HACKExecuteAbility = false;
             // }
             
-            HandleMovement();
+            // HandleMovement();
         }
         
         public override bool Selectable()

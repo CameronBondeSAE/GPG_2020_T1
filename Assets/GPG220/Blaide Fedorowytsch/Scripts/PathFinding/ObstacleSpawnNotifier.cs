@@ -10,7 +10,7 @@ public class ObstacleSpawnNotifier : MonoBehaviour
 
     private Bounds bounds;
     private Vector3 pos;
-    public Tweening obstacleTweening;
+    public Wall obstacleWall;
     private ProceduralGrowthSystem proceduralGrowthSystem;
 	// Collider mainCollider;
 
@@ -29,10 +29,10 @@ public class ObstacleSpawnNotifier : MonoBehaviour
 
     public void OnAppear()
 	{
-        obstacleTweening.Appear();
-        if (obstacleTweening.col != null)
+        obstacleWall.Appear();
+        if (obstacleWall.col != null)
         {
-            bounds = obstacleTweening.col.bounds;
+            bounds = obstacleWall.col.bounds;
             pos = transform.position;
             GlobalEvents.OnPathFindingObstacleChange(new WorldPosAndBounds(pos,bounds));
         }
@@ -41,7 +41,7 @@ public class ObstacleSpawnNotifier : MonoBehaviour
     public void OnDisappear()
 	{
 		// mainCollider.enabled = false;
-        obstacleTweening.Disappear();
+        obstacleWall.Disappear();
         GlobalEvents.OnPathFindingObstacleChange(new WorldPosAndBounds(pos,bounds));
     }
 }

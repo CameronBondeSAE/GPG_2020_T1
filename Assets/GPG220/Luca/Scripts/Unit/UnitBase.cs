@@ -15,7 +15,8 @@ namespace GPG220.Luca.Scripts.Unit
     /// Base class for units. (A unit can be a building, movable unit, ...)
     /// </summary>
     [RequireComponent(typeof(Rigidbody), typeof(Health), typeof(Inventory)), RequireComponent(typeof(AbilityController))]
-    public abstract class UnitBase : NetworkBehaviour, ISelectable, IDescribable
+    [Serializable]
+	public abstract class UnitBase : NetworkBehaviour, ISelectable, IDescribable
     {
         public static event Action<UnitBase> SpawnStaticEvent;
         public static event Action<UnitBase> DespawnStaticEvent;

@@ -53,17 +53,21 @@ namespace GPG220.Luca.Scripts.Unit
             base.Initialize();
             if (pathFinderController == null)
                 pathFinderController = FindObjectOfType<PathFinderController>();
-            if (characterController == null)
-                characterController =
-                    GetComponent<CharacterController>() ?? gameObject.AddComponent<CharacterController>();
-            rb.isKinematic = true;
+
+			
+			// CAM HACK: Just using blaides Move ability for now
+			// if (characterController == null)
+                // characterController =
+                    // GetComponent<CharacterController>() ?? gameObject.AddComponent<CharacterController>();
+            // rb.isKinematic = true;
             
             distanceToGround = GetComponent<Collider>().bounds.size.y / 2 + .1f;
         }
 
         private void Update()
         {
-            HandleMovement();
+			// CAM HACK: Just using Blaides Move ability for now
+            // HandleMovement();
         }
 
         protected virtual void HandleMovement()

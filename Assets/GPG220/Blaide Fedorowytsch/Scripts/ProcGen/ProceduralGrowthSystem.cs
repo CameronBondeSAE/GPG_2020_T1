@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
+using Mirror.Websocket;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -242,6 +244,10 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
                     // ObjectGrid[x, y].transform.localScale = new Vector3(worldSize.x * (gridSize.x / 100) * 0.01f,
                         // obstacleHeight, worldSize.y * (gridSize.y / 100) * 0.01f);
 
+					// Networking
+					NetworkServer.Spawn(ObjectGrid[x,y]);
+						
+						
                     if (ObstacleHolder)
                     {
                         ObjectGrid[x,y].transform.parent = ObstacleHolder.transform;

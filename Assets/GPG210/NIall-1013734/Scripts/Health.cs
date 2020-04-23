@@ -1,17 +1,28 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
-    public int startingHealth;
-   [SerializeField] public int CurrentHealth { get; set; }
+	public float health = 50.0f;
 
-     public event Action<Health> deathEvent;
-     public static event Action<Health> deathStaticEvent;
-     public event Action<Health, int> healthChangedEvent;
+    public int startingHealth;
+
+	[ProgressBar("Health", 100, EColor.Red)]
+	private int currentHealth;
+	
+	public int CurrentHealth
+	{
+		get => currentHealth;
+		set => currentHealth = value;
+	}
+
+	public event Action<Health> deathEvent;
+    public static event Action<Health> deathStaticEvent;
+    public event Action<Health, int> healthChangedEvent;
 
 
     private void Awake()

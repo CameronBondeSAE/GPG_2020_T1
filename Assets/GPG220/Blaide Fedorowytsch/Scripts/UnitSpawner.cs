@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using GPG220.Blaide_Fedorowytsch.Scripts.Interfaces;
 using GPG220.Luca.Scripts.Unit;
 using Mirror;
+using NaughtyAttributes;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -12,7 +13,10 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
     public class UnitSpawner : NetworkBehaviour
 	{
 		public Vector3 boundrySize;
-        public List<UnitBase> unitBases;
+
+
+		[ReorderableList]
+		public List<UnitBase> unitBases;
         public int spawnNumber = 1;
         public LayerMask SpawnableSurfaces;
 		
