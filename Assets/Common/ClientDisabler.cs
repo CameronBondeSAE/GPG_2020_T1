@@ -9,6 +9,12 @@ public class ClientDisabler : NetworkBehaviour
 	
     void Awake()
     {
+		GameManager gameManager = FindObjectOfType<GameManager>();
+		gameManager.startGameEvent += GameManagerOnstartGameEvent;
+    }
+
+	private void GameManagerOnstartGameEvent()
+	{
 		if (!isServer)
 		{
 			foreach (var monoBehaviour in disableOnClient)
@@ -16,5 +22,5 @@ public class ClientDisabler : NetworkBehaviour
 				if (monoBehaviour != null) monoBehaviour.enabled = false;
 			}
 		}
-    }
+	}
 }

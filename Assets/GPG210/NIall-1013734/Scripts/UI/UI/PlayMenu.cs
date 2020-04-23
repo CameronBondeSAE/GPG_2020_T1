@@ -9,12 +9,11 @@ using UnityEngine.InputSystem.Editor;
 
 public class PlayMenu : MonoBehaviour
 {
-
-    public event Action playEvent;
-    public GameObject PlayMenuUI;
+	public GameObject PlayMenuUI;
     public SetupMenu SetupMenuUI;
     public OptionsMenu optionsMenu;
 
+	public GameManager gameManager;
 
     public void Awake()
     {
@@ -26,9 +25,8 @@ public class PlayMenu : MonoBehaviour
     public void Play()
     {
        PlayMenuUI.SetActive(false);
-       playEvent?.Invoke();
-       
-    }
+	   gameManager.OnStartGameEvent();
+	}
 
     public void Options()
     {

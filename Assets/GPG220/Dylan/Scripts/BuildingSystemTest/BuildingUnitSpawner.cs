@@ -29,6 +29,7 @@ namespace GPG220.Dylan.Scripts.BuildingSystemTest
         public void Init()
         {
             StartCoroutine("Delay");
+            isSelected = true;
         }
 
         public IEnumerator Delay()
@@ -43,7 +44,7 @@ namespace GPG220.Dylan.Scripts.BuildingSystemTest
         {
             gameManager = FindObjectOfType<GameManager>();
             playMenu = FindObjectOfType<PlayMenu>();
-            playMenu.playEvent += Init;
+            gameManager.startGameEvent += Init;
         }
 
         private void Update()
