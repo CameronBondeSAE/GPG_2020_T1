@@ -2,46 +2,51 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
+using Cinemachine;
 using UnityEngine;
 
 public class TornadoVortex : MonoBehaviour
 {
-    public Transform tornadoCenter;
-    public float pullSpeed;
-    public float refreshRate = 2;
-    public Vector3 offset;
-    private bool shouldPull;
-    public AnimationCurve pullspeedCurve;
-    public AnimationCurve PullCenterCurve;
+   //controls the radius of tornados pull range
+   public float radius;
+   public float maxRadiusToPullin;
+   //pulls objects into the tornado  negative numbers
+   public float PullInPower;
+   public float maxPullin;
+   
+   public Vector3 offset;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        StartCoroutine(PullObject(true, other));
-    }
+   private Collider[] colliders;
 
-    private void OnTriggerExit(Collider other)
-    {
-        
-        StartCoroutine(PullObject(false,other)); //pull it in if pullable
-    }
+   void Update()
+   {
+      colliders = Physics.OverlapSphere(transform.position, radius);
+      foreach (Collider c in colliders)
+      {
+         if (c.GetComponent<Rigidbody>() == null)
+         {
+            continue; //passes control to the next iteration
+         }
+         //raycast that checks the rigidbodies that collide with the tornado and pulling them in when the requirements meet
+         Ray ray = new Ray(transform.position,c.transform.position - transform.position);
+         RaycastHit hit;
+         Physics.Raycast(ray, out hit);
+         if (hit.collider.name != c.gameObject.name || hit.distance < maxPullin)
+         {
+            continue;
+         }
+         else
+         {
+            Rigidbody rigidbody = c.GetComponent<Rigidbody>();
+            c.transform.RotateAround(Vector3.up,c.transform.position,radius);
+            rigidbody.AddExplosionForce(PullInPower,transform.position,radius);
+         }
+         
 
-    IEnumerator PullObject(bool shouldPull, Collider other)
-    {
-        if (shouldPull)
-        {
-            pullSpeed = pullspeedCurve.Evaluate(((Time.time * 0.1f) % pullspeedCurve.length));
-            
-            Vector3 forceDirection = tornadoCenter.position + offset - other.transform.position;
-            other.GetComponent<Rigidbody>().AddForce(forceDirection.normalized * pullSpeed * Time.deltaTime);
-            Vector3.Cross(Vector3.up,forceDirection.normalized);
-            tornadoCenter.position = new Vector3(tornadoCenter.position.x,PullCenterCurve.Evaluate(((Time.time * 0.1f)% PullCenterCurve.length)),pullSpeed);
-            yield return refreshRate;
-            yield return StartCoroutine(PullObject(shouldPull, other));
-        }
-    }
-    
-    
-    
+      }
+   }
+
+   
 }
 
 
