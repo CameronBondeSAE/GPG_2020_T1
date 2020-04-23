@@ -10,6 +10,7 @@ public class PauseMenu : MonoBehaviour
 
     public GameObject PauseMenuUI;
     public PlayMenu PlayMenuUI;
+    public PauseOptionsMenu pauseOptionsMenu;
 
     private RTSNetworkManager rtsNetworkManager;
 
@@ -33,6 +34,12 @@ public class PauseMenu : MonoBehaviour
     {
         PauseMenuUI.SetActive(false);
         IsPaused = false;
+    }
+
+    public void Options()
+    {
+        PauseMenuUI.SetActive(false);
+        pauseOptionsMenu.pauseOptionsMenu.SetActive(true);
     }
 
     private void Pause()
