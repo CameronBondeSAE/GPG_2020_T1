@@ -5,14 +5,26 @@ using UnityEngine.Audio;
 
 public class PauseOptionsMenu : MonoBehaviour
 {
-    public AudioMixer audioMixer;
+    public AudioMixerGroup MasterMixer;
+    public AudioMixerGroup MusicMixer;
+    public AudioMixerGroup SFXMixer;
     public PauseMenu pauseMenu;
     public GameObject pauseOptionsMenu;
 
 
-    public void SetVolume(float volume)
+    public void SetMasterVolume(float volume)
     {
-        audioMixer.SetFloat("Volume", volume);
+        MasterMixer.audioMixer.SetFloat("Volume", volume);
+    }
+
+    public void SetMusicVolume(float musicvolume)
+    {
+        MusicMixer.audioMixer.SetFloat("MusicVolume", musicvolume);
+    }
+
+    public void SetSFXVolume(float sfxvolume)
+    {
+        SFXMixer.audioMixer.SetFloat("SFXVolume", sfxvolume);
     }
 
     public void Back()
