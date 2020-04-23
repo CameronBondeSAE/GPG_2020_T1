@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -9,7 +11,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
     {
         private NodeGrid grid;
         public Transform seeker, target;
-        
+
+        public delegate void pathFindingCallBack(List<Node> list);
 
         private void Awake()
         {
@@ -26,17 +29,28 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
         [Button(ButtonStyle.FoldoutButton)]
         public void TestPathFind()
         {
-            FindPath(seeker.position,target.position);
+         //   FindPath(seeker.position,target.position);
+            
         }
 
-        public List<Node> FindPath(Vector3 startPos, Vector3 targetPos)
+        public async void RequestPathFind(Vector3 startPos, Vector3 targetPos, pathFindingCallBack callBack)
         {
-/*
+            
+            Node startNode = grid.NodeFromWorldPoint(startPos);
+            Node targetNode = grid.NodeFromWorldPoint(targetPos);
+            
+            List<Node> path = await Task.Run(() => FindPath(startNode, targetNode));
+            callBack(path);
+        }
+  
+        
+        public List<Node> FindPath(Node startNode, Node targetNode)
+        {
+/*           
 
             startPos = transform.InverseTransformPoint(startPos);
             targetPos = transform.InverseTransformPoint(targetPos);*/
-            Node startNode = grid.NodeFromWorldPoint(startPos);
-            Node targetNode = grid.NodeFromWorldPoint(targetPos);
+
 
             if (targetNode.walkable == false)
             {

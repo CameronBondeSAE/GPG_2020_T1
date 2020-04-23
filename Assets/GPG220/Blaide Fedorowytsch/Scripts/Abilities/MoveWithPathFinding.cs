@@ -46,11 +46,19 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Abilities
         {
             heightOffset = GetComponent<Collider>().bounds.extents.y;
             target = worldPos;
-            moving = true;
-            currentPath = simplePathfinder.FindPath(transform.position, target);
+            moving = false;
+           // currentPath = simplePathfinder.FindPath(transform.position, target);
+            simplePathfinder.RequestPathFind(transform.position, target, SetPath);
             currentPathNodeIndex = 0;
             return true;
         }
+
+        private void SetPath(List<Node> list)
+        {
+            currentPath = list;
+            moving = true;
+        }
+
         private void FixedUpdate()
         {
             if (moving)
