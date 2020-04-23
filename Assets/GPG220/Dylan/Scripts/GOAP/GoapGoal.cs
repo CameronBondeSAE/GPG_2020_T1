@@ -1,14 +1,13 @@
 ﻿using ReGoap.Unity;
-using UnityEngine;
 
-namespace GOAP
+namespace GPG220.Dylan.Scripts.GOAP
 {
     public class GoapGoal : ReGoapGoal<string, object>
     {
         protected override void Awake()
         {
             base.Awake();
-            goal.Set("AtTargetPositon", true);
+            goal.Set("Goal Name", true);
         }
     }
 }

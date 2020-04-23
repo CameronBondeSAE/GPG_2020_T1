@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/Scripts/RTSCamera/CameraControls.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/GPG220/Dylan/Scripts/RTSCamera/CameraControls.inputactions'
 
 using System;
 using System.Collections;

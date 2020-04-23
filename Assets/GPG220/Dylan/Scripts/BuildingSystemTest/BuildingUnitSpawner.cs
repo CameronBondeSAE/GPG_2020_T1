@@ -16,18 +16,14 @@ namespace GPG220.Dylan.Scripts.BuildingSystemTest
     {
         private PlayMenu playMenu;
         private UnitSpawner unitSpawner;
-        public float spawnRadius = 4;
+        private GameManager gameManager;
+        // public float spawnRadius = 4;
+        public LayerMask groundMask;
 
         public HumanPlayer player;
 
         public bool isSelected;
-
-        public Transform buttonSpawnArea;
-        public GameObject buttonPrefab;
-        public float buttonPadding;
-        [HideInInspector] public List<GameObject> buttonPrefabs = new List<GameObject>();
-
-
+        
         public void Init()
         {
             StartCoroutine("Delay");
@@ -38,10 +34,12 @@ namespace GPG220.Dylan.Scripts.BuildingSystemTest
             yield return new WaitForSeconds(1.5f);
             unitSpawner = FindObjectOfType<UnitSpawner>();
             player = FindObjectOfType<HumanPlayer>();
+            gameManager = FindObjectOfType<GameManager>();
         }
 
         private void Awake()
         {
+            gameManager = FindObjectOfType<GameManager>();
             playMenu = FindObjectOfType<PlayMenu>();
             playMenu.playEvent += Init;
         }
@@ -56,8 +54,6 @@ namespace GPG220.Dylan.Scripts.BuildingSystemTest
                     if (GUI.Button(new Rect(Screen.width / 20, Screen.height / 15 + Screen.height / 10 * i, 100, 30),
                         unitSpawner.unitBases[i].name))
                     {
-                        
-                        
                         SpawnUnit(player, unitSpawner.unitBases[i], GetRandomSpawnPoint());
                     }
                 }
@@ -66,21 +62,51 @@ namespace GPG220.Dylan.Scripts.BuildingSystemTest
 
         Vector3 GetRandomSpawnPoint()
         {
-            float randomPosX = Random.Range(transform.position.x - spawnRadius,
-                transform.position.x + spawnRadius);
-            float randomPosY = transform.position.y;
-            float randomPosZ = Random.Range(transform.position.z - spawnRadius,
-                transform.position.z + spawnRadius);
+            UnitBase[] unitBases = FindObjectsOfType<UnitBase>();
 
-            Vector3 randomPos = new Vector3(randomPosX, randomPosY, randomPosZ);
-            return randomPos;
+            Vector3 position = Vector3.zero;
+            
+            foreach (var unitBase in unitBases)
+            {
+                if (unitBase.netIdentity == gameManager.localPlayer.netIdentity)
+                {
+                    // check Unitbase position distance to center of screen. If close enough then spawn
+                    if (Vector3.Distance(unitBase.transform.position, GetCentreOfCamera()) > gameManager.unitBuildDistanceThreshold)
+                    {
+                        position = unitBase.transform.position;
+                        return position;
+                    }
+                }
+            }
+            return position;
+            
+            // float randomPosX = Random.Range(transform.position.x - spawnRadius,
+            //     transform.position.x + spawnRadius);
+            // float randomPosY = transform.position.y;
+            // float randomPosZ = Random.Range(transform.position.z - spawnRadius,
+            //     transform.position.z + spawnRadius);
+            //
+            // Vector3 randomPos = new Vector3(randomPosX, randomPosY, randomPosZ);
+            // return randomPos;
+        }
+
+        public Vector3 GetCentreOfCamera()
+        {
+            Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast (ray, out hit, groundMask))
+            {
+                Debug.DrawLine(ray.origin,hit.point,Color.green,10f);
+                // return hit.point;
+            }
+
+            return hit.point;
         }
 
         void SpawnUnit(HumanPlayer localPlayer, UnitBase unitToSpawn, Vector3 locationToSpawn)
         {
             // bool localPlayer = FindObjectOfType<PlayerBase>().isLocalPlayer;
             unitSpawner.SpawnUnit(localPlayer.netIdentity, unitToSpawn, locationToSpawn, Quaternion.identity);
-            
         }
     }
 }

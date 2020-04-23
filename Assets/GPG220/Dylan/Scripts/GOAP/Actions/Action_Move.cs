@@ -1,20 +1,23 @@
 ﻿using System;
+using GPG220.Dylan.Scripts.GOAP.States;
 using ReGoap.Core;
 using ReGoap.Unity;
 using UnityEngine;
 
-namespace GPG220.Dylan.Scripts.GOAP
+namespace GPG220.Dylan.Scripts.GOAP.Actions
 {
-    public class GoapAction : ReGoapAction<string, object>
+    // ReSharper disable once InconsistentNaming
+    public class Action_Move : ReGoapAction<string, object>
     {
-        public Transform target;
-        public float speed = 1.0f;
+        private StateMove stateMove;
         protected override void Awake()
         {
             base.Awake();
-            
-            // preconditions.Set("myPrecondition", target.position != transform.position );
-            // effects.Set("myEffects", transform.position = target.position);
+
+            stateMove = GetComponent<StateMove>();
+
+            preconditions.Set("hasTarget", stateMove.target.position != transform.position );
+            effects.Set("targetPosition", Vector3.zero);
         }
 
 
@@ -24,6 +27,18 @@ namespace GPG220.Dylan.Scripts.GOAP
             base.Run(previous, next, settings, goalState, done, fail);
             // do your own game logic here
             Debug.Log("Hi");
+            // stateMove.MoveTowardsTarget();
+
+
+            if (settings.HasKey("targetPosition"))
+            {
+                stateMove.MoveTowardsTarget();
+                doneCallback(this);
+            }
+            else
+            {
+                failCallback(this);
+            }
             
             // when done, in this function or outside this function, call the done or fail callback, automatically saved to doneCallback and failCallback by ReGoapAction
             
