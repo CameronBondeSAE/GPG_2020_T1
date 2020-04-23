@@ -14,13 +14,13 @@ public class ObstacleSpawnNotifier : MonoBehaviour
     private ProceduralGrowthSystem proceduralGrowthSystem;
 	// Collider mainCollider;
 
-    private void OnEnable()
-    {
+   // private void OnEnable()
+    //{
 		// mainCollider = gameObject.GetComponent<Collider>();
 		// bounds = mainCollider.bounds;
   //       pos = transform.position;
   //       GlobalEvents.OnPathFindingObstacleChange(new WorldPosAndBounds(pos,bounds));
-    }
+   // }
 
     // private void OnDisable()
     // {
