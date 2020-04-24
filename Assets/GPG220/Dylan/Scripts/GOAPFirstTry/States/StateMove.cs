@@ -1,6 +1,7 @@
 ﻿using ReGoap.Unity.FSM;
 using UnityEngine;
 using System;
+using System.Collections;
 
 namespace GPG220.Dylan.Scripts.GOAP.States
 {
@@ -28,10 +29,11 @@ namespace GPG220.Dylan.Scripts.GOAP.States
         {
             base.Update();
 
-            if (CheckDistance())
+            if (PathPossible())
             {
                 MoveTowardsTarget();
             }
+            
         }
 
         public override void Init(StateMachine stateMachine)
@@ -41,7 +43,6 @@ namespace GPG220.Dylan.Scripts.GOAP.States
             var stateDone = new SmTransition(GetPriority(), GetIdleState);
             stateMachine.GetComponent<StateIdle>().Transitions.Add(state);
             Transitions.Add(stateDone);
-            
         }
 
         public Type GetIdleState(ISmState state)
@@ -66,8 +67,10 @@ namespace GPG220.Dylan.Scripts.GOAP.States
         
         
 
-        public bool CheckDistance()
+        public bool PathPossible()
         {
+            //check if path is possible
+            
             var distanceTilTargetReached = Vector3.Distance(transform.position, target.position);
             if (distanceTilTargetReached <= 0.5f)
             {
@@ -88,8 +91,8 @@ namespace GPG220.Dylan.Scripts.GOAP.States
             currentState = States.moving;
             float step = speed * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, target.position, step);
-            
-            
         }
+
+       
     }
 }

@@ -225,17 +225,19 @@ GameObject:
   - component: {fileID: 458670461}
   - component: {fileID: 458670460}
   - component: {fileID: 458670459}
-  - component: {fileID: 458670463}
   - component: {fileID: 458670464}
+  - component: {fileID: 458670463}
   - component: {fileID: 458670465}
+  - component: {fileID: 458670472}
   - component: {fileID: 458670468}
-  - component: {fileID: 458670467}
-  - component: {fileID: 458670466}
-  - component: {fileID: 458670470}
-  - component: {fileID: 458670469}
   - component: {fileID: 458670471}
+  - component: {fileID: 458670467}
+  - component: {fileID: 458670470}
+  - component: {fileID: 458670466}
+  - component: {fileID: 458670469}
+  - component: {fileID: 458670473}
   m_Layer: 0
-  m_Name: Agent
+  m_Name: Agent 48
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -312,7 +314,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &458670463
 MonoBehaviour:
@@ -329,7 +331,7 @@ MonoBehaviour:
   Name: Bob
   CalculationDelay: 0.5
   BlackListGoalOnFailure: 0
-  CalculateNewGoalOnStart: 1
+  CalculateNewGoalOnStart: 0
 --- !u!114 &458670464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -351,10 +353,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 458670458}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 077884e7a32e44b42b82125b6f68485e, type: 3}
+  m_Script: {fileID: 11500000, guid: a26b23793f291fd4bb176d55f90b9e39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 2035171543}
+  Name: TargetReached
+  Priority: 1
+  ErrorDelay: 0.5
+  WarnPossibleGoal: 1
 --- !u!114 &458670466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -364,44 +369,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 458670458}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 099479df713828149afd24b1c7f7d86f, type: 3}
+  m_Script: {fileID: 11500000, guid: f5918010843b68f49918788b7fa8f377, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  priority: 1
-  target: {fileID: 2035171543}
-  speed: 1
-  needsToMove: 0
-  currentState: 0
+  Name: Teleport
+  Cost: 5
+  targetPosition: {x: 0, y: 0, z: 0}
+  energyAmount: 10
 --- !u!114 &458670467
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 458670458}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d679e3b646377f84eb4b41881fc9dff4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  priority: 0
---- !u!114 &458670468
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 458670458}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ba45453f8f799b4988059b1116e8132, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableStackedStates: 0
-  initialState: {fileID: 458670467}
-  permitLoopTransition: 1
-  orderTransitions: 0
---- !u!114 &458670469
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -415,6 +390,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Move
   Cost: 1
+--- !u!114 &458670468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 458670458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6bd52f9d4119b43bfb5d924d341990, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: GetTarget
+  Cost: 1
+--- !u!114 &458670469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 458670458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd126c8acb7a8c640a3de39ac03d51cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: TargetReached
+  Cost: 1
 --- !u!114 &458670470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -424,11 +427,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 458670458}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd8bf5d98961c8d44908e9016351d9e7, type: 3}
+  m_Script: {fileID: 11500000, guid: 1d2a8d304682cad4bbae5dfc41b633ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: Idle
+  Name: CheckEnergy
   Cost: 1
+  energyAmount: 0
 --- !u!114 &458670471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -438,13 +442,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 458670458}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a26b23793f291fd4bb176d55f90b9e39, type: 3}
+  m_Script: {fileID: 11500000, guid: c431c5213d020634a8c89043e62adc1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: targetPosition
-  Priority: 10
-  ErrorDelay: 0.5
-  WarnPossibleGoal: 1
+  Name: PathPossible
+  Cost: 1
+  pathPossible: 1
+  teleportInstead: 0
+--- !u!114 &458670472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 458670458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b35457bde67b3ee4db022cbd34b034ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goapAgentDylan: {fileID: 0}
+  goal: {fileID: 0}
+--- !u!114 &458670473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 458670458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7241d6105cadec0448c2295d464d81dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: GoalNotPossible
+  Cost: 1
 --- !u!1 &1452167894
 GameObject:
   m_ObjectHideFlags: 0
@@ -809,7 +841,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2125363877
 GameObject:
@@ -847,7 +879,7 @@ MonoBehaviour:
     MaxIterations: 1000
     MaxNodesToExpand: 10000
     UsingDynamicActions: 0
-    DebugPlan: 0
+    DebugPlan: 1
   LogLevel: 3
   NodeWarmupCount: 1000
   StatesWarmupCount: 10000
@@ -863,5 +895,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
