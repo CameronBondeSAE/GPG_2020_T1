@@ -10,20 +10,31 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
     public class Action_CheckEnergy : ReGoapAction<string, object>
     {
         public float energyAmount;
+
         protected override void Awake()
         {
             base.Awake();
-            
-            preconditions.Set("energyRequired", true );
+
+            // preconditions.Set("energyRequired", true);
+            //
+            // effects.Set("hasEnergy", true);
+        }
+
+        public override ReGoapState<string, object> GetPreconditions(GoapActionStackData<string, object> stackData)
+        {
+            preconditions.Set("energyRequired", true);
+
+            return base.GetPreconditions(stackData);
+        }
+
+        public override ReGoapState<string, object> GetEffects(GoapActionStackData<string, object> stackData)
+        {
             if (energyAmount > 0)
             {
                 effects.Set("hasEnergy", true);
-                
             }
-            else
-            {
-                effects.Set("notPossible",true);
-            }
+
+            return base.GetEffects(stackData);
         }
 
 
@@ -33,25 +44,22 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
             Action<IReGoapAction<string, object>> fail)
         {
             base.Run(previous, next, settings, goalState, done, fail);
-            // 
-            if (energyAmount > 0)
-            {
-                
-                doneCallback(this);
-            }
-            else
+
+            if (!settings.HasKey("hasEnergy"))
             {
                 failCallback(this);
             }
-            
-            
-            
-            
+            else
+            {
+                doneCallback(this);
+            }
         }
 
         public override void Exit(IReGoapAction<string, object> next)
         {
             base.Exit(next);
+
+            energyAmount -= 1;
 
             var worldState = agent.GetMemory().GetWorldState();
             foreach (var pair in effects.GetValues())

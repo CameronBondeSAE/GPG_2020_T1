@@ -235,7 +235,6 @@ GameObject:
   - component: {fileID: 458670470}
   - component: {fileID: 458670466}
   - component: {fileID: 458670469}
-  - component: {fileID: 458670473}
   m_Layer: 0
   m_Name: Agent 48
   m_TagString: Untagged
@@ -373,9 +372,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Teleport
-  Cost: 5
-  targetPosition: {x: 0, y: 0, z: 0}
-  energyAmount: 10
+  Cost: 2
+  targetPosition: {fileID: 2035171543}
+  teleportDelay: 2
 --- !u!114 &458670467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -390,6 +389,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Move
   Cost: 1
+  targetPosition: {fileID: 2035171543}
 --- !u!114 &458670468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -447,8 +447,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: PathPossible
   Cost: 1
-  pathPossible: 1
-  teleportInstead: 0
+  pathPossible: 0
+  targetPosition: {fileID: 2035171543}
 --- !u!114 &458670472
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -463,20 +463,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goapAgentDylan: {fileID: 0}
   goal: {fileID: 0}
---- !u!114 &458670473
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 458670458}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7241d6105cadec0448c2295d464d81dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: GoalNotPossible
-  Cost: 1
 --- !u!1 &1452167894
 GameObject:
   m_ObjectHideFlags: 0

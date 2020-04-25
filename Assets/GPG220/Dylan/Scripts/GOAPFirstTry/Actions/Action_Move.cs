@@ -1,28 +1,38 @@
 ﻿using System;
-using GPG220.Dylan.Scripts.GOAP.States;
 using ReGoap.Core;
 using ReGoap.Unity;
 using UnityEngine;
 
-namespace GPG220.Dylan.Scripts.GOAP.Actions
+namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
 {
     // ReSharper disable once InconsistentNaming
     public class Action_Move : ReGoapAction<string, object>
     {
         private bool canMove;
+        public Transform targetPosition;
 
         protected override void Awake()
         {
             base.Awake();
-            canMove = true;
+
+            // preconditions.Set("pathPossible", true);
+            //
+            // effects.Set("moveToTarget", true);
+        }
+        
+        public override ReGoapState<string, object> GetPreconditions(GoapActionStackData<string, object> stackData)
+        {
             preconditions.Set("pathPossible", true);
-            if (canMove)
-            {
-                effects.Set("moveToTarget", true); 
-            }
-           
+
+            return base.GetPreconditions(stackData);
         }
 
+        public override ReGoapState<string, object> GetEffects(GoapActionStackData<string, object> stackData)
+        {
+            effects.Set("moveToTarget", true);
+
+            return base.GetEffects(stackData);
+        }
 
         public override void Run(IReGoapAction<string, object> previous, IReGoapAction<string, object> next,
             ReGoapState<string, object> settings, ReGoapState<string, object> goalState,
@@ -30,12 +40,11 @@ namespace GPG220.Dylan.Scripts.GOAP.Actions
             Action<IReGoapAction<string, object>> fail)
         {
             base.Run(previous, next, settings, goalState, done, fail);
-            // called pathfinder move and move to mouse click
 
-            
-            done(this);
-            
-            
+            // called pathfinder move and move to target position
+            Debug.Log("Pretending to Move");
+
+            doneCallback(this);
         }
 
         public override void Exit(IReGoapAction<string, object> next)

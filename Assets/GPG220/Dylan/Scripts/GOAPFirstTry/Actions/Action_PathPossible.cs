@@ -11,33 +11,45 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
     public class Action_PathPossible : ReGoapAction<string, object>
     {
         public bool pathPossible;
-        public bool teleportInstead;
+        
+        public Transform targetPosition;
 
         protected override void Awake()
         {
             base.Awake();
 
+
+            // preconditions.Set("hasTarget", true);
+            //
+            // if (pathPossible)
+            // {
+            //     effects.Set("pathPossible", true);
+            // }
+            // else
+            // {
+            //     effects.Set("energyRequired", true);
+            // }
+        }
+
+        public override ReGoapState<string, object> GetPreconditions(GoapActionStackData<string, object> stackData)
+        {
             preconditions.Set("hasTarget", true);
 
+            return base.GetPreconditions(stackData);
+        }
 
+        public override ReGoapState<string, object> GetEffects(GoapActionStackData<string, object> stackData)
+        {
             if (pathPossible)
             {
                 effects.Set("pathPossible", true);
             }
             else
             {
-                teleportInstead = true;
+                effects.Set("energyRequired", true);
             }
 
-            if (teleportInstead)
-            {
-                effects.Set("hasEnergy", true);
-            }
-            
-            else
-            {
-                effects.Set("notPossible",true);
-            }
+            return base.GetEffects(stackData);
         }
 
         public override void Run(IReGoapAction<string, object> previous, IReGoapAction<string, object> next,
@@ -46,26 +58,15 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
             Action<IReGoapAction<string, object>> fail)
         {
             base.Run(previous, next, settings, goalState, done, fail);
+
             // check if path is possible if so call done and continue else try to teleport
 
-            if (pathPossible)
-            {
-                doneCallback(this);
-            }
-
-            if (teleportInstead)
-            {
-                doneCallback(this);
-            }
+            doneCallback(this);
         }
 
         public override void Exit(IReGoapAction<string, object> next)
         {
             base.Exit(next);
-
-            preconditions.Clear();
-            effects.Clear();
-            
 
             var worldState = agent.GetMemory().GetWorldState();
             foreach (var pair in effects.GetValues())
