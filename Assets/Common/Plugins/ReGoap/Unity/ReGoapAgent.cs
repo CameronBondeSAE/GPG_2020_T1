@@ -104,7 +104,7 @@ namespace ReGoap.Unity
                 action.AskForInterruption();
         }
 
-        protected virtual bool CalculateNewGoal(bool forceStart = false)
+		public virtual bool CalculateNewGoal(bool forceStart = false)
         {
             if (IsPlanning)
                 return false;

@@ -1,4 +1,5 @@
-﻿using ReGoap.Unity;
+﻿using System;
+using ReGoap.Unity;
 using UnityEngine;
 
 namespace GPG220.Dylan.Scripts.GOAP.Goals
@@ -8,7 +9,10 @@ namespace GPG220.Dylan.Scripts.GOAP.Goals
         protected override void Awake()
         {
             base.Awake();
-            goal.Set("AtTargetPositon", true);
+            goal.Set("targetReached", true);
+            
         }
+
+        
     }
 }

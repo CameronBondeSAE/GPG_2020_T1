@@ -13,8 +13,8 @@ namespace GPG220.Dylan.Scripts.GOAP
         {
             base.Awake();
             
-            // preconditions.Set("myPrecondition", target.position != transform.position );
-            // effects.Set("myEffects", transform.position = target.position);
+            preconditions.Set("myPrecondition", true);
+            effects.Set("myEffects", true);
         }
 
 
