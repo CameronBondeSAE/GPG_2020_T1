@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using GPG220.Blaide_Fedorowytsch.Scripts.PathFinding;
 using GPG220.Dylan.Scripts.GOAP.States;
 using ReGoap.Core;
 using ReGoap.Unity;
 using UnityEngine;
+using GPG220.Blaide_Fedorowytsch.Scripts.PathFinding;
+using UnityEngine.Experimental.VFX.Utility;
 
 
 namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
@@ -10,27 +14,19 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
     // ReSharper disable once InconsistentNaming
     public class Action_PathPossible : ReGoapAction<string, object>
     {
-        public bool pathPossible;
-        
-        public Transform targetPosition;
-
+        //TODO find some way to determine this bools state
+        public bool isPathPossible;
+        public List<Node> currentPath = new List<Node>();
+        public Vector3 targetPosition;
+        public SimplePathfinder simplePathfinder;
         protected override void Awake()
         {
+            simplePathfinder = FindObjectOfType<SimplePathfinder>();
+            
             base.Awake();
-
-
-            // preconditions.Set("hasTarget", true);
-            //
-            // if (pathPossible)
-            // {
-            //     effects.Set("pathPossible", true);
-            // }
-            // else
-            // {
-            //     effects.Set("energyRequired", true);
-            // }
         }
 
+        
         public override ReGoapState<string, object> GetPreconditions(GoapActionStackData<string, object> stackData)
         {
             preconditions.Set("hasTarget", true);
@@ -40,17 +36,36 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
 
         public override ReGoapState<string, object> GetEffects(GoapActionStackData<string, object> stackData)
         {
-            if (pathPossible)
+            if (isPathPossible)
             {
                 effects.Set("pathPossible", true);
             }
             else
             {
+                effects.Set("pathPossible", false);
                 effects.Set("energyRequired", true);
             }
 
             return base.GetEffects(stackData);
         }
+
+        private bool CheckIfPathIsPossible()
+        {
+            for (var i = 0; i < currentPath.Count; i++)
+            {
+                if (currentPath[i].walkable == false)
+                {
+                    isPathPossible = false;
+                }
+                else
+                {
+                    isPathPossible = true;
+                }
+            }
+
+            return isPathPossible;
+        }
+        
 
         public override void Run(IReGoapAction<string, object> previous, IReGoapAction<string, object> next,
             ReGoapState<string, object> settings, ReGoapState<string, object> goalState,
@@ -61,7 +76,14 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
 
             // check if path is possible if so call done and continue else try to teleport
 
+            
+            
             doneCallback(this);
+        }
+        
+        public void SetPath(List<Node> list)
+        {
+            currentPath = list;
         }
 
         public override void Exit(IReGoapAction<string, object> next)

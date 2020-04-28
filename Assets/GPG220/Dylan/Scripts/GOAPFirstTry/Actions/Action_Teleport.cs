@@ -10,22 +10,12 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
     public class Action_Teleport : ReGoapAction<string, object>
     {
         public Transform targetPosition;
-        
-        public float teleportDelay;
-        private bool isRunning;
 
-        protected override void Awake()
-        {
-            base.Awake();
+        [HideInInspector] public float teleportDelay;
+        [HideInInspector] public bool isRunning;
 
-            // preconditions.Set("hasEnergy", true);
-            //
-            // effects.Set("moveToTarget", true);
-        }
-        
         public override ReGoapState<string, object> GetPreconditions(GoapActionStackData<string, object> stackData)
         {
-            
             preconditions.Set("hasEnergy", true);
 
             return base.GetPreconditions(stackData);
@@ -44,16 +34,7 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
             Action<IReGoapAction<string, object>> fail)
         {
             base.Run(previous, next, settings, goalState, done, fail);
-            
-            
-            
-            isRunning = false;
-            
-            if (!isRunning)
-            {
-                isRunning = true;
-                StartCoroutine("TeleportDelay");
-            }
+
 
             doneCallback(this);
         }
@@ -69,6 +50,7 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
         {
             base.Exit(next);
 
+            
 
             var worldState = agent.GetMemory().GetWorldState();
             foreach (var pair in effects.GetValues())

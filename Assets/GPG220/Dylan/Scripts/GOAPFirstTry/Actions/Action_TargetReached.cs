@@ -10,15 +10,7 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
     public class Action_TargetReached : ReGoapAction<string, object>
     {
         public event Action targetReached;
-       
-        
-        protected override void Awake()
-        {
-            base.Awake();
-
-            // preconditions.Set("moveToTarget", true);
-            // effects.Set("targetReached", true);
-        }
+        public Vector3 targetPosition;
         
         public override ReGoapState<string, object> GetPreconditions(GoapActionStackData<string, object> stackData)
         {
@@ -30,7 +22,7 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
         public override ReGoapState<string, object> GetEffects(GoapActionStackData<string, object> stackData)
         {
             effects.Set("targetReached", true);
-
+            
             return base.GetEffects(stackData);
         }
 
@@ -42,11 +34,22 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
         {
             base.Run(previous, next, settings, goalState, done, fail);
 
-            //triggers explosion and deletion of agent
-            targetReached?.Invoke();
-            Debug.Log("Target Reached");
-            
             doneCallback(this);
+        }
+
+        public void FixedUpdate()
+        {
+            if (Vector3.Distance(transform.position, targetPosition) < 4f)
+            {
+                targetReached?.Invoke();
+            }
+
+        }
+
+        public void TriggerEvent()
+        {
+            targetReached?.Invoke();
+            // Debug.Log("Target Reached");
         }
 
         public override void PlanExit(IReGoapAction<string, object> previousAction, IReGoapAction<string, object> nextAction, ReGoapState<string, object> settings, ReGoapState<string, object> goalState)

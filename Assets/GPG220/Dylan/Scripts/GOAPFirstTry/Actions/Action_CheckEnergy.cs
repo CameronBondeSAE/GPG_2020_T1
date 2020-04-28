@@ -10,15 +10,7 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
     public class Action_CheckEnergy : ReGoapAction<string, object>
     {
         public float energyAmount;
-
-        protected override void Awake()
-        {
-            base.Awake();
-
-            // preconditions.Set("energyRequired", true);
-            //
-            // effects.Set("hasEnergy", true);
-        }
+        public bool canTeleport;
 
         public override ReGoapState<string, object> GetPreconditions(GoapActionStackData<string, object> stackData)
         {
@@ -29,12 +21,30 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
 
         public override ReGoapState<string, object> GetEffects(GoapActionStackData<string, object> stackData)
         {
-            if (energyAmount > 0)
+            if (CheckEnergy())
             {
                 effects.Set("hasEnergy", true);
+                Debug.Log("Teleport Allowed");
+            }
+            else
+            {
+                effects.Set("hasEnergy", false);
             }
 
             return base.GetEffects(stackData);
+        }
+
+        public bool CheckEnergy()
+        {
+            if (energyAmount > 0)
+            {
+                canTeleport = true;
+            }
+            else
+            {
+                canTeleport = false;
+            }
+            return canTeleport;
         }
 
 
@@ -58,8 +68,6 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
         public override void Exit(IReGoapAction<string, object> next)
         {
             base.Exit(next);
-
-            energyAmount -= 1;
 
             var worldState = agent.GetMemory().GetWorldState();
             foreach (var pair in effects.GetValues())

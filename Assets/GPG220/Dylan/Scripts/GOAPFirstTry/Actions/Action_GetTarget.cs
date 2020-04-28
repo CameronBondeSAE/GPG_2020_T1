@@ -9,16 +9,6 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
     // ReSharper disable once InconsistentNaming
     public class Action_GetTarget : ReGoapAction<string, object>
     {
-        protected override void Awake()
-        {
-            base.Awake();
-
-            preconditions.Clear();
-            effects.Clear();
-
-            // effects.Set("hasTarget", true);
-        }
-
         public override ReGoapState<string, object> GetEffects(GoapActionStackData<string, object> stackData)
         {
             effects.Set("hasTarget", true);
