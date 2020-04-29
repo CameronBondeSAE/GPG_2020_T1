@@ -393,10 +393,11 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                     var selectedGameObject = ((MonoBehaviour) s).gameObject;
                     if (selectedGameObject != null) RemoveOutlineFromObject(selectedGameObject);
                 }
-
-                List<ISelectable> removedIselectables = selectedIselectables;
+                OnDeselectionEvent?.Invoke(selectedIselectables);
                 selectedIselectables.Clear();
-                OnDeselectionEvent?.Invoke(removedIselectables);
+                /*List<ISelectable> removedIselectables = selectedIselectables;
+                selectedIselectables.Clear();
+                OnDeselectionEvent?.Invoke(removedIselectables);*/
             }
         }
 
