@@ -9,6 +9,7 @@ public class MultiplayerMenu : MonoBehaviour
 {
     public GameObject multiplayerMenu;
     public PlayMenu PlayMenuUI;
+    public GameObject HowToHost;
 
     public GameManager gameManager;
     public RTSNetworkManager rtsNetworkManager;
@@ -22,16 +23,16 @@ public class MultiplayerMenu : MonoBehaviour
     public void HostGame()
     {
         multiplayerMenu.SetActive(false);
-        rtsNetworkManager.StartHost();
-        gameManager.OnStartGameEvent();
+        HowToHost.SetActive(true);
     }
 
 
     public void JoinGame()
     {
         multiplayerMenu.SetActive(false);
-        gameManager.OnStartGameEvent();
         rtsNetworkManager.StartClient();
+        gameManager.OnStartGameEvent();
+
     }
 
 

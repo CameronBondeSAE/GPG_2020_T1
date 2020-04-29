@@ -21,7 +21,7 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
         public SimplePathfinder simplePathfinder;
         protected override void Awake()
         {
-            simplePathfinder = FindObjectOfType<SimplePathfinder>();
+            // simplePathfinder = FindObjectOfType<SimplePathfinder>();
             
             base.Awake();
         }
@@ -36,6 +36,7 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
 
         public override ReGoapState<string, object> GetEffects(GoapActionStackData<string, object> stackData)
         {
+            CheckIfPathIsPossible();
             if (isPathPossible)
             {
                 effects.Set("pathPossible", true);
@@ -51,17 +52,15 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
 
         private bool CheckIfPathIsPossible()
         {
-            for (var i = 0; i < currentPath.Count; i++)
+            if(currentPath == null)
             {
-                if (currentPath[i].walkable == false)
-                {
-                    isPathPossible = false;
-                }
-                else
-                {
-                    isPathPossible = true;
-                }
+                isPathPossible = false;
             }
+            else
+            {
+                isPathPossible = true;
+            }
+
 
             return isPathPossible;
         }
@@ -75,7 +74,7 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
             base.Run(previous, next, settings, goalState, done, fail);
 
             // check if path is possible if so call done and continue else try to teleport
-
+            
             
             
             doneCallback(this);

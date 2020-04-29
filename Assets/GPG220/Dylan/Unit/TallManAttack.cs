@@ -78,6 +78,7 @@ namespace GPG220.Dylan.Unit
 
             targetPosition = worldPos;
             simplePathfinder.RequestPathFind(transform.position, targetPosition, SetPath);
+            pathPossibleAction.currentPath = currentPath;
             currentPathNodeIndex = 0;
             // goapAgentDylan.CalculateNewGoal(true);
 
@@ -120,17 +121,15 @@ namespace GPG220.Dylan.Unit
 
         private bool CheckIfPathIsPossible()
         {
-            for (var i = 0; i < currentPath.Count; i++)
+            if(currentPath == null)
             {
-                if (currentPath[i].walkable == false)
-                {
-                    pathPossibleAction.isPathPossible = false;
-                }
-                else
-                {
-                    pathPossibleAction.isPathPossible = true;
-                }
+                pathPossibleAction.isPathPossible = false;
             }
+            else
+            {
+                pathPossibleAction.isPathPossible = true;
+            }
+
 
             return pathPossibleAction.isPathPossible;
         }
