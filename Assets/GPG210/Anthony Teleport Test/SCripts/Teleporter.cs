@@ -12,6 +12,8 @@ public class Teleporter : UnitBase
 
     private Rigidbody rb;
 
+    public AudioSource deathSound;
+
 
     public override void OnSelected()
     {
@@ -51,6 +53,7 @@ public class Teleporter : UnitBase
     public void Death(Health health1)
     {
         Destroy(gameObject);
+        deathSound.Play();
     }
 
     //shows text for character description

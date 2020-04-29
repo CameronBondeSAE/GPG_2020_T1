@@ -17,6 +17,7 @@ public class TapOnHeadAbility : AbilityBase
 		mainRenderer = GetComponentInChildren<Renderer>();
 	}
 
+	// User clicked on Ability UI. I just play an effect, but you could actually do your whole ability code here if it doesn't need a target
 	public override bool SelectedExecute()
 	{
 		transform.DOScale(getReadyScale, duration).SetEase(Ease.OutFlash);
@@ -26,15 +27,16 @@ public class TapOnHeadAbility : AbilityBase
 		return base.SelectedExecute();
 	}
 
-	public override bool TargetExecute(GameObject targets = null)
+	// Right clicked on ANY UnitBase (I can kill myself even, you should check for ownership with localPlayer)
+	public override bool TargetExecute(GameObject target = null)
 	{
 		transform.DOScale(getReadyScale*2, duration).SetEase(Ease.OutElastic);
 		mainRenderer.material.color = Color.red;
 		mainRenderer.material.DOColor(Color.white, duration);
 
 		// KILL
-		targets.GetComponent<Health>().ChangeHealth(-damage);
+		target.GetComponent<Health>().ChangeHealth(-damage);
 		
-		return base.TargetExecute(targets);
+		return base.TargetExecute(target);
 	}
 }

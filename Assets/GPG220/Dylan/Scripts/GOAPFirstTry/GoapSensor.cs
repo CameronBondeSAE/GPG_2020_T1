@@ -1,7 +1,6 @@
 ﻿using ReGoap.Unity;
-using UnityEngine;
 
-namespace GOAP
+namespace GPG220.Dylan.Scripts.GOAPFirstTry
 {
     public class GoapSensor : ReGoapSensor<string, object>
     {

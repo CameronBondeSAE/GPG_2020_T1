@@ -105,15 +105,20 @@ namespace GPG220.Luca.Scripts.Abilities
         }
 
         /// <summary>
-        /// Executes certain functionality with a given list of targets
+        /// Executes certain functionality with a single target
         /// </summary>
-        /// <param name="targets"></param>
+        /// <param name="target"></param>
         /// <returns>True if the ability could be executed (No cooldown, ...)</returns>
-        public virtual bool TargetExecute(GameObject targets = null)
+        public virtual bool TargetExecute(GameObject target = null)
         {
             return true;
         }
-        
+
+		/// <summary>
+		/// Overload for just right clicking on a world position
+		/// </summary>
+		/// <param name="worldPos"></param>
+		/// <returns></returns>
         public virtual bool TargetExecute( Vector3 worldPos)
         {
             return true;
