@@ -16,7 +16,7 @@ namespace GPG220.Dylan.Scripts.BuildingSystemTest
     public class BuildingUnitSpawner : MonoBehaviour
     {
         private PlayMenu playMenu;
-        private UnitSpawner unitSpawner;
+        public UnitSpawner unitSpawner;
         private GameManager gameManager;
         public float spawnRadius = 4;
         public LayerMask groundMask;
@@ -36,7 +36,6 @@ namespace GPG220.Dylan.Scripts.BuildingSystemTest
         public IEnumerator Delay()
         {
             yield return new WaitForSeconds(1.5f);
-            unitSpawner = FindObjectOfType<UnitSpawner>();
             player = FindObjectOfType<HumanPlayer>();
             gameManager = FindObjectOfType<GameManager>();
         }
@@ -67,8 +66,9 @@ namespace GPG220.Dylan.Scripts.BuildingSystemTest
             // SpawnUnit(player, unitSpawner.unitBases[i], GetRandomSpawnPoint(unitSpawner.unitBases[i]));
             //
         }
+
         private void OnGUI()
-        //comment out when your buttons spawn in
+            //comment out when your buttons spawn in
         {
             if (player != null && (isSelected && player.isLocalPlayerMine))
             {
@@ -85,7 +85,6 @@ namespace GPG220.Dylan.Scripts.BuildingSystemTest
             }
         }
 
-        
 
         Vector3 GetRandomSpawnPoint(UnitBase Ub)
         {
@@ -99,15 +98,13 @@ namespace GPG220.Dylan.Scripts.BuildingSystemTest
                 if (Vector3.Distance(unitBase.transform.position, GetCentreOfCamera()) >
                     gameManager.unitBuildDistanceThreshold)
                 {
-                    Bounds b = new Bounds(unitBase.transform.position,new Vector3(spawnRadius,5,spawnRadius));
+                    Bounds b = new Bounds(unitBase.transform.position, new Vector3(spawnRadius, 5, spawnRadius));
 
                     position = unitSpawner.RandomGroundPointInBounds(b, Ub.GetComponent<Collider>().bounds.size);
-                    
+
                     return position;
                 }
             }
-            
-
 
             // float randomPosX = Random.Range(transform.position.x - spawnRadius,
             //     transform.position.x + spawnRadius);
