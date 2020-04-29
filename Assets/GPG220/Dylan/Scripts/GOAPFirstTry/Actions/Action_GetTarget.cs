@@ -9,13 +9,10 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
     // ReSharper disable once InconsistentNaming
     public class Action_GetTarget : ReGoapAction<string, object>
     {
-        protected override void Awake()
+        public override ReGoapState<string, object> GetEffects(GoapActionStackData<string, object> stackData)
         {
-            base.Awake();
-            preconditions.Clear();
-            effects.Clear();
-            
             effects.Set("hasTarget", true);
+            return base.GetEffects(stackData);
         }
 
 
@@ -25,13 +22,8 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
             Action<IReGoapAction<string, object>> fail)
         {
             base.Run(previous, next, settings, goalState, done, fail);
-            // get where was clicked if valid then continue action else failed.
 
-
-            done(this);
-
-      
-           
+            doneCallback(this);
         }
 
         public override void Exit(IReGoapAction<string, object> next)

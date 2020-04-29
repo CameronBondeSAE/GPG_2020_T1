@@ -10,20 +10,41 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
     public class Action_CheckEnergy : ReGoapAction<string, object>
     {
         public float energyAmount;
-        protected override void Awake()
+        public bool canTeleport;
+
+        public override ReGoapState<string, object> GetPreconditions(GoapActionStackData<string, object> stackData)
         {
-            base.Awake();
-            
-            preconditions.Set("energyRequired", true );
-            if (energyAmount > 0)
+            preconditions.Set("energyRequired", true);
+
+            return base.GetPreconditions(stackData);
+        }
+
+        public override ReGoapState<string, object> GetEffects(GoapActionStackData<string, object> stackData)
+        {
+            if (CheckEnergy())
             {
                 effects.Set("hasEnergy", true);
-                
+                Debug.Log("Teleport Allowed");
             }
             else
             {
-                effects.Set("notPossible",true);
+                effects.Set("hasEnergy", false);
             }
+
+            return base.GetEffects(stackData);
+        }
+
+        public bool CheckEnergy()
+        {
+            if (energyAmount > 0)
+            {
+                canTeleport = true;
+            }
+            else
+            {
+                canTeleport = false;
+            }
+            return canTeleport;
         }
 
 
@@ -33,20 +54,15 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
             Action<IReGoapAction<string, object>> fail)
         {
             base.Run(previous, next, settings, goalState, done, fail);
-            // 
-            if (energyAmount > 0)
-            {
-                
-                doneCallback(this);
-            }
-            else
+
+            if (!settings.HasKey("hasEnergy"))
             {
                 failCallback(this);
             }
-            
-            
-            
-            
+            else
+            {
+                doneCallback(this);
+            }
         }
 
         public override void Exit(IReGoapAction<string, object> next)

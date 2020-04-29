@@ -1979,11 +1979,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff733bf49effb4f419f902f038c19168, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitBuildDistanceThreshold: 10
   globalUnitBases: []
   listOfSpawns: []
   listofPlayerBases: []
   defaultUnitBases: []
   networkManager: {fileID: 2014623609}
+  localPlayer: {fileID: 0}
   playMenu: {fileID: 1077335987}
   unitSpawner: {fileID: 666229043}
 --- !u!4 &1285704455
@@ -2363,6 +2365,31 @@ PrefabInstance:
     - target: {fileID: 2079158393, guid: 9312c56302d9dd7429ac76f5626315ad, type: 3}
       propertyPath: m_LocalPosition.x
       value: 43.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5038828844791700524, guid: 9312c56302d9dd7429ac76f5626315ad,
+        type: 3}
+      propertyPath: radius
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5038828844791700524, guid: 9312c56302d9dd7429ac76f5626315ad,
+        type: 3}
+      propertyPath: maxRadiusToPullin
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5038828844791700524, guid: 9312c56302d9dd7429ac76f5626315ad,
+        type: 3}
+      propertyPath: PullInPower
+      value: -50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5038828844791700524, guid: 9312c56302d9dd7429ac76f5626315ad,
+        type: 3}
+      propertyPath: maxPullin
+      value: -5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5038828844791700524, guid: 9312c56302d9dd7429ac76f5626315ad,
+        type: 3}
+      propertyPath: offset.y
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9312c56302d9dd7429ac76f5626315ad, type: 3}

@@ -19,7 +19,17 @@ GameObject:
   - component: {fileID: 5716777472576173906}
   - component: {fileID: 2555404064974854344}
   - component: {fileID: -9199990877367977980}
-  m_Layer: 0
+  - component: {fileID: 4685679867447186686}
+  - component: {fileID: -8740265944045577935}
+  - component: {fileID: -4341213548572956988}
+  - component: {fileID: -1152716210826682096}
+  - component: {fileID: -1154958276303189156}
+  - component: {fileID: -2824012564683087676}
+  - component: {fileID: -4616605343080274639}
+  - component: {fileID: -718284527823379706}
+  - component: {fileID: -2285058548876772619}
+  - component: {fileID: 1603737041656348613}
+  m_Layer: 12
   m_Name: TallMan
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -207,6 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3266ec32201a0694a8a80c5131a2d2ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 50
   startingHealth: 100
 --- !u!114 &-9199990877367977980
 MonoBehaviour:
@@ -236,3 +247,194 @@ MonoBehaviour:
   unitName: Tall Man
   unitDescription: He's Really Tall
   unitImage: {fileID: 21300000, guid: bba9dca16ddf36248b5ad7e1cedd888f, type: 3}
+--- !u!114 &4685679867447186686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6382999078083594662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47653ce3018d00d46b02cc00461d4180, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  cooldown: 0
+  currentCooldown: 0
+  targetRequired: 0
+  abilityName: 
+  abilityDescription: 
+  abilityImage: {fileID: 0}
+  targetPosition: {x: 0, y: 0, z: 0}
+  energy: 1
+  explosionRadius: 3
+  explosionDamage: 2
+  teleportCost: 1
+  teleportDelay: 2
+  goapAgentDylan: {fileID: 0}
+  goal: {fileID: 0}
+  teleportAction: {fileID: 0}
+  pathPossibleAction: {fileID: 0}
+  checkEnergyAction: {fileID: 0}
+  moveAction: {fileID: 0}
+  targetReachedAction: {fileID: 0}
+  unitLayerMask:
+    serializedVersion: 2
+    m_Bits: 4096
+  rb: {fileID: 0}
+  ground:
+    serializedVersion: 2
+    m_Bits: 256
+  currentPathNodeIndex: 0
+  nodeDistanceMin: 1.5
+  moveForce: 1000
+  simplePathfinder: {fileID: 0}
+--- !u!114 &-8740265944045577935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6382999078083594662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6799d39571106b142a08ed54f4b4eedd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-4341213548572956988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6382999078083594662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b26f22560603444caaf883770faffcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: 
+  CalculationDelay: 0.5
+  BlackListGoalOnFailure: 0
+  CalculateNewGoalOnStart: 0
+--- !u!114 &-1152716210826682096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6382999078083594662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a26b23793f291fd4bb176d55f90b9e39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: GenericGoal
+  Priority: 1
+  ErrorDelay: 0.5
+  WarnPossibleGoal: 1
+--- !u!114 &-1154958276303189156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6382999078083594662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6bd52f9d4119b43bfb5d924d341990, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: GetTarget
+  Cost: 1
+--- !u!114 &-2824012564683087676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6382999078083594662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c431c5213d020634a8c89043e62adc1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: PathPossible
+  Cost: 1
+  isPathPossible: 0
+  targetPosition: {x: 0, y: 0, z: 0}
+  simplePathfinder: {fileID: 0}
+--- !u!114 &-4616605343080274639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6382999078083594662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bef8f142807c0e418ae022069bcd9c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Move
+  Cost: 1
+  canMove: 0
+  targetPosition: {x: 0, y: 0, z: 0}
+  rb: {fileID: 0}
+  ground:
+    serializedVersion: 2
+    m_Bits: 256
+  currentPathNodeIndex: 0
+  nodeDistanceMin: 1.5
+  moveForce: 1000
+  targetReachedAction: {fileID: 0}
+--- !u!114 &-718284527823379706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6382999078083594662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d2a8d304682cad4bbae5dfc41b633ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: CheckEnergy
+  Cost: 1
+  energyAmount: 0
+  canTeleport: 0
+--- !u!114 &-2285058548876772619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6382999078083594662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5918010843b68f49918788b7fa8f377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Teleport
+  Cost: 2
+  targetPosition: {fileID: 0}
+  teleportDelay: 0
+  isRunning: 0
+--- !u!114 &1603737041656348613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6382999078083594662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd126c8acb7a8c640a3de39ac03d51cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: TargetReached
+  Cost: 1
+  targetPosition: {x: 0, y: 0, z: 0}

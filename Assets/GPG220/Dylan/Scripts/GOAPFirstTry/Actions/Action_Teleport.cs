@@ -1,28 +1,32 @@
 ﻿using System;
-using GPG220.Dylan.Scripts.GOAP.States;
+using System.Collections;
 using ReGoap.Core;
 using ReGoap.Unity;
 using UnityEngine;
 
-namespace GPG220.Dylan.Scripts.GOAP.Actions
+namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
 {
     // ReSharper disable once InconsistentNaming
     public class Action_Teleport : ReGoapAction<string, object>
     {
-        public Vector3 targetPosition;
-        
-        public float energyAmount = 10;
+        public Transform targetPosition;
 
-        protected override void Awake()
+        [HideInInspector] public float teleportDelay;
+        [HideInInspector] public bool isRunning;
+
+        public override ReGoapState<string, object> GetPreconditions(GoapActionStackData<string, object> stackData)
         {
-            base.Awake();
+            preconditions.Set("hasEnergy", true);
 
-            
-            preconditions.Set("hasEnergy", true );
-            
-            effects.Set("moveToTarget", true);
+            return base.GetPreconditions(stackData);
         }
 
+        public override ReGoapState<string, object> GetEffects(GoapActionStackData<string, object> stackData)
+        {
+            effects.Set("moveToTarget", true);
+
+            return base.GetEffects(stackData);
+        }
 
         public override void Run(IReGoapAction<string, object> previous, IReGoapAction<string, object> next,
             ReGoapState<string, object> settings, ReGoapState<string, object> goalState,
@@ -30,17 +34,23 @@ namespace GPG220.Dylan.Scripts.GOAP.Actions
             Action<IReGoapAction<string, object>> fail)
         {
             base.Run(previous, next, settings, goalState, done, fail);
-            // 
-            energyAmount -= 1;
+
 
             doneCallback(this);
+        }
 
-
+        public IEnumerator TeleportDelay()
+        {
+            yield return new WaitForSeconds(teleportDelay);
+            transform.position = targetPosition.position;
+            isRunning = false;
         }
 
         public override void Exit(IReGoapAction<string, object> next)
         {
             base.Exit(next);
+
+            
 
             var worldState = agent.GetMemory().GetWorldState();
             foreach (var pair in effects.GetValues())

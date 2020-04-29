@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
 {
+    // ReSharper disable once InconsistentNaming
     public class Action_NotPossible : ReGoapAction<string, object>
     {
         protected override void Awake()
@@ -13,7 +14,7 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
             base.Awake();
             
             preconditions.Set("notPossible", true);
-            effects.Set("targetReached", true);
+            
             
         }
 
@@ -23,7 +24,10 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
         {
             base.Run(previous, next, settings, goalState, done, fail);
 
-            doneCallback(this);
+            Debug.Log("Goal Not Possible");
+            
+            failCallback(this);
+            // doneCallback(this);
 
 
         }

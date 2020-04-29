@@ -6,14 +6,24 @@ using UnityEngine;
 
 namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
 {
+    // ReSharper disable once InconsistentNaming
     public class Action_TargetReached : ReGoapAction<string, object>
     {
-        protected override void Awake()
+        public event Action targetReached;
+        public Vector3 targetPosition;
+        
+        public override ReGoapState<string, object> GetPreconditions(GoapActionStackData<string, object> stackData)
         {
-            base.Awake();
-
             preconditions.Set("moveToTarget", true);
+
+            return base.GetPreconditions(stackData);
+        }
+
+        public override ReGoapState<string, object> GetEffects(GoapActionStackData<string, object> stackData)
+        {
             effects.Set("targetReached", true);
+            
+            return base.GetEffects(stackData);
         }
 
 
@@ -23,26 +33,46 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
             Action<IReGoapAction<string, object>> fail)
         {
             base.Run(previous, next, settings, goalState, done, fail);
-            // called explode attack here
-
 
             doneCallback(this);
+        }
+
+        public void FixedUpdate()
+        {
+            if (Vector3.Distance(transform.position, targetPosition) < 4f)
+            {
+                targetReached?.Invoke();
+            }
+
+        }
+
+        public void TriggerEvent()
+        {
+            targetReached?.Invoke();
+            // Debug.Log("Target Reached");
+        }
+
+        public override void PlanExit(IReGoapAction<string, object> previousAction, IReGoapAction<string, object> nextAction, ReGoapState<string, object> settings, ReGoapState<string, object> goalState)
+        {
+            preconditions.Clear();
+            effects.Clear();
+        
+            base.PlanExit(previousAction, nextAction, settings, goalState);
         }
 
         public override void Exit(IReGoapAction<string, object> next)
         {
             base.Exit(next);
+
             
             preconditions.Clear();
             effects.Clear();
-            
+
             var worldState = agent.GetMemory().GetWorldState();
             foreach (var pair in effects.GetValues())
             {
                 worldState.Set(pair.Key, pair.Value);
             }
-            
-            
         }
     }
 }
