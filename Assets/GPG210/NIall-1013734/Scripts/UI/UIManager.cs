@@ -49,10 +49,7 @@ public class UIManager : MonoBehaviour
 
     public void TargetAction(InputAction.CallbackContext ctx) // called on mouse right click
     {
-        Vector3
-            worldPosition =
-                unitSelectionManager
-                    .targetPoint; // get the worldpoint from the unitselection manager because its already raycasting to find world points.
+        Vector3 worldPosition = unitSelectionManager.targetPoint; // get the worldpoint from the unitselection manager because its already raycasting to find world points.
         GameObject targetObject = unitSelectionManager.targetObject;
         if (groupAbilityControllers.Count > 0)
         {
@@ -150,7 +147,19 @@ public class UIManager : MonoBehaviour
 
     private void OnDeselection(List<ISelectable> selectables)
     {
-        groupAbilityControllers.Clear();
+        if (groupAbilityControllers.Count > 0)
+        {
+            foreach (ISelectable selectable in selectables)
+            {
+                groupAbilityControllers.Remove(((UnitBase)selectable).abilityController);
+            }
+
+        }
+        abilityController = null;
+        selectedTargetAbility = null;
+        selectedWorldTargetAbility = null;
+
+        /*groupAbilityControllers.Clear();
         abilityController = null;
         selectedTargetAbility = null;
         selectedWorldTargetAbility = null;
@@ -158,6 +167,6 @@ public class UIManager : MonoBehaviour
         if (selectables.Count <= 0)
         {
             abilitySelectionUI.SetActive(false);
-        }
+        }*/
     }
 }
