@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blastRadius: 10
-  explosionForce: 200
+  explosionForce: 50
   player: {fileID: 8736307313088339209, guid: dfd57f06fcd310648957731cbc248d76, type: 3}
   bulletClone: {fileID: 0}
   damage: 75

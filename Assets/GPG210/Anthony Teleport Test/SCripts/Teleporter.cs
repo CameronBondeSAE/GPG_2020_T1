@@ -55,17 +55,8 @@ public class Teleporter : UnitBase
         Destroy(gameObject);
         deathSound.Play();
     }
-
-    //shows text for character description
-
-
-    private void OnCollisionEnter(Collision other)
-    {
-        // Does the other object even have a Health component?
-        if (other.gameObject.GetComponent<Health>() != null)
-            // Do damage
-            other.gameObject.GetComponent<Health>().ChangeHealth(-damage);
-    }
+    
+    
 
 
     /* public void Teleporting()

@@ -35,20 +35,8 @@ public class RocketManUnitBase : UnitBase
     public void Death(Health health)
     {
         Destroy(gameObject);
-        
+        deathSound.Play();
     }
 
-    private void OnCollisionEnter(Collision other)
-    {
-        // Does the other object even have a Health component?
-        if (other.gameObject.GetComponent<Health>() != null)
-        {
-            // Do damage
-            other.gameObject.GetComponent<Health>().ChangeHealth(-damage);
-            deathSound.Play();
-           
-        }
-            
-        
-    }
+   
 }

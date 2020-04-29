@@ -8,11 +8,11 @@ using UnityEngine;
 public class TornadoVortex : MonoBehaviour
 {
    //controls the radius of tornados pull range
-   public float radius;
-   public float maxRadiusToPullin;
+   public float radius = 10f;
+   public float maxRadiusToPullin = 10f;
    //pulls objects into the tornado  negative numbers
-   public float PullInPower;
-   public float maxPullin;
+   public float PullInPower =  -70f;
+   public float maxPullin = 20f;
    
    public Vector3 offset;
 

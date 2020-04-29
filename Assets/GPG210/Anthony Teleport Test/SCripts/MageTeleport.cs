@@ -39,6 +39,7 @@ public class MageTeleport : AbilityBase
 
     public override bool TargetExecute(Vector3 worldPos)
     {
+       
         Debug.Log("Teleporting Activated");
         teleportTimer = Vector3.Distance(transform.position,worldPos+= offset)/10f;
         transform.position = worldPos += offset;
