@@ -52,17 +52,15 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
 
         private bool CheckIfPathIsPossible()
         {
-            for (var i = 0; i < currentPath.Count; i++)
+            if(currentPath == null)
             {
-                if (currentPath[i].walkable == false)
-                {
-                    isPathPossible = false;
-                }
-                else
-                {
-                    isPathPossible = true;
-                }
+                isPathPossible = false;
             }
+            else
+            {
+                isPathPossible = true;
+            }
+
 
             return isPathPossible;
         }
