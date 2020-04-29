@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using GPG220.Blaide_Fedorowytsch.Scripts.ProcGen;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class ObstacleSpawnNotifier : MonoBehaviour
@@ -38,6 +39,7 @@ public class ObstacleSpawnNotifier : MonoBehaviour
         }
     }
 
+    [Button(ButtonSizes.Small)]
     public void OnDisappear()
 	{
 		// mainCollider.enabled = false;

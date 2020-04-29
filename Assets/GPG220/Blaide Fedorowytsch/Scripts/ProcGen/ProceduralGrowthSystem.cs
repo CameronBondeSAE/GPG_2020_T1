@@ -60,14 +60,15 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
         void Start()
         {
             //gameManager.startGameEvent += GenerateAll;
-            gridSizeLocker = gridSize;
-            GenerateAll();
+
         }
 
         private void Awake()
         {
             gameManager.startGameEvent += StartGrowth;
-            growObstacles = false;
+            //growObstacles = false;
+            gridSizeLocker = gridSize;
+            GenerateBoolGrid();
         }
 
         void GenerateAll()
@@ -79,6 +80,9 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
 
         public void StartGrowth()
         {
+            FindEdgeObstacles();
+            GenerateObjectGrid();
+            gameStarted = true;
             growObstacles = true;
         }
 
