@@ -66,13 +66,9 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
         private void Awake()
         {
             gameManager.startGameEvent += StartGrowth;
-<<<<<<< Updated upstream
-            growObstacles = false;
-=======
             //growObstacles = false;
             gridSizeLocker = gridSize;
             GenerateBoolGrid();
->>>>>>> Stashed changes
         }
 
         void GenerateAll()
