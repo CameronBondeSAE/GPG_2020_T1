@@ -1049,7 +1049,7 @@ MonoBehaviour:
   defaultUnitBases: []
   networkManager: {fileID: 1466362677}
   localPlayer: {fileID: 0}
-  playMenu: {fileID: 1329116019}
+  multiPlayerMenu: {fileID: 0}
   unitSpawner: {fileID: 1331086590}
 --- !u!4 &846187098
 Transform:
@@ -1315,7 +1315,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 3.12e-43}
+  m_BoundingSphereOverride: {x: 0, y: 12888464, z: 8.18e-43, w: 13555936}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1831,6 +1831,16 @@ PrefabInstance:
       propertyPath: obstacleThreshold
       value: 0.868
       objectReference: {fileID: 0}
+    - target: {fileID: 844936440088286563, guid: 69c72cf18b94ae04a80ce166e1e5b1e9,
+        type: 3}
+      propertyPath: growObstacles
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 844936440088286563, guid: 69c72cf18b94ae04a80ce166e1e5b1e9,
+        type: 3}
+      propertyPath: roundTime
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 844936440088286622, guid: 69c72cf18b94ae04a80ce166e1e5b1e9,
         type: 3}
       propertyPath: m_Name
@@ -1901,6 +1911,14 @@ PrefabInstance:
       propertyPath: m_text
       value: localhost
       objectReference: {fileID: 0}
+    - target: {fileID: 1375059196, guid: 298228f203107444691db63a0ad56f1a, type: 3}
+      propertyPath: rtsNetworkManager
+      value: 
+      objectReference: {fileID: 1466362677}
+    - target: {fileID: 1375059196, guid: 298228f203107444691db63a0ad56f1a, type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 846187097}
     - target: {fileID: 1793977684, guid: 298228f203107444691db63a0ad56f1a, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -2177,6 +2195,16 @@ PrefabInstance:
       propertyPath: m_Value
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8620873269242555922, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 846187097}
+    - target: {fileID: 8620873269242555922, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: rtsNetworkManager
+      value: 
+      objectReference: {fileID: 1466362677}
     - target: {fileID: 8732324036710421084, guid: 298228f203107444691db63a0ad56f1a,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target

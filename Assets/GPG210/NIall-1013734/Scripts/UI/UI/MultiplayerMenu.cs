@@ -13,9 +13,11 @@ public class MultiplayerMenu : MonoBehaviour
 
     public GameManager gameManager;
     public RTSNetworkManager rtsNetworkManager;
+    public string testServer;
 
     public void Start()
     {
+        testServer = "14.201.222.143";
         PlayMenuUI = GetComponent<PlayMenu>();
     }
 
@@ -40,5 +42,18 @@ public class MultiplayerMenu : MonoBehaviour
     {
         multiplayerMenu.SetActive(false);
         PlayMenuUI.PlayMenuUI.SetActive(true);
+    }
+
+    public void SetIP(string IP)
+    {
+        rtsNetworkManager.SetHostname(IP);
+    }
+
+    public void TestServer()
+    {
+        rtsNetworkManager.SetHostname(testServer);
+        multiplayerMenu.SetActive(false);
+        rtsNetworkManager.StartClient();
+        gameManager.OnStartGameEvent();
     }
 }

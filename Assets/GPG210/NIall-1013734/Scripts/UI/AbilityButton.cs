@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using GPG220.Luca.Scripts.Abilities;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class AbilityButton : MonoBehaviour
+public class AbilityButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public UIManager uiManager;
     public AbilityBase abilityBase;
@@ -14,18 +15,23 @@ public class AbilityButton : MonoBehaviour
     {
         if (abilityBase != null)
         {
-         //   abilityBase.SelectedExecute();
-         abilityBase.GetComponent<AbilityController>().SelectedExecuteAbility(abilityBase);
+            abilityBase.GetComponent<AbilityController>().SelectedExecuteAbility(abilityBase);
 
-         if (abilityBase.targetRequired == true)
-         {
-             uiManager.selectedTargetAbility = abilityBase;
-             uiManager.selectedWorldTargetAbility = abilityBase;
-         }
-         
+            if (abilityBase.targetRequired == true)
+            {
+                uiManager.selectedTargetAbility = abilityBase;
+                uiManager.selectedWorldTargetAbility = abilityBase;
+            }
         }
-        
     }
 
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        throw new System.NotImplementedException();
+    }
 
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        throw new System.NotImplementedException();
+    }
 }
