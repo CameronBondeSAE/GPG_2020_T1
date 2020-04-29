@@ -1883,7 +1883,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0.1484375, z: 0.03125, w: -0.03125}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -2643,6 +2643,16 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: StopAllCoroutines
       objectReference: {fileID: 0}
+    - target: {fileID: 8620873269242555922, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 1285704454}
+    - target: {fileID: 8620873269242555922, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: rtsNetworkManager
+      value: 
+      objectReference: {fileID: 2014623609}
     - target: {fileID: 8732324036710421084, guid: 298228f203107444691db63a0ad56f1a,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
