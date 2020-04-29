@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using GPG220.Luca.Scripts.Unit;
 using UnityEngine;
 
-public class AttackAntenna : MonoBehaviour
+public class AttackAntenna : UnitBase
 {
     private Transform t;
     public float distance;
@@ -26,16 +27,23 @@ public class AttackAntenna : MonoBehaviour
         {
             if (Physics.Raycast(t.position, t.forward, out hit, distance))
             {
-                if (hit.transform.GetComponent<Health>() != null)
+
+                if (GetComponent<UnitBase>().owner != hit.transform.GetComponent<UnitBase>().owner)
                 {
-                    // Do damage
-                    hit.transform.GetComponent<Health>().ChangeHealth(-damage);
+                    if (hit.transform.GetComponent<Health>() != null)
+                    {
+                        // Do damage
+                        hit.transform.GetComponent<Health>().ChangeHealth(-damage);
 
-                    Debug.Log(gameObject.name + hit + "Damaged Unit");
+                        Debug.Log(gameObject.name + hit + "Damaged Unit");
 
-                    transform.GetComponent<ParticleSystem>().Play();
+                        transform.GetComponent<ParticleSystem>().Play();
 
-                    fire = false;
+                        fire = false;
+                    }
+                    
+                    Debug.Log(owner);
+                    Debug.Log(hit.transform.GetComponent<UnitBase>().owner);
                 }
             }
         }
