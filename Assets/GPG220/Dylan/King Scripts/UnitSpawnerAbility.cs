@@ -57,22 +57,8 @@ namespace GPG220.Dylan.King_Scripts
             float randomPosZ = Random.Range(position.z - spawnRadius,
                 position.z + spawnRadius);
 
-            Vector3 randomPos = new Vector3(position.x, position.y, position.z);
+            Vector3 randomPos = new Vector3(randomPosX, randomPosY, randomPosZ);
             return randomPos;
-        }
-
-        public Vector3 GetCentreOfCamera()
-        {
-            Vector3 cameraPos = new Vector3(Screen.width / 2f, Screen.height / 2f, 0);
-            Ray ray = Camera.main.ScreenPointToRay(cameraPos);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, groundMask))
-            {
-                Debug.DrawLine(ray.origin, hit.point, Color.green, 10f);
-                // return hit.point;
-            }
-
-            return hit.point;
         }
     }
 }
