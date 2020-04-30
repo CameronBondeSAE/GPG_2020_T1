@@ -23,7 +23,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
 
         public bool DrawGizmos = false;
     
-        private void Start()
+        private void Awake()
         {
            // gameManager.startGameEvent += generateMesh;
             mesh = new Mesh();

@@ -22,7 +22,8 @@ namespace GPG220.Dylan.Scripts.BuildingSystemTest
         public LayerMask groundMask;
 
         public HumanPlayer player;
-
+		private MapUtilities mapUtilities;
+		
         public bool isSelected;
         private float spawnHeight = 2f;
 
@@ -41,7 +42,8 @@ namespace GPG220.Dylan.Scripts.BuildingSystemTest
         }
 
         private void Awake()
-        {
+		{
+			mapUtilities = FindObjectOfType<MapUtilities>();
             gameManager = FindObjectOfType<GameManager>();
             playMenu = FindObjectOfType<PlayMenu>();
             gameManager.startGameEvent += Init;
@@ -100,7 +102,7 @@ namespace GPG220.Dylan.Scripts.BuildingSystemTest
                 {
                     Bounds b = new Bounds(unitBase.transform.position, new Vector3(spawnRadius, 5, spawnRadius));
 
-                    position = unitSpawner.RandomGroundPointInBounds(b, Ub.GetComponent<Collider>().bounds.size);
+                    position = mapUtilities.RandomGroundPointInBounds(b, Ub.GetComponent<Collider>().bounds.size);
 
                     return position;
                 }
@@ -134,7 +136,8 @@ namespace GPG220.Dylan.Scripts.BuildingSystemTest
         void SpawnUnit(HumanPlayer localPlayer, UnitBase unitToSpawn, Vector3 locationToSpawn)
         {
             // bool localPlayer = FindObjectOfType<PlayerBase>().isLocalPlayer;
-            unitSpawner.SpawnUnit(localPlayer.netIdentity, unitToSpawn, locationToSpawn, Quaternion.identity);
-        }
+			unitSpawner.SpawnUnit(localPlayer.netIdentity, unitToSpawn, locationToSpawn,
+														Quaternion.identity);
+		}
     }
 }

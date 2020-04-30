@@ -205,9 +205,9 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             List<PlayerBase> playerBases = new List<PlayerBase>();
             if (gameManager != null)
             {
-                if (gameManager.listofPlayerBases.Count > 0)
+                if (gameManager.playerBases.Count > 0)
                 {
-                    playerBases = gameManager.listofPlayerBases;
+                    playerBases = gameManager.playerBases;
                 }
             }
             else
@@ -216,7 +216,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
                 gameManager = FindObjectOfType<GameManager>();
                 if (gameManager != null)
                 {
-                    playerBases = gameManager.listofPlayerBases;
+                    playerBases = gameManager.playerBases;
                 }
             }
             

@@ -2729,18 +2729,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff733bf49effb4f419f902f038c19168, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitBuildDistanceThreshold: 10
-  globalUnitBases: []
-  listOfSpawns: []
-  listofPlayerBases: []
-  defaultUnitBases: []
   networkManager: {fileID: 2014623609}
   proceduralMeshGenerator: {fileID: 1588283111}
   proceduralGrowthSystem: {fileID: 178437040}
+  globalUnitBases: []
+  playerBases: []
+  unitBuildDistanceThreshold: 10
   unitSpawner: {fileID: 666229043}
   unitSpawnerKing: {fileID: 1923261902}
   localPlayer: {fileID: 0}
+  kings: []
   multiPlayerMenu: {fileID: 0}
+  mapUtilities: {fileID: 0}
 --- !u!4 &1285704455
 Transform:
   m_ObjectHideFlags: 0
@@ -2913,6 +2913,22 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 178437039}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1588283107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1588283106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32d6d721d0374804f81426b48ff9335f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boundrySize: {x: 0, y: 0, z: 0}
+  SpawnableSurfaces:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!114 &1588283111 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 844936440088286623, guid: 69c72cf18b94ae04a80ce166e1e5b1e9,

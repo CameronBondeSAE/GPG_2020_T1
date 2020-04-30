@@ -10,32 +10,37 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-	public float unitBuildDistanceThreshold = 10f;
-
-	public List<UnitBase>   globalUnitBases   = new List<UnitBase>();
-	public List<SpawnPoint> listOfSpawns      = new List<SpawnPoint>();
-	public List<PlayerBase> listofPlayerBases = new List<PlayerBase>();
-	public List<UnitBase>   defaultUnitBases  = new List<UnitBase>();
-
 	public RTSNetworkManager networkManager;
-
 	public ProceduralMeshGenerator proceduralMeshGenerator;
-	public ProceduralGrowthSystem proceduralGrowthSystem;
+	public ProceduralGrowthSystem  proceduralGrowthSystem;
+	
+	public List<UnitBase>   globalUnitBases   = new List<UnitBase>();
+	public List<PlayerBase> playerBases = new List<PlayerBase>();
 
+
+	
+	// Game Mode - King
+	public float unitBuildDistanceThreshold = 10f;
+	
 	public UnitSpawner unitSpawner;
 	public UnitSpawner unitSpawnerKing;
 
 	public PlayerBase localPlayer;
+	public List<King> kings;
 
-	public event Action gameOverEvent;
+	public event Action GameOverEvent;
 	public event Action startGameEvent;
 
 	// Hack: No references to View UI stuff generally from 'Model' managers etc
 	public MultiplayerMenu multiPlayerMenu;
-
+	public MapUtilities mapUtilities;
+	
+	
 	// Subscribing to all the events
 	private void Start()
 	{
+		mapUtilities = FindObjectOfType<MapUtilities>();
+		
 		UnitBase.SpawnStaticEvent   += UnitBaseOnSpawnStaticEvent;
 		UnitBase.DespawnStaticEvent += UnitBaseOnDespawnStaticEvent;
 
@@ -52,7 +57,7 @@ public class GameManager : MonoBehaviour
 		if (networkManager != null)
 		{
 			PlayerBase playerBase = conn.identity.GetComponent<PlayerBase>();
-			listofPlayerBases.Remove(playerBase);
+			playerBases.Remove(playerBase);
 
 			if (playerBase.isLocalPlayer)
 			{
@@ -71,7 +76,7 @@ public class GameManager : MonoBehaviour
 		{
 			PlayerBase playerBase = conn.identity.GetComponent<PlayerBase>();
 
-			listofPlayerBases.Add(playerBase);
+			playerBases.Add(playerBase);
 
 			if (playerBase.isLocalPlayer)
 			{
@@ -80,8 +85,9 @@ public class GameManager : MonoBehaviour
 
 			Debug.Log("Build units for new player");
 
-			BuildKing(conn.identity);
-			BuildUnits(conn.identity);
+			BuildKing(conn.identity, playerBase);
+
+			BuildUnits(conn.identity, playerBase);
 		}
 	}
 
@@ -95,17 +101,19 @@ public class GameManager : MonoBehaviour
 	}
 
 	//spawn the units randomly around the map
-	public void BuildUnits(NetworkIdentity owner)
+	public void BuildUnits(NetworkIdentity owner, PlayerBase playerBase)
 	{
 		if (unitSpawner != null)
 		{
 			// unitSpawner.RandomSpawns(owner);
-			unitSpawner.SpawnOneOfEach(owner);
+			playerBase.units = unitSpawner.SpawnOneOfEach(owner);
 		}
 	}
 
-	public void BuildKing(NetworkIdentity owner)
+	public void BuildKing(NetworkIdentity owner, PlayerBase playerBase)
 	{
+		King king = null;
+
 		if (unitSpawnerKing != null)
 		{
 			UnitBase unitBaseOfKing = unitSpawnerKing.unitBases[0];
@@ -118,8 +126,10 @@ public class GameManager : MonoBehaviour
 			
 			DestroyImmediate(temp); // HACK
 			
-			Vector3 rndPoint = unitSpawnerKing.RandomGroundPointInBounds(proceduralMeshGenerator.mesh.bounds, unitExtents);
-			unitSpawnerKing.SpawnUnit(owner, unitBaseOfKing, rndPoint, Quaternion.identity);
+			Vector3 rndPoint = mapUtilities.RandomGroundPointInBounds(proceduralMeshGenerator.mesh.bounds, unitExtents);
+			king = unitSpawnerKing.SpawnUnit(owner, unitBaseOfKing, rndPoint, Quaternion.identity) as King;
+
+			playerBase.king = king;
 		}
 	}
 
@@ -133,15 +143,40 @@ public class GameManager : MonoBehaviour
 	{
 		globalUnitBases.Remove(obj);
 		obj.GetComponent<Health>().deathEvent -= HealthOndeathStaticEvent;
+
+		CheckForGameOver();
 	}
 
-//Player spawns on a spawn point within the map
+	private void CheckForGameOver()
+	{
+		List<King> kings = new List<King>();
+		
+		foreach (PlayerBase playerBase in playerBases)
+		{
+			// Count Kings
+			kings.Add(playerBase.king);
+		}
+
+		if (kings.Count == 1)
+		{
+			// There's only one king left AFTER a king just got destroyed. So someone won
+			GameOverEvent?.Invoke();
+		}
+
+		if (kings.Count <= 0)
+		{
+			// TODO: Handle the last king dying quickly after the win state
+			Debug.Log("LAST KING DIED AS WELL! Probably shouldn't happen!");
+		}
+	}
+
+	//Player spawns on a spawn point within the map
 	private void UnitBaseOnSpawnStaticEvent(UnitBase obj)
 	{
 		// TODO Define Enemies and Players
 		globalUnitBases.Add(obj);
 		obj.GetComponent<Health>().deathEvent += HealthOndeathStaticEvent;
-		listOfSpawns                          =  FindObjectsOfType<SpawnPoint>().ToList();
+		// listOfSpawns                          =  FindObjectsOfType<SpawnPoint>().ToList();
 
 		//listOfSpawns = globalUnitBases[(Random.Range(0,listOfSpawns.Count))];
 	}
@@ -149,9 +184,9 @@ public class GameManager : MonoBehaviour
 //game over check if there are still units on the map
 	public void CheckIfGameOver()
 	{
-		if (globalUnitBases.Count == 0 && gameOverEvent != null)
+		if (globalUnitBases.Count == 0 && GameOverEvent != null)
 		{
-			gameOverEvent?.Invoke();
+			GameOverEvent?.Invoke();
 		}
 	}
 }
