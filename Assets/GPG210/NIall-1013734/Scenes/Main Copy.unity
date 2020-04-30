@@ -677,8 +677,7 @@ PrefabInstance:
         type: 3}
       propertyPath: gameManagerPrefab
       value: 
-      objectReference: {fileID: 2937991697066462840, guid: ff09ae3cace58124d96b62ccd444925e,
-        type: 3}
+      objectReference: {fileID: 846187097}
     - target: {fileID: 933689560544922517, guid: 18825b8ec10c5c944bedba252d160eb8,
         type: 3}
       propertyPath: spawnPrefabs.Array.data[0]
@@ -718,8 +717,7 @@ PrefabInstance:
         type: 3}
       propertyPath: gameManagerPrefab
       value: 
-      objectReference: {fileID: 2937991697066462840, guid: ff09ae3cace58124d96b62ccd444925e,
-        type: 3}
+      objectReference: {fileID: 846187097}
     - target: {fileID: 933689560544922517, guid: 18825b8ec10c5c944bedba252d160eb8,
         type: 3}
       propertyPath: spawnPrefabs.Array.data[0]
@@ -1951,6 +1949,11 @@ PrefabInstance:
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 413908094203332086, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 523477200682890961, guid: 298228f203107444691db63a0ad56f1a,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -2051,6 +2054,26 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3638717833417591547, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3638717833417591547, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3638717833417591547, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3638717833417591547, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3746325223107951610, guid: 298228f203107444691db63a0ad56f1a,
         type: 3}
       propertyPath: m_text
@@ -2100,9 +2123,54 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4966090741738848247, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4966090741738848247, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4966090741738848247, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4966090741738848247, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5095145647202363378, guid: 298228f203107444691db63a0ad56f1a,
         type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6446924834608804156, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6446924834608804156, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6446924834608804156, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6446924834608804156, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6446924834608804156, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7993774512274916398, guid: 298228f203107444691db63a0ad56f1a,
