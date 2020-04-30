@@ -21,11 +21,12 @@ namespace GPG220.Dylan.King_Scripts
         public PlayerBase player;
 
 
-        public void Awake()
+        public void Start()
         {
             gameManager = FindObjectOfType<GameManager>();
-            gameManager.startGameEvent += Init;
-        }
+            // gameManager.startGameEvent += Init;
+			Init();
+		}
 
         public void Init()
         {
@@ -34,10 +35,11 @@ namespace GPG220.Dylan.King_Scripts
         }
 
         public override bool SelectedExecute()
-        {
+		{
+			base.SelectedExecute();
+			
             SpawnUnit(player, unitPrefab, GetRandomSpawnPoint());
             return true;
-            return base.SelectedExecute();
         }
 
         void SpawnUnit(PlayerBase localPlayer, UnitBase unitToSpawn, Vector3 locationToSpawn)
@@ -47,9 +49,7 @@ namespace GPG220.Dylan.King_Scripts
 
         Vector3 GetRandomSpawnPoint()
         {
-            UnitBase[] unitBases = FindObjectsOfType<UnitBase>();
-
-            Vector3 position = transform.position;
+			Vector3 position = transform.position;
 
             float randomPosX = Random.Range(position.x - spawnRadius,
                 position.x + spawnRadius);

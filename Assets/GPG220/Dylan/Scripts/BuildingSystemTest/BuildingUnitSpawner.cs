@@ -70,24 +70,24 @@ namespace GPG220.Dylan.Scripts.BuildingSystemTest
             //
         }
 
-        private void OnGUI()
-            //comment out when your buttons spawn in
-        {
-            if (player != null && (isSelected && player.isLocalPlayerMine))
-            {
-                for (int i = 0; i < unitSpawner.unitBases.Count; i++)
-                {
-                    //GUI Buttons
-                    //comment this out when done
-                    if (GUI.Button(new Rect(Screen.width / 20, Screen.height / 15 + Screen.height / 10 * i, 100, 30),
-                        unitSpawner.unitBases[i].name))
-                    {
-                        SpawnUnit(player, unitSpawner.unitBases[i], GetRandomSpawnPoint(unitSpawner.unitBases[i]));
-                    }
-                }
-            }
-        }
-
+        // private void OnGUI()
+        //     //comment out when your buttons spawn in
+        // {
+        //     if (player != null && (isSelected && player.isLocalPlayerMine))
+        //     {
+        //         for (int i = 0; i < unitSpawner.unitBases.Count; i++)
+        //         {
+        //             //GUI Buttons
+        //             //comment this out when done
+        //             if (GUI.Button(new Rect(Screen.width / 20, Screen.height / 15 + Screen.height / 10 * i, 100, 30),
+        //                 unitSpawner.unitBases[i].name))
+        //             {
+        //                 SpawnUnit(player, unitSpawner.unitBases[i], GetRandomSpawnPoint(unitSpawner.unitBases[i]));
+        //             }
+        //         }
+        //     }
+        // }
+        //
 
         Vector3 GetRandomSpawnPoint(UnitBase Ub)
         {

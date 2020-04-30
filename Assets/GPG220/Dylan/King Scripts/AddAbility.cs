@@ -29,8 +29,8 @@ namespace GPG220.Dylan.King_Scripts
                 UnitSpawnerAbility unitSpawnerAbility = gameObject.AddComponent<UnitSpawnerAbility>();
                 unitSpawnerAbility.unitPrefab = unitSpawner.unitBases[i];
                 unitSpawnerAbility.groundMask = groundMask;
-                unitSpawnerAbility.abilityName = "Spawn Unit:" + unitSpawnerAbility.unitPrefab.unitName;
-                unitSpawnerAbility.abilityDescription = "Spawn " + unitSpawnerAbility.unitPrefab.Name;
+                unitSpawnerAbility.abilityName = "Build: " + unitSpawnerAbility.unitPrefab.unitName;
+                unitSpawnerAbility.abilityDescription = "Build " + unitSpawnerAbility.unitPrefab.Name;
                 unitSpawnerAbility.player = player;
             }
         }
