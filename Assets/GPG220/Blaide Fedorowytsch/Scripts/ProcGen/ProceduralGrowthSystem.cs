@@ -278,7 +278,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
                     }
                     else
                     {
-                        ObjectGrid[x,y].GetComponent<ObstacleSpawnNotifier>().OnDisappear();
+                       // ObjectGrid[x,y].GetComponent<ObstacleSpawnNotifier>().OnDisappear();
                     }
                 }
             }
