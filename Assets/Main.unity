@@ -791,6 +791,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstacleWall: {fileID: 0}
+  killLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &262155129
 GameObject:
   m_ObjectHideFlags: 0
@@ -1645,6 +1648,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstacleWall: {fileID: 0}
+  killLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &666229043 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3398339021096822533, guid: ff09ae3cace58124d96b62ccd444925e,
@@ -1730,7 +1736,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 6.39e-43, y: 9.2863354e+24, z: 6.39e-43, w: 0}
+  m_BoundingSphereOverride: {x: 6.1343e-41, y: 2.47e-43, z: 6e-45, w: -3.925365e-36}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -2000,6 +2006,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstacleWall: {fileID: 0}
+  killLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1001 &849211261
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2165,6 +2174,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstacleWall: {fileID: 0}
+  killLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &1077335987 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1375059197, guid: 298228f203107444691db63a0ad56f1a,
@@ -2701,7 +2713,7 @@ PrefabInstance:
         type: 3}
       propertyPath: unitBases.Array.data[0]
       value: 
-      objectReference: {fileID: 8337901391893673648, guid: ee67c92ac93cde84faf49f37d187da68,
+      objectReference: {fileID: 8337901391893673648, guid: 449fbc9b3a06aad4881c390efc4617d1,
         type: 3}
     - target: {fileID: 3398339021096822533, guid: ff09ae3cace58124d96b62ccd444925e,
         type: 3}
@@ -2777,6 +2789,7 @@ MonoBehaviour:
   SpawnableSurfaces:
     serializedVersion: 2
     m_Bits: 256
+  debugEmptySpace: 0
 --- !u!1001 &1597150429
 PrefabInstance:
   m_ObjectHideFlags: 0
