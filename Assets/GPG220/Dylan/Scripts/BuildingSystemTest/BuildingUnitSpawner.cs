@@ -20,7 +20,7 @@ namespace GPG220.Dylan.Scripts.BuildingSystemTest
         private GameManager gameManager;
         public float spawnRadius = 4;
         public LayerMask groundMask;
-
+        
         public HumanPlayer player;
 		private MapUtilities mapUtilities;
 		
@@ -37,8 +37,9 @@ namespace GPG220.Dylan.Scripts.BuildingSystemTest
         public IEnumerator Delay()
         {
             yield return new WaitForSeconds(1.5f);
-            player = FindObjectOfType<HumanPlayer>();
             gameManager = FindObjectOfType<GameManager>();
+            // player = gameManager.localPlayer;
+
         }
 
         private void Awake()

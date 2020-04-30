@@ -13,11 +13,11 @@ public class MultiplayerMenu : MonoBehaviour
 
     public GameManager gameManager;
     public RTSNetworkManager rtsNetworkManager;
-    public string testServer;
+    [SerializeField]
+    public string testServer = "14.201.222.143";
 
     public void Start()
     {
-        testServer = "14.201.222.143";
         PlayMenuUI = GetComponent<PlayMenu>();
     }
 
