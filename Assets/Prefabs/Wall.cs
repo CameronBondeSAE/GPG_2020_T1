@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using GPG220.Blaide_Fedorowytsch.Scripts.ProcGen;
 using Mirror;
 
 public class Wall : NetworkBehaviour
@@ -16,9 +15,6 @@ public class Wall : NetworkBehaviour
 	Renderer rend;
 	public Transform target;
 	public Vector3 targetScale;
-	public Vector2Int gridPos;
-	public ProceduralGrowthSystem procGrow;
-	private ObstacleSpawnNotifier _spawnNotifier;
 	
     private void Awake()
 	{
@@ -27,7 +23,6 @@ public class Wall : NetworkBehaviour
 		rend.enabled = false;
 		
 		target.localScale = new Vector3(targetScale.x, 0, targetScale.z);
-		_spawnNotifier = GetComponent<ObstacleSpawnNotifier>();
 	}
 
     public void Appear()
@@ -41,13 +36,6 @@ public class Wall : NetworkBehaviour
 			
 		}
 	}
-
-    public void DestroyWall()
-    {
-	    procGrow.SetBoolGridPosition(gridPos,false);
-	    _spawnNotifier.OnDisappear();
-	    
-    }
 
     public void Disappear()
     {
