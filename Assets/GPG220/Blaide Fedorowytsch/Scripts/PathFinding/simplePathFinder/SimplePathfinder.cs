@@ -11,8 +11,9 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
 	{
 		private NodeGrid  grid;
 		public  Transform seeker, target;
-		private object gridlocker = new object();
-		private object paranoidLock = new object();
+		private object    gridlocker   = new object();
+		private object    paranoidLock = new object();
+
 		public delegate void pathFindingCallBack(List<Node> list);
 
 		private void Awake()
@@ -50,87 +51,86 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
 		{
 			lock (paranoidLock)
 			{
-				
-			// Debug.Log("Start pathing");
-			// Debug.Log("		ID = " + Thread.CurrentThread.ManagedThreadId);
+				// Debug.Log("Start pathing");
+				// Debug.Log("		ID = " + Thread.CurrentThread.ManagedThreadId);
 /*           
 
             startPos = transform.InverseTransformPoint(startPos);
             targetPos = transform.InverseTransformPoint(targetPos);*/
 
 
-			if (targetNode.walkable == false)
-			{
-				// Debug.Log("Not walkable");
-				// Debug.Log("		ID = " + Thread.CurrentThread.ManagedThreadId);
-
-				return null; // new List<Node>();
-			}
-
-			List<Node>    openSet   = new List<Node>();
-			HashSet<Node> closedSet = new HashSet<Node>();
-
-			openSet.Add(startNode);
-
-
-			// Debug.Log("While starting");
-			// Debug.Log("		ID = " + Thread.CurrentThread.ManagedThreadId);
-			while (openSet.Count > 0)
-			{
-				Node currentNode = openSet[0];
-				for (int i = 1; i < openSet.Count; i++)
+				if (targetNode.walkable == false)
 				{
-					if (openSet[i].FCost < currentNode.FCost ||
-						(openSet[i].FCost == currentNode.FCost && openSet[i].hCost < currentNode.hCost))
-					{
-						currentNode = openSet[i];
-					}
-				}
-
-				openSet.Remove(currentNode);
-				closedSet.Add(currentNode);
-
-				if (currentNode == targetNode)
-				{
-					// Debug.Log("RetracePath");
+					// Debug.Log("Not walkable");
 					// Debug.Log("		ID = " + Thread.CurrentThread.ManagedThreadId);
 
-					return RetracePath(startNode, targetNode);
+					return null; // new List<Node>();
 				}
 
-				List<Node> neighbours;
-				lock (gridlocker)
-				{
-					neighbours = grid.GetNeighbours(currentNode);
-				}
+				List<Node>    openSet   = new List<Node>();
+				HashSet<Node> closedSet = new HashSet<Node>();
 
-				foreach (Node neighbour in neighbours)
+				openSet.Add(startNode);
+
+
+				// Debug.Log("While starting");
+				// Debug.Log("		ID = " + Thread.CurrentThread.ManagedThreadId);
+				while (openSet.Count > 0)
 				{
-					if (!neighbour.walkable || closedSet.Contains(neighbour))
+					Node currentNode = openSet[0];
+					for (int i = 1; i < openSet.Count; i++)
 					{
-						continue;
+						if (openSet[i].FCost < currentNode.FCost ||
+							(openSet[i].FCost == currentNode.FCost && openSet[i].hCost < currentNode.hCost))
+						{
+							currentNode = openSet[i];
+						}
 					}
 
-					int newMovementCostToNeighbour = currentNode.gCost + GetDistantce(currentNode, neighbour);
-					if (newMovementCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour))
+					openSet.Remove(currentNode);
+					closedSet.Add(currentNode);
+
+					if (currentNode == targetNode)
 					{
-						neighbour.gCost  = newMovementCostToNeighbour;
-						neighbour.hCost  = GetDistantce(neighbour, targetNode);
-						neighbour.parent = currentNode;
-						if (!openSet.Contains(neighbour))
+						// Debug.Log("RetracePath");
+						// Debug.Log("		ID = " + Thread.CurrentThread.ManagedThreadId);
+
+						return RetracePath(startNode, targetNode);
+					}
+
+					List<Node> neighbours;
+
+					lock (gridlocker)
+					{
+						neighbours = grid.GetNeighbours(currentNode);
+					}
+
+					foreach (Node neighbour in neighbours)
+					{
+						if (!neighbour.walkable || closedSet.Contains(neighbour))
 						{
-							openSet.Add(neighbour);
+							continue;
+						}
+
+						int newMovementCostToNeighbour = currentNode.gCost + GetDistantce(currentNode, neighbour);
+						if (newMovementCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour))
+						{
+							neighbour.gCost  = newMovementCostToNeighbour;
+							neighbour.hCost  = GetDistantce(neighbour, targetNode);
+							neighbour.parent = currentNode;
+							if (!openSet.Contains(neighbour))
+							{
+								openSet.Add(neighbour);
+							}
 						}
 					}
 				}
-			}
 
-			// Debug.Log("Pathing ended : No Nodes");
-			// Debug.Log("		ID = " + Thread.CurrentThread.ManagedThreadId);
+				// Debug.Log("Pathing ended : No Nodes");
+				// Debug.Log("		ID = " + Thread.CurrentThread.ManagedThreadId);
 
-			// return new List<Node>();
-			return null;
-			
+				// return new List<Node>();
+				return null;
 			}
 		}
 
@@ -160,6 +160,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
 			{
 				grid.path = path;
 			}
+
 			return path;
 		}
 

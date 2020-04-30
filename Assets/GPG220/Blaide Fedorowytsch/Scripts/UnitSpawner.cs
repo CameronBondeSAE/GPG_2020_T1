@@ -19,7 +19,13 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 		public List<UnitBase> unitBases;
         public int spawnNumber = 1;
         public LayerMask SpawnableSurfaces;
-		
+
+		private void Start()
+		{
+			
+		}
+
+
 		public void SpawnUnit(NetworkIdentity owner, UnitBase unit, Vector3 position, Quaternion rotation)
         {
             GameObject g = Instantiate(unit.gameObject, position, rotation);

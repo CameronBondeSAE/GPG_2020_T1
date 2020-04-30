@@ -28,7 +28,7 @@ public class AttackAntenna : UnitBase
             if (Physics.Raycast(t.position, t.forward, out hit, distance))
             {
 
-                if (GetComponent<UnitBase>().owner != hit.transform.GetComponent<UnitBase>().owner)
+                if (GetComponent<UnitBase>()?.owner != hit.transform.GetComponent<UnitBase>()?.owner)
                 {
                     if (hit.transform.GetComponent<Health>() != null)
                     {

@@ -22,7 +22,10 @@ public class Health : MonoBehaviour
 
 	public event Action<Health> deathEvent;
     public static event Action<Health> deathStaticEvent;
-    public event Action<Health, int> healthChangedEvent;
+
+	// Note: I'm
+	public delegate void HealthChangedDelegate(Health _health, int _amountChanged);
+	public event HealthChangedDelegate healthChangedEvent;
 
 
     private void Awake()

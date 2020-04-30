@@ -9,7 +9,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
         public bool showVerts = false;
         private Vector3[] verticies;
         private int[] triangles;
-        private Mesh mesh;
+		public Mesh mesh;
         public Vector2Int meshResolution = new Vector2Int(20,20);
         public Vector2 worldSize = new Vector2Int(20,20);
         public Vector2 seed = new Vector2(0.3145f,0.1232f);
@@ -92,15 +92,16 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
             mesh.vertices = verticies;
             mesh.triangles = triangles;
             mesh.RecalculateNormals();
-        
-            Vector2[] uvs = new Vector2[verticies.Length];
+			mesh.RecalculateBounds();
+
+			Vector2[] uvs = new Vector2[verticies.Length];
             int j = 0;
             while (j < uvs.Length) {
                 uvs[j] = new Vector2(verticies[j].z/meshResolution.y, verticies[j].x / meshResolution.x);
                 j++;
             }
             mesh.uv = uvs;
-            collider.sharedMesh = null;
+            // collider.sharedMesh = null;
             collider.sharedMesh = mesh;
 
         }

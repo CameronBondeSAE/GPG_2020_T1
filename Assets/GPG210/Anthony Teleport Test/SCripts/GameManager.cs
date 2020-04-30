@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 using GPG220.Blaide_Fedorowytsch.Scripts;
+using GPG220.Blaide_Fedorowytsch.Scripts.ProcGen;
 using GPG220.Luca.Scripts.Unit;
 using Mirror;
-using Mirror.Examples.Basic;
-using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 
 public class GameManager : MonoBehaviour
@@ -25,16 +19,21 @@ public class GameManager : MonoBehaviour
 
 	public RTSNetworkManager networkManager;
 
+	public ProceduralMeshGenerator proceduralMeshGenerator;
+	public ProceduralGrowthSystem proceduralGrowthSystem;
+
+	public UnitSpawner unitSpawner;
+	public UnitSpawner unitSpawnerKing;
+
 	public PlayerBase localPlayer;
 
 	public event Action gameOverEvent;
 	public event Action startGameEvent;
 
 	// Hack: No references to View UI stuff generally from 'Model' managers etc
-	public MultiplayerMenu   multiPlayerMenu;
-	public UnitSpawner unitSpawner;
+	public MultiplayerMenu multiPlayerMenu;
 
-//subscribing to all the events
+	// Subscribing to all the events
 	private void Start()
 	{
 		UnitBase.SpawnStaticEvent   += UnitBaseOnSpawnStaticEvent;
@@ -42,13 +41,13 @@ public class GameManager : MonoBehaviour
 
 		if (networkManager != null)
 		{
-			networkManager.OnClientPlayerSpawnEvent  += NetworkManagerOnOnClientPlayerSpawnEvent;
-			networkManager.OnClientDisconnectedEvent += NetworkManagerOnOnClientDisconnectedEvent;
+			networkManager.OnClientPlayerSpawnEvent  += NetworkManagerOnClientPlayerSpawnEvent;
+			networkManager.OnClientDisconnectedEvent += NetworkManagerOnClientDisconnectedEvent;
 		}
 	}
 
-//player has left the game, remove from the list
-	private void NetworkManagerOnOnClientDisconnectedEvent(NetworkConnection conn)
+	// Player has left the game, remove from the list
+	private void NetworkManagerOnClientDisconnectedEvent(NetworkConnection conn)
 	{
 		if (networkManager != null)
 		{
@@ -66,7 +65,7 @@ public class GameManager : MonoBehaviour
 	}
 
 //player has connected to the game, add to the list
-	private void NetworkManagerOnOnClientPlayerSpawnEvent(NetworkConnection conn)
+	private void NetworkManagerOnClientPlayerSpawnEvent(NetworkConnection conn)
 	{
 		if (networkManager != null)
 		{
@@ -80,6 +79,8 @@ public class GameManager : MonoBehaviour
 			}
 
 			Debug.Log("Build units for new player");
+
+			BuildKing(conn.identity);
 			BuildUnits(conn.identity);
 		}
 	}
@@ -100,6 +101,25 @@ public class GameManager : MonoBehaviour
 		{
 			// unitSpawner.RandomSpawns(owner);
 			unitSpawner.SpawnOneOfEach(owner);
+		}
+	}
+
+	public void BuildKing(NetworkIdentity owner)
+	{
+		if (unitSpawnerKing != null)
+		{
+			UnitBase unitBaseOfKing = unitSpawnerKing.unitBases[0];
+
+			
+			// HACK: Have to spawn a real instance to get the actual bounds, because you can't from a prefab??
+			GameObject temp = Instantiate(unitBaseOfKing.gameObject);
+
+			Vector3 unitExtents = temp.GetComponent<Collider>().bounds.extents;
+			
+			DestroyImmediate(temp); // HACK
+			
+			Vector3 rndPoint = unitSpawnerKing.RandomGroundPointInBounds(proceduralMeshGenerator.mesh.bounds, unitExtents);
+			unitSpawnerKing.SpawnUnit(owner, unitBaseOfKing, rndPoint, Quaternion.identity);
 		}
 	}
 

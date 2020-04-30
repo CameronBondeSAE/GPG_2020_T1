@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using GPG220.Luca.Scripts.Abilities;
+using GPG220.Luca.Scripts.Unit;
 using UnityEngine;
 
 public class TapOnHeadAbility : AbilityBase
@@ -30,12 +31,15 @@ public class TapOnHeadAbility : AbilityBase
 	// Right clicked on ANY UnitBase (I can kill myself even, you should check for ownership with localPlayer)
 	public override bool TargetExecute(GameObject target = null)
 	{
-		transform.DOScale(getReadyScale*2, duration).SetEase(Ease.OutElastic);
-		mainRenderer.material.color = Color.red;
-		mainRenderer.material.DOColor(Color.white, duration);
+		if (GetComponent<UnitBase>().owner != target.GetComponent<UnitBase>().owner)
+		{
+			transform.DOScale(getReadyScale*2, duration).SetEase(Ease.OutElastic);
+			mainRenderer.material.color = Color.red;
+			mainRenderer.material.DOColor(Color.white, duration);
 
-		// KILL
-		target.GetComponent<Health>().ChangeHealth(-damage);
+			// KILL
+			target.GetComponent<Health>().ChangeHealth(-damage);
+		}
 		
 		return base.TargetExecute(target);
 	}
