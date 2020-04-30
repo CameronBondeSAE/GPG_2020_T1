@@ -18,51 +18,41 @@ public class RocketShot : AbilityBase
     public AudioSource explosionSound;
     public Camera cam;
 
-    private Vector3 moveDir;
-
-    
-    
 
     // Start is called before the first frame update
     void Start()
     {
-        
         abilityName = "Rocket";
         abilityDescription = "Shoot a rocket at someone exploding them";
         targetRequired = true;
     }
 
-     void Update()
-     {
-      
-     }
-
-    public override bool TargetExecute(GameObject target = null)
+    void Update()
     {
-       // if (GetComponent<UnitBase>().owner != target.GetComponent<UnitBase>().owner)
-        
-            GameObject bulletClone = (GameObject) Instantiate(bullet, spawnTransform.position,spawnTransform.rotation);
-            explosionSound.Play();
-            bulletClone.GetComponent<Rigidbody>().velocity = spawnTransform.forward * bulletSpeed; //bullet goes at a certain speed
-            //bulletClone.GetComponent<Rigidbody>().AddForce(spawnTransform.forward * explosionForce,ForceMode.Impulse); //add a force and make it explode
-        
+        cam = FindObjectOfType<Camera>();
+    }
 
-            //pointing towards the mouse pos
+    public override bool TargetExecute(Vector3 worldPos)
+    {
+        // if (GetComponent<UnitBase>().owner != target.GetComponent<UnitBase>().owner)
+        transform.LookAt(worldPos);
+        GameObject bulletClone = (GameObject) Instantiate(bullet, spawnTransform.position, spawnTransform.rotation);
+        explosionSound.Play();
+        bulletClone.GetComponent<Rigidbody>().velocity = spawnTransform.forward * bulletSpeed; //bullet goes at a certain speed
+        bulletClone.GetComponent<Rigidbody>().AddForce(spawnTransform.forward * explosionForce,ForceMode.Impulse); //add a force and make it explode
 
-            moveDir = (target.transform.position - spawnTransform.position).normalized * bulletSpeed;
-            bulletClone.GetComponent<Rigidbody>().velocity = new Vector3(moveDir.x,moveDir.y,moveDir.z);
 
-            //player.transform.LookAt(target);
-            //spawnTransform.LookAt(target);
-        
-            isShooting = true;
-            Destroy(bulletClone,3f);
-        
-            Physics.IgnoreCollision(bulletClone.GetComponent<Collider>(),rb.GetComponent<Collider>());
-        
+        //pointing towards the mouse pos
 
-        
-       
-        return base.TargetExecute(target);
+
+        //player.transform.LookAt(target);
+        //spawnTransform.LookAt(target);
+
+        isShooting = true;
+        Destroy(bulletClone, 3f);
+
+        Physics.IgnoreCollision(bulletClone.GetComponent<Collider>(), rb.GetComponent<Collider>());
+
+        return base.TargetExecute(worldPos);
     }
 }

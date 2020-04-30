@@ -12,7 +12,7 @@ public class BulletScript : MonoBehaviour
     private Collider[] hitColliders;
     public RocketManUnitBase player;
     public RocketShot bulletClone;
-    public int damage = 50;
+    public int damage;
     private void OnCollisionEnter(Collision other)
     {
         DoExplosion(other.contacts[0].point);
@@ -38,7 +38,7 @@ public class BulletScript : MonoBehaviour
             if (hitcol.GetComponent<Rigidbody>())
             {
                 hitcol.GetComponent<Rigidbody>().isKinematic = false;
-                hitcol.GetComponent<Rigidbody>().AddExplosionForce(explosionForce,explosionPoint,blastRadius,1,ForceMode.Impulse);
+                hitcol.GetComponent<Rigidbody>().AddExplosionForce(explosionForce,explosionPoint,blastRadius,0.2f,ForceMode.Impulse);
             }
             }
             
