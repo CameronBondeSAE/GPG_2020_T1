@@ -93,7 +93,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
            {
                for (int y = forwardMost; y <= backwardMost; y++)
                {
-                   grid[x, y].walkable = !Physics.CheckSphere(grid[x, y].worldPosition, nodeRadius, layerMask);
+                  grid[x, y].walkable = !Physics.CheckBox(grid[x, y].worldPosition, new Vector3(nodeRadius/10,5,nodeRadius/10),transform.rotation,layerMask,QueryTriggerInteraction.Ignore);
                }
            }
        }
