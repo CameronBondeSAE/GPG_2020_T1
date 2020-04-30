@@ -13,6 +13,7 @@ public class ObstacleSpawnNotifier : MonoBehaviour
     private Vector3 pos;
     public Wall obstacleWall;
     private ProceduralGrowthSystem proceduralGrowthSystem;
+    public LayerMask killLayer;
 	// Collider mainCollider;
 
    // private void OnEnable()
@@ -36,6 +37,16 @@ public class ObstacleSpawnNotifier : MonoBehaviour
             bounds = obstacleWall.col.bounds;
             pos = transform.position;
             GlobalEvents.OnPathFindingObstacleChange(new WorldPosAndBounds(pos,bounds));
+        }
+
+
+        foreach (Collider collider in  Physics.OverlapBox(transform.position, new Vector3(1, 1, 2.5f), transform.rotation, killLayer))
+        {
+            if (collider.GetComponent<Health>() != null)
+            {
+                Health h = collider.GetComponent<Health>();
+                h.ChangeHealth(- h.CurrentHealth * 2);
+            }
         }
     }
 

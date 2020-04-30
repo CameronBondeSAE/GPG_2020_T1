@@ -58,8 +58,11 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Abilities
 
         private void SetPath(List<Node> list)
         {
-            currentPath = list;
-            moving = true;
+            if (list != null)
+            {
+                currentPath = list;
+                moving = true;
+            }
         }
 
         private void FixedUpdate()
