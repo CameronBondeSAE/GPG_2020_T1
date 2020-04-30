@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: -7197862813521790675}
   - component: {fileID: -935519169515989212}
   - component: {fileID: 114481657677577802}
+  - component: {fileID: 8440408697992445312}
   - component: {fileID: 68299660218663067}
   - component: {fileID: 5545409066728190419}
   - component: {fileID: 8316809734386749385}
@@ -150,8 +151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3266ec32201a0694a8a80c5131a2d2ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 50
   startingHealth: 100
+  currentHealth: 100
 --- !u!114 &114733390339695892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,8 +178,8 @@ MonoBehaviour:
   myNetID: 0
   myOwnerIdentity: {fileID: 0}
   debug: 
-  unitName: 
-  unitDescription: 
+  unitName: RankUpUnit
+  unitDescription: 'Rank Up Unit '
   unitImage: {fileID: 0}
   UnitSpeed: 4
   target: {x: 0, y: 0, z: 0}
@@ -216,6 +217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  addToAbilityUI: 1
   cooldown: 0
   currentCooldown: 0
   targetRequired: 0
@@ -245,7 +247,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  cooldown: 0
+  addToAbilityUI: 1
+  cooldown: 30
   currentCooldown: 0
   targetRequired: 0
   abilityName: Promotion!
@@ -259,6 +262,31 @@ MonoBehaviour:
   outerProng: {fileID: 259808231189580907}
   centreProng: {fileID: 2931690903238514345}
   currentKillState: 0
+--- !u!114 &8440408697992445312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1440955559183952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c73ce7eaeac3fec4cab7e87089a1a5db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  addToAbilityUI: 1
+  cooldown: 0
+  currentCooldown: 0
+  targetRequired: 0
+  abilityName: Shotgun
+  abilityDescription: Shoots a spread of projectiles infront of unit damaging enemies
+    first hit.
+  abilityImage: {fileID: 0}
+  pelletPrefab: {fileID: 6430273330219342301, guid: 96763d1766fefb34bb5f737301491e31,
+    type: 3}
+  Prong: {fileID: 1686169348673056}
 --- !u!114 &68299660218663067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,7 +299,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 874cb52109fd49e45b974084751dcfc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 4
+  syncMode: 0
+  syncInterval: 0.1
+  addToAbilityUI: 0
+  cooldown: 0
+  currentCooldown: 0
+  targetRequired: 0
+  abilityName: 
+  abilityDescription: 
+  abilityImage: {fileID: 0}
+  distance: 5
   fire: 1
   fireRate: 0
   damage: 10
@@ -5522,6 +5559,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40ce883dac650854c87e9e52bd68571f, type: 3}
+--- !u!224 &5790321984401766939 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1509859411571637688, guid: 40ce883dac650854c87e9e52bd68571f,
+    type: 3}
+  m_PrefabInstance: {fileID: 4949247117779994531}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8692826519782908990 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4326936291509167005, guid: 40ce883dac650854c87e9e52bd68571f,
@@ -5534,9 +5577,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &5790321984401766939 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1509859411571637688, guid: 40ce883dac650854c87e9e52bd68571f,
-    type: 3}
-  m_PrefabInstance: {fileID: 4949247117779994531}
-  m_PrefabAsset: {fileID: 0}

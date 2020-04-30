@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using GPG220.Luca.Scripts.Abilities;
 using GPG220.Luca.Scripts.Unit;
 using UnityEngine;
 
-public class AttackAntenna : UnitBase
+public class AttackAntenna : AbilityBase
 {
     private Transform t;
     public float distance;
@@ -42,7 +43,7 @@ public class AttackAntenna : UnitBase
                         fire = false;
                     }
                     
-                    Debug.Log(owner);
+                    Debug.Log(transform.GetComponent<UnitBase>().owner);
                     Debug.Log(hit.transform.GetComponent<UnitBase>().owner);
                 }
             }
