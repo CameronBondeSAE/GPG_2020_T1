@@ -42,12 +42,10 @@ public class ObstacleSpawnNotifier : MonoBehaviour
 
         foreach (Collider collider in  Physics.OverlapBox(transform.position, new Vector3(1, 1, 2.5f), transform.rotation, killLayer))
         {
-            if (collider.GetComponent<Health>() != null)
-            {
-                Health h = collider.GetComponent<Health>();
-                h.ChangeHealth(- h.CurrentHealth * 2);
-            }
-        }
+			Health h = collider.GetComponent<Health>(); 
+			// h?.ChangeHealth(- h.CurrentHealth * 2);
+			h?.InstaKill();
+		}
     }
 
     [Button(ButtonSizes.Small)]

@@ -8,6 +8,10 @@ using Mirror;
 
 public class Wall : NetworkBehaviour
 {
+	public float duration = 4f;
+
+	public bool hidden = true;
+	
 	public Collider col;
 	Renderer rend;
 	public Transform target;
@@ -30,10 +34,12 @@ public class Wall : NetworkBehaviour
     {
 		col.enabled = true;
 		rend.enabled = true;
-        // target.localScale = new Vector3(2f, 0f, 2f);
-        target.DOScale(targetScale, 5f).SetEase(Ease.Linear);
-		
-		// target.localScale = targetScale;
+
+		if (hidden)
+		{
+			var tweenerCore = target.DOScale(targetScale, duration).SetEase(Ease.Linear);
+			
+		}
 	}
 
     public void DestroyWall()
@@ -45,10 +51,20 @@ public class Wall : NetworkBehaviour
 
     public void Disappear()
     {
+		Tween t = null;
+		
+		if (!hidden)
+		{
+			t = target.DOScale(new Vector3(1f, 0f, 1f), 5f).SetEase(Ease.Linear);
+			t.onComplete += delegate
+							{
+								col.enabled  = false;
+								rend.enabled = false;
+							}; 
+		}
 
-	    target.localScale = new Vector3(1f, 1f, 1f);
-	    Tween t = target.DOScale(new Vector3(1f, 0f, 1f), 5f).SetEase(Ease.Linear);
-	    t.onComplete += ()=> col.enabled = false;
-	    t.onComplete += ()=> rend.enabled = false;
+		hidden = true;
+
+		
 	}
 }

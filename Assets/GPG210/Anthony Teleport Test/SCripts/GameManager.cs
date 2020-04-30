@@ -13,25 +13,27 @@ public class GameManager : MonoBehaviour
 {
 	[ReadOnly]
 	public RTSNetworkManager networkManager;
+
 	[ReadOnly]
 	public ProceduralMeshGenerator proceduralMeshGenerator;
+
 	[ReadOnly]
-	public ProceduralGrowthSystem  proceduralGrowthSystem;
-	
-	public List<UnitBase>   globalUnitBases   = new List<UnitBase>();
-	public List<PlayerBase> playerBases = new List<PlayerBase>();
+	public ProceduralGrowthSystem proceduralGrowthSystem;
+
+	public List<UnitBase>   globalUnitBases = new List<UnitBase>();
+	public List<PlayerBase> playerBases     = new List<PlayerBase>();
 
 
-	
 	// Game Mode - King
 	public float unitBuildDistanceThreshold = 10f;
-	
-	public UnitSpawner unitSpawner;
-	public UnitSpawner unitSpawnerKing;
+
+	public UnitSpawner        unitSpawner;
+	public UnitSpawner        unitSpawnerKing;
 	public HealthbarViewModel healthbarPrefab;
 
 	[ReadOnly]
 	public PlayerBase localPlayer;
+
 	[ReadOnly]
 	public List<King> kings;
 
@@ -40,13 +42,13 @@ public class GameManager : MonoBehaviour
 
 	[ReadOnly]
 	public MapUtilities mapUtilities;
-	
-	
+
+
 	// Subscribing to all the events
 	private void Start()
 	{
 		mapUtilities = FindObjectOfType<MapUtilities>();
-		
+
 		UnitBase.SpawnStaticEvent   += UnitBaseOnSpawnStaticEvent;
 		UnitBase.DespawnStaticEvent += UnitBaseOnDespawnStaticEvent;
 
@@ -92,12 +94,10 @@ public class GameManager : MonoBehaviour
 			Debug.Log("Build units for new player");
 
 			BuildKing(conn.identity, playerBase);
-
 			BuildUnits(conn.identity, playerBase);
 
 			// TODO: Networking
 			HealthbarViewModel healthBar = Instantiate(healthbarPrefab);
-			
 		}
 	}
 
@@ -128,15 +128,19 @@ public class GameManager : MonoBehaviour
 		{
 			UnitBase unitBaseOfKing = unitSpawnerKing.unitBases[0];
 
-			
+
 			// HACK: Have to spawn a real instance to get the actual bounds, because you can't from a prefab??
 			GameObject temp = Instantiate(unitBaseOfKing.gameObject);
 
 			Vector3 unitExtents = temp.GetComponent<Collider>().bounds.extents;
-			
+
+			// Give the king a bit more room
+			unitExtents.x = unitExtents.x * 2f;
+			unitExtents.z = unitExtents.z * 2f;
+
 			DestroyImmediate(temp); // HACK
 
-			Vector3 rndPoint = mapUtilities.RandomGroundPointInBounds(proceduralMeshGenerator.mesh.bounds, unitExtents*2f);
+			Vector3 rndPoint = mapUtilities.RandomGroundPointInBounds(proceduralMeshGenerator.mesh.bounds, unitExtents);
 			king = unitSpawnerKing.SpawnUnit(owner, unitBaseOfKing, rndPoint, Quaternion.identity) as King;
 
 			playerBase.king = king;
@@ -160,7 +164,7 @@ public class GameManager : MonoBehaviour
 	private void CheckForGameOver()
 	{
 		List<King> kings = new List<King>();
-		
+
 		foreach (PlayerBase playerBase in playerBases)
 		{
 			// Count Kings

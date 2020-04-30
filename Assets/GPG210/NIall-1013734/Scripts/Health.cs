@@ -40,9 +40,15 @@ public class Health : MonoBehaviour
         CheckForDeath();
     }
 
+	public void InstaKill()
+	{
+		deathEvent?.Invoke(this);
+		deathStaticEvent?.Invoke(this);
+	}
+
     public void CheckForDeath()
     {
-        if (CurrentHealth <= 0 && deathEvent != null)
+        if (CurrentHealth <= 0)
         {
             deathEvent?.Invoke(this);
             deathStaticEvent?.Invoke(this);

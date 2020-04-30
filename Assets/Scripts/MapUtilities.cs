@@ -10,6 +10,8 @@ public class MapUtilities : MonoBehaviour
 	public Vector3   boundrySize;
 	public LayerMask SpawnableSurfaces;
 
+	public bool debugEmptySpace = false;
+
 	private void Start()
 	{
 		boundrySize = GetComponent<ProceduralMeshGenerator>().mesh.bounds.extents;
@@ -17,7 +19,10 @@ public class MapUtilities : MonoBehaviour
 
 	private void Update()
 	{
-		TestRandomGroundPointInBounds();
+		if (debugEmptySpace)
+		{
+			TestRandomGroundPointInBounds();
+		}
 	}
 
 	private void TestRandomGroundPointInBounds()
@@ -46,20 +51,31 @@ public class MapUtilities : MonoBehaviour
 			if (Physics.Raycast(ray, out hit, boundrySize.y + 10f, SpawnableSurfaces, QueryTriggerInteraction.Ignore))
 			{
 				Vector3 offsetPosition      = hit.point + new Vector3(0, +unitExtents.y, 0);
-				Bounds  prespawnCheckBounds = new Bounds(offsetPosition, unitExtents);
+				// Bounds  prespawnCheckBounds = new Bounds(offsetPosition, unitExtents);
 
 
-				while (prespawnCheckBounds.Contains(hit.point))
-				{
-					offsetPosition             += Vector3.up * 0.1f;
-					prespawnCheckBounds.center =  offsetPosition;
-				}
+				// while (prespawnCheckBounds.Contains(hit.point))
+				// {
+					// offsetPosition             += Vector3.up * 0.1f;
+					// prespawnCheckBounds.center =  offsetPosition;
+				// }
 
-				if (!Physics.CheckBox(prespawnCheckBounds.center, prespawnCheckBounds.extents))
+				// if (!Physics.CheckBox(prespawnCheckBounds.center, prespawnCheckBounds.extents))
+				if (!Physics.CheckBox(offsetPosition, unitExtents))
 				{
 					p     = offsetPosition;
 					clear = true;
-					// Debug.DrawLine(ray.origin, ray.origin + Vector3.up*10f, Color.green);
+					if (debugEmptySpace)
+					{
+						Debug.DrawLine(ray.origin, ray.origin + Vector3.up*10f, Color.green);
+					}
+				}
+				else
+				{
+					if (debugEmptySpace)
+					{
+						Debug.DrawLine(ray.origin, ray.origin + Vector3.up * 10f, Color.red);
+					}
 				}
 			}
 		}
