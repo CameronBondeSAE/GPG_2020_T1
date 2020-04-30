@@ -32,7 +32,10 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Abilities
         }
 
         private void Awake()
-        {
+		{
+			// HACK: Hardcoded for now, should set the default in script
+			addToAbilityUI = false;
+			
             abilityName = "Move PF";
             abilityDescription = "moves units, hopefully";
             rb = GetComponent<Rigidbody>();

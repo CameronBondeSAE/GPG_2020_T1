@@ -25,6 +25,17 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 		}
 
 		// HACK: gamemode stuff
+		private void UnitBaseOnSpawnStaticEvent(UnitBase obj)
+		{
+			if (obj.GetComponent<King>() && obj.netIdentity == netIdentity)
+			{
+				king = obj.GetComponent<King>();
+			}
+			else if (obj.netIdentity == netIdentity)
+			{
+				units.Add(obj);
+			}
+		}
 		private void UnitBaseOnDespawnStaticEvent(UnitBase obj)
 		{
 			if (obj.GetComponent<King>() && obj.netIdentity == netIdentity)
@@ -37,16 +48,5 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 			}
 		}
 
-		private void UnitBaseOnSpawnStaticEvent(UnitBase obj)
-		{
-			if (obj.GetComponent<King>() && obj.netIdentity == netIdentity)
-			{
-				king = obj.GetComponent<King>();
-			}
-			else
-			{
-				units.Add(obj);
-			}
-		}
 	}
 }

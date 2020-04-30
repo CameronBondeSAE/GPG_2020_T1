@@ -5,13 +5,17 @@ using GPG220.Blaide_Fedorowytsch.Scripts;
 using GPG220.Blaide_Fedorowytsch.Scripts.ProcGen;
 using GPG220.Luca.Scripts.Unit;
 using Mirror;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 
 public class GameManager : MonoBehaviour
 {
+	[ReadOnly]
 	public RTSNetworkManager networkManager;
+	[ReadOnly]
 	public ProceduralMeshGenerator proceduralMeshGenerator;
+	[ReadOnly]
 	public ProceduralGrowthSystem  proceduralGrowthSystem;
 	
 	public List<UnitBase>   globalUnitBases   = new List<UnitBase>();
@@ -24,15 +28,17 @@ public class GameManager : MonoBehaviour
 	
 	public UnitSpawner unitSpawner;
 	public UnitSpawner unitSpawnerKing;
+	public HealthbarViewModel healthbarPrefab;
 
+	[ReadOnly]
 	public PlayerBase localPlayer;
+	[ReadOnly]
 	public List<King> kings;
 
 	public event Action GameOverEvent;
 	public event Action startGameEvent;
 
-	// Hack: No references to View UI stuff generally from 'Model' managers etc
-	public MultiplayerMenu multiPlayerMenu;
+	[ReadOnly]
 	public MapUtilities mapUtilities;
 	
 	
@@ -88,6 +94,10 @@ public class GameManager : MonoBehaviour
 			BuildKing(conn.identity, playerBase);
 
 			BuildUnits(conn.identity, playerBase);
+
+			// TODO: Networking
+			HealthbarViewModel healthBar = Instantiate(healthbarPrefab);
+			
 		}
 	}
 
@@ -125,8 +135,8 @@ public class GameManager : MonoBehaviour
 			Vector3 unitExtents = temp.GetComponent<Collider>().bounds.extents;
 			
 			DestroyImmediate(temp); // HACK
-			
-			Vector3 rndPoint = mapUtilities.RandomGroundPointInBounds(proceduralMeshGenerator.mesh.bounds, unitExtents);
+
+			Vector3 rndPoint = mapUtilities.RandomGroundPointInBounds(proceduralMeshGenerator.mesh.bounds, unitExtents*2f);
 			king = unitSpawnerKing.SpawnUnit(owner, unitBaseOfKing, rndPoint, Quaternion.identity) as King;
 
 			playerBase.king = king;

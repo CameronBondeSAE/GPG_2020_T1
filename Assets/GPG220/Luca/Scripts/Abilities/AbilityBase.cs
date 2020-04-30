@@ -10,7 +10,8 @@ using NaughtyAttributes;
 namespace GPG220.Luca.Scripts.Abilities
 {
     public abstract class AbilityBase : NetworkBehaviour,IDescribable
-    {
+	{
+		public bool addToAbilityUI = true;
         public float cooldown;
         
         public float currentCooldown; // Info: Public so UI could get current cooldown for example

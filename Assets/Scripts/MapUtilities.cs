@@ -7,12 +7,25 @@ using Random = UnityEngine.Random;
 
 public class MapUtilities : MonoBehaviour
 {
-	public Vector3 boundrySize;
+	public Vector3   boundrySize;
 	public LayerMask SpawnableSurfaces;
 
 	private void Start()
 	{
 		boundrySize = GetComponent<ProceduralMeshGenerator>().mesh.bounds.extents;
+	}
+
+	private void Update()
+	{
+		TestRandomGroundPointInBounds();
+	}
+
+	private void TestRandomGroundPointInBounds()
+	{
+		for (int i = 0; i < 1000; i++)
+		{
+			Vector3 pos = RandomGroundPointInBounds(GetComponent<ProceduralMeshGenerator>().mesh.bounds, new Vector3(1f,1f,1f));
+		}
 	}
 
 	public Vector3 RandomGroundPointInBounds(Bounds spawnBounds, Vector3 unitExtents)
@@ -27,10 +40,10 @@ public class MapUtilities : MonoBehaviour
 			attempts++;
 			float      randX = Random.Range(spawnBounds.min.x, spawnBounds.max.x);
 			float      randZ = Random.Range(spawnBounds.min.z, spawnBounds.max.z);
-			Vector3    o     = new Vector3(randX, spawnBounds.max.y, randZ);
+			Vector3    o     = transform.position + new Vector3(randX, spawnBounds.max.y, randZ);
 			Ray        ray   = new Ray(o, Vector3.down);
 			RaycastHit hit;
-			if (Physics.Raycast(ray, out hit, boundrySize.y * 3, SpawnableSurfaces, QueryTriggerInteraction.Ignore))
+			if (Physics.Raycast(ray, out hit, boundrySize.y + 10f, SpawnableSurfaces, QueryTriggerInteraction.Ignore))
 			{
 				Vector3 offsetPosition      = hit.point + new Vector3(0, +unitExtents.y, 0);
 				Bounds  prespawnCheckBounds = new Bounds(offsetPosition, unitExtents);
@@ -46,17 +59,11 @@ public class MapUtilities : MonoBehaviour
 				{
 					p     = offsetPosition;
 					clear = true;
+					// Debug.DrawLine(ray.origin, ray.origin + Vector3.up*10f, Color.green);
 				}
 			}
 		}
 
 		return p;
-	}
-	
-	
-	private void OnDrawGizmos()
-	{
-		Gizmos.DrawWireCube(transform.position,boundrySize);
-            
 	}
 }

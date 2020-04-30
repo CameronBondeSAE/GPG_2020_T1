@@ -2,17 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using NaughtyAttributes;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
-	public float health = 50.0f;
+	public int startingHealth;
 
-    public int startingHealth;
-
-	[ProgressBar("Health", 100, EColor.Red)]
-	private int currentHealth;
+	[SerializeField]
+	private int currentHealth = 100;
 	
 	public int CurrentHealth
 	{
@@ -45,8 +44,8 @@ public class Health : MonoBehaviour
     {
         if (CurrentHealth <= 0 && deathEvent != null)
         {
-            deathEvent.Invoke(this);
-            if (deathStaticEvent != null) deathStaticEvent.Invoke(this);
+            deathEvent?.Invoke(this);
+            deathStaticEvent?.Invoke(this);
         }
     }
 }

@@ -127,10 +127,13 @@ public class UIManager : MonoBehaviour
             int counter = 0;
             foreach (var item in abilityControllerAbilities)
             {
-                buttons[counter].gameObject.SetActive(true);
-                buttons[counter].GetComponentInChildren<TextMeshProUGUI>().text = item.Value.abilityName;
-                buttons[counter].GetComponent<AbilityButton>().abilityBase = item.Value;
-                buttons[counter].GetComponent<AbilityButton>().index = counter;
+				if (item.Value.addToAbilityUI)
+				{
+					buttons[counter].gameObject.SetActive(true);
+					buttons[counter].GetComponentInChildren<TextMeshProUGUI>().text = item.Value.abilityName;
+					buttons[counter].GetComponent<AbilityButton>().abilityBase      = item.Value;
+					buttons[counter].GetComponent<AbilityButton>().index            = counter;
+				}
 
                 counter++;
             }

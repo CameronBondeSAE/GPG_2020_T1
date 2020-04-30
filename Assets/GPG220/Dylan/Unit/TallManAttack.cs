@@ -192,7 +192,7 @@ namespace GPG220.Dylan.Unit
                     {
                         Debug.Log("Explode!!");
                         Health unitHealth = unit.GetComponent<Health>();
-                        unitHealth.health -= explosionDamage;
+                        unitHealth.ChangeHealth((int)-explosionDamage); // CAM CHANGE: can't access health directly. It's also an int for some reason
                     }
                 }
             }
