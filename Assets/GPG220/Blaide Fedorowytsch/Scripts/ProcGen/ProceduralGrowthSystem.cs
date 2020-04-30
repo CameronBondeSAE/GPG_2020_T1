@@ -66,7 +66,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
         private void Awake()
         {
             gameManager.startGameEvent += StartGrowth;
-            //growObstacles = false;
+            growObstacles = false;
             gridSizeLocker = gridSize;
             GenerateBoolGrid();
         }
@@ -256,6 +256,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
                         transform.position + new Vector3((x) * 0.01f * (worldSize.x / (gridSize.x * 0.01f)),
                             obstacleHeight / 2, (y) * 0.01f * (worldSize.y / (gridSize.y * 0.01f))),
                         transform.rotation);
+                    ObjectGrid[x,y].GetComponent<Wall>().gridPos = new Vector2Int(x,y);
                     // ObjectGrid[x, y].transform.localScale = new Vector3(worldSize.x * (gridSize.x / 100) * 0.01f,
                         // obstacleHeight, worldSize.y * (gridSize.y / 100) * 0.01f);
 
@@ -284,6 +285,12 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
             }
         }
 
+        public void SetBoolGridPosition(Vector2Int pos, bool setValue)
+        {
+            BoolGrid[pos.x, pos.y] = setValue;
+            openEdges.Add(pos);
+            updateBoolGrid();
+        }
 
         List<Vector2Int> CompareBoolGrids()
         {
