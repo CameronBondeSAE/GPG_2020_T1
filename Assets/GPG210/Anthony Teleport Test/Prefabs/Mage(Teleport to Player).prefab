@@ -159,7 +159,7 @@ MonoBehaviour:
   myNetID: 0
   myOwnerIdentity: {fileID: 0}
   debug: 
-  unitName: 
+  unitName: Teleporter
   unitDescription: 
   unitImage: {fileID: 0}
   damage: 100
@@ -189,7 +189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneId: 1490705277
+  sceneId: 3007630939
   serverOnly: 0
   m_AssetId: 
 --- !u!114 &-1344011683330915107

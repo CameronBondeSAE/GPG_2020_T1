@@ -8,15 +8,28 @@ using UnityEngine;
 public class TornadoVortex : MonoBehaviour
 {
    //controls the radius of tornados pull range
-   public float radius = 10f;
-   public float maxRadiusToPullin = 10f;
+   public float radius = 20f;
+   public float maxRadiusToPullin = 10;
    //pulls objects into the tornado  negative numbers
-   public float PullInPower =  -70f;
-   public float maxPullin = 20f;
+   public float PullInPower =  -70;
+   public float maxPullin = 20;
    
    public Vector3 offset;
 
    private Collider[] colliders;
+
+   private GameManager gameManager;
+   
+
+   void Awake()
+   {
+      gameManager = FindObjectOfType<GameManager>();
+      gameManager.startGameEvent += Update;
+   }
+   void OnDrawGizmos()
+   {
+      Gizmos.DrawSphere(transform.position,radius);
+   }
 
    void Update()
    {
