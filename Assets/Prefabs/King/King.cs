@@ -10,12 +10,15 @@ public class King : UnitBase
 
 	private void Awake()
 	{
-		Initialize();
-
 		audioSource = GetComponent<AudioSource>();
 		
 		GetComponent<Health>().healthChangedEvent += OnhealthChangedEvent;
 		GetComponent<Health>().deathEvent += OndeathEvent;
+	}
+
+	private void Start()
+	{
+		Initialize();
 	}
 
 	private void OndeathEvent(Health _health)

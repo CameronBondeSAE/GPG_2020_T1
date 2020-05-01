@@ -29,7 +29,8 @@ public class ObstacleSpawnNotifier : MonoBehaviour
         // GlobalEvents.OnPathFindingObstacleChange(new WorldPosAndBounds(pos,bounds));
     // }
 
-    public void OnAppear()
+	[Button(ButtonSizes.Small)]
+	public void OnAppear()
 	{
         obstacleWall.Appear();
         if (obstacleWall.col != null)

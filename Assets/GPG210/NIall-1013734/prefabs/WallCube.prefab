@@ -109,7 +109,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  duration: 5
+  appearDuration: 2
+  disappearDuration: 1
+  hidden: 1
   col: {fileID: 3695246183648753582}
   target: {fileID: 8128687792835031175}
   targetScale: {x: 1, y: 1, z: 1}

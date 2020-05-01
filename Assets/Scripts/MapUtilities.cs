@@ -9,6 +9,7 @@ public class MapUtilities : MonoBehaviour
 {
 	public Vector3   boundrySize;
 	public LayerMask SpawnableSurfaces;
+	public LayerMask EmptySpaceSurfacesToIgnore;
 
 	public bool debugEmptySpace = false;
 
@@ -61,7 +62,7 @@ public class MapUtilities : MonoBehaviour
 				// }
 
 				// if (!Physics.CheckBox(prespawnCheckBounds.center, prespawnCheckBounds.extents))
-				if (!Physics.CheckBox(offsetPosition, unitExtents))
+				if (!Physics.CheckBox(offsetPosition, unitExtents, Quaternion.identity, EmptySpaceSurfacesToIgnore))
 				{
 					p     = offsetPosition;
 					clear = true;

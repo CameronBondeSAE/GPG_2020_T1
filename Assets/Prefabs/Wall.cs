@@ -8,7 +8,8 @@ using Mirror;
 
 public class Wall : NetworkBehaviour
 {
-	public float duration = 4f;
+	public float appearDuration = 4f;
+	public float disappearDuration = 1f;
 
 	public bool hidden = true;
 	
@@ -24,6 +25,8 @@ public class Wall : NetworkBehaviour
 	{
 		 col = GetComponent<Collider>();
 		rend = GetComponentInChildren<Renderer>();
+
+		col.enabled = false;
 		rend.enabled = false;
 		
 		target.localScale = new Vector3(targetScale.x, 0, targetScale.z);
@@ -37,9 +40,10 @@ public class Wall : NetworkBehaviour
 
 		if (hidden)
 		{
-			var tweenerCore = target.DOScale(targetScale, duration).SetEase(Ease.Linear);
-			
+			var tweenerCore = target.DOScale(targetScale, appearDuration).SetEase(Ease.Linear);
 		}
+
+		hidden = false;
 	}
 
     public void DestroyWall()
@@ -55,7 +59,7 @@ public class Wall : NetworkBehaviour
 		
 		if (!hidden)
 		{
-			t = target.DOScale(new Vector3(1f, 0f, 1f), 5f).SetEase(Ease.Linear);
+			t = target.DOScale(new Vector3(1f, 0f, 1f), disappearDuration).SetEase(Ease.InOutElastic);
 			t.onComplete += delegate
 							{
 								col.enabled  = false;

@@ -91,13 +91,16 @@ public class GameManager : MonoBehaviour
 				localPlayer = playerBase;
 			}
 
-			Debug.Log("Build units for new player");
+			// Debug.Log("Build units for new player");
 
 			BuildKing(conn.identity, playerBase);
-			BuildUnits(conn.identity, playerBase);
+			// BuildUnits(conn.identity, playerBase);
 
 			// TODO: Networking
-			HealthbarViewModel healthBar = Instantiate(healthbarPrefab);
+			if (healthbarPrefab != null)
+			{
+				HealthbarViewModel healthBar = Instantiate(healthbarPrefab);
+			}
 		}
 	}
 
