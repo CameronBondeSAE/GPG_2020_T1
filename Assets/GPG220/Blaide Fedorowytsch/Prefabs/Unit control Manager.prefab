@@ -55,15 +55,6 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: onSelectionEvent
-      Entry: 6
-      Data: 
-    - Name: onDeselectionEvent
-      Entry: 6
-      Data: 
-    - Name: mouseOverIselectable
-      Entry: 6
-      Data: 
     - Name: iSelectablesInSelection
       Entry: 7
       Data: 0|System.Collections.Generic.List`1[[GPG220.Blaide_Fedorowytsch.Scripts.Interfaces.ISelectable,
@@ -163,7 +154,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 21b8dc4537fe4404e90a08b0fc3e2086, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
