@@ -21,7 +21,7 @@ namespace GPG220.Dylan.Unit
         public float energy;
 
         public float explosionRadius;
-        public float explosionDamage;
+        public int explosionDamage;
         public float teleportCost;
         public float teleportDelay;
 
@@ -88,12 +88,12 @@ namespace GPG220.Dylan.Unit
             // moveAction.currentPathNodeIndex = 0;
 
             moveAction.canMove = false;
-            // goapAgentDylan.CalculateNewGoal(true);
+            goapAgentDylan.CalculateNewGoal(true);
 
-            if (CheckIfPathIsPossible())
+            if (pathPossibleAction.isPathPossible)
             {
-                // moveAction.canMove = true;
-                goapAgentDylan.CalculateNewGoal(true);
+                moveAction.canMove = true;
+                // goapAgentDylan.CalculateNewGoal(true);
             }
             else
             {
@@ -111,7 +111,7 @@ namespace GPG220.Dylan.Unit
                     checkEnergyAction.energyAmount = energy;
                 }
 
-                goapAgentDylan.CalculateNewGoal(true);
+                // goapAgentDylan.CalculateNewGoal(true);
             }
 
             // goapAgentDylan.CalculateNewGoal(true);
@@ -124,6 +124,7 @@ namespace GPG220.Dylan.Unit
             if(currentPath == null)
             {
                 pathPossibleAction.isPathPossible = false;
+                moveAction.canMove = false;
             }
             else
             {
@@ -136,7 +137,7 @@ namespace GPG220.Dylan.Unit
 
         public void FixedUpdate()
         {
-            if (moveAction.canMove)
+            if (moveAction.canMove && currentPath != null)
             {
                 if (Vector3.Distance(this.gameObject.transform.position, targetPosition) > nodeDistanceMin)
                 {
