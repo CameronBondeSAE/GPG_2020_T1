@@ -42,6 +42,9 @@ namespace GPG220.Dylan.Unit
         public float moveForce = 1000;
         public SimplePathfinder simplePathfinder;
 
+        public AudioSource audioSource;
+        public AudioClip teleportSFX;
+        public AudioClip explodeSFX;
         public void Awake()
         {
             abilityName = "Explosive Surprise";
@@ -51,6 +54,7 @@ namespace GPG220.Dylan.Unit
 
             rb = GetComponent<Rigidbody>();
             simplePathfinder = FindObjectOfType<SimplePathfinder>();
+            audioSource = GetComponent<AudioSource>();
 
             goapAgentDylan = GetComponent<GoapAgentDylan>();
             goal = GetComponent<GoalTargetReached>();
@@ -119,6 +123,7 @@ namespace GPG220.Dylan.Unit
             return base.TargetExecute(worldPos);
         }
 
+        
         private bool CheckIfPathIsPossible()
         {
             if(currentPath == null)
@@ -197,10 +202,10 @@ namespace GPG220.Dylan.Unit
                     }
                 }
             }
-
-            // StartCoroutine("Death");
-            Death();
-
+            audioSource.PlayOneShot(explodeSFX);
+            StartCoroutine("Death");
+            // Death();
+            
             targetReachedAction.targetReached -= ExplodeAttack;
         }
 
@@ -216,27 +221,29 @@ namespace GPG220.Dylan.Unit
 
         public IEnumerator TeleportDelay()
         {
+            audioSource.PlayOneShot(teleportSFX);
             yield return new WaitForSeconds(teleportDelay);
             transform.position = new Vector3(targetPosition.x, targetPosition.y + 2f, targetPosition.z);
             teleportAction.isRunning = false;
             CheckDistance();
         }
 
-        public void Death()
-        {
-            Health health = this.gameObject.GetComponent<Health>();
-            health.ChangeHealth(-999);
-
-            // Destroy(gameObject);
-        }
-
-        // public IEnumerator Death()
+        // public void Death()
         // {
-        //     yield return new WaitForSeconds(2f);
+        //     
         //     Health health = this.gameObject.GetComponent<Health>();
         //     health.ChangeHealth(-999);
         //
         //     // Destroy(gameObject);
         // }
+
+        public IEnumerator Death()
+        {
+            yield return new WaitForSeconds(2f);
+            Health health = this.gameObject.GetComponent<Health>();
+            health.ChangeHealth(-999);
+        
+            // Destroy(gameObject);
+        }
     }
 }
