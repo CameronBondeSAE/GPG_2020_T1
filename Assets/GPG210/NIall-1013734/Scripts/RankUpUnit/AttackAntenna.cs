@@ -36,15 +36,15 @@ public class AttackAntenna : AbilityBase
                         // Do damage
                         hit.transform.GetComponent<Health>().ChangeHealth(-damage);
 
-                        Debug.Log(gameObject.name + hit + "Damaged Unit");
+                        // Debug.Log(gameObject.name + hit + "Damaged Unit");
 
                         transform.GetComponent<ParticleSystem>().Play();
 
                         fire = false;
                     }
                     
-                    Debug.Log(transform.GetComponent<UnitBase>().owner);
-                    Debug.Log(hit.transform.GetComponent<UnitBase>().owner);
+                    // Debug.Log(transform.GetComponent<UnitBase>().owner);
+                    // Debug.Log(hit.transform.GetComponent<UnitBase>().owner);
                 }
             }
         }

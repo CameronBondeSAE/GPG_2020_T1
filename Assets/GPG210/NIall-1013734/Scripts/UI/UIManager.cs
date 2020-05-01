@@ -104,8 +104,8 @@ public class UIManager : MonoBehaviour
 
     private void OnSelection([CanBeNull] List<ISelectable> selectables)
     {
-        Debug.Log(selectables.ToString());
-        Debug.Log(selectables.Count.ToString());
+        // Debug.Log(selectables.ToString());
+        // Debug.Log(selectables.Count.ToString());
 
 
         if (selectables.Count == 1)

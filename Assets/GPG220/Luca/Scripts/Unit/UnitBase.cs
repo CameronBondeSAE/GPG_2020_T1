@@ -25,11 +25,11 @@ namespace GPG220.Luca.Scripts.Unit
 		public uint ownerNetID;
 		[SyncVar]
 		public NetworkIdentity owner;
-
-		[SyncVar] public Color myColour;
-		private MeshRenderer meshRenderer;
+		[SyncVar] 
+		public Color myColour;
 		
-        public UnitStats unitStats;
+		private MeshRenderer meshRenderer;
+		public UnitStats unitStats;
         public Inventory inventory;
         public Rigidbody rb;
         public Health health;

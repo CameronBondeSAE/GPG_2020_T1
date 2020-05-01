@@ -27,10 +27,10 @@ namespace GPG220.Dylan.King_Scripts
             for (int i = 0; i < unitSpawner.unitBases.Count; i++)
             {
                 UnitSpawnerAbility unitSpawnerAbility = gameObject.AddComponent<UnitSpawnerAbility>();
-                unitSpawnerAbility.unitPrefab = unitSpawner.unitBases[i];
+                unitSpawnerAbility.unitPrefabIndex = i;
                 unitSpawnerAbility.groundMask = groundMask;
-                unitSpawnerAbility.abilityName = "Build: " + unitSpawnerAbility.unitPrefab.unitName;
-                unitSpawnerAbility.abilityDescription = "Build " + unitSpawnerAbility.unitPrefab.Name;
+                unitSpawnerAbility.abilityName = unitSpawner.unitBases[i].unitName;
+                unitSpawnerAbility.abilityDescription = "Build " + unitSpawner.unitBases[i].Name + " next to King";
                 unitSpawnerAbility.player = player;
             }
         }

@@ -15,7 +15,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 		[ReorderableList]
 		public List<UnitBase> unitBases;
 
-		public int       spawnNumber = 1;
+		public int spawnNumber = 1;
 
 		private MapUtilities mapUtilities;
 
@@ -27,18 +27,26 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 
 		public UnitBase SpawnUnit(NetworkIdentity owner, UnitBase unit, Vector3 position, Quaternion rotation)
 		{
-			GameObject g = Instantiate(unit.gameObject, position, rotation);
+			if (isServer)
+			{
+				GameObject g = Instantiate(unit.gameObject, position, rotation);
 
-			// Networking
-			UnitBase uB = g.GetComponent<UnitBase>();
-			uB.owner      = owner;
-			uB.ownerNetID = owner.netId;
+				// Networking
+				UnitBase uB = g.GetComponent<UnitBase>();
+				uB.owner      = owner;
+				uB.ownerNetID = owner.netId;
 
-			// Assign ownership of spawned units to client
-			NetworkServer.Spawn(g, owner.gameObject);
-			// g.GetComponent<NetworkIdentity>().AssignClientAuthority(playerBaseOwner.GetComponent<NetworkIdentity>().connectionToClient);
+				// Assign ownership of spawned units to client
+				NetworkServer.Spawn(g, owner.gameObject);
+				// g.GetComponent<NetworkIdentity>().AssignClientAuthority(playerBaseOwner.GetComponent<NetworkIdentity>().connectionToClient);
 
-			return uB;
+				return uB;
+			}
+			else
+			{
+				Debug.LogWarning("Trying to spawn from client");
+				return null;
+			}
 		}
 
 		//[Button (Name = "RandomSpawn" )]

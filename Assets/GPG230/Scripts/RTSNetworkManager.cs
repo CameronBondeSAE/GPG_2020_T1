@@ -57,4 +57,14 @@ public class RTSNetworkManager : NetworkManager
     {
         this.networkAddress = hostname;
     }
+
+	public override void OnClientConnect(NetworkConnection conn)
+	{
+		base.OnClientConnect(conn);
+	}
+
+	public override void OnStartClient()
+	{
+		base.OnStartClient();
+	}
 }

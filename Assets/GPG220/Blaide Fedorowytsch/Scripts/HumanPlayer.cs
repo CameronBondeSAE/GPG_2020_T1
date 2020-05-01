@@ -17,9 +17,15 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
             netIdMine = netId;
         }
 
-        public void Awake()
+        public void Start()
         {
             playerColour = new Color(Random.Range(0F,1F), Random.Range(0, 1F), Random.Range(0, 1F));
-        }
+			
+			// HACK? Need to set the localPlayer for CLIENTS so they can Units owned by the player can assign ownership when THEY request units spawned (the king)
+			if (isLocalPlayer)
+			{
+				FindObjectOfType<GameManager>().localPlayer = this;
+			}
+		}
     }
 }
