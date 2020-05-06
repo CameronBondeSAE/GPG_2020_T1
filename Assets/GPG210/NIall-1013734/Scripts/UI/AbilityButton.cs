@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using GPG220.Luca.Scripts.Abilities;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,6 +10,7 @@ public class AbilityButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public UIManager uiManager;
     public AbilityBase abilityBase;
     public int index;
+    public TextMeshProUGUI tmpUGUI;
 
 
     public void ClickedButton()
@@ -27,11 +29,11 @@ public class AbilityButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        tmpUGUI.text = abilityBase.Description;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        tmpUGUI.text = "";
     }
 }
