@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 94927603161039922}
   - component: {fileID: 4786210523474013921}
   - component: {fileID: -5220772708215256399}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: pelletPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,6 +116,8 @@ MonoBehaviour:
   abilityDescription: 
   abilityImage: {fileID: 0}
   amount: 15
+  unitBase: {fileID: 0}
+  growMultiplier: 0
 --- !u!54 &-5220772708215256399
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -130,5 +132,5 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 16
   m_CollisionDetection: 0

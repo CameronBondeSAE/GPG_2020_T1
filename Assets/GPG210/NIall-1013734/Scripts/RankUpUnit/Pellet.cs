@@ -1,40 +1,63 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using GPG220.Luca.Scripts.Abilities;
+using GPG220.Luca.Scripts.Unit;
+using Mirror;
 using UnityEngine;
 
-public class Pellet : AbilityBase
+namespace GPG210.Scripts.RankUpUnit
 {
-    private float speed;
-    private float lifeDuration;
-
-    private float lifeTimer;
-    public int amount;
-
-    void Start()
+    public class Pellet : AbilityBase
     {
-        lifeDuration = 1.5f;
-        speed = 15f;
-        lifeTimer = lifeDuration;
-    }
+        private float speed;
+        private float lifeDuration;
 
+        private float lifeTimer;
+        public int amount;
+        [HideInInspector] public UnitBase unitBase;
+        public float growMultiplier;
 
-    void Update()
-    {
-        transform.position += transform.forward * (speed * Time.deltaTime);
-
-        lifeTimer -= Time.deltaTime;
-        if (lifeTimer <= 0f)
+        public void Awake()
         {
+            // var pelletsSpawned = FindObjectsOfType<Pellet>();
+            //
+            // foreach (var pellet in pelletsSpawned)
+            // {
+            //     Physics.IgnoreCollision(this.GetComponent<Collider>(),pellet.GetComponent<Collider>());
+            // }
+            
+            Physics.IgnoreCollision(this.GetComponent<Collider>(), FindObjectOfType<Pellet>().GetComponent<Collider>());
+        }
+
+        void Start()
+        {
+            lifeDuration = 1.5f;
+            speed = 15f;
+            lifeTimer = lifeDuration;
+        }
+
+        void FixedUpdate()
+        {
+            transform.position += transform.forward * (speed * Time.deltaTime);
+            transform.localScale += transform.localScale * (growMultiplier * Time.deltaTime);
+            lifeTimer -= Time.deltaTime;
+            if (lifeTimer <= 0f)
+            {
+                Destroy(gameObject);
+            }
+        }
+
+
+        public void OnTriggerEnter(Collider other)
+        {
+            if (other.GetComponent<UnitBase>())
+            {
+                if (unitBase.owner != other.GetComponent<UnitBase>().owner)
+                {
+                    other.transform.GetComponent<Health>().ChangeHealth(-amount);
+                }
+            }
+
             Destroy(gameObject);
         }
-    }
-
-
-    public void OnTriggerEnter(Collider other)
-    {
-        other.transform.GetComponent<Health>().ChangeHealth(-amount);
-        //  Destroy(gameObject);
     }
 }

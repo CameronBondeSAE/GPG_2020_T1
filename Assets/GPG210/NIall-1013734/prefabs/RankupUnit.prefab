@@ -279,7 +279,7 @@ MonoBehaviour:
   addToAbilityUI: 1
   cooldown: 0
   currentCooldown: 0
-  targetRequired: 0
+  targetRequired: 1
   abilityName: Shotgun
   abilityDescription: Shoots a spread of projectiles infront of unit damaging enemies
     first hit.
@@ -287,6 +287,7 @@ MonoBehaviour:
   pelletPrefab: {fileID: 6430273330219342301, guid: 96763d1766fefb34bb5f737301491e31,
     type: 3}
   Prong: {fileID: 1686169348673056}
+  bulletGrowthMultiplier: 1.5
 --- !u!114 &68299660218663067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5337,6 +5338,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4006765777629298}
     m_Modifications:
+    - target: {fileID: 3790974502673593787, guid: f025ea9745a03304fb68e5463313693a,
+        type: 3}
+      propertyPath: m_Name
+      value: HealthbarClamp
+      objectReference: {fileID: 0}
     - target: {fileID: 3790974502673593732, guid: f025ea9745a03304fb68e5463313693a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5397,11 +5403,6 @@ PrefabInstance:
       propertyPath: healthbar
       value: 
       objectReference: {fileID: 8692826519782908990}
-    - target: {fileID: 3790974502673593787, guid: f025ea9745a03304fb68e5463313693a,
-        type: 3}
-      propertyPath: m_Name
-      value: HealthbarClamp
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f025ea9745a03304fb68e5463313693a, type: 3}
 --- !u!4 &454287072 stripped
@@ -5417,6 +5418,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4006765777629298}
     m_Modifications:
+    - target: {fileID: 3734357262073136749, guid: 40ce883dac650854c87e9e52bd68571f,
+        type: 3}
+      propertyPath: m_Name
+      value: Healthbar Canvas
+      objectReference: {fileID: 0}
     - target: {fileID: 1509859411571637688, guid: 40ce883dac650854c87e9e52bd68571f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5522,6 +5528,16 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4949247118855478735, guid: 40ce883dac650854c87e9e52bd68571f,
+        type: 3}
+      propertyPath: health
+      value: 
+      objectReference: {fileID: 1404205552856636576}
+    - target: {fileID: 7157968816201594405, guid: 40ce883dac650854c87e9e52bd68571f,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3497335801224615537, guid: 40ce883dac650854c87e9e52bd68571f,
         type: 3}
       propertyPath: m_Color.r
@@ -5540,21 +5556,6 @@ PrefabInstance:
     - target: {fileID: 3497335801224615537, guid: 40ce883dac650854c87e9e52bd68571f,
         type: 3}
       propertyPath: m_Color.a
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3734357262073136749, guid: 40ce883dac650854c87e9e52bd68571f,
-        type: 3}
-      propertyPath: m_Name
-      value: Healthbar Canvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 4949247118855478735, guid: 40ce883dac650854c87e9e52bd68571f,
-        type: 3}
-      propertyPath: health
-      value: 
-      objectReference: {fileID: 1404205552856636576}
-    - target: {fileID: 7157968816201594405, guid: 40ce883dac650854c87e9e52bd68571f,
-        type: 3}
-      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
