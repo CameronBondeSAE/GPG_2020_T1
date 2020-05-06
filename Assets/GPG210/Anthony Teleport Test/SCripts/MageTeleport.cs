@@ -30,7 +30,7 @@ public class MageTeleport : AbilityBase
     private void Awake()
     {
         abilityName = "Teleport";
-        abilityDescription = "Teleport to another player on the map killing them instantly.";
+        abilityDescription = "Teleport to a world position on the map";
         targetRequired = true;
 
     }
