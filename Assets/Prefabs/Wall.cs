@@ -8,9 +8,13 @@ using Mirror;
 
 public class Wall : NetworkBehaviour
 {
+	
+	
 	public float appearDuration = 4f;
 	public float disappearDuration = 1f;
-
+	
+	
+	[SyncVar(hook = nameof(NetworkHidden))]
 	public bool hidden = true;
 	
 	public Collider col;
@@ -33,6 +37,25 @@ public class Wall : NetworkBehaviour
 		_spawnNotifier = GetComponent<ObstacleSpawnNotifier>();
 	}
 
+   
+    public void NetworkHidden(bool oldValue , bool newValue)
+    {
+
+	    if (isClientOnly)
+	    {
+		    
+		    if (newValue)
+		    {
+			    Appear();
+		    }
+		    else
+		    {
+			    Disappear();
+		    }
+	    }
+    }
+    
+    
     public void Appear()
     {
 		col.enabled = true;
@@ -43,8 +66,12 @@ public class Wall : NetworkBehaviour
 			var tweenerCore = target.DOScale(targetScale, appearDuration).SetEase(Ease.Linear);
 		}
 
-		hidden = false;
+	
+			hidden = false;
+		
+		
 	}
+
 
     public void DestroyWall()
     {
@@ -66,9 +93,9 @@ public class Wall : NetworkBehaviour
 								rend.enabled = false;
 							}; 
 		}
-
-		hidden = true;
-
+		
+			hidden = true;
+			
 		
 	}
 }
