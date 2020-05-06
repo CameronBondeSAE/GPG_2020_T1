@@ -53,13 +53,13 @@ MonoBehaviour:
   abilityDescription: 
   abilityImage: {fileID: 0}
   bullet: {fileID: 743213674323251579, guid: d093a4c5b8a1b464d9aa583288500775, type: 3}
+  RocketManUnitBase: {fileID: 0}
   target: {x: 0, y: 0, z: 0}
   isShooting: 0
   spawnTransform: {fileID: 0}
   explosionForce: 3
   rb: {fileID: 0}
   explosionSound: {fileID: 0}
-  cam: {fileID: 0}
 --- !u!1 &3661466405372876209
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,7 +271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneId: 2682252176
+  sceneId: 3281900296
   serverOnly: 0
   m_AssetId: 
 --- !u!114 &8736307313088339211
@@ -402,13 +402,13 @@ MonoBehaviour:
   abilityDescription: 
   abilityImage: {fileID: 0}
   bullet: {fileID: 743213674323251579, guid: d093a4c5b8a1b464d9aa583288500775, type: 3}
+  RocketManUnitBase: {fileID: 8736307313088339209}
   target: {x: 0, y: 0, z: 0}
   isShooting: 0
   spawnTransform: {fileID: 240019059}
   explosionForce: 100
   rb: {fileID: 8736307313088339221}
   explosionSound: {fileID: 3565607544720654060}
-  cam: {fileID: 6044255250202774872, guid: a345f4621287af443a04fbf7364d6634, type: 3}
 --- !u!114 &8052012631895070761
 MonoBehaviour:
   m_ObjectHideFlags: 0
