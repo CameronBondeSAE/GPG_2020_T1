@@ -6,7 +6,8 @@ namespace Anthony
 {
     public interface IDescribable
     {
-        string Name
+        [SerializeField] 
+		string Name
         {
             get;
         }
