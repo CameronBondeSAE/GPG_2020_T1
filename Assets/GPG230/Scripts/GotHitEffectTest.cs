@@ -12,7 +12,7 @@ public class GotHitEffectTest : MonoBehaviour
     public float maxAmount;
     public float minAmount;
     public float speed;
-   
+    public int damage;
     
     // Start is called before the first frame update
     void Start()
@@ -31,23 +31,22 @@ public class GotHitEffectTest : MonoBehaviour
     {
         if (meshRenderer.material.GetFloat("_Amount") > minAmount)
         {
-            
             meshRenderer.material.SetFloat("_Amount", meshRenderer.material.GetFloat("_Amount") - Time.deltaTime*speed);
         }
 
         if (Input.GetKeyDown("space"))
         {
-            WibblyWobble(health,50);
+            WibblyWobble(health, damage);
         }
     }
 
     public void WibblyWobble(Health health, int amount)
     {
         
-        float percent = amount / (float)health.CurrentHealth * 100;
+        float percent = amount / (float)health.CurrentHealth;
         
         
-        meshRenderer.material.SetFloat("_Amount",maxAmount);
+        meshRenderer.material.SetFloat("_Amount",amount);
         
     }
 
