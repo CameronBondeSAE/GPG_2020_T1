@@ -150,6 +150,7 @@ public class UIManager : MonoBehaviour
 
     private void OnDeselection(List<ISelectable> selectables)
     {
+        
         if (groupAbilityControllers.Count > 0)
         {
             foreach (ISelectable selectable in selectables)
@@ -161,6 +162,8 @@ public class UIManager : MonoBehaviour
         abilityController = null;
         selectedTargetAbility = null;
         selectedWorldTargetAbility = null;
+        
+        abilitySelectionUI.SetActive(false);
 
         /*groupAbilityControllers.Clear();
         abilityController = null;

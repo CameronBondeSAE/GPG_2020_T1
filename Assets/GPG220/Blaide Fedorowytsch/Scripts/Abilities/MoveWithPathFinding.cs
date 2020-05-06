@@ -69,6 +69,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Abilities
         {
             if (moving)
             {
+                
+                
                 if (Vector3.Distance(this.gameObject.transform.position,target) > nodeDistanceMin)
                 {
                     Vector3 nextPos = currentPath[currentPathNodeIndex].worldPosition;
@@ -78,12 +80,15 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Abilities
                             nextPos) > nodeDistanceMin)
                     {
                         Move(nextPos);
+                        rb.AddForce(Vector3.down *rb.mass *4);
                     }
                     else
                     {
                         if(currentPathNodeIndex < currentPath.Count -1)
                         currentPathNodeIndex += 1;
                     }
+                    
+                    transform.LookAt(new Vector3(nextPos.x,transform.position.y,nextPos.z));
                 }
                 else
                 {
