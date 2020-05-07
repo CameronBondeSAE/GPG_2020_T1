@@ -180,6 +180,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Vector1_385CF92D: 1
+    - Vector1_6CA4D53E: 4
     - _AORemapMax: 1
     - _AORemapMin: 0
     - _ATDistance: 1
@@ -193,7 +195,7 @@ Material:
     - _AlphaCutoffShadow: 0.5
     - _AlphaDstBlend: 0
     - _AlphaSrcBlend: 1
-    - _Amount: 0.58
+    - _Amount: 0.1
     - _Anisotropy: 0
     - _Blend: 0
     - _BlendMode: 0
