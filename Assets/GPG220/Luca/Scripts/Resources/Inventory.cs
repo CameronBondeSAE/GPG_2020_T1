@@ -111,7 +111,7 @@ namespace GPG220.Luca.Scripts.Resources
                     var amtToTake = RemoveResources(resType.Key, dropOutMaxStack, false);
                     var rpu = go.GetComponent<ResourcePickUp>() ?? go.AddComponent<ResourcePickUp>();
                     var rpuInventory = rpu?.inventory ?? rpu?.GetComponent<Inventory>();
-                    var amtTaken = rpuInventory?.AddResources(resType.Key, amtToTake) ?? 0;
+                    var amtTaken = rpuInventory?.AddResources(resType.Key, amtToTake) ?? 1;
 
                     if (amtTaken < amtToTake)
                         AddResources(resType.Key, amtToTake - amtTaken);
@@ -151,6 +151,7 @@ namespace GPG220.Luca.Scripts.Resources
             
             if(amt != 0)
                 onResQuantityChanged?.Invoke(this,resourceType,-amt);
+                
             
             return amt;
         }

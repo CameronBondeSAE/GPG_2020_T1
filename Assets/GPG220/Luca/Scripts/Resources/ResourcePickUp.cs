@@ -50,6 +50,7 @@ public class ResourcePickUp : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        
         HandleCollision(other.gameObject);
     }
 
@@ -75,5 +76,6 @@ public class ResourcePickUp : MonoBehaviour
             if (amtTaken != amtToTake)
                 otherInventory.AddResources(resType.Key, amtToTake-amtTaken);
         });
+        
     }
 }
