@@ -17,43 +17,47 @@ namespace GPG220.Luca.Scripts.Unit
         // Hacky
         public struct VisualHealthState
         {
-            [Range(0,100)]
-            public int fromPercentage;
-            [Range(0,100)]
-            public int toPercentage;
+            [Range(0, 100)] public int fromPercentage;
+            [Range(0, 100)] public int toPercentage;
 
-            [PreviewField]
-            public GameObject model;
+            [PreviewField] public GameObject model;
         }
-        
+
         public List<VisualHealthState> visualHealthStates;
         private VisualHealthState currentVisualHealthState;
         private float oldHealth = 0;
 
-        [FoldoutGroup("Loot Options")] public bool lootOnDestroy = false; // Loot will be given out when it's fully destroyed otherwise gradually depending on damage.
-        
-        [FoldoutGroup("ResetOptions")] public float despawnTime = -1; // -1: Don't despawn, 0: Despawn immediately, >0: Despawn after x seconds (after dying)
-        [FoldoutGroup("ResetOptions")] public float respawnTime = -1; // -1: Don't respawn, 0: Respawn immediately, >0: Respawn after x seconds (after dying)
+        [FoldoutGroup("Loot Options")] public bool
+            lootOnDestroy =
+                false; // Loot will be given out when it's fully destroyed otherwise gradually depending on damage.
+
+        [FoldoutGroup("ResetOptions")] public float
+            despawnTime = -1; // -1: Don't despawn, 0: Despawn immediately, >0: Despawn after x seconds (after dying)
+
+        [FoldoutGroup("ResetOptions")] public float
+            respawnTime = -1; // -1: Don't respawn, 0: Respawn immediately, >0: Respawn after x seconds (after dying)
+
         private float despawnCountdown = -1;
         private float respawnCountdown = -1;
-        
-        [FoldoutGroup("Hit Simulation")]
-        public float damage = 10;
 
-        [FoldoutGroup("Hit Simulation")]
-        public UnitBase otherUnit;
-        
-        [FoldoutGroup("Hit Simulation"),Button("Simulate Hit")]
+        [FoldoutGroup("Hit Simulation")] public float damage = -999;
+
+        [FoldoutGroup("Hit Simulation")] public UnitBase otherUnit;
+
+        public ResourceType resourceType;
+        public Inventory inventory;
+
+        [FoldoutGroup("Hit Simulation"), Button("Simulate Hit")]
         public void SimulateHit()
         {
             if (otherUnit == null)
                 return;
 
             unitStats.Health -= damage;
-            
+
             HandleOnHit(otherUnit);
         }
-        
+
         private void Start()
         {
             Initialize();
@@ -61,20 +65,43 @@ namespace GPG220.Luca.Scripts.Unit
 
         protected override void Initialize()
         {
-            base.Initialize();
-            if(visualHealthStates == null)
+            inventory = GetComponent<Inventory>();
+            if (visualHealthStates == null)
                 visualHealthStates = new List<VisualHealthState>();
             //visualHealthStates = new Dictionary<KeyValuePair<int,int>, GameObject>();
 
             _originalAmounts = inventory.GetResourceQuantities();
-            oldHealth = unitStats.Health;
-            
-            unitStats.onHealthChanged += HandleOnHealthChanged;
+            if (unitStats != null)
+            {
+                oldHealth = unitStats.Health;
+                unitStats.onHealthChanged += HandleOnHealthChanged;
+            }
+
+            inventory.ResQuantityChangedEvent += CheckInventory;
+            base.Initialize();
+        }
+
+        private void CheckInventory(Inventory _inventory, ResourceType _resourceType, int amount)
+        {
+            Debug.Log("Working");
+            _inventory = inventory;
+            _resourceType = resourceType;
+            if (_inventory.GetResourceQuantity(_resourceType) <= 0)
+            {
+                health.deathEvent += Death;
+                health.InstaKill();
+            }
+        }
+
+        private void Death(Health obj)
+        {
+            health.deathEvent -= Death;
+            Destroy(gameObject);
         }
 
         private void OnDestroy()
         {
-            unitStats.onHealthChanged -= HandleOnHealthChanged;
+            if (unitStats != null) unitStats.onHealthChanged -= HandleOnHealthChanged;
         }
 
         private void Update()
@@ -89,7 +116,7 @@ namespace GPG220.Luca.Scripts.Unit
             if (respawnTime > 0 && respawnCountdown > 0)
             {
                 respawnCountdown -= Time.deltaTime;
-                if(respawnCountdown <= 0)
+                if (respawnCountdown <= 0)
                     Respawn();
             }
         }
@@ -113,18 +140,20 @@ namespace GPG220.Luca.Scripts.Unit
 
             if (otherUnitInventory == null)
                 return;
-            
+
             _originalAmounts.ForEach(kvp =>
             {
                 // Calculate the amounts of resources to be transferred. Give all resources if the resource is "Dead". HACKY.
-                var amount = unitStats.IsAlive() ? ((int)(kvp.Value * healthPercentChange)) : inventory.GetResourceQuantity(kvp.Key);
-                
+                var amount = unitStats.IsAlive()
+                    ? ((int) (kvp.Value * healthPercentChange))
+                    : inventory.GetResourceQuantity(kvp.Key);
+
                 if (amount <= 0)
                     return;
-                
+
                 // Remove resource from this ResourceUnit
                 amount = inventory.RemoveResources(kvp.Key, amount);
-                
+
                 // Try and add resources to the otherUnits' inventory
                 var transferredAmount = otherUnitInventory.AddResources(kvp.Key, amount);
 
@@ -138,16 +167,17 @@ namespace GPG220.Luca.Scripts.Unit
         {
             var currentHealthPercentage = GetHealthPercentage(unitStats.Health);
             var vhs = visualHealthStates
-                .FirstOrDefault(state => state.fromPercentage <= currentHealthPercentage && state.toPercentage >= currentHealthPercentage);
+                .FirstOrDefault(state =>
+                    state.fromPercentage <= currentHealthPercentage && state.toPercentage >= currentHealthPercentage);
 
             if (vhs.Equals(currentVisualHealthState))
                 return;
 
             currentVisualHealthState = vhs;
-            
+
             if (vhs.model == null)
                 return;
-            
+
             // TODO: Use pooling? Or just (de-)activate models & always keep them alive?
             Destroy(currentModel);
 
@@ -158,8 +188,8 @@ namespace GPG220.Luca.Scripts.Unit
         {
             if (unitStats.Health < 0)
                 return 0;
-            
-            return (int)(health / unitStats.MaxHealth * 100);
+
+            return (int) (health / unitStats.MaxHealth * 100);
         }
 
         public void Respawn()

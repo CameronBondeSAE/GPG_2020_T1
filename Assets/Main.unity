@@ -2263,6 +2263,30 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: StartHost
       objectReference: {fileID: 0}
+    - target: {fileID: 4487287839828795117, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: m_text
+      value: "- Flexible RTS multiplayer engine project\r\n- Including small demo
+        Units and Abilities\r\n- Modular Unit/Ability systems\r\n- Custom pathfinding
+        (adapts to changing level)\r\n- Networking with \u2018unlimited\u2019 players\r\n-
+        Procedural level with growth algorithm\r\n- Goal Oriented Action Planning
+        AI\r\n- Adaptive UI system with any new units and abilities\r"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4487287839828795117, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 339
+      objectReference: {fileID: 0}
+    - target: {fileID: 4487287839828795117, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4487287839828795117, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 52
+      objectReference: {fileID: 0}
     - target: {fileID: 7993774512274916398, guid: 298228f203107444691db63a0ad56f1a,
         type: 3}
       propertyPath: m_IsActive
@@ -2312,6 +2336,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: StopAllCoroutines
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995541893682817016, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995541893682817019, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8620873269242555922, guid: 298228f203107444691db63a0ad56f1a,
         type: 3}

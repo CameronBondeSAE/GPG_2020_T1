@@ -112,6 +112,8 @@ GameObject:
   - component: {fileID: 8337901391893673648}
   - component: {fileID: 602410776146797288}
   - component: {fileID: -6594382436035461785}
+  - component: {fileID: 5874412341077429423}
+  - component: {fileID: 8290591019739895267}
   m_Layer: 12
   m_Name: King
   m_TagString: Untagged
@@ -452,6 +454,35 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!135 &5874412341077429423
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1127377614303666354}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8290591019739895267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1127377614303666354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcc0cdbfeab4e9b488cf1f9d06e20e79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory: {fileID: 4914630097033095459}
+  despawnTime: -1
+  despawnCountdown: -1
+  pickupCooldown: 1
 --- !u!1 &4977924751711294215
 GameObject:
   m_ObjectHideFlags: 0
@@ -5290,6 +5321,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 370540908157501794}
     m_Modifications:
+    - target: {fileID: -927199367670048503, guid: ff2449463ac53674e8200c6d95f9251f,
+        type: 3}
+      propertyPath: m_Name
+      value: Crown
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: ff2449463ac53674e8200c6d95f9251f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5359,11 +5395,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: -927199367670048503, guid: ff2449463ac53674e8200c6d95f9251f,
-        type: 3}
-      propertyPath: m_Name
-      value: Crown
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff2449463ac53674e8200c6d95f9251f, type: 3}

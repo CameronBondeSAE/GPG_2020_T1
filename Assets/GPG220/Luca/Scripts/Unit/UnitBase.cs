@@ -87,24 +87,27 @@ namespace GPG220.Luca.Scripts.Unit
 			rb.drag = 10f;
 			
 			
-			// Is it a player? (Resources are units also)
-			var playerBase = owner.gameObject.GetComponent<PlayerBase>();
-			if (playerBase != null)
+			if (owner != null)
 			{
-				myColour = playerBase.playerColour;
+				// Is it a player? (Resources are units also)
+				var playerBase = owner.gameObject.GetComponent<PlayerBase>();
+				if (playerBase != null)
+				{
+					myColour = playerBase.playerColour;
 
-				if (GetComponent<MeshRenderer>() != null)
-				{
-					meshRenderer = GetComponent<MeshRenderer>();
+					if (GetComponent<MeshRenderer>() != null)
+					{
+						meshRenderer = GetComponent<MeshRenderer>();
+					}
+					else
+					{
+						meshRenderer = GetComponentInChildren<MeshRenderer>();
+					}
+					meshRenderer.material.SetColor("_TeamColour", myColour);
 				}
-				else
-				{
-					meshRenderer = GetComponentInChildren<MeshRenderer>();
-				}
-				meshRenderer.material.SetColor("_TeamColour", myColour);
 			}
-			
-            SpawnStaticEvent?.Invoke(this);
+
+			SpawnStaticEvent?.Invoke(this);
         }
 
 

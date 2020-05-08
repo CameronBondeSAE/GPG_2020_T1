@@ -21,7 +21,7 @@ namespace GPG220.Luca.Scripts.Resources
 
         public delegate void OnResQuantityChangeDel(Inventory inventory, ResourceType resourceType, int amtChange);
 
-        public event OnResQuantityChangeDel onResQuantityChanged;
+        public event OnResQuantityChangeDel ResQuantityChangedEvent;
 
         #endregion
 
@@ -111,7 +111,7 @@ namespace GPG220.Luca.Scripts.Resources
                     var amtToTake = RemoveResources(resType.Key, dropOutMaxStack, false);
                     var rpu = go.GetComponent<ResourcePickUp>() ?? go.AddComponent<ResourcePickUp>();
                     var rpuInventory = rpu?.inventory ?? rpu?.GetComponent<Inventory>();
-                    var amtTaken = rpuInventory?.AddResources(resType.Key, amtToTake) ?? 0;
+                    var amtTaken = rpuInventory?.AddResources(resType.Key, amtToTake) ?? 1;
 
                     if (amtTaken < amtToTake)
                         AddResources(resType.Key, amtToTake - amtTaken);
@@ -150,7 +150,8 @@ namespace GPG220.Luca.Scripts.Resources
             _resources[resourceType] -= amt;
             
             if(amt != 0)
-                onResQuantityChanged?.Invoke(this,resourceType,-amt);
+                ResQuantityChangedEvent?.Invoke(this,resourceType,-amt);
+                
             
             return amt;
         }
@@ -187,7 +188,7 @@ namespace GPG220.Luca.Scripts.Resources
                 _resources[resourceType] += amt;
             
             if(amt != 0)
-                onResQuantityChanged?.Invoke(this,resourceType,amt);
+                ResQuantityChangedEvent?.Invoke(this,resourceType,amt);
             
             return amt;
         }

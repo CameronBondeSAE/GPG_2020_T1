@@ -104,7 +104,6 @@ GameObject:
   - component: {fileID: 5192832846046125137}
   - component: {fileID: -8476284788690995837}
   - component: {fileID: 1094213608848175721}
-  - component: {fileID: -6167559107507854516}
   - component: {fileID: -101041894764572988}
   - component: {fileID: -1440496096387045403}
   - component: {fileID: 8565073978350996128}
@@ -148,7 +147,8 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 1622a6d0ba2a43b46abc0f28a39b6067, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -167,7 +167,19 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 10
       Data: 0
+    - Name: 
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -209,24 +221,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &-6167559107507854516
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5364050421391014370}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcc0cdbfeab4e9b488cf1f9d06e20e79, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inventory: {fileID: 0}
-  despawnTime: -1
-  despawnCountdown: -1
-  pickupCooldown: 1
 --- !u!114 &-101041894764572988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,7 +235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3266ec32201a0694a8a80c5131a2d2ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 0
+  startingHealth: 50
   currentHealth: 100
 --- !u!114 &-1440496096387045403
 MonoBehaviour:
@@ -307,6 +303,8 @@ MonoBehaviour:
   respawnTime: -1
   damage: 10
   otherUnit: {fileID: 0}
+  resourceType: {fileID: 0}
+  inventory: {fileID: 0}
 --- !u!1 &5364050422119203567
 GameObject:
   m_ObjectHideFlags: 0

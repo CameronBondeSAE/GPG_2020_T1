@@ -126,15 +126,16 @@ public class GameManager : MonoBehaviour
 
 
 			// HACK: Have to spawn a real instance to get the actual bounds, because you can't from a prefab??
-			GameObject temp = Instantiate(unitBaseOfKing.gameObject);
+			// GameObject temp = Instantiate(unitBaseOfKing.gameObject);
 
-			Vector3 unitExtents = temp.GetComponent<Collider>().bounds.extents;
+			// DOUBLE HACK: Spawning an actual king messes up event in the gamemanager
+			Vector3 unitExtents = new Vector3(1f,1f,1f);  //temp.GetComponent<Collider>().bounds.extents;
 
 			// Give the king a bit more room
 			unitExtents.x = unitExtents.x * 2f;
 			unitExtents.z = unitExtents.z * 2f;
 
-			DestroyImmediate(temp); // HACK
+			// DestroyImmediate(temp); // HACK
 
 			Vector3 rndPoint = mapUtilities.RandomGroundPointInBounds(proceduralMeshGenerator.mesh.bounds, unitExtents);
 			king = unitSpawnerKing.SpawnUnit(owner, unitBaseOfKing, rndPoint, Quaternion.identity) as King;
