@@ -77,7 +77,7 @@ namespace GPG220.Luca.Scripts.Unit
                 unitStats.onHealthChanged += HandleOnHealthChanged;
             }
 
-            inventory.onResQuantityChanged += CheckInventory;
+            inventory.ResQuantityChangedEvent += CheckInventory;
             base.Initialize();
         }
 

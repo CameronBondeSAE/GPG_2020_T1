@@ -21,7 +21,7 @@ namespace GPG220.Luca.Scripts.Resources
 
         public delegate void OnResQuantityChangeDel(Inventory inventory, ResourceType resourceType, int amtChange);
 
-        public event OnResQuantityChangeDel onResQuantityChanged;
+        public event OnResQuantityChangeDel ResQuantityChangedEvent;
 
         #endregion
 
@@ -150,7 +150,7 @@ namespace GPG220.Luca.Scripts.Resources
             _resources[resourceType] -= amt;
             
             if(amt != 0)
-                onResQuantityChanged?.Invoke(this,resourceType,-amt);
+                ResQuantityChangedEvent?.Invoke(this,resourceType,-amt);
                 
             
             return amt;
@@ -188,7 +188,7 @@ namespace GPG220.Luca.Scripts.Resources
                 _resources[resourceType] += amt;
             
             if(amt != 0)
-                onResQuantityChanged?.Invoke(this,resourceType,amt);
+                ResQuantityChangedEvent?.Invoke(this,resourceType,amt);
             
             return amt;
         }
