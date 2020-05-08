@@ -45,3 +45,4 @@ Assets/Plugins/Editor/JetBrains.meta
 # Misc - Maybe still be needed at some stage!
 Assets/Plugins/Editor.meta
 PlanDebugger/
+*.ffs_db
