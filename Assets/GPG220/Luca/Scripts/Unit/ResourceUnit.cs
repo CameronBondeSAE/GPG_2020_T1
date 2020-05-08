@@ -67,15 +67,18 @@ namespace GPG220.Luca.Scripts.Unit
             //visualHealthStates = new Dictionary<KeyValuePair<int,int>, GameObject>();
 
             _originalAmounts = inventory.GetResourceQuantities();
-            oldHealth = unitStats.Health;
-            
-            unitStats.onHealthChanged += HandleOnHealthChanged;
-        }
+			if (unitStats != null)
+			{
+				oldHealth = unitStats.Health;
+
+				unitStats.onHealthChanged += HandleOnHealthChanged;
+			}
+		}
 
         private void OnDestroy()
-        {
-            unitStats.onHealthChanged -= HandleOnHealthChanged;
-        }
+		{
+			if (unitStats != null) unitStats.onHealthChanged -= HandleOnHealthChanged;
+		}
 
         private void Update()
         {
