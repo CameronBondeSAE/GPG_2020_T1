@@ -9,10 +9,11 @@ public class RTSNetworkManager : NetworkManager
 {
     public GameManager gameManagerPrefab;
     public PlayMenu playMenuHack;
+	public event Action<NetworkConnection> ClientConnectedCalledEvent;
 
-    public event Action<NetworkConnection> OnClientPlayerSpawnEvent;
-    public event Action<NetworkConnection> OnClientDisconnectedEvent;
-    public event Action OnStartedHost;
+	public event Action<NetworkConnection> ClientPlayerSpawnEvent;
+    public event Action<NetworkConnection> ClientDisconnectedEvent;
+    public event Action StartedHostEvent;
 
 
     public override void Awake()
@@ -30,7 +31,7 @@ public class RTSNetworkManager : NetworkManager
         // gameManager.playMenu       = playMenuHack;
         // NetworkServer.Spawn(gameManager.gameObject);
 
-        OnStartedHost?.Invoke();
+        StartedHostEvent?.Invoke();
     }
 
     public override void OnServerConnect(NetworkConnection conn)
@@ -42,13 +43,13 @@ public class RTSNetworkManager : NetworkManager
     {
         base.OnServerAddPlayer(conn);
 
-        OnClientPlayerSpawnEvent?.Invoke(conn);
+        ClientPlayerSpawnEvent?.Invoke(conn);
     }
 
 
     public override void OnServerDisconnect(NetworkConnection conn)
     {
-        OnClientDisconnectedEvent?.Invoke(conn);
+        ClientDisconnectedEvent?.Invoke(conn);
 
         base.OnServerDisconnect(conn);
     }
@@ -61,6 +62,8 @@ public class RTSNetworkManager : NetworkManager
 	public override void OnClientConnect(NetworkConnection conn)
 	{
 		base.OnClientConnect(conn);
+
+		ClientConnectedCalledEvent?.Invoke(conn);
 	}
 
 	public override void OnStartClient()

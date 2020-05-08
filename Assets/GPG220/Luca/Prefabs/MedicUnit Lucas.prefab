@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 2939113266008733350}
   - component: {fileID: 2939113266008733354}
   m_Layer: 12
-  m_Name: MedicUnit
+  m_Name: MedicUnit Lucas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a64af4d4478cb6141888cf0789f2b4b3, type: 2}
+  - {fileID: 2100000, guid: 5e08b5117cb7f694d828522f4c09f815, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -135,6 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 80
+  currentHealth: 100
 --- !u!114 &2939113266008733346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,6 +250,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  addToAbilityUI: 1
   cooldown: 0
   currentCooldown: 0
   targetRequired: 0
@@ -278,6 +280,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  addToAbilityUI: 1
   cooldown: 4
   currentCooldown: 0
   targetRequired: 0
@@ -304,6 +307,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  addToAbilityUI: 1
   cooldown: 5
   currentCooldown: 0
   targetRequired: 0

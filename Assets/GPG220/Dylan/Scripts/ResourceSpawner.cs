@@ -18,7 +18,7 @@ namespace GPG220.Dylan.Scripts
             gameManager = FindObjectOfType<GameManager>();
             mapUtilities = FindObjectOfType<MapUtilities>();
             proceduralMeshGenerator = FindObjectOfType<ProceduralMeshGenerator>();
-            gameManager.startGameEvent += gameManagerOnstartGameEvent;
+            gameManager.StartGameEvent += gameManagerOnstartGameEvent;
             // gameManager.GameOverEvent += gameManagerOnstartGameEvent;
         }
 

@@ -15,7 +15,7 @@ public class Wall : NetworkBehaviour
 	
 	
 	[SyncVar(hook = nameof(NetworkHidden))]
-	public bool hidden = true;
+	public bool isVisible = false;
 	
 	public Collider col;
 	Renderer rend;
@@ -61,13 +61,12 @@ public class Wall : NetworkBehaviour
 		col.enabled = true;
 		rend.enabled = true;
 
-		if (hidden)
+		if (!isVisible)
 		{
 			var tweenerCore = target.DOScale(targetScale, appearDuration).SetEase(Ease.Linear);
 		}
-
-	
-			hidden = false;
+		
+		isVisible = true;
 		
 		
 	}
@@ -84,7 +83,7 @@ public class Wall : NetworkBehaviour
     {
 		Tween t = null;
 		
-		if (!hidden)
+		if (isVisible)
 		{
 			t = target.DOScale(new Vector3(1f, 0f, 1f), disappearDuration).SetEase(Ease.InOutElastic);
 			t.onComplete += delegate
@@ -94,8 +93,6 @@ public class Wall : NetworkBehaviour
 							}; 
 		}
 		
-			hidden = true;
-			
-		
+		isVisible = false;
 	}
 }

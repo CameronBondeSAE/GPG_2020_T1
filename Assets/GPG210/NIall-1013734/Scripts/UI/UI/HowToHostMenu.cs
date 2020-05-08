@@ -17,7 +17,7 @@ public class HowToHostMenu : MonoBehaviour
     {
         howToHost.SetActive(false);
         rtsNetworkManager.StartHost();
-        gameManager.OnStartGameEvent();
+        gameManager.OnStartGameEventInvocation();
         
     }
 

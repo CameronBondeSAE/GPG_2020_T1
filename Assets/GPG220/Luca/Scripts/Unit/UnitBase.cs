@@ -80,18 +80,30 @@ namespace GPG220.Luca.Scripts.Unit
             health = GetComponent<Health>();
             abilityController = GetComponent<AbilityController>();
 
-            myColour = owner.gameObject.GetComponent<PlayerBase>().playerColour;
+			// Set default drags etc You'd have to override this
+			rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY |
+							 RigidbodyConstraints.FreezeRotationZ;
 
-            if (GetComponent<MeshRenderer>() != null)
-            {
-	            meshRenderer = GetComponent<MeshRenderer>();
-            }
-            else
-            {
-	            meshRenderer = GetComponentInChildren<MeshRenderer>();
-            }
-            meshRenderer.material.SetColor("_TeamColour", myColour);
-            
+			rb.drag = 10f;
+			
+			
+			// Is it a player? (Resources are units also)
+			var playerBase = owner.gameObject.GetComponent<PlayerBase>();
+			if (playerBase != null)
+			{
+				myColour = playerBase.playerColour;
+
+				if (GetComponent<MeshRenderer>() != null)
+				{
+					meshRenderer = GetComponent<MeshRenderer>();
+				}
+				else
+				{
+					meshRenderer = GetComponentInChildren<MeshRenderer>();
+				}
+				meshRenderer.material.SetColor("_TeamColour", myColour);
+			}
+			
             SpawnStaticEvent?.Invoke(this);
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,8 +33,10 @@ public class MultiplayerMenu : MonoBehaviour
     public void JoinGame()
     {
         multiplayerMenu.SetActive(false);
+		Debug.Log("isClient???????? : "+NetworkClient.isConnected);
         rtsNetworkManager.StartClient();
-        gameManager.OnStartGameEvent();
+		Debug.Log("2 isClient???????? : "+NetworkClient.isConnected);
+        gameManager.OnStartGameEventInvocation();
 
     }
 
@@ -54,6 +57,6 @@ public class MultiplayerMenu : MonoBehaviour
         rtsNetworkManager.SetHostname(testServer);
         multiplayerMenu.SetActive(false);
         rtsNetworkManager.StartClient();
-        gameManager.OnStartGameEvent();
+        gameManager.OnStartGameEventInvocation();
     }
 }

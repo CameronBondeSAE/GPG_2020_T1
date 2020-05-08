@@ -39,14 +39,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 844936440088286560}
+  - component: {fileID: 1588283113}
   - component: {fileID: 844936440088286623}
+  - component: {fileID: 844936440088286563}
   - component: {fileID: 844936440088286562}
   - component: {fileID: 844936440088286561}
-  - component: {fileID: 844936440088286563}
   - component: {fileID: 1588283112}
   m_Layer: 8
   m_Name: MapGenerator
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -66,6 +67,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1588283113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844936440088286622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32d6d721d0374804f81426b48ff9335f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boundrySize: {x: 0, y: 0, z: 0}
+  SpawnableSurfaces:
+    serializedVersion: 2
+    m_Bits: 256
+  EmptySpaceSurfacesToIgnore:
+    serializedVersion: 2
+    m_Bits: 15927
+  debugEmptySpace: 0
 --- !u!114 &844936440088286623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showVerts: 1
+  mesh: {fileID: 0}
   meshResolution: {x: 20, y: 20}
   worldSize: {x: 200, y: 200}
   seed: {x: 0.1, y: 0.23}
@@ -88,6 +110,39 @@ MonoBehaviour:
   collider: {fileID: 1588283112}
   gameManager: {fileID: 0}
   DrawGizmos: 0
+--- !u!114 &844936440088286563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844936440088286622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1ebd3d0cf1b1e6409e40ddb1b9d17ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gizmos: 0
+  gridSize: {x: 100, y: 100}
+  worldSize: {x: 200, y: 200}
+  obstacleHeight: 4
+  obstacleGenerationDensity: {x: 0.06, y: 0.06}
+  seed: {x: 286.7, y: 655.6}
+  obstacleThreshold: 0.851
+  obstacleThresholdLast: 0
+  growObstacles: 1
+  baseGrowRate: 0.5
+  perlinWeight: 1
+  perlinGrowthRate: 0.002
+  roundTime: 3
+  timer: 0
+  obstaclePrefab: {fileID: 3695246183648753576, guid: 812709ba988adf14e91a5ac074d1becf,
+    type: 3}
+  ObstacleHolder: {fileID: 844936439617160392}
+  gameManager: {fileID: 0}
+  applyOverrideGrid: 0
+  closedEdges: []
+  openEdges: []
 --- !u!33 &844936440088286562
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -134,36 +189,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &844936440088286563
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 844936440088286622}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1ebd3d0cf1b1e6409e40ddb1b9d17ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gridSize: {x: 100, y: 100}
-  worldSize: {x: 200, y: 200}
-  obstacleHeight: 11.34
-  obstacleGenerationDensity: {x: 0.06, y: 0.06}
-  seed: {x: 286.7, y: 655.6}
-  obstacleThreshold: 0.868
-  obstacleThresholdLast: 0
-  growObstacles: 0
-  baseGrowRate: 0
-  roundTime: 0
-  timer: 0
-  obstaclePrefab: {fileID: 3695246183648753576, guid: 812709ba988adf14e91a5ac074d1becf,
-    type: 3}
-  ObstacleHolder: {fileID: 844936439617160392}
-  gameManager: {fileID: 0}
-  applyOverrideGrid: 0
-  closedEdges: []
-  openEdges: []
 --- !u!64 &1588283112
 MeshCollider:
   m_ObjectHideFlags: 0

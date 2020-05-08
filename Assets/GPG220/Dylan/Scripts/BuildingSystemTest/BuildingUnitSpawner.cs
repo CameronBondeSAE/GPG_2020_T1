@@ -47,7 +47,7 @@ namespace GPG220.Dylan.Scripts.BuildingSystemTest
 			mapUtilities = FindObjectOfType<MapUtilities>();
             gameManager = FindObjectOfType<GameManager>();
             playMenu = FindObjectOfType<PlayMenu>();
-            gameManager.startGameEvent += Init;
+            gameManager.StartGameEvent += Init;
         }
 
         private void Update()

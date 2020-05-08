@@ -30,7 +30,7 @@ namespace GPG220.Dylan.King_Scripts
                 unitSpawnerAbility.unitPrefabIndex = i;
                 unitSpawnerAbility.groundMask = groundMask;
                 unitSpawnerAbility.abilityName = unitSpawner.unitBases[i].unitName;
-                unitSpawnerAbility.abilityDescription = "Build " + unitSpawner.unitBases[i].Name + " next to King";
+                unitSpawnerAbility.abilityDescription = "Build " + unitSpawner.unitBases[i].Name + " next to King. Costs 1 gold";
                 unitSpawnerAbility.player = player;
             }
         }

@@ -38,7 +38,9 @@ public class GameManager : MonoBehaviour
 	public List<King> kings;
 
 	public event Action GameOverEvent;
-	public event Action startGameEvent;
+	public event Action StartGameEvent;
+	public event Action ServerHostStartedEvent;
+	// public event Action JoinedMidGameEvent;
 
 	[ReadOnly]
 	public MapUtilities mapUtilities;
@@ -54,8 +56,8 @@ public class GameManager : MonoBehaviour
 
 		if (networkManager != null)
 		{
-			networkManager.OnClientPlayerSpawnEvent  += NetworkManagerOnClientPlayerSpawnEvent;
-			networkManager.OnClientDisconnectedEvent += NetworkManagerOnClientDisconnectedEvent;
+			networkManager.ClientPlayerSpawnEvent  += NetworkManagerOnClientPlayerSpawnEvent;
+			networkManager.ClientDisconnectedEvent += NetworkManagerOnClientDisconnectedEvent;
 		}
 	}
 
@@ -103,16 +105,7 @@ public class GameManager : MonoBehaviour
 			}
 		}
 	}
-
-//game starts
-	public void OnStartGameEvent()
-	{
-		if (startGameEvent != null)
-		{
-			startGameEvent.Invoke();
-		}
-	}
-
+	
 	//spawn the units randomly around the map
 	public void BuildUnits(NetworkIdentity owner, PlayerBase playerBase)
 	{
@@ -204,6 +197,15 @@ public class GameManager : MonoBehaviour
 		if (globalUnitBases.Count == 0 && GameOverEvent != null)
 		{
 			GameOverEvent?.Invoke();
+		}
+	}
+	
+	//game starts
+	public void OnStartGameEventInvocation()
+	{
+		if (StartGameEvent != null)
+		{
+			StartGameEvent.Invoke();
 		}
 	}
 }

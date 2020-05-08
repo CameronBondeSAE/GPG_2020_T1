@@ -27,7 +27,7 @@ public class PlayMenu : MonoBehaviour
     {
        PlayMenuUI.SetActive(false);
 	   rtsNetworkManager.StartHost();
-	   gameManager.OnStartGameEvent();
+	   gameManager.OnStartGameEventInvocation();
 	}
 
     public void Options()

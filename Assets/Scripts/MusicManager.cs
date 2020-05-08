@@ -11,7 +11,7 @@ public class MusicManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameManager.startGameEvent += GameManagerOnstartGameEvent;
+        gameManager.StartGameEvent += GameManagerOnstartGameEvent;
     }
 
     private void GameManagerOnstartGameEvent()

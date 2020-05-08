@@ -154,7 +154,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 
 			// gameManager = FindObjectOfType<GameManager>();
 			// GameManager isn't spawned until the game host starts
-			rtsNetworkManager.OnStartedHost += () => gameManager = FindObjectOfType<GameManager>();
+			rtsNetworkManager.StartedHostEvent += () => gameManager = FindObjectOfType<GameManager>();
 		}
 
         // Update is called once per frame

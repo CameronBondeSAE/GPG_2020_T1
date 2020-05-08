@@ -24,7 +24,7 @@ public class TornadoVortex : MonoBehaviour
    void Awake()
    {
       gameManager = FindObjectOfType<GameManager>();
-      gameManager.startGameEvent += Update;
+      gameManager.StartGameEvent += Update;
    }
    void OnDrawGizmos()
    {

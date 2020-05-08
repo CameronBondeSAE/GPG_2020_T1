@@ -73,23 +73,27 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Abilities
                 
                 if (Vector3.Distance(this.gameObject.transform.position,target) > nodeDistanceMin)
                 {
-                    Vector3 nextPos = currentPath[currentPathNodeIndex].worldPosition;
-                  //  nextPos = new Vector3(nextPos.x, procMesh.GetHeightAtPosition(new Vector2(nextPos.x, nextPos.z)) + 1, nextPos.z);
-                    nextPos = new Vector3(nextPos.x,transform.position.y, nextPos.z);
-                    if (Vector3.Distance(this.gameObject.transform.position,
-                            nextPos) > nodeDistanceMin)
-                    {
-                        Move(nextPos);
-                        rb.AddForce(Vector3.down *rb.mass *4);
-                    }
-                    else
-                    {
-                        if(currentPathNodeIndex < currentPath.Count -1)
-                        currentPathNodeIndex += 1;
-                    }
+					// CHECK: BUG: This is null sometimes, not sure why
+					if (currentPath != null)
+					{
+						Vector3 nextPos = currentPath[currentPathNodeIndex].worldPosition;
+						//  nextPos = new Vector3(nextPos.x, procMesh.GetHeightAtPosition(new Vector2(nextPos.x, nextPos.z)) + 1, nextPos.z);
+						nextPos = new Vector3(nextPos.x,transform.position.y, nextPos.z);
+						if (Vector3.Distance(this.gameObject.transform.position,
+											 nextPos) > nodeDistanceMin)
+						{
+							Move(nextPos);
+							rb.AddForce(Vector3.down *rb.mass *4);
+						}
+						else
+						{
+							if(currentPathNodeIndex < currentPath.Count -1)
+								currentPathNodeIndex += 1;
+						}
                     
-                    transform.LookAt(new Vector3(nextPos.x,transform.position.y,nextPos.z));
-                }
+						transform.LookAt(new Vector3(nextPos.x,transform.position.y,nextPos.z));
+					}
+				}
                 else
                 {
                     moving = false;
