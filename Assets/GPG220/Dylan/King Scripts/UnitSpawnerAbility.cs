@@ -40,9 +40,9 @@ namespace GPG220.Dylan.King_Scripts
         public override bool SelectedExecute()
         {
             base.SelectedExecute();
-            if (inventory.GetResourceQuantity(resourceType) >= spawnCost)
+            // if (inventory.GetResourceQuantity(resourceType) >= spawnCost)
             {
-                inventory.RemoveResources(resourceType, spawnCost);
+                // inventory.RemoveResources(resourceType, spawnCost);
                 CmdSpawnUnit(player.netIdentity, unitPrefabIndex, GetRandomSpawnPoint());
             }
 

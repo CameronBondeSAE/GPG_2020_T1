@@ -31,8 +31,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts
 			UnitBase.DespawnStaticEvent += UnitBaseOnDespawnStaticEvent;
 
 			// HACK. Inventory should be syncing
-			inventory = GetComponent<Inventory>();
-			inventory.ResQuantityChangedEvent += OnResQuantityChangedEvent;
+			if (king != null) inventory = king.GetComponent<Inventory>();
+			if (inventory != null) inventory.ResQuantityChangedEvent += OnResQuantityChangedEvent;
 		}
 
 		private void OnResQuantityChangedEvent(Inventory inventory, ResourceType resourcetype, int amtchange)

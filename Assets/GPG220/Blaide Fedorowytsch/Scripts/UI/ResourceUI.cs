@@ -31,7 +31,7 @@ public class ResourceUI : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         kingInv = gameManager.localPlayer.king.inventory;
-        kingInv.onResQuantityChanged += UpdateResCount;
+        kingInv.ResQuantityChangedEvent += UpdateResCount;
         TMP.text = "Gold : " + kingInv.GetResourceQuantity(resourceType);
         panel.SetActive(true);
     }

@@ -1457,7 +1457,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 8.6659435e+36, z: 6.66e-43, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 7.273436e+22, z: 1.7225352e+22, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -2244,6 +2244,21 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2411360162340292833, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 69.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2411360162340292833, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 91.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2411360162340292833, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 6.2
+      objectReference: {fileID: 0}
     - target: {fileID: 3746325223107951610, guid: 298228f203107444691db63a0ad56f1a,
         type: 3}
       propertyPath: m_text
@@ -2266,26 +2281,61 @@ PrefabInstance:
     - target: {fileID: 4487287839828795117, guid: 298228f203107444691db63a0ad56f1a,
         type: 3}
       propertyPath: m_text
-      value: "- Flexible RTS multiplayer engine project\r\n- Including small demo
-        Units and Abilities\r\n- Modular Unit/Ability systems\r\n- Custom pathfinding
-        (adapts to changing level)\r\n- Networking with \u2018unlimited\u2019 players\r\n-
-        Procedural level with growth algorithm\r\n- Goal Oriented Action Planning
-        AI\r\n- Adaptive UI system with any new units and abilities\r"
+      value: "- Flexible RTS multiplayer engine project\r\n- Including demo 'game'
+        with Units and Abilities\r\n- Systems for Units/Abilities/Inventory/Resources\r\n-
+        Networking with \u2018unlimited\u2019 players\r\n- Procedural level with growth
+        algorithm\r\n- Custom pathfinding (adapts to changing level)\r\n- Goal Oriented
+        Action Planning AI\r\n- Adaptive UI system with any new units and abilities\r"
       objectReference: {fileID: 0}
     - target: {fileID: 4487287839828795117, guid: 298228f203107444691db63a0ad56f1a,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 339
+      value: 364
       objectReference: {fileID: 0}
     - target: {fileID: 4487287839828795117, guid: 298228f203107444691db63a0ad56f1a,
         type: 3}
       propertyPath: m_textInfo.spaceCount
-      value: 50
+      value: 51
       objectReference: {fileID: 0}
     - target: {fileID: 4487287839828795117, guid: 298228f203107444691db63a0ad56f1a,
         type: 3}
       propertyPath: m_textInfo.wordCount
-      value: 52
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 4487287839828795117, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 18.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4487287839828795117, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: m_fontSizeMin
+      value: -1.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4487287839828795117, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4487287839828795117, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4487287839828795117, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: m_firstOverflowCharacterIndex
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4487287839828795117, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4487287839828795117, guid: 298228f203107444691db63a0ad56f1a,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 18.3
       objectReference: {fileID: 0}
     - target: {fileID: 7993774512274916398, guid: 298228f203107444691db63a0ad56f1a,
         type: 3}
@@ -2340,7 +2390,7 @@ PrefabInstance:
     - target: {fileID: 7995541893682817016, guid: 298228f203107444691db63a0ad56f1a,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7995541893682817019, guid: 298228f203107444691db63a0ad56f1a,
         type: 3}
