@@ -102,6 +102,7 @@ public class GameManager : MonoBehaviour
 			if (healthbarPrefab != null)
 			{
 				HealthbarViewModel healthBar = Instantiate(healthbarPrefab);
+				healthBar.target = playerBase.transform;
 			}
 		}
 	}
