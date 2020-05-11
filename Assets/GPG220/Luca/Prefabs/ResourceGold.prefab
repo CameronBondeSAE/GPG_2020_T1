@@ -221,7 +221,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 126
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!114 &-101041894764572988
 MonoBehaviour:
@@ -303,7 +303,7 @@ MonoBehaviour:
   respawnTime: -1
   damage: 10
   otherUnit: {fileID: 0}
-  resourceType: {fileID: 0}
+  resourceType: {fileID: 11400000, guid: 1622a6d0ba2a43b46abc0f28a39b6067, type: 2}
   inventory: {fileID: 0}
 --- !u!1 &5364050422119203567
 GameObject:
