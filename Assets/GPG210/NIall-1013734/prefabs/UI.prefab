@@ -113,7 +113,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "localhost\u200B"
+  m_text: localhost
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -771,8 +771,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1375059196}
-        m_MethodName: SetIP
+      - m_Target: {fileID: 0}
+        m_MethodName: SetHostname
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4417,8 +4417,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 143, y: 67}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 143, y: 6.2}
+  m_SizeDelta: {x: 69.8, y: 91.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5495518745220422250
 CanvasRenderer:
@@ -4446,11 +4446,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "- Flexible RTS multiplayer engine project\r\n- Including small demo Units
-    and Abilities\r\n- Modular Unit/Ability systems\r\n- Custom pathfinding\r\n- Networking
-    with \u2018unlimited\u2019 players\r\n- Procedural level with growth algorithm\r\n-
-    Goal Oriented Action Planning AI\r\n- Adaptive UI system with any new units and
-    abilities\r"
+  m_text: "- Flexible RTS multiplayer engine project\r\n- Including demo 'game' with
+    Units and Abilities\r\n- Systems for Units/Abilities/Inventory/Resources\r\n-
+    Networking with \u2018unlimited\u2019 players\r\n- Procedural level with growth
+    algorithm\r\n- Custom pathfinding (adapts to changing level)\r\n- Goal Oriented
+    Action Planning AI\r\n- Adaptive UI system with any new units and abilities\r"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -4478,11 +4478,11 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 30.75
-  m_fontSizeBase: 36
+  m_fontSize: 18.3
+  m_fontSizeBase: 18.3
   m_fontWeight: 400
-  m_enableAutoSizing: 1
-  m_fontSizeMin: 18
+  m_enableAutoSizing: 0
+  m_fontSizeMin: -1.9
   m_fontSizeMax: 72
   m_fontStyle: 32
   m_textAlignment: 257
@@ -4519,10 +4519,10 @@ MonoBehaviour:
   m_margin: {x: -288.92212, y: 0, z: -259.73676, w: -247.43057}
   m_textInfo:
     textComponent: {fileID: 4487287839828795117}
-    characterCount: 312
+    characterCount: 364
     spriteCount: 0
-    spaceCount: 46
-    wordCount: 48
+    spaceCount: 51
+    wordCount: 55
     linkCount: 0
     lineCount: 8
     pageCount: 1
@@ -8042,7 +8042,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Thir Thparkles
+  m_text: 'Project
+
+    Thparkles
 
 '
   m_isRightToLeft: 0
@@ -11563,31 +11565,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 291018977825748694, guid: 88aa6a06601365d4f993ba0b774baae5,
-        type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 291018977825748694, guid: 88aa6a06601365d4f993ba0b774baae5,
-        type: 3}
-      propertyPath: m_textInfo.spaceCount
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 291018977825748694, guid: 88aa6a06601365d4f993ba0b774baae5,
-        type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 291018977825748694, guid: 88aa6a06601365d4f993ba0b774baae5,
-        type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 291018977825748694, guid: 88aa6a06601365d4f993ba0b774baae5,
-        type: 3}
-      propertyPath: m_textInfo.pageCount
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 88aa6a06601365d4f993ba0b774baae5, type: 3}
