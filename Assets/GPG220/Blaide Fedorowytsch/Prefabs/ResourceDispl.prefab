@@ -33,10 +33,10 @@ RectTransform:
   m_Father: {fileID: 291018977314034857}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -237.4, y: 163.45}
-  m_SizeDelta: {x: -474.8, y: -326.9}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: -122.899994, y: -13.050003}
+  m_SizeDelta: {x: -245.79999, y: 26.100006}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &291018977086016050
 CanvasRenderer:
@@ -322,10 +322,10 @@ MonoBehaviour:
   m_margin: {x: 2.9, y: 3.55, z: 3.72, w: 3.25}
   m_textInfo:
     textComponent: {fileID: 291018977825748694}
-    characterCount: 10
+    characterCount: 1
     spriteCount: 0
-    spaceCount: 2
-    wordCount: 2
+    spaceCount: 0
+    wordCount: 1
     linkCount: 0
     lineCount: 1
     pageCount: 1
