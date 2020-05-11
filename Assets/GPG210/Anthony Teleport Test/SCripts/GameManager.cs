@@ -97,13 +97,6 @@ public class GameManager : MonoBehaviour
 
 			BuildKing(conn.identity, playerBase);
 			// BuildUnits(conn.identity, playerBase);
-
-			// TODO: Networking
-			if (healthbarPrefab != null)
-			{
-				HealthbarViewModel healthBar = Instantiate(healthbarPrefab);
-				healthBar.target = playerBase.transform;
-			}
 		}
 	}
 	
@@ -191,6 +184,18 @@ public class GameManager : MonoBehaviour
 		// listOfSpawns                          =  FindObjectsOfType<SpawnPoint>().ToList();
 
 		//listOfSpawns = globalUnitBases[(Random.Range(0,listOfSpawns.Count))];
+		
+		// Floating healthbars
+		// TODO: Networking
+		if (healthbarPrefab != null)
+		{
+			HealthbarViewModel healthBar = Instantiate(healthbarPrefab);
+			healthBar.SetTarget(obj.transform);
+			var canvas = healthBar.GetComponent<Canvas>();
+			canvas.worldCamera = Camera.main;
+			canvas.renderMode = RenderMode.WorldSpace;
+		}
+		// TODO: On unit death, destroy healthbar
 	}
 
 //game over check if there are still units on the map

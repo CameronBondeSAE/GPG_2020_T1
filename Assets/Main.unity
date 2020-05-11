@@ -408,7 +408,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh30814
+  m_Name: pb_Mesh30842
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -632,6 +632,11 @@ PrefabInstance:
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 1285704454}
+    - target: {fileID: 844936440088286563, guid: 69c72cf18b94ae04a80ce166e1e5b1e9,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 844936440088286622, guid: 69c72cf18b94ae04a80ce166e1e5b1e9,
         type: 3}
       propertyPath: m_Name
@@ -651,7 +656,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 178437039}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b1ebd3d0cf1b1e6409e40ddb1b9d17ed, type: 3}
   m_Name: 
@@ -783,6 +788,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ResourceSpawner
       objectReference: {fileID: 0}
+    - target: {fileID: 7406413777944910314, guid: ed13b90311efffc44abcd5dd45f95b4c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed13b90311efffc44abcd5dd45f95b4c, type: 3}
 --- !u!114 &477320475 stripped
@@ -902,7 +912,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh30838
+  m_Name: pb_Mesh30868
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1748,7 +1758,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh30866
+  m_Name: pb_Mesh30896
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2596,7 +2606,8 @@ MonoBehaviour:
   unitBuildDistanceThreshold: 10
   unitSpawner: {fileID: 666229043}
   unitSpawnerKing: {fileID: 1923261902}
-  healthbarPrefab: {fileID: 0}
+  healthbarPrefab: {fileID: 4949247118855478735, guid: 40ce883dac650854c87e9e52bd68571f,
+    type: 3}
   localPlayer: {fileID: 0}
   kings: []
   mapUtilities: {fileID: 0}
@@ -2856,7 +2867,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh30874
+  m_Name: pb_Mesh30904
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
