@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using ReGoap.Core;
 using ReGoap.Unity;
+using UnityEngine;
 
 public class KillAction : ReGoapAction<string, object>
 {
@@ -17,7 +19,16 @@ public class KillAction : ReGoapAction<string, object>
 	{
 		base.Run(previous, next, settings, goalState, done, fail);
 
-		done(this);
-		// doneCallback(this);
+		Debug.Log("KillAction: Run");
+
+		StartCoroutine(Kill());
+	}
+
+	private IEnumerator Kill()
+	{
+		Debug.Log("KILLING....");
+		yield return new WaitForSeconds(2);
+		Debug.Log("KILLED!");
+		doneCallback(this);
 	}
 }

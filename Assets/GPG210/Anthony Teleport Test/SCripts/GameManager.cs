@@ -187,7 +187,7 @@ public class GameManager : MonoBehaviour
 		
 		// Floating healthbars
 		// TODO: Networking
-		if (healthbarPrefab != null)
+		if (healthbarPrefab != null && !(obj as ResourceUnit)) // HACK don't add healthbars to resources, should be part of Unitbase settings probably
 		{
 			HealthbarViewModel healthBar = Instantiate(healthbarPrefab);
 			healthBar.SetTarget(obj.transform);

@@ -41,9 +41,12 @@ public class HealthbarViewModel : MonoBehaviour
 
 	private void DeathEvent(Health health)
 	{
-		health.healthChangedEvent -= HealthOnhealthChangedEvent;
-		health.deathEvent -= DeathEvent;
 		Destroy(gameObject);
 	}
 
+	private void OnDestroy()
+	{
+		health.healthChangedEvent -= HealthOnhealthChangedEvent;
+		health.deathEvent         -= DeathEvent;
+	}
 }

@@ -458,10 +458,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 456067435436690906, guid: 083b09af7cfa2f84580ffb34eb51e1f7,
+        type: 3}
+      propertyPath: hasEnergy
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3889594433754231425, guid: 083b09af7cfa2f84580ffb34eb51e1f7,
         type: 3}
       propertyPath: CalculateNewGoalOnStart
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3889594433754231425, guid: 083b09af7cfa2f84580ffb34eb51e1f7,
+        type: 3}
+      propertyPath: CalculationDelay
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6063529958636818862, guid: 083b09af7cfa2f84580ffb34eb51e1f7,
+        type: 3}
+      propertyPath: Cost
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6443858099944839954, guid: 083b09af7cfa2f84580ffb34eb51e1f7,
         type: 3}

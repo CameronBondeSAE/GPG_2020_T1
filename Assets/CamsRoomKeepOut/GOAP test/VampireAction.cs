@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using ReGoap.Core;
 using ReGoap.Unity;
+using UnityEngine;
 
 public class VampireAction : ReGoapAction<string, object>
 {
@@ -17,7 +19,14 @@ public class VampireAction : ReGoapAction<string, object>
 	{
 		base.Run(previous, next, settings, goalState, done, fail);
 		
-		done(this);
-		// doneCallback(this);
+		StartCoroutine(Vampire());
+	}
+
+	private IEnumerator Vampire()
+	{
+		Debug.Log("Vampiring ally....");
+		yield return new WaitForSeconds(2);
+		Debug.Log("Vamped!");
+		doneCallback(this);
 	}
 }

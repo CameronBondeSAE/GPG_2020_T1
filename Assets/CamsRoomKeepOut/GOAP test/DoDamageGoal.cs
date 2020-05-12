@@ -1,4 +1,5 @@
-﻿using ReGoap.Unity;
+﻿using System;
+using ReGoap.Unity;
 
 public class DoDamageGoal : ReGoapGoal<string,object>
 {
