@@ -15,6 +15,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
 		private object    paranoidLock = new object();
 
 		public delegate void pathFindingCallBack(List<Node> list);
+		
+		public bool testPathOnUpdate = false;
 
 		private void Awake()
 		{
@@ -23,13 +25,17 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
 
 		private void Update()
 		{
-			// FindPath(seeker.position,target.position);
+			if (testPathOnUpdate)
+			{
+				TestPathFind();	
+			}
+			
 		}
 
 		[Button(ButtonStyle.FoldoutButton)]
 		public void TestPathFind()
 		{
-			//   FindPath(seeker.position,target.position);
+			   FindPath(grid.NodeFromWorldPoint(seeker.position),grid.NodeFromWorldPoint(target.position));
 		}
 
 		public async void RequestPathFind(Vector3 startPos, Vector3 targetPos, pathFindingCallBack callBack)

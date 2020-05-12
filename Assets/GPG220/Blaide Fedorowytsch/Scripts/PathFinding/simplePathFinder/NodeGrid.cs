@@ -23,32 +23,66 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
         public Vector3 checkNodeBoundThreshold;
         public float checkNodesDelay;
 
+        public bool alwaysDrawGizmos = false;
+        
         private void OnDrawGizmosSelected()
         {
-            Gizmos.DrawWireCube(transform.position,new Vector3(gridWorldSize.x,1,gridWorldSize.y));
-            if (grid != null)
+            if (!alwaysDrawGizmos)
             {
-                foreach (Node n in grid)
+                Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
+                if (grid != null)
                 {
-                    //Gizmos.color = Color.white;
-                    //Gizmos.DrawCube(n.worldPosition,Vector3.one * (nodeDiamater-0.1f));
-                    if (!n.walkable)
+                    foreach (Node n in grid)
                     {
-                        Gizmos.color =Color.red;
-                        Gizmos.DrawCube(n.worldPosition,Vector3.one * (nodeDiamater-0.1f));
-                    }
-                    
-                    if (path != null)
-                    {
-                        if (path.Contains(n))
+                        //Gizmos.color = Color.white;
+                        //Gizmos.DrawCube(n.worldPosition,Vector3.one * (nodeDiamater-0.1f));
+                        if (!n.walkable)
                         {
-                            Gizmos.color = Color.green;
-                            Gizmos.DrawCube(n.worldPosition,Vector3.one * (nodeDiamater-0.1f));
+                            Gizmos.color = Color.red;
+                            Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiamater - 0.1f));
+                        }
+
+                        if (path != null)
+                        {
+                            if (path.Contains(n))
+                            {
+                                Gizmos.color = Color.green;
+                                Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiamater - 0.1f));
+                            }
                         }
                     }
                 }
             }
-            
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (alwaysDrawGizmos)
+            {
+                Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
+                if (grid != null)
+                {
+                    foreach (Node n in grid)
+                    {
+                        //Gizmos.color = Color.white;
+                        //Gizmos.DrawCube(n.worldPosition,Vector3.one * (nodeDiamater-0.1f));
+                        if (!n.walkable)
+                        {
+                            Gizmos.color = Color.red;
+                            Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiamater - 0.1f));
+                        }
+
+                        if (path != null)
+                        {
+                            if (path.Contains(n))
+                            {
+                                Gizmos.color = Color.green;
+                                Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiamater - 0.1f));
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private void Start()
