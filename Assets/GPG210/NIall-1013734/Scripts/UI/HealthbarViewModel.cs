@@ -25,6 +25,7 @@ public class HealthbarViewModel : MonoBehaviour
 		{
 			healthbar.SetMaxHealth(health.startingHealth);
 			health.healthChangedEvent += HealthOnhealthChangedEvent;
+			health.deathEvent += DeathEvent;
 		}
 	}
 
@@ -37,6 +38,12 @@ public class HealthbarViewModel : MonoBehaviour
     {
          healthbar.SetHealth(health.CurrentHealth);
     }
-    
+
+	private void DeathEvent(Health health)
+	{
+		health.healthChangedEvent -= HealthOnhealthChangedEvent;
+		health.deathEvent -= DeathEvent;
+		Destroy(gameObject);
+	}
 
 }

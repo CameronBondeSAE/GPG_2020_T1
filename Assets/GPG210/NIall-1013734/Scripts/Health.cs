@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using NaughtyAttributes;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Health : MonoBehaviour
-{
+public class Health : NetworkBehaviour
+{	
+	[SyncVar]
 	public int startingHealth;
-
+	
+	
 	[SerializeField]
+	[SyncVar]
 	private int currentHealth = 100;
 	
 	public int CurrentHealth
@@ -32,14 +36,27 @@ public class Health : MonoBehaviour
         CurrentHealth = startingHealth;
         
     }
-
+    
     public void ChangeHealth(int amount)
     {
-        CurrentHealth += amount;
-        healthChangedEvent?.Invoke(this, amount);
-        CheckForDeath();
+		CmdChangeHealth(amount);
     }
 
+    [Command]
+    public void CmdChangeHealth(int amount)
+    {
+	    RpcChangeHealth(amount);
+    }
+    
+    
+    [ClientRpc]
+    public void RpcChangeHealth(int amount)
+    {
+	    CurrentHealth += amount;
+	    healthChangedEvent?.Invoke(this, amount);
+	    CheckForDeath();
+    }
+    
 	public void InstaKill()
 	{
 		deathEvent?.Invoke(this);
