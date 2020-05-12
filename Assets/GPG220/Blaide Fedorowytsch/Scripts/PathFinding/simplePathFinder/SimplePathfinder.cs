@@ -49,33 +49,35 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
 
 		public List<Node> FindPath(Node startNode, Node targetNode)
 		{
-			lock (paranoidLock)
-			{
-				// Debug.Log("Start pathing");
-				// Debug.Log("		ID = " + Thread.CurrentThread.ManagedThreadId);
+			// Debug.Log("Start pathing");
+			// Debug.Log("		ID = " + Thread.CurrentThread.ManagedThreadId);
 /*           
 
             startPos = transform.InverseTransformPoint(startPos);
             targetPos = transform.InverseTransformPoint(targetPos);*/
 
 
-				if (targetNode.walkable == false)
-				{
-					// Debug.Log("Not walkable");
-					// Debug.Log("		ID = " + Thread.CurrentThread.ManagedThreadId);
-
-					return null; // new List<Node>();
-				}
-
-				List<Node>    openSet   = new List<Node>();
-				HashSet<Node> closedSet = new HashSet<Node>();
-
-				openSet.Add(startNode);
-
-
-				// Debug.Log("While starting");
+			if (targetNode.walkable == false)
+			{
+				// Debug.Log("Not walkable");
 				// Debug.Log("		ID = " + Thread.CurrentThread.ManagedThreadId);
-				while (openSet.Count > 0)
+
+				return null; // new List<Node>();
+			}
+
+			List<Node>    openSet   = new List<Node>();
+			HashSet<Node> closedSet = new HashSet<Node>();
+
+			openSet.Add(startNode);
+
+
+			// Debug.Log("While starting");
+			// Debug.Log("		ID = " + Thread.CurrentThread.ManagedThreadId);
+			int count = openSet.Count;
+
+			lock (paranoidLock)
+			{
+				while (count > 0)
 				{
 					Node currentNode = openSet[0];
 					for (int i = 1; i < openSet.Count; i++)
@@ -88,6 +90,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
 					}
 
 					openSet.Remove(currentNode);
+					count--;
+
 					closedSet.Add(currentNode);
 
 					if (currentNode == targetNode)
@@ -100,10 +104,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
 
 					List<Node> neighbours;
 
-					lock (gridlocker)
-					{
-						neighbours = grid.GetNeighbours(currentNode);
-					}
+					neighbours = grid.GetNeighbours(currentNode);
 
 					foreach (Node neighbour in neighbours)
 					{
@@ -112,26 +113,27 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
 							continue;
 						}
 
-						int newMovementCostToNeighbour = currentNode.gCost + GetDistantce(currentNode, neighbour);
+						int newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour);
 						if (newMovementCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour))
 						{
 							neighbour.gCost  = newMovementCostToNeighbour;
-							neighbour.hCost  = GetDistantce(neighbour, targetNode);
+							neighbour.hCost  = GetDistance(neighbour, targetNode);
 							neighbour.parent = currentNode;
 							if (!openSet.Contains(neighbour))
 							{
 								openSet.Add(neighbour);
+								count++;
 							}
 						}
 					}
 				}
-
-				// Debug.Log("Pathing ended : No Nodes");
-				// Debug.Log("		ID = " + Thread.CurrentThread.ManagedThreadId);
-
-				// return new List<Node>();
-				return null;
 			}
+
+			// Debug.Log("Pathing ended : No Nodes");
+			// Debug.Log("		ID = " + Thread.CurrentThread.ManagedThreadId);
+
+			// return new List<Node>();
+			return null;
 		}
 
 		List<Node> RetracePath(Node startNode, Node endNode)
@@ -164,7 +166,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.PathFinding
 			return path;
 		}
 
-		int GetDistantce(Node nodeA, Node nodeB)
+		int GetDistance(Node nodeA, Node nodeB)
 		{
 			int distx = Mathf.Abs(nodeA.gridPosition.x - nodeB.gridPosition.x);
 			int disty = Mathf.Abs(nodeA.gridPosition.y - nodeB.gridPosition.y);
