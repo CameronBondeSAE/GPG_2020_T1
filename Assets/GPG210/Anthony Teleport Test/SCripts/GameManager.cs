@@ -126,8 +126,8 @@ public class GameManager : MonoBehaviour
 			Vector3 unitExtents = new Vector3(1f,1f,1f);  //temp.GetComponent<Collider>().bounds.extents;
 
 			// Give the king a bit more room
-			unitExtents.x = unitExtents.x * 2f;
-			unitExtents.z = unitExtents.z * 2f;
+			unitExtents.x = unitExtents.x * 5f;
+			unitExtents.z = unitExtents.z * 5f;
 
 			// DestroyImmediate(temp); // HACK
 

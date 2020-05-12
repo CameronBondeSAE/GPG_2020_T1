@@ -56,19 +56,31 @@ public class Health : NetworkBehaviour
 	    healthChangedEvent?.Invoke(this, amount);
 	    CheckForDeath();
     }
-    
+	
+	public void CheckForDeath()
+	{
+		if (CurrentHealth <= 0)
+		{
+			deathEvent?.Invoke(this);
+			deathStaticEvent?.Invoke(this);
+		}
+	}
+	
 	public void InstaKill()
+	{
+		CmdInstaKill();
+	}
+
+	[Command]
+	public void CmdInstaKill()
+	{
+		RpcInstaKill();
+	}
+	
+	[ClientRpc]
+	public void RpcInstaKill()
 	{
 		deathEvent?.Invoke(this);
 		deathStaticEvent?.Invoke(this);
 	}
-
-    public void CheckForDeath()
-    {
-        if (CurrentHealth <= 0)
-        {
-            deathEvent?.Invoke(this);
-            deathStaticEvent?.Invoke(this);
-        }
-    }
 }

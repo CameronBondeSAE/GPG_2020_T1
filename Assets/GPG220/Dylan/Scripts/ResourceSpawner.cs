@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace GPG220.Dylan.Scripts
 {
-    public class ResourceSpawner : MonoBehaviour
+    public class ResourceSpawner : NetworkBehaviour
     {
         public MapUtilities mapUtilities;
         public ProceduralMeshGenerator proceduralMeshGenerator;
@@ -18,8 +18,9 @@ namespace GPG220.Dylan.Scripts
             gameManager = FindObjectOfType<GameManager>();
             mapUtilities = FindObjectOfType<MapUtilities>();
             proceduralMeshGenerator = FindObjectOfType<ProceduralMeshGenerator>();
-            gameManager.StartGameEvent += gameManagerOnstartGameEvent;
-            // gameManager.GameOverEvent += gameManagerOnstartGameEvent;
+
+			gameManager.StartGameEvent += gameManagerOnstartGameEvent;
+			// gameManager.GameOverEvent += gameManagerOnstartGameEvent;
         }
 
 
@@ -36,6 +37,12 @@ namespace GPG220.Dylan.Scripts
             // gameManager.startGameEvent -= gameManagerOnstartGameEvent;
         }
 
-        void gameManagerOnstartGameEvent() => SpawnResources(amountToSpawn);
-    }
+		void gameManagerOnstartGameEvent()
+		{
+			if (isServer)
+			{
+				SpawnResources(amountToSpawn);
+			}
+		}
+	}
 }

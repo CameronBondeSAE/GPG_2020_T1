@@ -15,7 +15,7 @@ public class HealthEditor : Editor
       Health myScript = (Health) target;
       if (GUILayout.Button("Kill Unit"))
       {
-         myScript.ChangeHealth(-99999999);
+         myScript.InstaKill();
       }
    }
 }
