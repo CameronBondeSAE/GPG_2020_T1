@@ -39,15 +39,9 @@ public class Health : NetworkBehaviour
     
     public void ChangeHealth(int amount)
     {
-		CmdChangeHealth(amount);
+		RpcChangeHealth(amount);
     }
 
-    [Command]
-    public void CmdChangeHealth(int amount)
-    {
-	    RpcChangeHealth(amount);
-    }
-    
     
     [ClientRpc]
     public void RpcChangeHealth(int amount)

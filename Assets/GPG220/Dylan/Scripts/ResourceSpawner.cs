@@ -39,7 +39,9 @@ namespace GPG220.Dylan.Scripts
 
 		void gameManagerOnstartGameEvent()
 		{
-			if (isServer)
+			
+			// TODO: Networking
+			// if (isServer)
 			{
 				SpawnResources(amountToSpawn);
 			}
