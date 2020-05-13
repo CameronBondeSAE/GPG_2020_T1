@@ -37,19 +37,17 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
             doneCallback(this);
         }
 
-        public void FixedUpdate()
-        {
-            if (Vector3.Distance(transform.position, targetPosition) < 4f)
-            {
-                targetReached?.Invoke();
-            }
-
-        }
+        // public void FixedUpdate()
+        // {
+        //     if (Vector3.Distance(transform.position, targetPosition) < 4f)
+        //     {
+        //         targetReached?.Invoke();
+        //     }
+        // }
 
         public void TriggerEvent()
         {
             targetReached?.Invoke();
-            // Debug.Log("Target Reached");
         }
 
         public override void PlanExit(IReGoapAction<string, object> previousAction, IReGoapAction<string, object> nextAction, ReGoapState<string, object> settings, ReGoapState<string, object> goalState)

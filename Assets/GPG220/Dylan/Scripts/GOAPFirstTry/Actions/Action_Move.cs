@@ -20,7 +20,7 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
         public int currentPathNodeIndex;
         public float nodeDistanceMin = 1.5f;
         public float moveForce = 1000;
-        
+
         [HideInInspector] public Action_TargetReached targetReachedAction;
 
         protected override void Awake()
@@ -59,7 +59,7 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
             base.Run(previous, next, settings, goalState, done, fail);
 
             canMove = true;
-            
+
             doneCallback(this);
         }
 
@@ -73,8 +73,8 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
                 worldState.Set(pair.Key, pair.Value);
             }
         }
-        
-        
+
+
         // public void FixedUpdate()
         // {
         //     if (canMove)
@@ -114,7 +114,5 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
         //         rb.AddForce(Vector3.ProjectOnPlane((v - transform.position), hit.normal) * moveForce);
         //     }
         // }
-
-        
     }
 }

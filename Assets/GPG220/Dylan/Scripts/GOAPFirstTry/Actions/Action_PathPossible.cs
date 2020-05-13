@@ -16,6 +16,7 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
     {
         //TODO find some way to determine this bools state
         public bool isPathPossible;
+        public bool allowedToTeleport;
         public List<Node> currentPath = new List<Node>();
         public Vector3 targetPosition;
         public SimplePathfinder simplePathfinder;
@@ -36,8 +37,7 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
 
         public override ReGoapState<string, object> GetEffects(GoapActionStackData<string, object> stackData)
         {
-            CheckIfPathIsPossible();
-            if (isPathPossible)
+            if (CheckIfPathIsPossible())
             {
                 effects.Set("pathPossible", true);
             }
@@ -55,12 +55,13 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
             if(currentPath == null)
             {
                 isPathPossible = false;
+                allowedToTeleport = true;
             }
             else
             {
                 isPathPossible = true;
+                allowedToTeleport = false;
             }
-
 
             return isPathPossible;
         }
@@ -73,10 +74,6 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
         {
             base.Run(previous, next, settings, goalState, done, fail);
 
-            // check if path is possible if so call done and continue else try to teleport
-            
-            
-            
             doneCallback(this);
         }
         

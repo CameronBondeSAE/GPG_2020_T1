@@ -24,7 +24,6 @@ namespace GPG220.Dylan.Scripts.GOAPFirstTry.Actions
             if (CheckEnergy())
             {
                 effects.Set("hasEnergy", true);
-                Debug.Log("Teleport Allowed");
             }
             else
             {

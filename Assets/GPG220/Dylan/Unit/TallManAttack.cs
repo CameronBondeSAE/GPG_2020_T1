@@ -45,6 +45,8 @@ namespace GPG220.Dylan.Unit
         public AudioSource audioSource;
         public AudioClip teleportSFX;
         public AudioClip explodeSFX;
+
+
         public void Awake()
         {
             abilityName = "Explosive Surprise";
@@ -75,37 +77,32 @@ namespace GPG220.Dylan.Unit
             targetReachedAction.targetReached += ExplodeAttack;
         }
 
-
         public override bool TargetExecute(Vector3 worldPos)
         {
-            Debug.Log("Target");
-
             targetPosition = worldPos;
             simplePathfinder.RequestPathFind(transform.position, targetPosition, SetPath);
-            pathPossibleAction.currentPath = currentPath;
+            // pathPossibleAction.currentPath = currentPath;
             currentPathNodeIndex = 0;
-            // goapAgentDylan.CalculateNewGoal(true);
-
-            // pathPossibleAction.targetPosition = targetPosition;
-            // targetReachedAction.targetPosition = targetPosition;
-            // moveAction.targetPosition = targetPosition;
-            // moveAction.currentPathNodeIndex = 0;
-
             moveAction.canMove = false;
-            goapAgentDylan.CalculateNewGoal(true);
 
+            StartCoroutine(Delay());
+            
+            return true;
+        }
+
+        private IEnumerator Delay()
+        {
+            yield return new WaitForSeconds(1f);
             if (pathPossibleAction.isPathPossible)
             {
                 moveAction.canMove = true;
-                // goapAgentDylan.CalculateNewGoal(true);
             }
             else
             {
-                if (energy > 0)
+                if (checkEnergyAction.canTeleport && pathPossibleAction.allowedToTeleport)
                 {
                     if (!teleportAction.isRunning)
                     {
-                        Debug.Log("Target");
                         teleportDelay = Vector3.Distance(transform.position, targetPosition) / 10f;
                         teleportAction.isRunning = true;
                         StartCoroutine("TeleportDelay");
@@ -114,30 +111,7 @@ namespace GPG220.Dylan.Unit
                     checkEnergyAction.energyAmount -= teleportCost;
                     checkEnergyAction.energyAmount = energy;
                 }
-
-                // goapAgentDylan.CalculateNewGoal(true);
             }
-
-            // goapAgentDylan.CalculateNewGoal(true);
-            return true;
-            return base.TargetExecute(worldPos);
-        }
-
-        
-        private bool CheckIfPathIsPossible()
-        {
-            if(currentPath == null)
-            {
-                pathPossibleAction.isPathPossible = false;
-                moveAction.canMove = false;
-            }
-            else
-            {
-                pathPossibleAction.isPathPossible = true;
-            }
-
-
-            return pathPossibleAction.isPathPossible;
         }
 
         public void FixedUpdate()
@@ -156,12 +130,15 @@ namespace GPG220.Dylan.Unit
                     else
                     {
                         if (currentPathNodeIndex < currentPath.Count - 1)
+                        {
                             currentPathNodeIndex += 1;
+                        }
                     }
                 }
                 else
                 {
                     moveAction.canMove = false;
+                    CheckDistance();
                 }
             }
             else
@@ -183,11 +160,12 @@ namespace GPG220.Dylan.Unit
         public void SetPath(List<Node> list)
         {
             currentPath = list;
+            pathPossibleAction.currentPath = currentPath;
+            goapAgentDylan.CalculateNewGoal(true);
         }
 
         public void ExplodeAttack()
         {
-            Debug.Log("Explode!");
             Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius, unitLayerMask);
 
             if (colliders.Length > 0)
@@ -196,16 +174,17 @@ namespace GPG220.Dylan.Unit
                 {
                     if (unit.GetComponent<Health>())
                     {
-                        Debug.Log("Explode!!");
                         Health unitHealth = unit.GetComponent<Health>();
-                        unitHealth.ChangeHealth((int)-explosionDamage); // CAM CHANGE: can't access health directly. It's also an int for some reason
+                        unitHealth.ChangeHealth(
+                            (int) -explosionDamage); // CAM CHANGE: can't access health directly. It's also an int for some reason
                     }
                 }
             }
+
             audioSource.PlayOneShot(explodeSFX);
             StartCoroutine("Death");
             // Death();
-            
+
             targetReachedAction.targetReached -= ExplodeAttack;
         }
 
@@ -213,9 +192,8 @@ namespace GPG220.Dylan.Unit
         {
             if (Vector3.Distance(transform.position, targetPosition) < 4f)
             {
-                Debug.Log("check distance");
-                targetReachedAction.TriggerEvent();
-                // ExplodeAttack();
+                // targetReachedAction.TriggerEvent();
+                ExplodeAttack();
             }
         }
 
@@ -223,7 +201,7 @@ namespace GPG220.Dylan.Unit
         {
             audioSource.PlayOneShot(teleportSFX);
             yield return new WaitForSeconds(teleportDelay);
-            transform.position = new Vector3(targetPosition.x, targetPosition.y + 2f, targetPosition.z);
+            transform.position = new Vector3(targetPosition.x, targetPosition.y + 1f, targetPosition.z);
             teleportAction.isRunning = false;
             CheckDistance();
         }
@@ -242,7 +220,7 @@ namespace GPG220.Dylan.Unit
             yield return new WaitForSeconds(2f);
             Health health = this.gameObject.GetComponent<Health>();
             health.ChangeHealth(-999);
-        
+
             // Destroy(gameObject);
         }
     }
