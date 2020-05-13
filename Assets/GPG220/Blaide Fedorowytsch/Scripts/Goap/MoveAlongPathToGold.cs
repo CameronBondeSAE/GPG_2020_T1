@@ -17,6 +17,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Goap
         private Rigidbody rB;
         public float moveForce;
         private bool moving;
+        public float timeout = 8;
+        public float timer;
         
         protected override void Awake()
         {
@@ -37,24 +39,33 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Goap
             currentPath = _pathFindToGold.Path;
             currentPathNodeIndex = 0;
             target = _pathFindToGold.target;
+            resetTimer();
+        }
 
 
+
+        public void resetTimer()
+        {
+            timer = timeout;
         }
 
         private void Update()
         {
-
-                if (Vector3.Distance(this.gameObject.transform.position, new Vector3(target.x,transform.position.y,target.z)) > nodeDistanceMin)
+            if (timer > 0)
+            {
+                timer -= Time.deltaTime;
+                if (Vector3.Distance(this.gameObject.transform.position,
+                    new Vector3(target.x, transform.position.y, target.z)) > nodeDistanceMin)
                 {
                     if (currentPath != null)
                     {
-                        
-                        
+
+
                         Vector3 nextPos = currentPath[currentPathNodeIndex].worldPosition;
                         nextPos = new Vector3(nextPos.x, transform.position.y, nextPos.z);
-                        
-                        
-                        
+
+
+
                         if (Vector3.Distance(this.gameObject.transform.position,
                             nextPos) > nodeDistanceMin)
                         {
@@ -64,6 +75,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Goap
                         else if (currentPathNodeIndex < currentPath.Count - 1)
                         {
                             currentPathNodeIndex += 1;
+                            resetTimer();
                         }
                         else
                         {
@@ -74,22 +86,29 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Goap
                     }
                     else
                     {
-                        
+
                     }
                 }
                 else
                 {
-                    doneCallback(this);
+                    failCallback(this);
+                    resetTimer();
                 }
+            }
+            else
+            {
+                failCallback(this);
+                resetTimer();
+            }
 
-                
-            
+
+
         }
 
         void Move(Vector3 v)
         {
             //this.gameObject.transform.position = Vector3.MoveTowards(this.gameObject.transform.position, v, 0.5f);
-            rB.AddForce((v -transform.position) * moveForce);
+            rB.AddForce((v -transform.position).normalized * moveForce);
         }
         
         private void OnDrawGizmosSelected()

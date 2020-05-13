@@ -139,7 +139,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 126
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &6964453730883976658
 MonoBehaviour:
@@ -171,8 +171,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Move Along Path To Gold
   Cost: 1
-  nodeDistanceMin: 1.2
-  moveForce: 2000
+  nodeDistanceMin: 1
+  moveForce: 6000
+  timeout: 3
+  timer: 0
 --- !u!114 &6964453730883976671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,9 +218,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Destroy Wall In Way
-  Cost: 1
-  distanceBeforeDestroyingWall: 0
-  forceModifier: 0
+  Cost: 2
+  forceModifier: 10000
 --- !u!114 &6964453730883976669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,7 +262,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  startingHealth: 0
+  startingHealth: 100
   currentHealth: 100
 --- !u!114 &6964453730883976678
 MonoBehaviour:
@@ -379,7 +380,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6964453730883976661}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 8ff378406eacbcc4087fac3d3abdf375, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5

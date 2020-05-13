@@ -14,6 +14,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Goap
         private bool findingPath = false;
         public Vector3 target;
         private SimplePathfinder pf;
+        private MoveAlongPathToGold _moveAlongPathToGold;
 
         protected override void Awake()
         {
@@ -23,8 +24,17 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Goap
             //effects.Set("HasPathToGold", true);
             Cost = 1;
             _findNearestGold = GetComponent<FindNearestGold>();
-            
-            
+            _moveAlongPathToGold = GetComponent<MoveAlongPathToGold>();
+
+        }
+        public void ElevateCost()
+        {
+            Cost += 0.2f;
+        }
+
+        public void ResetCost()
+        {
+            Cost = 1f;
         }
 
         private void SetPath(List<Node> list)
@@ -35,7 +45,8 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Goap
                 doneCallback(this);
             }
             else
-            {
+            { 
+                ElevateCost();
                 failCallback(this);
             }
         }

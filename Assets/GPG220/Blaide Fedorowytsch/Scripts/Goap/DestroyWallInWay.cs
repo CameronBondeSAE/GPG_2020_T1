@@ -9,46 +9,52 @@ using UnityEngine;
 public class DestroyWallInWay : ReGoapAction<string,object>
 {
     private FindNearestGold _findNearestGold;
-    public float distanceBeforeDestroyingWall;
     private Rigidbody rB;
     public float forceModifier;
-
+    private PathFindToGold pathFindToGold;
     private bool collidedWithWall;
     protected override void Awake()
     {
         base.Awake();
         preconditions.Set("GoldFound", true);
         effects.Set("HasPathToGold",true);
-        Cost = 3;
         rB = GetComponent<Rigidbody>();
+        pathFindToGold = GetComponent<PathFindToGold>();
     }
     public override void Run(IReGoapAction<string, object> previous, IReGoapAction<string, object> next, ReGoapState<string, object> settings, ReGoapState<string, object> goalState, Action<IReGoapAction<string, object>> done, Action<IReGoapAction<string, object>> fail)
-    { 
+    {
         base.Run(previous, next,settings,goalState, done, fail);
-        
+        Debug.Log("why the fuck aren't i working?");
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (Vector3.Distance(transform.position, _findNearestGold.closestGold.transform.position) >
-            distanceBeforeDestroyingWall  &&  !collidedWithWall)
-        {
-            Vector3 target = new Vector3(_findNearestGold.closestGold.transform.position.x,transform.position.y,_findNearestGold.closestGold.transform.position.z);
-            rB.AddForce((transform.position - target)*forceModifier);
-        }
-        else if (collidedWithWall)
-        {
-            failCallback(this);  
-        } 
+        Debug.Log("Im Updating");
+        Vector3 position = _findNearestGold.closestGold.transform.position;
+        Vector3 target = new Vector3(position.x,transform.position.y,position.z);
+        Move(target);
     }
 
-    private void OnCollisionEnter(Collision other)
+    
+    void Move(Vector3 v)
     {
-        if (other.gameObject.GetComponent<Wall>() && !collidedWithWall)
+        //this.gameObject.transform.position = Vector3.MoveTowards(this.gameObject.transform.position, v, 0.5f);
+        rB.AddForce((v -transform.position).normalized * forceModifier);
+    }
+
+    private void OnCollisionStay(Collision other)
+    {
+        if (this.enabled)
         {
+            if (other.gameObject.GetComponent<Wall>())
+            {
+
+                other.gameObject.GetComponent<ObstacleSpawnNotifier>().OnDisappear();
+                collidedWithWall = true;
+                failCallback(this);
+                pathFindToGold.Cost = 1;
+            }
             
-            other.gameObject.GetComponent<ObstacleSpawnNotifier>().OnDisappear();
-            collidedWithWall = true;
         }
     }
 }
