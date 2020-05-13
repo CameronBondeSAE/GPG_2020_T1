@@ -132,6 +132,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3266ec32201a0694a8a80c5131a2d2ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   startingHealth: 80
   currentHealth: 100
 --- !u!114 &2939113266008733346
@@ -206,7 +208,7 @@ MonoBehaviour:
   myNetID: 0
   myOwnerIdentity: {fileID: 0}
   debug: 
-  unitName: 
+  unitName: Medic
   unitDescription: 
   unitImage: {fileID: 0}
   pathFinderController: {fileID: 0}

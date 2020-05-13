@@ -31,7 +31,7 @@ public class HealthbarViewModel : MonoBehaviour
 
 	private void Update()
 	{
-		transform.position = target.position + offset;
+		if (target != null) transform.position = target.position + offset;
 	}
 
 	private void HealthOnhealthChangedEvent(Health arg1, int arg2)

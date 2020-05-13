@@ -23,8 +23,7 @@ public class UIManager : MonoBehaviour
     [HideInInspector] public InputAction cursorMove;
     private Camera mainCam;
 
-
-    private UnitSelectionManager unitSelectionManager;
+	private UnitSelectionManager unitSelectionManager;
     public List<UnitBase> units;
 
     public Button[] buttons;

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using GPG220.Blaide_Fedorowytsch.Scripts.Interfaces;
+﻿using System.Collections.Generic;
 using GPG220.Luca.Scripts.Unit;
 using Mirror;
 using NaughtyAttributes;
-using Sirenix.OdinInspector;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

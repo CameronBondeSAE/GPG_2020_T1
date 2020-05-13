@@ -120,6 +120,18 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &52457634 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1555321804470288114, guid: 91458b95eb965ac4baf5c3fd0c4c25e5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1824013603}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72bfaf2542009eb40a4e057032155590, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &55446166 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1375059196, guid: 298228f203107444691db63a0ad56f1a,
@@ -565,6 +577,96 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &171873216
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 171873218}
+  - component: {fileID: 171873217}
+  m_Layer: 0
+  m_Name: Tutorial
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &171873217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171873216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a88aa09463ae4e4d870350fc4e4ec3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: tutorialEvents
+      Entry: 7
+      Data: 0|Castle.Components.DictionaryAdapter.EditableList`1[[TutorialEvent, Assembly-CSharp]],
+        Castle.Core
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 1|TutorialEvent, Assembly-CSharp
+    - Name: textToShow
+      Entry: 1
+      Data: Select the King by clicking or drawing a box around them
+    - Name: messageToSatisfyAndRemoveText
+      Entry: 1
+      Data: OnSelection
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 2|TutorialEvent, Assembly-CSharp
+    - Name: textToShow
+      Entry: 1
+      Data: Build a unit by clicking buttons in the Ability window
+    - Name: messageToSatisfyAndRemoveText
+      Entry: 1
+      Data: UnitSpawned
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  unitSelectionManager: {fileID: 52457634}
+--- !u!4 &171873218
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171873216}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -12.875076, y: 5.422016, z: 7.633067}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &178437039
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1275,6 +1377,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259623929760448621, guid: cab458c032766474f80d112a9b70da6d,
+        type: 3}
+      propertyPath: m_Interactable
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5572601276252501240, guid: cab458c032766474f80d112a9b70da6d,
         type: 3}
@@ -2021,7 +2128,7 @@ PrefabInstance:
     - target: {fileID: 3398339021096822533, guid: ff09ae3cace58124d96b62ccd444925e,
         type: 3}
       propertyPath: unitBases.Array.size
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3398339021096822533, guid: ff09ae3cace58124d96b62ccd444925e,
         type: 3}
@@ -2073,7 +2180,7 @@ PrefabInstance:
         type: 3}
       propertyPath: unitBases.Array.data[6]
       value: 
-      objectReference: {fileID: 8932981262465183121, guid: ce1f1eec4dc935a41b8dafd39af1b41e,
+      objectReference: {fileID: 6964453730883976667, guid: 7f1b1d8b7160d4942bbfb46c6d9211a5,
         type: 3}
     - target: {fileID: 3398339021096822533, guid: ff09ae3cace58124d96b62ccd444925e,
         type: 3}
