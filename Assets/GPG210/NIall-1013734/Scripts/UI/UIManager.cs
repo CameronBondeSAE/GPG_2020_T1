@@ -35,6 +35,7 @@ public class UIManager : MonoBehaviour
 
     public List<AbilityController> groupAbilityControllers;
 
+	public static event Action<InputAction.CallbackContext> TargetActionStaticEvent;
 
     private void Awake()
     {
@@ -48,6 +49,8 @@ public class UIManager : MonoBehaviour
 
     public void TargetAction(InputAction.CallbackContext ctx) // called on mouse right click
     {
+		TargetActionStaticEvent?.Invoke(ctx);
+		
         Vector3 worldPosition = unitSelectionManager.targetPoint; // get the worldpoint from the unitselection manager because its already raycasting to find world points.
         GameObject targetObject = unitSelectionManager.targetObject;
         if (groupAbilityControllers.Count > 0)
