@@ -57,7 +57,7 @@ namespace GPG220.Luca.Scripts.Abilities
 				defaultTargetAbilityIndex = abilities.Values.IndexOf(defaultTargetAbility);
 			else
 			{
-				Debug.Log("No default target ability set in " + GetComponent<UnitBase>()?.name);
+				// Debug.Log("No default target ability set in " + GetComponent<UnitBase>()?.name);
 				defaultTargetAbilityIndex = -1;
 			}
 
@@ -65,7 +65,7 @@ namespace GPG220.Luca.Scripts.Abilities
 				defaultWorldTargetAbilityIndex = abilities.Values.IndexOf(defaultWorldTargetAbility);
 			else
 			{
-				Debug.Log("No default target ability set in " + GetComponent<UnitBase>()?.name);
+				// Debug.Log("No default target ability set in " + GetComponent<UnitBase>()?.name);
 				defaultWorldTargetAbilityIndex = -1;
 			}
 			
