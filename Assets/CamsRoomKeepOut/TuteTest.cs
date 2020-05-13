@@ -1,11 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using GPG220.Blaide_Fedorowytsch.Scripts;
+using GPG220.Luca.Scripts.Abilities;
 using GPG220.Luca.Scripts.Unit;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 
+[Serializable]
 public class TutorialEvent
 {
 	public string textToShow;
@@ -21,8 +24,10 @@ public class TuteTest : SerializedMonoBehaviour
 	// HACK: Systems to subscribe to and turn into a generic message
 	public UnitSelectionManager unitSelectionManager;
 
-	public int currentTutorialMessageIndex = 0;
+	public int currentTutorialMessageIndex = -1; // HACK: to start at zero with showing 'nextTutorialMessage'
 
+	public TutorialEvent currentTutorial;
+	
 	/// <summary>
 	/// HACK: Take non-abstracted events and turn them into general messages
 	/// </summary>
@@ -30,6 +35,7 @@ public class TuteTest : SerializedMonoBehaviour
 	{
 		UnitBase.SpawnStaticEvent += obj => EventMessageTriggered("OnSpawnUnit");
 		unitSelectionManager.OnSelectionEvent += list => EventMessageTriggered("OnSelection");
+		AbilityController.ClickedLocalAbilityStaticEvent += controller => EventMessageTriggered("OnClickedAbility");
 
 		NextTutorialMessage();
 	}
@@ -51,6 +57,7 @@ public class TuteTest : SerializedMonoBehaviour
 	{
 		yield return new WaitForSeconds(1);
 		currentTutorialMessageIndex++;
+		currentTutorial = tutorialEvents[currentTutorialMessageIndex];
 		TurnOnTutorialMessage(tutorialEvents[currentTutorialMessageIndex].textToShow);
 	}
 

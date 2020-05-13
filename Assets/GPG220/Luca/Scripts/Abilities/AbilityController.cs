@@ -14,6 +14,8 @@ namespace GPG220.Luca.Scripts.Abilities
 	/// </summary>
 	public class AbilityController : NetworkBehaviour
 	{
+		public static event Action<AbilityController> ClickedLocalAbilityStaticEvent;
+		
 		// Automatically loads abilities added to the same gameobject on Start()
 		public bool autoLoadAbilities = true;
 
@@ -113,6 +115,8 @@ namespace GPG220.Luca.Scripts.Abilities
 		/// <returns>HACK: NO*** Returns true if the ability could be executed.</returns>
 		public void SelectedExecuteAbility(AbilityBase ability, bool mustContainAbility = true)
 		{
+			ClickedLocalAbilityStaticEvent?.Invoke(this);
+
 			CmdSelectedExecuteAbility(abilities.IndexOfValue(ability));
 			// return ability != null && (mustContainAbility == false || abilities.ContainsValue(ability)) &&
 				   // ability.SelectedExecute();
@@ -144,6 +148,8 @@ namespace GPG220.Luca.Scripts.Abilities
 		/// <returns>Returns true if the ability could be executed.</returns>
 		public void TargetExecuteAbility(AbilityBase ability, GameObject target = null)
 		{
+			ClickedLocalAbilityStaticEvent?.Invoke(this);
+			
 			var index = abilities.IndexOfValue(ability);
 			abilities.TryGetValue(index, out AbilityBase outAbility);
 
@@ -196,6 +202,8 @@ namespace GPG220.Luca.Scripts.Abilities
 
 		public void TargetExecuteAbility(AbilityBase ability, Vector3 worldPos)
 		{
+			ClickedLocalAbilityStaticEvent?.Invoke(this);
+			
 			CmdTargetExecuteAbilityWorldPos(abilities.IndexOfValue(ability), worldPos);
 
 			//return ability?.TargetExecute(worldPos) ?? false;
