@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections;
+﻿using System.Collections;
 using GPG220.Blaide_Fedorowytsch.Scripts;
 using GPG220.Luca.Scripts.Unit;
-using Mirror;
-using Mirror.Examples.Chat;
-using Sirenix.OdinInspector.Editor.Drawers;
 using UnityEngine;
-using UnityEngine.Experimental.PlayerLoop;
-using Random = UnityEngine.Random;
 
 
 namespace GPG220.Dylan.Scripts.BuildingSystemTest

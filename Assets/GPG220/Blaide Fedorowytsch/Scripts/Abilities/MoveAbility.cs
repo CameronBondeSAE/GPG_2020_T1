@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using GPG220.Blaide_Fedorowytsch.Scripts.Interfaces;
-using GPG220.Luca.Scripts.Abilities;
+﻿using GPG220.Luca.Scripts.Abilities;
 using GPG220.Luca.Scripts.Unit;
-using NSubstitute.Extensions;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
