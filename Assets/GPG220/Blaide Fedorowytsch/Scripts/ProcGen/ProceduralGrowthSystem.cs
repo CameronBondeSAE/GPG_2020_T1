@@ -320,16 +320,25 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
 		List<Vector2Int> CompareBoolGrids()
 		{
 			List<Vector2Int> list = new List<Vector2Int>();
-			for (int x = 0; x < gridSize.x; x++)
+			if (BoolGrid == null || lastBoolGrid == null)
 			{
-				for (int y = 0; y < gridSize.y; y++)
+				//GenerateBoolGrid();
+			}
+			else
+			{
+				for (int x = 0; x < gridSize.x; x++)
 				{
-					if (BoolGrid[x, y] != lastBoolGrid[x, y])
+					for (int y = 0; y < gridSize.y; y++)
 					{
-						list.Add(new Vector2Int(x, y));
+						if (BoolGrid[x, y] != lastBoolGrid[x, y])
+						{
+							list.Add(new Vector2Int(x, y));
+						}
 					}
 				}
 			}
+
+
 
 
 			return list;
@@ -356,6 +365,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
 
 		public void updateBoolGrid()
 		{
+			if(lastBoolGrid != null)
 			for (int x = 0; x < gridSize.x; x++)
 			{
 				for (int y = 0; y < gridSize.y; y++)
