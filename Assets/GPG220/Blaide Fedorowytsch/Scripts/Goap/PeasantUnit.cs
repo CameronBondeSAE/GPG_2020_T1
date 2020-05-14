@@ -32,8 +32,12 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.Goap
 
         public void SendToKing(Inventory inventory1, ResourceType resourceType, int amtChange)
         {
-            inventory.RemoveResources(resourceType, amtChange);
-            king.inventory.AddResources(resourceType, amtChange);
+            if (amtChange > 0)
+            {
+                inventory.RemoveResources(resourceType, amtChange);
+                king.inventory.AddResources(resourceType, amtChange);
+            }
+
         }
 
     }
