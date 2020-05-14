@@ -89,14 +89,14 @@ namespace GPG220.Luca.Scripts.Unit
             if (_inventory.GetResourceQuantity(_resourceType) <= 0)
             {
                 health.deathEvent += Death;
-                health.InstaKill();
+                health.RpcInstaKill();
             }
         }
 
         private void Death(Health obj)
         {
             health.deathEvent -= Death;
-            Destroy(gameObject);
+            Destroy(gameObject,0.1f);
         }
 
         private void OnDestroy()
