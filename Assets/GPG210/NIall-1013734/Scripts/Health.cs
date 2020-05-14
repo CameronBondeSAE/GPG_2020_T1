@@ -62,17 +62,18 @@ public class Health : NetworkBehaviour
 	
 	public void InstaKill()
 	{
-		CmdInstaKill();
-	}
-
-	[Command]
-	public void CmdInstaKill()
-	{
 		RpcInstaKill();
 	}
 	
 	[ClientRpc]
 	public void RpcInstaKill()
+	{
+		deathEvent?.Invoke(this);
+		deathStaticEvent?.Invoke(this);
+	}
+
+	// If the whole GO gets Unity Destroyed, fire off death (for things like healthbars listening)
+	private void OnDestroy()
 	{
 		deathEvent?.Invoke(this);
 		deathStaticEvent?.Invoke(this);

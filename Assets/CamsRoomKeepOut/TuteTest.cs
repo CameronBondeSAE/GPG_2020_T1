@@ -34,19 +34,20 @@ public class TuteTest : SerializedMonoBehaviour
 	/// <summary>
 	/// HACK: Take non-abstracted events and turn them into general messages
 	/// </summary>
-	void Start()
+	void Awake()
 	{
+		// Start when the game starts
+		FindObjectOfType<GameManager>().StartGameEvent += NextTutorialMessage;
+		
 		UnitBase.SpawnStaticEvent                        += obj => EventMessageTriggered("OnSpawnUnit");
 		unitSelectionManager.OnSelectionEvent            += list => EventMessageTriggered("OnSelection");
 		AbilityController.ClickedLocalAbilityStaticEvent += controller => EventMessageTriggered("OnClickedAbility");
 		UIManager.TargetActionStaticEvent                += context => EventMessageTriggered("OnTargetAction");
-
-		NextTutorialMessage();
 	}
 
 	private void EventMessageTriggered(string eventMessage)
 	{
-		if (tutorialEvents[currentTutorialMessageIndex].messageToSatisfyAndRemoveText == eventMessage)
+		if (currentTutorialMessageIndex >= 0 && tutorialEvents.Count > currentTutorialMessageIndex && tutorialEvents[currentTutorialMessageIndex].messageToSatisfyAndRemoveText == eventMessage)
 		{
 			TurnOffTutorialMessage();
 			NextTutorialMessage();

@@ -720,7 +720,7 @@ Transform:
   m_Children:
   - {fileID: 332298130}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &178437039
 PrefabInstance:
@@ -938,7 +938,7 @@ PrefabInstance:
     - target: {fileID: 7406413777944910313, guid: ed13b90311efffc44abcd5dd45f95b4c,
         type: 3}
       propertyPath: amountToSpawn
-      value: 200
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7406413777944910314, guid: ed13b90311efffc44abcd5dd45f95b4c,
         type: 3}
@@ -1585,7 +1585,7 @@ PrefabInstance:
     - target: {fileID: 4185516348687593663, guid: cab458c032766474f80d112a9b70da6d,
         type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4185516348687593663, guid: cab458c032766474f80d112a9b70da6d,
         type: 3}
@@ -1938,7 +1938,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 9
   m_Type: 1
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 3.1415927
   m_Range: 10
   m_SpotAngle: 30
@@ -1984,7 +1984,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 1e-45, z: 2.281e-42, w: 6e-44}
+  m_BoundingSphereOverride: {x: 0, y: 2.3510604e-38, z: 7.9639e-41, w: 3.7649e-40}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -2166,7 +2166,7 @@ Transform:
   - {fileID: 580168833}
   - {fileID: 1805615242}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &812839803
 Mesh:
@@ -2777,7 +2777,7 @@ PrefabInstance:
     - target: {fileID: 7995541892702618878, guid: 298228f203107444691db63a0ad56f1a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 7995541893100761205, guid: 298228f203107444691db63a0ad56f1a,
         type: 3}
@@ -2821,6 +2821,60 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 298228f203107444691db63a0ad56f1a, type: 3}
+--- !u!1 &1220818817
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1220818819}
+  - component: {fileID: 1220818818}
+  m_Layer: 0
+  m_Name: GOAP Planner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1220818818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220818817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01af53ed93d4de441bfad05f5f6236f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MultiThread: 0
+  ThreadsCount: 1
+  PlannerSettings:
+    PlanningEarlyExit: 0
+    MaxIterations: 1000
+    MaxNodesToExpand: 10000
+    UsingDynamicActions: 0
+    DebugPlan: 0
+  LogLevel: 0
+  NodeWarmupCount: 1000
+  StatesWarmupCount: 10000
+--- !u!4 &1220818819
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220818817}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 41.727207, y: 76.60551, z: -106.96673}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1229185710
 GameObject:
   m_ObjectHideFlags: 0
@@ -3302,7 +3356,7 @@ Transform:
   - {fileID: 803788324}
   - {fileID: 1229185711}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1898275193
 PrefabInstance:
