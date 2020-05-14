@@ -15,6 +15,8 @@ public class CameraController : MonoBehaviour
 
     public GameManager gameManager;
 
+	public static event Action OnMouseWheelMoved;
+
     void Start()
     {
    
@@ -54,6 +56,13 @@ public class CameraController : MonoBehaviour
         }
 
         float scroll = Input.GetAxis("Mouse ScrollWheel");
+
+		// Hack for tutorials etc to know about mouse wheels. should use new input system
+		if (scroll > 0 || scroll < 0)
+		{
+			OnMouseWheelMoved?.Invoke();
+		}
+		
         pos.y -= scroll * scrollSpeed * 100f * Time.deltaTime;
        
         pos.x = Mathf.Clamp(pos.x, -panLimit.x, panLimit.x); //clamps allows a set min and max value

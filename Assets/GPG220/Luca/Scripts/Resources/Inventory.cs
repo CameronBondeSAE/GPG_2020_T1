@@ -92,7 +92,10 @@ namespace GPG220.Luca.Scripts.Resources
         [Button("Drop All Items")]
         public void DropAllItems(Health health)
         {
-            StartCoroutine(DropItems());
+			if (gameObject.activeSelf)
+			{
+				StartCoroutine(DropItems());
+			}
         }
 
         private IEnumerator DropItems()

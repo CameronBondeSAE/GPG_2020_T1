@@ -43,6 +43,7 @@ public class TuteTest : SerializedMonoBehaviour
 		unitSelectionManager.OnSelectionEvent            += list => EventMessageTriggered("OnSelection");
 		AbilityController.ClickedLocalAbilityStaticEvent += controller => EventMessageTriggered("OnClickedAbility");
 		UIManager.TargetActionStaticEvent                += context => EventMessageTriggered("OnTargetAction");
+		CameraController.OnMouseWheelMoved += () => EventMessageTriggered("OnMouseWheelMoved");
 	}
 
 	private void EventMessageTriggered(string eventMessage)

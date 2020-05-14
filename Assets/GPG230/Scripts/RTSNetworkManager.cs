@@ -31,12 +31,13 @@ public class RTSNetworkManager : NetworkManager
         // gameManager.playMenu       = playMenuHack;
         // NetworkServer.Spawn(gameManager.gameObject);
 
-        StartedHostEvent?.Invoke();
     }
 
     public override void OnServerConnect(NetworkConnection conn)
     {
         base.OnServerConnect(conn);
+
+		StartedHostEvent?.Invoke();
     }
 
     public override void OnServerAddPlayer(NetworkConnection conn)

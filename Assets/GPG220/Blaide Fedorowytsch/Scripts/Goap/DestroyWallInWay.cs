@@ -29,11 +29,17 @@ public class DestroyWallInWay : ReGoapAction<string,object>
 
     private void FixedUpdate()
     {
-        Debug.Log("Im Updating");
-        Vector3 position = _findNearestGold.closestGold.transform.position;
-        Vector3 target = new Vector3(position.x,transform.position.y,position.z);
-        Move(target);
-    }
+        // Debug.Log("Im Updating");
+		if (_findNearestGold != null)
+		{
+			if (_findNearestGold.closestGold != null)
+			{
+				Vector3 position = _findNearestGold.closestGold.transform.position;
+				Vector3 target   = new Vector3(position.x,transform.position.y,position.z);
+				Move(target);
+			}
+		}
+	}
 
     
     void Move(Vector3 v)

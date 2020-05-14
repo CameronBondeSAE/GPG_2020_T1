@@ -95,12 +95,20 @@ namespace GPG220.Luca.Scripts.Unit
 
         private void Death(Health obj)
         {
+			if (!isServer)
+			{
+				return;
+			}
             health.deathEvent -= Death;
             Destroy(gameObject,0.1f);
         }
 
         private void OnDestroy()
         {
+			if (!isServer)
+			{
+				return;
+			}
             if (unitStats != null) unitStats.onHealthChanged -= HandleOnHealthChanged;
         }
 
@@ -130,6 +138,11 @@ namespace GPG220.Luca.Scripts.Unit
         // TODO Receive event from a damage handler
         private void HandleOnHit(UnitBase otherUnit)
         {
+			if (!isServer)
+			{
+				return;
+			}
+			
             if (lootOnDestroy && unitStats.IsAlive())
                 return;
 

@@ -9,19 +9,23 @@ namespace GPG220.Dylan.Scripts
     {
         public MapUtilities mapUtilities;
         public ProceduralMeshGenerator proceduralMeshGenerator;
-        public GameManager gameManager;
+		public GameManager gameManager;
+		public RTSNetworkManager rtsNetworkManager;
         public float amountToSpawn;
         public GameObject resourcePrefab;
 
         public void Awake()
         {
-            gameManager = FindObjectOfType<GameManager>();
             mapUtilities = FindObjectOfType<MapUtilities>();
             proceduralMeshGenerator = FindObjectOfType<ProceduralMeshGenerator>();
 
-			gameManager.StartGameEvent += gameManagerOnstartGameEvent;
+			// gameManager = FindObjectOfType<GameManager>();
+			// gameManager.ServerHostStartedEvent += gameManagerOnstartGameEvent;
 			// gameManager.GameOverEvent += gameManagerOnstartGameEvent;
-        }
+
+			rtsNetworkManager = FindObjectOfType<RTSNetworkManager>();
+			rtsNetworkManager.StartedHostEvent += gameManagerOnstartGameEvent;
+		}
 
 
         public void SpawnResources(float amountToSpawn)
@@ -41,7 +45,7 @@ namespace GPG220.Dylan.Scripts
 		{
 			
 			// TODO: Networking
-			// if (isServer)
+			// if (Network)
 			{
 				SpawnResources(amountToSpawn);
 			}

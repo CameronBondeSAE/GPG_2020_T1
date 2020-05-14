@@ -61,7 +61,7 @@ public class Wall : NetworkBehaviour
 		col.enabled = true;
 		rend.enabled = true;
 
-		if (!isVisible)
+		// if (!isVisible)
 		{
 			var tweenerCore = target.DOScale(targetScale, appearDuration).SetEase(Ease.Linear);
 		}
@@ -83,7 +83,7 @@ public class Wall : NetworkBehaviour
     {
 		Tween t = null;
 		
-		if (isVisible)
+		// if (isVisible)
 		{
 			t = target.DOScale(new Vector3(1f, 0f, 1f), disappearDuration).SetEase(Ease.InOutElastic);
 			t.onComplete += delegate

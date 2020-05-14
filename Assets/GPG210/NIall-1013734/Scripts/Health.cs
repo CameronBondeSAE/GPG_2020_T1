@@ -39,7 +39,10 @@ public class Health : NetworkBehaviour
     
     public void ChangeHealth(int amount)
     {
-		RpcChangeHealth(amount);
+		if (isServer)
+		{
+			RpcChangeHealth(amount);
+		}
     }
 
     
@@ -62,7 +65,10 @@ public class Health : NetworkBehaviour
 	
 	public void InstaKill()
 	{
-		RpcInstaKill();
+		if (isServer)
+		{
+			RpcInstaKill();
+		}
 	}
 	
 	[ClientRpc]
