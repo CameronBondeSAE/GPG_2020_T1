@@ -286,7 +286,7 @@ namespace GPG220.Blaide_Fedorowytsch.Scripts.ProcGen
 					// obstacleHeight, worldSize.y * (gridSize.y / 100) * 0.01f);
 
 					// Networking
-					NetworkServer.Spawn(ObjectGrid[x, y]);
+					// NetworkServer.Spawn(ObjectGrid[x, y]);
 
 
 					if (ObstacleHolder)
