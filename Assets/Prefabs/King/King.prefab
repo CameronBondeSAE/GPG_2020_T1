@@ -168,6 +168,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3266ec32201a0694a8a80c5131a2d2ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   startingHealth: 100
   currentHealth: 100
 --- !u!114 &7557236680982209879
@@ -239,7 +241,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1127377614303666354}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 8ff378406eacbcc4087fac3d3abdf375, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.75

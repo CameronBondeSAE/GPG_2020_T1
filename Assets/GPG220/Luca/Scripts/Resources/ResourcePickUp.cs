@@ -16,6 +16,7 @@ public class ResourcePickUp : MonoBehaviour
     
     public float pickupCooldown = 1f;
     private float remainingPickupCooldown = 0f;
+    private ResourceUnit _resourceUnit;
     
     private void Awake()
     {
@@ -23,6 +24,10 @@ public class ResourcePickUp : MonoBehaviour
         var bc = GetComponent<SphereCollider>();
         if(bc != null)
             bc.isTrigger = true;
+        if (GetComponent<ResourceUnit>() != null)
+        {
+            _resourceUnit = GetComponent<ResourceUnit>();
+        }
     }
 
 
@@ -53,6 +58,16 @@ public class ResourcePickUp : MonoBehaviour
         
         HandleCollision(other.gameObject);
     }
+
+    /*private void OnTriggerStay(Collider other)
+    {
+        HandleCollision(other.gameObject);
+    }*/
+
+    /*private void OnCollisionStay(Collision other)
+    {
+        HandleCollision(other.collider.gameObject);
+    }*/
 
     private void OnCollisionEnter(Collision other)
     {
